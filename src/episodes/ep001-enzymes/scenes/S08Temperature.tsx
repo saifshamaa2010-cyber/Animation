@@ -15,7 +15,7 @@ import { Scrim } from "../../../components/Scrim";
 import { HandCircle } from "../../../components/kit/hand";
 import { useScene } from "../../../lib/timeline";
 import { s08Timing } from "./S08Temperature.timing";
-import { DOCKS, enzymePose, mouthPoint } from "./S08-S10-arc";
+import { DOCKS, ENZ, enzymePose, mouthPoint } from "./S08-S10-arc";
 import {
   AmbientTemp,
   ApproxText,
@@ -74,11 +74,15 @@ export const S08Temperature: React.FC = () => {
   // ---- lens: the full-frame crowd pulls back into a circular window on "a faster rate of reaction"
   const irisT = Math.max(0, Math.min(1, (f - k.irisA) / (k.irisB - k.irisA)));
   const cam = lensCam(irisT);
+  // focus shift: ease in on the hero enzyme while its substrate lands (relaxed again by the pull-back)
+  const push = 0.16 * span(f, k.heroApproach - 30, k.heroDock + 6, EASE.inOut) * (1 - span(f, k.irisA - 4, k.irisA + 26, EASE.inOut));
+  const P = [ENZ[0].hx - 60, ENZ[0].hy + 10] as const;
+  const pushT = `translate(${P[0]} ${P[1]}) scale(${1 + push}) translate(${-P[0]} ${-P[1]})`;
+  const pushPt = (p: readonly [number, number]): [number, number] => [P[0] + (p[0] - P[0]) * (1 + push), P[1] + (p[1] - P[1]) * (1 + push)];
   const rim = span(f, k.irisA + 10, k.irisB + 4);
 
   // ---- thermometer arrives on "temperature" and reads 10 °C (cold)
   const thIn = span(f, k.thermoIn, k.thermoIn + 22);
-  const thFill = span(f, k.thermoIn + 8, k.thermoIn + 34, EASE.inOut);
 
   // ---- graph
   const axes = span(f, k.axesA, k.axesB, EASE.inOut);
@@ -91,7 +95,7 @@ export const S08Temperature: React.FC = () => {
   // ---- the hero collision (full view): label anchored at the active-site mouth of enzyme 0
   const hero = DOCKS[0];
   const heroMouth = mouthPoint(enzymePose(hero.e, Math.min(abs, hero.at + hero.hold)));
-  const heroScreen = worldToScreen(cam, heroMouth);
+  const heroScreen = worldToScreen(cam, pushPt(heroMouth));
   const lblIn = span(f, k.successful - 2, k.successful + 20, EASE.out);
   const lblOut = 1 - span(f, k.complexWord - 8, k.complexWord + 4, EASE.in);
 
@@ -105,13 +109,13 @@ export const S08Temperature: React.FC = () => {
       <AmbientTemp T={T} />
 
       <Lens cam={cam} frame={rim}>
-        <g transform={worldTransform(cam)}>
+        <g transform={`${worldTransform(cam)} ${pushT}`}>
           <Population abs={abs} />
         </g>
       </Lens>
 
       <g opacity={thIn} transform={`translate(0 ${(1 - thIn) * 40})`}>
-        <Thermometer x={THERMO.x} y={THERMO.y} height={THERMO.h} temperature={T * thFill} />
+        <Thermometer x={THERMO.x} y={THERMO.y} height={THERMO.h} temperature={T} />
       </g>
 
       <TempGraph
