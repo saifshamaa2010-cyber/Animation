@@ -40,6 +40,7 @@ all real pages — worth a 5-minute spot-check of any claim you feel unsure abou
 - Starch is drawn as an unbranched chain of glucose hexagons (amylose). Real starch is mostly branched amylopectin — fine for this level, never label it "amylopectin".
 - Maltose = exactly two linked glucose hexagons. Cellulose = glucose hexagons with every other ring flipped (how β-1,4 links look in diagrams).
 - The enzyme is a stylised globular protein, not a real amylase structure. Its active site must be a clear pocket the starch end fits.
+- Real α-amylase mostly cuts *inside* starch chains (it's an endo-enzyme) and releases a mix of maltose, maltotriose and short fragments. We show it trimming two-ring maltose pieces off a chain end because that makes "fit → snap → product leaves" readable. The narration never claims it only cuts at the end.
 - Denaturation shows the folded chain loosening and the pocket deforming — *not* the enzyme exploding, melting or "dying".
 - Rate–temperature graph: qualitative (no y-axis numbers). Rise to a peak near 37 °C, steep fall to ~0 by ~60 °C.
 - pH graph: two bell curves, pepsin peaking ≈ 2, amylase peaking ≈ 7.
