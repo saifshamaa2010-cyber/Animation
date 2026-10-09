@@ -194,9 +194,9 @@
    "id": "S06",
    "slug": "induced-fit",
    "startSec": 126.033,
-   "endSec": 148.946,
+   "endSec": 149.546,
    "startFrame": 3781,
-   "endFrame": 4468,
+   "endFrame": 4486,
    "cues": {
     "simplification": {
      "sec": 126.363,
@@ -223,292 +223,292 @@
   {
    "id": "S07",
    "slug": "myth-used-up",
-   "startSec": 148.946,
-   "endSec": 176.992,
-   "startFrame": 4468,
-   "endFrame": 5310,
+   "startSec": 149.546,
+   "endSec": 177.592,
+   "startFrame": 4486,
+   "endFrame": 5328,
    "cues": {
     "myth1": {
-     "sec": 149.376,
-     "frame": 4481
+     "sec": 149.976,
+     "frame": 4499
     },
     "bust1": {
-     "sec": 152.976,
-     "frame": 4589
+     "sec": 153.576,
+     "frame": 4607
     },
     "again": {
-     "sec": 157.196,
-     "frame": 4716
+     "sec": 157.796,
+     "frame": 4734
     },
     "catalase": {
-     "sec": 159.091,
-     "frame": 4773
+     "sec": 159.691,
+     "frame": 4791
     },
     "wear": {
-     "sec": 170.986,
-     "frame": 5130
+     "sec": 171.586,
+     "frame": 5148
     },
     "notConsumed": {
-     "sec": 174.616,
-     "frame": 5238
+     "sec": 175.216,
+     "frame": 5256
     }
    }
   },
   {
    "id": "S08",
    "slug": "temperature",
-   "startSec": 176.992,
-   "endSec": 209.681,
-   "startFrame": 5310,
-   "endFrame": 6290,
+   "startSec": 177.592,
+   "endSec": 210.281,
+   "startFrame": 5328,
+   "endFrame": 6308,
    "cues": {
     "temperature": {
-     "sec": 177.422,
-     "frame": 5323
+     "sec": 178.022,
+     "frame": 5341
     },
     "jiggle": {
-     "sec": 178.877,
-     "frame": 5366
+     "sec": 179.477,
+     "frame": 5384
     },
     "warm": {
-     "sec": 181.417,
-     "frame": 5443
+     "sec": 182.017,
+     "frame": 5461
     },
     "collide": {
-     "sec": 185.457,
-     "frame": 5564
+     "sec": 186.057,
+     "frame": 5582
     },
     "faster": {
-     "sec": 190.072,
-     "frame": 5702
+     "sec": 190.672,
+     "frame": 5720
     },
     "upToAPoint": {
-     "sec": 198.887,
-     "frame": 5967
+     "sec": 199.487,
+     "frame": 5985
     },
     "optimum": {
-     "sec": 201.752,
-     "frame": 6053
+     "sec": 202.352,
+     "frame": 6071
     }
    }
   },
   {
    "id": "S09",
    "slug": "predict",
-   "startSec": 209.681,
-   "endSec": 222.921,
-   "startFrame": 6290,
-   "endFrame": 6688,
+   "startSec": 210.281,
+   "endSec": 223.521,
+   "startFrame": 6308,
+   "endFrame": 6706,
    "cues": {
     "predict": {
-     "sec": 210.116,
-     "frame": 6303
+     "sec": 210.716,
+     "frame": 6321
     },
     "t50": {
-     "sec": 211.931,
-     "frame": 6358
+     "sec": 212.531,
+     "frame": 6376
     },
     "t60": {
-     "sec": 213.071,
-     "frame": 6392
+     "sec": 213.671,
+     "frame": 6410
     },
     "t70": {
-     "sec": 213.866,
-     "frame": 6416
+     "sec": 214.466,
+     "frame": 6434
     },
     "question": {
-     "sec": 214.776,
-     "frame": 6443
+     "sec": 215.376,
+     "frame": 6461
     },
     "pauseNow": {
-     "sec": 216.871,
-     "frame": 6506
+     "sec": 217.471,
+     "frame": 6524
     }
    }
   },
   {
    "id": "S10",
    "slug": "denature",
-   "startSec": 222.921,
-   "endSec": 261.251,
-   "startFrame": 6688,
-   "endFrame": 7838,
+   "startSec": 223.521,
+   "endSec": 262.451,
+   "startFrame": 6706,
+   "endFrame": 7874,
    "cues": {
     "reveal": {
-     "sec": 222.976,
-     "frame": 6689
+     "sec": 223.576,
+     "frame": 6707
     },
     "crash": {
-     "sec": 224.756,
-     "frame": 6743
+     "sec": 225.356,
+     "frame": 6761
     },
     "bonds": {
-     "sec": 227.141,
-     "frame": 6814
+     "sec": 227.741,
+     "frame": 6832
     },
     "shake": {
-     "sec": 230.776,
-     "frame": 6923
+     "sec": 231.376,
+     "frame": 6941
     },
     "unravel": {
-     "sec": 235.206,
-     "frame": 7056
+     "sec": 235.806,
+     "frame": 7074
     },
     "siteLost": {
-     "sec": 236.586,
-     "frame": 7098
+     "sec": 237.186,
+     "frame": 7116
     },
     "noFit": {
-     "sec": 238.656,
-     "frame": 7160
+     "sec": 239.256,
+     "frame": 7178
     },
     "denatured": {
-     "sec": 240.941,
-     "frame": 7228
+     "sec": 241.541,
+     "frame": 7246
     },
     "egg": {
-     "sec": 243.171,
-     "frame": 7295
+     "sec": 243.771,
+     "frame": 7313
     },
     "noUndo": {
-     "sec": 247.601,
-     "frame": 7428
+     "sec": 248.201,
+     "frame": 7446
     },
     "cold": {
-     "sec": 252.006,
-     "frame": 7560
+     "sec": 252.606,
+     "frame": 7578
     },
     "rewarm": {
-     "sec": 259.676,
-     "frame": 7790
+     "sec": 260.276,
+     "frame": 7808
     }
    }
   },
   {
    "id": "S11",
    "slug": "myth-killed",
-   "startSec": 261.251,
-   "endSec": 281.852,
-   "startFrame": 7838,
-   "endFrame": 8456,
+   "startSec": 262.451,
+   "endSec": 283.052,
+   "startFrame": 7874,
+   "endFrame": 8492,
    "cues": {
     "myth2": {
-     "sec": 261.681,
-     "frame": 7850
+     "sec": 262.881,
+     "frame": 7886
     },
     "notAlive": {
-     "sec": 265.071,
-     "frame": 7952
+     "sec": 266.271,
+     "frame": 7988
     },
     "molecule": {
-     "sec": 266.911,
-     "frame": 8007
+     "sec": 268.111,
+     "frame": 8043
     },
     "correct": {
-     "sec": 271.026,
-     "frame": 8131
+     "sec": 272.226,
+     "frame": 8167
     },
     "marks": {
-     "sec": 279.276,
-     "frame": 8378
+     "sec": 280.476,
+     "frame": 8414
     }
    }
   },
   {
    "id": "S12",
    "slug": "ph",
-   "startSec": 281.852,
-   "endSec": 312.413,
-   "startFrame": 8456,
-   "endFrame": 9372,
+   "startSec": 283.052,
+   "endSec": 313.613,
+   "startFrame": 8492,
+   "endFrame": 9408,
    "cues": {
     "ph": {
-     "sec": 282.287,
-     "frame": 8469
+     "sec": 283.487,
+     "frame": 8505
     },
     "disrupt": {
-     "sec": 288.042,
-     "frame": 8641
+     "sec": 289.242,
+     "frame": 8677
     },
     "phOptimum": {
-     "sec": 292.932,
-     "frame": 8788
+     "sec": 294.132,
+     "frame": 8824
     },
     "amylasePh": {
-     "sec": 295.807,
-     "frame": 8874
+     "sec": 297.007,
+     "frame": 8910
     },
     "stomach": {
-     "sec": 300.567,
-     "frame": 9017
+     "sec": 301.767,
+     "frame": 9053
     },
     "pepsin": {
-     "sec": 304.742,
-     "frame": 9142
+     "sec": 305.942,
+     "frame": 9178
     },
     "tuned": {
-     "sec": 309.982,
-     "frame": 9299
+     "sec": 311.182,
+     "frame": 9335
     }
    }
   },
   {
    "id": "S13",
    "slug": "resolve",
-   "startSec": 312.413,
-   "endSec": 339.091,
-   "startFrame": 9372,
-   "endFrame": 10173,
+   "startSec": 313.613,
+   "endSec": 340.291,
+   "startFrame": 9408,
+   "endFrame": 10209,
    "cues": {
     "back": {
-     "sec": 312.948,
-     "frame": 9388
+     "sec": 314.148,
+     "frame": 9424
     },
     "chew": {
-     "sec": 314.678,
-     "frame": 9440
+     "sec": 315.878,
+     "frame": 9476
     },
     "fit": {
-     "sec": 317.338,
-     "frame": 9520
+     "sec": 318.538,
+     "frame": 9556
     },
     "cut": {
-     "sec": 319.273,
-     "frame": 9578
+     "sec": 320.473,
+     "frame": 9614
     },
     "again": {
-     "sec": 320.813,
-     "frame": 9624
+     "sec": 322.013,
+     "frame": 9660
     },
     "conditions": {
-     "sec": 322.958,
-     "frame": 9689
+     "sec": 324.158,
+     "frame": 9725
     },
     "aeons": {
-     "sec": 327.443,
-     "frame": 9823
+     "sec": 328.643,
+     "frame": 9859
     },
     "tongue": {
-     "sec": 331.913,
-     "frame": 9957
+     "sec": 333.113,
+     "frame": 9993
     },
     "shapeLine": {
-     "sec": 335.478,
-     "frame": 10064
+     "sec": 336.678,
+     "frame": 10100
     },
     "title": {
-     "sec": 337.173,
-     "frame": 10115
+     "sec": 338.373,
+     "frame": 10151
     }
    }
   },
   {
    "id": "S14",
    "slug": "end",
-   "startSec": 339.091,
-   "endSec": 343.091,
-   "startFrame": 10173,
-   "endFrame": 10293,
+   "startSec": 340.291,
+   "endSec": 344.291,
+   "startFrame": 10209,
+   "endFrame": 10329,
    "cues": {}
   }
  ],
@@ -2562,7 +2562,7 @@
   {
    "text": "Lock",
    "startSec": 126.363,
-   "endSec": 126.593,
+   "endSec": 126.513,
    "scene": "S06"
   },
   {
@@ -2700,12 +2700,12 @@
   {
    "text": "itself",
    "startSec": 134.513,
-   "endSec": 134.833,
+   "endSec": 134.913,
    "scene": "S06"
   },
   {
    "text": "around",
-   "startSec": 134.833,
+   "startSec": 134.913,
    "endSec": 135.153,
    "scene": "S06"
   },
@@ -2838,7 +2838,7 @@
   {
    "text": "fit",
    "startSec": 144.033,
-   "endSec": 144.243,
+   "endSec": 144.353,
    "scene": "S06"
   },
   {
@@ -2910,1962 +2910,1938 @@
   {
    "text": "photograph.",
    "startSec": 148.283,
-   "endSec": 148.733,
+   "endSec": 149.313,
    "scene": "S06"
   },
   {
    "text": "Which",
-   "startSec": 149.376,
-   "endSec": 149.506,
+   "startSec": 149.976,
+   "endSec": 150.106,
    "scene": "S07"
   },
   {
    "text": "brings",
-   "startSec": 149.506,
-   "endSec": 149.746,
+   "startSec": 150.106,
+   "endSec": 150.346,
    "scene": "S07"
   },
   {
    "text": "us",
-   "startSec": 149.746,
-   "endSec": 149.906,
+   "startSec": 150.346,
+   "endSec": 150.506,
    "scene": "S07"
   },
   {
    "text": "to",
-   "startSec": 149.906,
-   "endSec": 150.066,
+   "startSec": 150.506,
+   "endSec": 150.666,
    "scene": "S07"
   },
   {
    "text": "myth",
-   "startSec": 150.066,
-   "endSec": 150.386,
+   "startSec": 150.666,
+   "endSec": 150.986,
    "scene": "S07"
   },
   {
    "text": "number",
-   "startSec": 150.386,
-   "endSec": 150.626,
+   "startSec": 150.986,
+   "endSec": 151.226,
    "scene": "S07"
   },
   {
    "text": "one:",
-   "startSec": 150.626,
-   "endSec": 150.876,
+   "startSec": 151.226,
+   "endSec": 151.476,
    "scene": "S07"
   },
   {
    "text": "that",
-   "startSec": 151.271,
-   "endSec": 151.391,
+   "startSec": 151.871,
+   "endSec": 151.991,
    "scene": "S07"
   },
   {
    "text": "enzymes",
-   "startSec": 151.461,
-   "endSec": 151.906,
+   "startSec": 152.061,
+   "endSec": 152.506,
    "scene": "S07"
   },
   {
    "text": "get",
-   "startSec": 152.066,
-   "endSec": 152.226,
+   "startSec": 152.666,
+   "endSec": 152.826,
    "scene": "S07"
   },
   {
    "text": "used",
-   "startSec": 152.226,
-   "endSec": 152.466,
+   "startSec": 152.826,
+   "endSec": 153.066,
    "scene": "S07"
   },
   {
    "text": "up.",
-   "startSec": 152.466,
-   "endSec": 152.581,
+   "startSec": 153.066,
+   "endSec": 153.181,
    "scene": "S07"
   },
   {
    "text": "They",
-   "startSec": 152.976,
-   "endSec": 153.096,
+   "startSec": 153.576,
+   "endSec": 153.696,
    "scene": "S07"
   },
   {
    "text": "don't.",
-   "startSec": 153.111,
-   "endSec": 153.906,
+   "startSec": 153.711,
+   "endSec": 154.506,
    "scene": "S07"
   },
   {
    "text": "After",
-   "startSec": 153.991,
-   "endSec": 154.226,
+   "startSec": 154.591,
+   "endSec": 154.826,
    "scene": "S07"
   },
   {
    "text": "each",
-   "startSec": 154.226,
-   "endSec": 154.546,
+   "startSec": 154.826,
+   "endSec": 155.146,
    "scene": "S07"
   },
   {
    "text": "reaction,",
-   "startSec": 154.546,
-   "endSec": 155.221,
+   "startSec": 155.146,
+   "endSec": 155.821,
    "scene": "S07"
   },
   {
    "text": "the",
-   "startSec": 155.371,
-   "endSec": 155.426,
+   "startSec": 155.971,
+   "endSec": 156.026,
    "scene": "S07"
   },
   {
    "text": "enzyme",
-   "startSec": 155.426,
-   "endSec": 155.986,
+   "startSec": 156.026,
+   "endSec": 156.586,
    "scene": "S07"
   },
   {
    "text": "is",
-   "startSec": 155.986,
-   "endSec": 156.146,
+   "startSec": 156.586,
+   "endSec": 156.746,
    "scene": "S07"
   },
   {
    "text": "unchanged,",
-   "startSec": 156.146,
-   "endSec": 156.921,
+   "startSec": 156.746,
+   "endSec": 157.521,
    "scene": "S07"
   },
   {
    "text": "ready",
-   "startSec": 157.196,
-   "endSec": 157.346,
+   "startSec": 157.796,
+   "endSec": 157.946,
    "scene": "S07"
   },
   {
    "text": "to",
-   "startSec": 157.346,
-   "endSec": 157.586,
+   "startSec": 157.946,
+   "endSec": 158.186,
    "scene": "S07"
   },
   {
    "text": "go",
-   "startSec": 157.586,
-   "endSec": 157.826,
+   "startSec": 158.186,
+   "endSec": 158.426,
    "scene": "S07"
   },
   {
    "text": "again,",
-   "startSec": 157.826,
-   "endSec": 158.066,
+   "startSec": 158.426,
+   "endSec": 158.666,
    "scene": "S07"
   },
   {
    "text": "and",
-   "startSec": 158.066,
-   "endSec": 158.386,
+   "startSec": 158.666,
+   "endSec": 158.986,
    "scene": "S07"
   },
   {
    "text": "again.",
-   "startSec": 158.386,
-   "endSec": 158.631,
+   "startSec": 158.986,
+   "endSec": 159.231,
    "scene": "S07"
   },
   {
    "text": "And",
-   "startSec": 159.091,
-   "endSec": 159.186,
+   "startSec": 159.691,
+   "endSec": 159.786,
    "scene": "S07"
   },
   {
    "text": "some",
-   "startSec": 159.186,
-   "endSec": 159.506,
+   "startSec": 159.786,
+   "endSec": 160.106,
    "scene": "S07"
   },
   {
    "text": "are",
-   "startSec": 159.506,
-   "endSec": 159.746,
+   "startSec": 160.106,
+   "endSec": 160.346,
    "scene": "S07"
   },
   {
    "text": "astonishingly",
-   "startSec": 159.746,
-   "endSec": 160.626,
+   "startSec": 160.346,
+   "endSec": 161.226,
    "scene": "S07"
   },
   {
    "text": "fast.",
-   "startSec": 160.626,
-   "endSec": 161.036,
+   "startSec": 161.226,
+   "endSec": 161.636,
    "scene": "S07"
   },
   {
    "text": "Catalase",
-   "startSec": 161.491,
-   "endSec": 162.146,
+   "startSec": 162.091,
+   "endSec": 162.746,
    "scene": "S07"
   },
   {
    "text": "is",
-   "startSec": 162.146,
-   "endSec": 162.306,
+   "startSec": 162.746,
+   "endSec": 162.906,
    "scene": "S07"
   },
   {
    "text": "found",
-   "startSec": 162.306,
-   "endSec": 162.546,
+   "startSec": 162.906,
+   "endSec": 163.146,
    "scene": "S07"
   },
   {
    "text": "in",
-   "startSec": 162.546,
-   "endSec": 162.706,
+   "startSec": 163.146,
+   "endSec": 163.306,
    "scene": "S07"
   },
   {
    "text": "almost",
-   "startSec": 162.706,
-   "endSec": 163.081,
+   "startSec": 163.306,
+   "endSec": 163.681,
    "scene": "S07"
   },
   {
    "text": "all",
-   "startSec": 163.131,
-   "endSec": 163.266,
+   "startSec": 163.731,
+   "endSec": 163.866,
    "scene": "S07"
   },
   {
    "text": "your",
-   "startSec": 163.266,
-   "endSec": 163.506,
+   "startSec": 163.866,
+   "endSec": 164.106,
    "scene": "S07"
   },
   {
    "text": "cells.",
-   "startSec": 163.506,
-   "endSec": 163.926,
+   "startSec": 164.106,
+   "endSec": 164.526,
    "scene": "S07"
   },
   {
    "text": "One",
-   "startSec": 164.456,
-   "endSec": 164.626,
+   "startSec": 165.056,
+   "endSec": 165.226,
    "scene": "S07"
   },
   {
    "text": "molecule",
-   "startSec": 164.626,
-   "endSec": 165.186,
+   "startSec": 165.226,
+   "endSec": 165.786,
    "scene": "S07"
   },
   {
    "text": "of",
-   "startSec": 165.186,
-   "endSec": 165.346,
+   "startSec": 165.786,
+   "endSec": 165.946,
    "scene": "S07"
   },
   {
    "text": "it",
-   "startSec": 165.346,
-   "endSec": 165.506,
+   "startSec": 165.946,
+   "endSec": 166.106,
    "scene": "S07"
   },
   {
    "text": "can",
-   "startSec": 165.506,
-   "endSec": 165.666,
+   "startSec": 166.106,
+   "endSec": 166.266,
    "scene": "S07"
   },
   {
    "text": "break",
-   "startSec": 165.666,
-   "endSec": 165.986,
+   "startSec": 166.266,
+   "endSec": 166.586,
    "scene": "S07"
   },
   {
    "text": "down",
-   "startSec": 165.986,
-   "endSec": 166.146,
+   "startSec": 166.586,
+   "endSec": 166.746,
    "scene": "S07"
   },
   {
    "text": "hundreds",
-   "startSec": 166.146,
-   "endSec": 166.626,
+   "startSec": 166.746,
+   "endSec": 167.226,
    "scene": "S07"
   },
   {
    "text": "of",
-   "startSec": 166.626,
-   "endSec": 166.676,
+   "startSec": 167.226,
+   "endSec": 167.276,
    "scene": "S07"
   },
   {
    "text": "thousands",
-   "startSec": 166.796,
-   "endSec": 167.186,
+   "startSec": 167.396,
+   "endSec": 167.786,
    "scene": "S07"
   },
   {
    "text": "of",
-   "startSec": 167.186,
-   "endSec": 167.346,
+   "startSec": 167.786,
+   "endSec": 167.946,
    "scene": "S07"
   },
   {
    "text": "molecules",
-   "startSec": 167.346,
-   "endSec": 167.906,
+   "startSec": 167.946,
+   "endSec": 168.506,
    "scene": "S07"
   },
   {
    "text": "of",
-   "startSec": 167.906,
-   "endSec": 168.066,
+   "startSec": 168.506,
+   "endSec": 168.666,
    "scene": "S07"
   },
   {
    "text": "hydrogen",
-   "startSec": 168.066,
-   "endSec": 168.706,
+   "startSec": 168.666,
+   "endSec": 169.306,
    "scene": "S07"
   },
   {
    "text": "peroxide.",
-   "startSec": 168.706,
-   "endSec": 169.341,
+   "startSec": 169.306,
+   "endSec": 169.941,
    "scene": "S07"
   },
   {
    "text": "Every",
-   "startSec": 169.826,
-   "endSec": 170.066,
+   "startSec": 170.426,
+   "endSec": 170.666,
    "scene": "S07"
   },
   {
    "text": "second.",
-   "startSec": 170.066,
-   "endSec": 170.556,
+   "startSec": 170.666,
+   "endSec": 171.156,
    "scene": "S07"
   },
   {
    "text": "Your",
-   "startSec": 170.986,
-   "endSec": 171.106,
+   "startSec": 171.586,
+   "endSec": 171.706,
    "scene": "S07"
   },
   {
    "text": "cells",
-   "startSec": 171.106,
-   "endSec": 171.496,
+   "startSec": 171.706,
+   "endSec": 172.096,
    "scene": "S07"
   },
   {
    "text": "do",
-   "startSec": 171.536,
-   "endSec": 171.746,
+   "startSec": 172.136,
+   "endSec": 172.346,
    "scene": "S07"
   },
   {
    "text": "replace",
-   "startSec": 171.746,
-   "endSec": 172.196,
+   "startSec": 172.346,
+   "endSec": 172.796,
    "scene": "S07"
   },
   {
    "text": "old",
-   "startSec": 172.246,
-   "endSec": 172.546,
+   "startSec": 172.846,
+   "endSec": 173.146,
    "scene": "S07"
   },
   {
    "text": "enzymes,",
-   "startSec": 172.546,
-   "endSec": 173.426,
+   "startSec": 173.146,
+   "endSec": 174.026,
    "scene": "S07"
   },
   {
    "text": "eventually.",
-   "startSec": 173.426,
-   "endSec": 174.466,
+   "startSec": 174.026,
+   "endSec": 175.066,
    "scene": "S07"
   },
   {
    "text": "But",
-   "startSec": 174.616,
-   "endSec": 174.666,
+   "startSec": 175.216,
+   "endSec": 175.266,
    "scene": "S07"
   },
   {
    "text": "the",
-   "startSec": 174.626,
-   "endSec": 174.786,
+   "startSec": 175.226,
+   "endSec": 175.386,
    "scene": "S07"
   },
   {
    "text": "reaction",
-   "startSec": 174.786,
-   "endSec": 175.346,
+   "startSec": 175.386,
+   "endSec": 175.946,
    "scene": "S07"
   },
   {
    "text": "itself",
-   "startSec": 175.346,
-   "endSec": 175.696,
+   "startSec": 175.946,
+   "endSec": 176.296,
    "scene": "S07"
   },
   {
    "text": "never",
-   "startSec": 175.836,
-   "endSec": 176.066,
+   "startSec": 176.436,
+   "endSec": 176.666,
    "scene": "S07"
   },
   {
    "text": "uses",
-   "startSec": 176.066,
-   "endSec": 176.466,
+   "startSec": 176.666,
+   "endSec": 177.066,
    "scene": "S07"
   },
   {
    "text": "them",
-   "startSec": 176.466,
-   "endSec": 176.626,
+   "startSec": 177.066,
+   "endSec": 177.226,
    "scene": "S07"
   },
   {
    "text": "up.",
-   "startSec": 176.626,
-   "endSec": 176.781,
+   "startSec": 177.226,
+   "endSec": 177.381,
    "scene": "S07"
   },
   {
    "text": "Now,",
-   "startSec": 177.422,
-   "endSec": 177.767,
+   "startSec": 178.022,
+   "endSec": 178.367,
    "scene": "S08"
   },
   {
    "text": "temperature.",
-   "startSec": 177.827,
-   "endSec": 178.452,
+   "startSec": 178.427,
+   "endSec": 179.052,
    "scene": "S08"
   },
   {
    "text": "Molecules",
-   "startSec": 178.877,
-   "endSec": 179.552,
+   "startSec": 179.477,
+   "endSec": 180.152,
    "scene": "S08"
   },
   {
    "text": "are",
-   "startSec": 179.552,
-   "endSec": 179.647,
+   "startSec": 180.152,
+   "endSec": 180.247,
    "scene": "S08"
   },
   {
    "text": "always",
-   "startSec": 179.717,
-   "endSec": 180.032,
+   "startSec": 180.317,
+   "endSec": 180.632,
    "scene": "S08"
   },
   {
    "text": "jiggling",
-   "startSec": 180.032,
-   "endSec": 180.672,
+   "startSec": 180.632,
+   "endSec": 181.272,
    "scene": "S08"
   },
   {
    "text": "around.",
-   "startSec": 180.672,
-   "endSec": 180.967,
+   "startSec": 181.272,
+   "endSec": 181.567,
    "scene": "S08"
   },
   {
    "text": "Heat",
-   "startSec": 181.417,
-   "endSec": 181.632,
+   "startSec": 182.017,
+   "endSec": 182.232,
    "scene": "S08"
   },
   {
    "text": "them",
-   "startSec": 181.632,
-   "endSec": 181.792,
+   "startSec": 182.232,
+   "endSec": 182.392,
    "scene": "S08"
   },
   {
    "text": "up,",
-   "startSec": 181.792,
-   "endSec": 181.912,
+   "startSec": 182.392,
+   "endSec": 182.512,
    "scene": "S08"
   },
   {
    "text": "and",
-   "startSec": 182.132,
-   "endSec": 182.192,
+   "startSec": 182.732,
+   "endSec": 182.792,
    "scene": "S08"
   },
   {
    "text": "they",
-   "startSec": 182.192,
-   "endSec": 182.352,
+   "startSec": 182.792,
+   "endSec": 182.952,
    "scene": "S08"
   },
   {
    "text": "gain",
-   "startSec": 182.352,
-   "endSec": 182.592,
+   "startSec": 182.952,
+   "endSec": 183.192,
    "scene": "S08"
   },
   {
    "text": "kinetic",
-   "startSec": 182.592,
-   "endSec": 183.152,
+   "startSec": 183.192,
+   "endSec": 183.752,
    "scene": "S08"
   },
   {
    "text": "energy.",
-   "startSec": 183.152,
-   "endSec": 183.952,
+   "startSec": 183.752,
+   "endSec": 184.552,
    "scene": "S08"
   },
   {
    "text": "They",
-   "startSec": 184.037,
-   "endSec": 184.112,
+   "startSec": 184.637,
+   "endSec": 184.712,
    "scene": "S08"
   },
   {
    "text": "move",
-   "startSec": 184.112,
-   "endSec": 184.432,
+   "startSec": 184.712,
+   "endSec": 185.032,
    "scene": "S08"
   },
   {
    "text": "faster.",
-   "startSec": 184.432,
-   "endSec": 184.947,
+   "startSec": 185.032,
+   "endSec": 185.547,
    "scene": "S08"
   },
   {
    "text": "Enzymes",
-   "startSec": 185.457,
-   "endSec": 185.872,
+   "startSec": 186.057,
+   "endSec": 186.472,
    "scene": "S08"
   },
   {
    "text": "and",
-   "startSec": 185.952,
-   "endSec": 186.112,
+   "startSec": 186.552,
+   "endSec": 186.712,
    "scene": "S08"
   },
   {
    "text": "substrates",
-   "startSec": 186.112,
-   "endSec": 186.752,
+   "startSec": 186.712,
+   "endSec": 187.352,
    "scene": "S08"
   },
   {
    "text": "bump",
-   "startSec": 186.752,
-   "endSec": 187.072,
+   "startSec": 187.352,
+   "endSec": 187.672,
    "scene": "S08"
   },
   {
    "text": "into",
-   "startSec": 187.072,
-   "endSec": 187.312,
+   "startSec": 187.672,
+   "endSec": 187.912,
    "scene": "S08"
   },
   {
    "text": "each",
-   "startSec": 187.312,
-   "endSec": 187.552,
+   "startSec": 187.912,
+   "endSec": 188.152,
    "scene": "S08"
   },
   {
    "text": "other",
-   "startSec": 187.552,
-   "endSec": 187.712,
+   "startSec": 188.152,
+   "endSec": 188.312,
    "scene": "S08"
   },
   {
    "text": "more",
-   "startSec": 187.712,
-   "endSec": 187.952,
+   "startSec": 188.312,
+   "endSec": 188.552,
    "scene": "S08"
   },
   {
    "text": "often,",
-   "startSec": 187.952,
-   "endSec": 188.352,
+   "startSec": 188.552,
+   "endSec": 188.952,
    "scene": "S08"
   },
   {
    "text": "and",
-   "startSec": 188.587,
-   "endSec": 188.752,
+   "startSec": 189.187,
+   "endSec": 189.352,
    "scene": "S08"
   },
   {
    "text": "with",
-   "startSec": 188.752,
-   "endSec": 188.912,
+   "startSec": 189.352,
+   "endSec": 189.512,
    "scene": "S08"
   },
   {
    "text": "more",
-   "startSec": 188.912,
-   "endSec": 189.152,
+   "startSec": 189.512,
+   "endSec": 189.752,
    "scene": "S08"
   },
   {
    "text": "energy.",
-   "startSec": 189.152,
-   "endSec": 189.632,
+   "startSec": 189.752,
+   "endSec": 190.232,
    "scene": "S08"
   },
   {
    "text": "So",
-   "startSec": 190.072,
-   "endSec": 190.122,
+   "startSec": 190.672,
+   "endSec": 190.722,
    "scene": "S08"
   },
   {
    "text": "more",
-   "startSec": 190.192,
-   "endSec": 190.432,
+   "startSec": 190.792,
+   "endSec": 191.032,
    "scene": "S08"
   },
   {
    "text": "collisions",
-   "startSec": 190.432,
-   "endSec": 191.072,
+   "startSec": 191.032,
+   "endSec": 191.672,
    "scene": "S08"
   },
   {
    "text": "are",
-   "startSec": 191.072,
-   "endSec": 191.312,
+   "startSec": 191.672,
+   "endSec": 191.912,
    "scene": "S08"
   },
   {
    "text": "successful,",
-   "startSec": 191.312,
-   "endSec": 191.887,
+   "startSec": 191.912,
+   "endSec": 192.487,
    "scene": "S08"
   },
   {
    "text": "with",
-   "startSec": 192.137,
-   "endSec": 192.272,
+   "startSec": 192.737,
+   "endSec": 192.872,
    "scene": "S08"
   },
   {
    "text": "the",
-   "startSec": 192.272,
-   "endSec": 192.352,
+   "startSec": 192.872,
+   "endSec": 192.952,
    "scene": "S08"
   },
   {
    "text": "substrate",
-   "startSec": 192.352,
-   "endSec": 192.992,
+   "startSec": 192.952,
+   "endSec": 193.592,
    "scene": "S08"
   },
   {
    "text": "landing",
-   "startSec": 192.992,
-   "endSec": 193.392,
+   "startSec": 193.592,
+   "endSec": 193.992,
    "scene": "S08"
   },
   {
    "text": "in",
-   "startSec": 193.392,
-   "endSec": 193.472,
+   "startSec": 193.992,
+   "endSec": 194.072,
    "scene": "S08"
   },
   {
    "text": "the",
-   "startSec": 193.472,
-   "endSec": 193.632,
+   "startSec": 194.072,
+   "endSec": 194.232,
    "scene": "S08"
   },
   {
    "text": "active",
-   "startSec": 193.632,
-   "endSec": 194.032,
+   "startSec": 194.232,
+   "endSec": 194.632,
    "scene": "S08"
   },
   {
    "text": "site.",
-   "startSec": 194.032,
-   "endSec": 194.752,
+   "startSec": 194.632,
+   "endSec": 195.352,
    "scene": "S08"
   },
   {
    "text": "More",
-   "startSec": 194.902,
-   "endSec": 195.072,
+   "startSec": 195.502,
+   "endSec": 195.672,
    "scene": "S08"
   },
   {
    "text": "enzyme\u2013substrate",
-   "startSec": 195.072,
-   "endSec": 196.272,
+   "startSec": 195.672,
+   "endSec": 196.872,
    "scene": "S08"
   },
   {
    "text": "complexes",
-   "startSec": 196.272,
-   "endSec": 196.832,
+   "startSec": 196.872,
+   "endSec": 197.432,
    "scene": "S08"
   },
   {
    "text": "form,",
-   "startSec": 196.917,
-   "endSec": 197.152,
+   "startSec": 197.517,
+   "endSec": 197.752,
    "scene": "S08"
   },
   {
    "text": "and",
-   "startSec": 197.407,
-   "endSec": 197.472,
+   "startSec": 198.007,
+   "endSec": 198.072,
    "scene": "S08"
   },
   {
    "text": "the",
-   "startSec": 197.472,
-   "endSec": 197.552,
+   "startSec": 198.072,
+   "endSec": 198.152,
    "scene": "S08"
   },
   {
    "text": "rate",
-   "startSec": 197.552,
-   "endSec": 197.952,
+   "startSec": 198.152,
+   "endSec": 198.552,
    "scene": "S08"
   },
   {
    "text": "goes",
-   "startSec": 197.952,
-   "endSec": 198.192,
+   "startSec": 198.552,
+   "endSec": 198.792,
    "scene": "S08"
   },
   {
    "text": "up.",
-   "startSec": 198.192,
-   "endSec": 198.832,
+   "startSec": 198.792,
+   "endSec": 199.432,
    "scene": "S08"
   },
   {
    "text": "Up",
-   "startSec": 198.887,
-   "endSec": 199.072,
+   "startSec": 199.487,
+   "endSec": 199.672,
    "scene": "S08"
   },
   {
    "text": "to",
-   "startSec": 199.072,
-   "endSec": 199.232,
+   "startSec": 199.672,
+   "endSec": 199.832,
    "scene": "S08"
   },
   {
    "text": "a",
-   "startSec": 199.232,
-   "endSec": 199.377,
+   "startSec": 199.832,
+   "endSec": 199.977,
    "scene": "S08"
   },
   {
    "text": "point,",
-   "startSec": 199.397,
-   "endSec": 199.707,
+   "startSec": 199.997,
+   "endSec": 200.307,
    "scene": "S08"
   },
   {
    "text": "warmer",
-   "startSec": 199.907,
-   "endSec": 200.432,
+   "startSec": 200.507,
+   "endSec": 201.032,
    "scene": "S08"
   },
   {
    "text": "means",
-   "startSec": 200.432,
-   "endSec": 200.592,
+   "startSec": 201.032,
+   "endSec": 201.192,
    "scene": "S08"
   },
   {
    "text": "faster.",
-   "startSec": 200.692,
-   "endSec": 201.162,
+   "startSec": 201.292,
+   "endSec": 201.762,
    "scene": "S08"
   },
   {
    "text": "The",
-   "startSec": 201.752,
-   "endSec": 201.802,
+   "startSec": 202.352,
+   "endSec": 202.402,
    "scene": "S08"
   },
   {
    "text": "temperature",
-   "startSec": 201.792,
-   "endSec": 202.352,
+   "startSec": 202.392,
+   "endSec": 202.952,
    "scene": "S08"
   },
   {
    "text": "where",
-   "startSec": 202.352,
-   "endSec": 202.512,
+   "startSec": 202.952,
+   "endSec": 203.112,
    "scene": "S08"
   },
   {
    "text": "the",
-   "startSec": 202.512,
-   "endSec": 202.592,
+   "startSec": 203.112,
+   "endSec": 203.192,
    "scene": "S08"
   },
   {
    "text": "rate",
-   "startSec": 202.592,
-   "endSec": 202.912,
+   "startSec": 203.192,
+   "endSec": 203.512,
    "scene": "S08"
   },
   {
    "text": "peaks",
-   "startSec": 202.912,
-   "endSec": 203.312,
+   "startSec": 203.512,
+   "endSec": 203.912,
    "scene": "S08"
   },
   {
    "text": "is",
-   "startSec": 203.312,
-   "endSec": 203.472,
+   "startSec": 203.912,
+   "endSec": 204.072,
    "scene": "S08"
   },
   {
    "text": "called",
-   "startSec": 203.472,
-   "endSec": 203.632,
+   "startSec": 204.072,
+   "endSec": 204.232,
    "scene": "S08"
   },
   {
    "text": "the",
-   "startSec": 203.632,
-   "endSec": 203.792,
+   "startSec": 204.232,
+   "endSec": 204.392,
    "scene": "S08"
   },
   {
    "text": "optimum.",
-   "startSec": 203.792,
-   "endSec": 204.372,
+   "startSec": 204.392,
+   "endSec": 204.972,
    "scene": "S08"
   },
   {
    "text": "For",
-   "startSec": 204.932,
-   "endSec": 204.992,
+   "startSec": 205.532,
+   "endSec": 205.592,
    "scene": "S08"
   },
   {
    "text": "many",
-   "startSec": 204.992,
-   "endSec": 205.232,
+   "startSec": 205.592,
+   "endSec": 205.832,
    "scene": "S08"
   },
   {
    "text": "enzymes",
-   "startSec": 205.232,
-   "endSec": 205.872,
-   "scene": "S08"
-  },
-  {
-   "text": "in",
-   "startSec": 205.872,
-   "endSec": 205.952,
-   "scene": "S08"
-  },
-  {
-   "text": "your",
-   "startSec": 205.952,
-   "endSec": 206.112,
-   "scene": "S08"
-  },
-  {
-   "text": "body,",
-   "startSec": 206.112,
+   "startSec": 205.832,
    "endSec": 206.472,
    "scene": "S08"
   },
   {
-   "text": "it's",
-   "startSec": 206.682,
-   "endSec": 206.832,
+   "text": "in",
+   "startSec": 206.472,
+   "endSec": 206.552,
    "scene": "S08"
   },
   {
-   "text": "around",
-   "startSec": 206.832,
+   "text": "your",
+   "startSec": 206.552,
+   "endSec": 206.712,
+   "scene": "S08"
+  },
+  {
+   "text": "body,",
+   "startSec": 206.712,
    "endSec": 207.072,
    "scene": "S08"
   },
   {
+   "text": "it's",
+   "startSec": 207.282,
+   "endSec": 207.432,
+   "scene": "S08"
+  },
+  {
+   "text": "around",
+   "startSec": 207.432,
+   "endSec": 207.672,
+   "scene": "S08"
+  },
+  {
    "text": "37",
-   "startSec": 207.072,
-   "endSec": 207.792,
+   "startSec": 207.672,
+   "endSec": 208.392,
    "scene": "S08"
   },
   {
    "text": "degrees:",
-   "startSec": 207.792,
-   "endSec": 208.267,
+   "startSec": 208.392,
+   "endSec": 208.867,
    "scene": "S08"
   },
   {
    "text": "body",
-   "startSec": 208.657,
-   "endSec": 208.967,
-   "scene": "S08"
-  },
-  {
-   "text": "temperature.",
-   "startSec": 208.997,
+   "startSec": 209.257,
    "endSec": 209.567,
    "scene": "S08"
   },
   {
+   "text": "temperature.",
+   "startSec": 209.597,
+   "endSec": 210.167,
+   "scene": "S08"
+  },
+  {
    "text": "So",
-   "startSec": 210.116,
-   "endSec": 210.166,
+   "startSec": 210.716,
+   "endSec": 210.766,
    "scene": "S09"
   },
   {
    "text": "what",
-   "startSec": 210.241,
-   "endSec": 210.401,
+   "startSec": 210.841,
+   "endSec": 211.001,
    "scene": "S09"
   },
   {
    "text": "if",
-   "startSec": 210.401,
-   "endSec": 210.561,
+   "startSec": 211.001,
+   "endSec": 211.161,
    "scene": "S09"
   },
   {
    "text": "we",
-   "startSec": 210.561,
-   "endSec": 210.641,
+   "startSec": 211.161,
+   "endSec": 211.241,
    "scene": "S09"
   },
   {
    "text": "keep",
-   "startSec": 210.641,
-   "endSec": 210.881,
+   "startSec": 211.241,
+   "endSec": 211.481,
    "scene": "S09"
   },
   {
    "text": "turning",
-   "startSec": 210.881,
-   "endSec": 211.121,
+   "startSec": 211.481,
+   "endSec": 211.721,
    "scene": "S09"
   },
   {
    "text": "up",
-   "startSec": 211.121,
-   "endSec": 211.281,
+   "startSec": 211.721,
+   "endSec": 211.881,
    "scene": "S09"
   },
   {
    "text": "the",
-   "startSec": 211.281,
-   "endSec": 211.346,
+   "startSec": 211.881,
+   "endSec": 211.946,
    "scene": "S09"
   },
   {
    "text": "heat?",
-   "startSec": 211.371,
-   "endSec": 211.601,
+   "startSec": 211.971,
+   "endSec": 212.201,
    "scene": "S09"
   },
   {
    "text": "Fifty",
-   "startSec": 211.931,
-   "endSec": 212.241,
+   "startSec": 212.531,
+   "endSec": 212.841,
    "scene": "S09"
   },
   {
    "text": "degrees.",
-   "startSec": 212.241,
-   "endSec": 212.706,
+   "startSec": 212.841,
+   "endSec": 213.306,
    "scene": "S09"
   },
   {
    "text": "Sixty.",
-   "startSec": 213.071,
-   "endSec": 213.636,
+   "startSec": 213.671,
+   "endSec": 214.236,
    "scene": "S09"
   },
   {
    "text": "Seventy.",
-   "startSec": 213.866,
-   "endSec": 214.466,
+   "startSec": 214.466,
+   "endSec": 215.066,
    "scene": "S09"
   },
   {
    "text": "Does",
-   "startSec": 214.776,
-   "endSec": 214.881,
+   "startSec": 215.376,
+   "endSec": 215.481,
    "scene": "S09"
   },
   {
    "text": "it",
-   "startSec": 214.881,
-   "endSec": 215.041,
+   "startSec": 215.481,
+   "endSec": 215.641,
    "scene": "S09"
   },
   {
    "text": "just",
-   "startSec": 215.041,
-   "endSec": 215.201,
+   "startSec": 215.641,
+   "endSec": 215.801,
    "scene": "S09"
   },
   {
    "text": "keep",
-   "startSec": 215.201,
-   "endSec": 215.441,
+   "startSec": 215.801,
+   "endSec": 216.041,
    "scene": "S09"
   },
   {
    "text": "getting",
-   "startSec": 215.441,
-   "endSec": 215.681,
+   "startSec": 216.041,
+   "endSec": 216.281,
    "scene": "S09"
   },
   {
    "text": "faster?",
-   "startSec": 215.681,
-   "endSec": 216.721,
+   "startSec": 216.281,
+   "endSec": 217.321,
    "scene": "S09"
   },
   {
    "text": "Pause",
-   "startSec": 216.871,
-   "endSec": 217.121,
+   "startSec": 217.471,
+   "endSec": 217.721,
    "scene": "S09"
   },
   {
    "text": "the",
-   "startSec": 217.121,
-   "endSec": 217.281,
+   "startSec": 217.721,
+   "endSec": 217.881,
    "scene": "S09"
   },
   {
    "text": "video,",
-   "startSec": 217.281,
-   "endSec": 217.706,
+   "startSec": 217.881,
+   "endSec": 218.306,
    "scene": "S09"
   },
   {
    "text": "and",
-   "startSec": 217.856,
-   "endSec": 217.921,
+   "startSec": 218.456,
+   "endSec": 218.521,
    "scene": "S09"
   },
   {
    "text": "make",
-   "startSec": 217.921,
-   "endSec": 218.161,
+   "startSec": 218.521,
+   "endSec": 218.761,
    "scene": "S09"
   },
   {
    "text": "your",
-   "startSec": 218.161,
-   "endSec": 218.321,
+   "startSec": 218.761,
+   "endSec": 218.921,
    "scene": "S09"
   },
   {
    "text": "prediction.",
-   "startSec": 218.321,
-   "endSec": 219.761,
+   "startSec": 218.921,
+   "endSec": 220.361,
    "scene": "S09"
   },
   {
    "text": "Here's",
-   "startSec": 222.976,
-   "endSec": 223.321,
+   "startSec": 223.576,
+   "endSec": 223.921,
    "scene": "S10"
   },
   {
    "text": "what",
-   "startSec": 223.321,
-   "endSec": 223.561,
+   "startSec": 223.921,
+   "endSec": 224.161,
    "scene": "S10"
   },
   {
    "text": "actually",
-   "startSec": 223.561,
-   "endSec": 223.801,
+   "startSec": 224.161,
+   "endSec": 224.401,
    "scene": "S10"
   },
   {
    "text": "happens.",
-   "startSec": 223.801,
-   "endSec": 224.331,
+   "startSec": 224.401,
+   "endSec": 224.931,
    "scene": "S10"
   },
   {
    "text": "The",
-   "startSec": 224.756,
-   "endSec": 224.806,
+   "startSec": 225.356,
+   "endSec": 225.406,
    "scene": "S10"
   },
   {
    "text": "rate",
-   "startSec": 224.761,
-   "endSec": 225.161,
+   "startSec": 225.361,
+   "endSec": 225.761,
    "scene": "S10"
   },
   {
    "text": "crashes,",
-   "startSec": 225.241,
-   "endSec": 225.721,
+   "startSec": 225.841,
+   "endSec": 226.321,
    "scene": "S10"
   },
   {
    "text": "and",
-   "startSec": 225.721,
-   "endSec": 225.881,
+   "startSec": 226.321,
+   "endSec": 226.481,
    "scene": "S10"
   },
   {
    "text": "it",
-   "startSec": 225.881,
-   "endSec": 226.041,
+   "startSec": 226.481,
+   "endSec": 226.641,
    "scene": "S10"
   },
   {
    "text": "doesn't",
-   "startSec": 226.041,
-   "endSec": 226.281,
+   "startSec": 226.641,
+   "endSec": 226.881,
    "scene": "S10"
   },
   {
    "text": "recover.",
-   "startSec": 226.281,
-   "endSec": 226.701,
+   "startSec": 226.881,
+   "endSec": 227.301,
    "scene": "S10"
   },
   {
    "text": "An",
-   "startSec": 227.141,
-   "endSec": 227.241,
+   "startSec": 227.741,
+   "endSec": 227.841,
    "scene": "S10"
   },
   {
    "text": "enzyme's",
-   "startSec": 227.241,
-   "endSec": 227.801,
+   "startSec": 227.841,
+   "endSec": 228.401,
    "scene": "S10"
   },
   {
    "text": "shape",
-   "startSec": 227.801,
-   "endSec": 228.121,
+   "startSec": 228.401,
+   "endSec": 228.721,
    "scene": "S10"
   },
   {
    "text": "is",
-   "startSec": 228.121,
-   "endSec": 228.281,
+   "startSec": 228.721,
+   "endSec": 228.881,
    "scene": "S10"
   },
   {
    "text": "held",
-   "startSec": 228.281,
-   "endSec": 228.521,
+   "startSec": 228.881,
+   "endSec": 229.121,
    "scene": "S10"
   },
   {
    "text": "together",
-   "startSec": 228.521,
-   "endSec": 228.911,
+   "startSec": 229.121,
+   "endSec": 229.511,
    "scene": "S10"
   },
   {
    "text": "by",
-   "startSec": 228.941,
-   "endSec": 229.081,
+   "startSec": 229.541,
+   "endSec": 229.681,
    "scene": "S10"
   },
   {
    "text": "lots",
-   "startSec": 229.081,
-   "endSec": 229.321,
+   "startSec": 229.681,
+   "endSec": 229.921,
    "scene": "S10"
   },
   {
    "text": "of",
-   "startSec": 229.321,
-   "endSec": 229.481,
+   "startSec": 229.921,
+   "endSec": 230.081,
    "scene": "S10"
   },
   {
    "text": "weak",
-   "startSec": 229.481,
-   "endSec": 229.881,
+   "startSec": 230.081,
+   "endSec": 230.481,
    "scene": "S10"
   },
   {
    "text": "bonds.",
-   "startSec": 229.881,
-   "endSec": 230.681,
+   "startSec": 230.481,
+   "endSec": 231.281,
    "scene": "S10"
   },
   {
    "text": "Too",
-   "startSec": 230.776,
-   "endSec": 230.921,
+   "startSec": 231.376,
+   "endSec": 231.521,
    "scene": "S10"
   },
   {
    "text": "much",
-   "startSec": 230.921,
-   "endSec": 231.161,
+   "startSec": 231.521,
+   "endSec": 231.761,
    "scene": "S10"
   },
   {
    "text": "heat,",
-   "startSec": 231.161,
-   "endSec": 231.481,
+   "startSec": 231.761,
+   "endSec": 232.081,
    "scene": "S10"
   },
   {
    "text": "and",
-   "startSec": 231.781,
-   "endSec": 231.831,
+   "startSec": 232.381,
+   "endSec": 232.431,
    "scene": "S10"
   },
   {
    "text": "it",
-   "startSec": 231.801,
-   "endSec": 231.961,
+   "startSec": 232.401,
+   "endSec": 232.561,
    "scene": "S10"
   },
   {
    "text": "vibrates",
-   "startSec": 231.961,
-   "endSec": 232.601,
+   "startSec": 232.561,
+   "endSec": 233.201,
    "scene": "S10"
   },
   {
    "text": "so",
-   "startSec": 232.601,
-   "endSec": 232.761,
+   "startSec": 233.201,
+   "endSec": 233.361,
    "scene": "S10"
   },
   {
    "text": "violently",
-   "startSec": 232.761,
-   "endSec": 233.401,
+   "startSec": 233.361,
+   "endSec": 234.001,
    "scene": "S10"
   },
   {
    "text": "that",
-   "startSec": 233.401,
-   "endSec": 233.516,
+   "startSec": 234.001,
+   "endSec": 234.116,
    "scene": "S10"
   },
   {
    "text": "those",
-   "startSec": 233.591,
-   "endSec": 233.801,
+   "startSec": 234.191,
+   "endSec": 234.401,
    "scene": "S10"
   },
   {
    "text": "bonds",
-   "startSec": 233.801,
-   "endSec": 234.201,
+   "startSec": 234.401,
+   "endSec": 234.801,
    "scene": "S10"
   },
   {
    "text": "break.",
-   "startSec": 234.286,
-   "endSec": 235.081,
+   "startSec": 234.886,
+   "endSec": 235.681,
    "scene": "S10"
   },
   {
    "text": "The",
-   "startSec": 235.206,
-   "endSec": 235.256,
+   "startSec": 235.806,
+   "endSec": 235.856,
    "scene": "S10"
   },
   {
    "text": "chain",
-   "startSec": 235.241,
-   "endSec": 235.641,
+   "startSec": 235.841,
+   "endSec": 236.241,
    "scene": "S10"
   },
   {
    "text": "unravels,",
-   "startSec": 235.641,
-   "endSec": 236.336,
+   "startSec": 236.241,
+   "endSec": 236.936,
    "scene": "S10"
   },
   {
    "text": "the",
-   "startSec": 236.586,
-   "endSec": 236.671,
+   "startSec": 237.186,
+   "endSec": 237.271,
    "scene": "S10"
   },
   {
    "text": "active",
-   "startSec": 236.706,
-   "endSec": 237.081,
+   "startSec": 237.306,
+   "endSec": 237.681,
    "scene": "S10"
   },
   {
    "text": "site",
-   "startSec": 237.081,
-   "endSec": 237.481,
+   "startSec": 237.681,
+   "endSec": 238.081,
    "scene": "S10"
   },
   {
    "text": "loses",
-   "startSec": 237.481,
-   "endSec": 237.801,
+   "startSec": 238.081,
+   "endSec": 238.401,
    "scene": "S10"
   },
   {
    "text": "its",
-   "startSec": 237.801,
-   "endSec": 238.041,
+   "startSec": 238.401,
+   "endSec": 238.641,
    "scene": "S10"
   },
   {
    "text": "shape,",
-   "startSec": 238.041,
-   "endSec": 238.251,
+   "startSec": 238.641,
+   "endSec": 238.851,
    "scene": "S10"
   },
   {
    "text": "and",
-   "startSec": 238.656,
-   "endSec": 238.761,
+   "startSec": 239.256,
+   "endSec": 239.361,
    "scene": "S10"
   },
   {
    "text": "the",
-   "startSec": 238.761,
-   "endSec": 238.841,
+   "startSec": 239.361,
+   "endSec": 239.441,
    "scene": "S10"
   },
   {
    "text": "substrate",
-   "startSec": 238.841,
-   "endSec": 239.481,
+   "startSec": 239.441,
+   "endSec": 240.081,
    "scene": "S10"
   },
   {
    "text": "no",
-   "startSec": 239.481,
-   "endSec": 239.641,
+   "startSec": 240.081,
+   "endSec": 240.241,
    "scene": "S10"
   },
   {
    "text": "longer",
-   "startSec": 239.641,
-   "endSec": 239.961,
+   "startSec": 240.241,
+   "endSec": 240.561,
    "scene": "S10"
   },
   {
    "text": "fits.",
-   "startSec": 239.961,
-   "endSec": 240.456,
+   "startSec": 240.561,
+   "endSec": 241.056,
    "scene": "S10"
   },
   {
    "text": "The",
-   "startSec": 240.941,
-   "endSec": 241.001,
+   "startSec": 241.541,
+   "endSec": 241.601,
    "scene": "S10"
   },
   {
    "text": "enzyme",
-   "startSec": 241.001,
-   "endSec": 241.641,
+   "startSec": 241.601,
+   "endSec": 242.241,
    "scene": "S10"
   },
   {
    "text": "has",
-   "startSec": 241.641,
-   "endSec": 241.801,
+   "startSec": 242.241,
+   "endSec": 242.401,
    "scene": "S10"
   },
   {
    "text": "been",
-   "startSec": 241.801,
-   "endSec": 241.961,
+   "startSec": 242.401,
+   "endSec": 242.561,
    "scene": "S10"
   },
   {
    "text": "denatured.",
-   "startSec": 241.961,
-   "endSec": 243.161,
+   "startSec": 242.561,
+   "endSec": 243.761,
    "scene": "S10"
   },
   {
    "text": "It's",
-   "startSec": 243.171,
-   "endSec": 243.401,
+   "startSec": 243.771,
+   "endSec": 244.001,
    "scene": "S10"
   },
   {
    "text": "the",
-   "startSec": 243.401,
-   "endSec": 243.561,
+   "startSec": 244.001,
+   "endSec": 244.161,
    "scene": "S10"
   },
   {
    "text": "same",
-   "startSec": 243.561,
-   "endSec": 243.721,
+   "startSec": 244.161,
+   "endSec": 244.321,
    "scene": "S10"
   },
   {
    "text": "kind",
-   "startSec": 243.721,
-   "endSec": 243.961,
+   "startSec": 244.321,
+   "endSec": 244.561,
    "scene": "S10"
   },
   {
    "text": "of",
-   "startSec": 243.961,
-   "endSec": 244.121,
+   "startSec": 244.561,
+   "endSec": 244.721,
    "scene": "S10"
   },
   {
    "text": "change",
-   "startSec": 244.121,
-   "endSec": 244.521,
+   "startSec": 244.721,
+   "endSec": 245.121,
    "scene": "S10"
   },
   {
    "text": "that",
-   "startSec": 244.521,
-   "endSec": 244.681,
+   "startSec": 245.121,
+   "endSec": 245.281,
    "scene": "S10"
   },
   {
    "text": "turns",
-   "startSec": 244.681,
-   "endSec": 245.081,
+   "startSec": 245.281,
+   "endSec": 245.681,
    "scene": "S10"
   },
   {
    "text": "egg",
-   "startSec": 245.081,
-   "endSec": 245.481,
+   "startSec": 245.681,
+   "endSec": 246.081,
    "scene": "S10"
   },
   {
    "text": "white",
-   "startSec": 245.481,
-   "endSec": 245.801,
+   "startSec": 246.081,
+   "endSec": 246.401,
    "scene": "S10"
   },
   {
    "text": "solid",
-   "startSec": 245.801,
-   "endSec": 246.201,
+   "startSec": 246.401,
+   "endSec": 246.801,
    "scene": "S10"
   },
   {
    "text": "in",
-   "startSec": 246.201,
-   "endSec": 246.361,
+   "startSec": 246.801,
+   "endSec": 246.961,
    "scene": "S10"
   },
   {
    "text": "a",
-   "startSec": 246.361,
-   "endSec": 246.441,
+   "startSec": 246.961,
+   "endSec": 247.041,
    "scene": "S10"
   },
   {
    "text": "hot",
-   "startSec": 246.441,
-   "endSec": 246.841,
+   "startSec": 247.041,
+   "endSec": 247.361,
    "scene": "S10"
   },
   {
    "text": "pan.",
-   "startSec": 246.841,
-   "endSec": 247.481,
+   "startSec": 247.361,
+   "endSec": 248.081,
    "scene": "S10"
   },
   {
    "text": "You",
-   "startSec": 247.601,
-   "endSec": 247.651,
+   "startSec": 248.201,
+   "endSec": 248.251,
    "scene": "S10"
   },
   {
    "text": "can't",
-   "startSec": 247.641,
-   "endSec": 247.946,
+   "startSec": 248.241,
+   "endSec": 248.546,
    "scene": "S10"
   },
   {
    "text": "uncook",
-   "startSec": 248.006,
-   "endSec": 248.441,
+   "startSec": 248.606,
+   "endSec": 249.041,
    "scene": "S10"
   },
   {
    "text": "an",
-   "startSec": 248.441,
-   "endSec": 248.521,
+   "startSec": 249.041,
+   "endSec": 249.121,
    "scene": "S10"
   },
   {
    "text": "egg,",
-   "startSec": 248.521,
-   "endSec": 248.756,
+   "startSec": 249.121,
+   "endSec": 249.356,
    "scene": "S10"
   },
   {
    "text": "and",
-   "startSec": 249.121,
-   "endSec": 249.171,
+   "startSec": 249.721,
+   "endSec": 249.826,
    "scene": "S10"
   },
   {
    "text": "cooling",
-   "startSec": 249.161,
-   "endSec": 249.721,
+   "startSec": 249.861,
+   "endSec": 250.321,
    "scene": "S10"
   },
   {
    "text": "usually",
-   "startSec": 249.721,
-   "endSec": 250.041,
+   "startSec": 250.321,
+   "endSec": 250.641,
    "scene": "S10"
   },
   {
    "text": "won't",
-   "startSec": 250.041,
-   "endSec": 250.271,
+   "startSec": 250.641,
+   "endSec": 250.871,
    "scene": "S10"
   },
   {
    "text": "fix",
-   "startSec": 250.426,
-   "endSec": 250.601,
+   "startSec": 251.026,
+   "endSec": 251.201,
    "scene": "S10"
   },
   {
    "text": "the",
-   "startSec": 250.601,
-   "endSec": 250.761,
+   "startSec": 251.201,
+   "endSec": 251.361,
    "scene": "S10"
   },
   {
    "text": "enzyme",
-   "startSec": 250.761,
-   "endSec": 251.321,
+   "startSec": 251.361,
+   "endSec": 251.921,
    "scene": "S10"
   },
   {
    "text": "either.",
-   "startSec": 251.321,
-   "endSec": 251.561,
+   "startSec": 251.921,
+   "endSec": 252.161,
    "scene": "S10"
   },
   {
    "text": "Cold",
-   "startSec": 252.006,
-   "endSec": 252.441,
-   "scene": "S10"
-  },
-  {
-   "text": "is",
-   "startSec": 252.441,
-   "endSec": 252.761,
-   "scene": "S10"
-  },
-  {
-   "text": "different.",
-   "startSec": 252.761,
+   "startSec": 252.606,
    "endSec": 253.041,
    "scene": "S10"
   },
   {
+   "text": "is",
+   "startSec": 253.041,
+   "endSec": 253.361,
+   "scene": "S10"
+  },
+  {
+   "text": "different.",
+   "startSec": 253.361,
+   "endSec": 253.641,
+   "scene": "S10"
+  },
+  {
    "text": "Molecules",
-   "startSec": 253.496,
-   "endSec": 254.121,
+   "startSec": 254.096,
+   "endSec": 254.801,
    "scene": "S10"
   },
   {
    "text": "have",
-   "startSec": 254.121,
-   "endSec": 254.361,
+   "startSec": 254.801,
+   "endSec": 254.961,
    "scene": "S10"
   },
   {
    "text": "less",
-   "startSec": 254.361,
-   "endSec": 254.601,
+   "startSec": 254.961,
+   "endSec": 255.201,
    "scene": "S10"
   },
   {
    "text": "kinetic",
-   "startSec": 254.601,
-   "endSec": 255.081,
+   "startSec": 255.201,
+   "endSec": 255.681,
    "scene": "S10"
   },
   {
    "text": "energy,",
-   "startSec": 255.081,
-   "endSec": 255.561,
+   "startSec": 255.681,
+   "endSec": 256.161,
    "scene": "S10"
   },
   {
    "text": "so",
-   "startSec": 255.666,
-   "endSec": 255.801,
+   "startSec": 256.266,
+   "endSec": 256.401,
    "scene": "S10"
   },
   {
    "text": "there",
-   "startSec": 255.801,
-   "endSec": 255.961,
+   "startSec": 256.401,
+   "endSec": 256.561,
    "scene": "S10"
   },
   {
    "text": "are",
-   "startSec": 255.961,
-   "endSec": 256.101,
+   "startSec": 256.561,
+   "endSec": 256.701,
    "scene": "S10"
   },
   {
    "text": "fewer",
-   "startSec": 256.161,
-   "endSec": 256.441,
+   "startSec": 256.761,
+   "endSec": 257.041,
    "scene": "S10"
   },
   {
    "text": "collisions.",
-   "startSec": 256.441,
-   "endSec": 257.006,
+   "startSec": 257.041,
+   "endSec": 257.606,
    "scene": "S10"
   },
   {
    "text": "But",
-   "startSec": 257.501,
-   "endSec": 257.561,
+   "startSec": 258.101,
+   "endSec": 258.161,
    "scene": "S10"
   },
   {
    "text": "the",
-   "startSec": 257.561,
-   "endSec": 257.706,
+   "startSec": 258.161,
+   "endSec": 258.306,
    "scene": "S10"
   },
   {
    "text": "enzyme",
-   "startSec": 257.756,
-   "endSec": 258.201,
+   "startSec": 258.356,
+   "endSec": 258.801,
    "scene": "S10"
   },
   {
    "text": "isn't",
-   "startSec": 258.201,
-   "endSec": 258.521,
+   "startSec": 258.801,
+   "endSec": 259.121,
    "scene": "S10"
   },
   {
    "text": "denatured.",
-   "startSec": 258.521,
-   "endSec": 259.236,
+   "startSec": 259.121,
+   "endSec": 259.836,
    "scene": "S10"
   },
   {
    "text": "Warm",
-   "startSec": 259.676,
-   "endSec": 259.961,
+   "startSec": 260.276,
+   "endSec": 260.561,
    "scene": "S10"
   },
   {
    "text": "it",
-   "startSec": 259.961,
-   "endSec": 260.121,
+   "startSec": 260.561,
+   "endSec": 260.721,
    "scene": "S10"
   },
   {
    "text": "up,",
-   "startSec": 260.121,
-   "endSec": 260.281,
+   "startSec": 260.721,
+   "endSec": 260.881,
    "scene": "S10"
   },
   {
    "text": "and",
-   "startSec": 260.281,
-   "endSec": 260.441,
+   "startSec": 260.881,
+   "endSec": 261.121,
    "scene": "S10"
   },
   {
    "text": "it",
-   "startSec": 260.441,
-   "endSec": 260.601,
+   "startSec": 261.121,
+   "endSec": 261.241,
    "scene": "S10"
   },
   {
    "text": "recovers.",
-   "startSec": 260.601,
-   "endSec": 261.171,
+   "startSec": 261.286,
+   "endSec": 261.771,
    "scene": "S10"
   },
   {
    "text": "And",
-   "startSec": 261.681,
-   "endSec": 261.731,
+   "startSec": 262.881,
+   "endSec": 262.931,
    "scene": "S11"
   },
   {
    "text": "that's",
-   "startSec": 261.731,
-   "endSec": 261.971,
+   "startSec": 262.931,
+   "endSec": 263.171,
    "scene": "S11"
   },
   {
    "text": "myth",
-   "startSec": 261.971,
-   "endSec": 262.291,
+   "startSec": 263.171,
+   "endSec": 263.491,
    "scene": "S11"
   },
   {
    "text": "number",
-   "startSec": 262.291,
-   "endSec": 262.511,
+   "startSec": 263.491,
+   "endSec": 263.711,
    "scene": "S11"
   },
   {
    "text": "two:",
-   "startSec": 262.691,
-   "endSec": 262.861,
+   "startSec": 263.891,
+   "endSec": 264.061,
    "scene": "S11"
   },
   {
    "text": "that",
-   "startSec": 263.131,
-   "endSec": 263.241,
+   "startSec": 264.331,
+   "endSec": 264.441,
    "scene": "S11"
   },
   {
    "text": "heat",
-   "startSec": 263.311,
-   "endSec": 263.651,
+   "startSec": 264.511,
+   "endSec": 264.851,
    "scene": "S11"
   },
   {
    "text": "\"kills\"",
-   "startSec": 263.651,
-   "endSec": 263.971,
+   "startSec": 264.851,
+   "endSec": 265.171,
    "scene": "S11"
   },
   {
    "text": "enzymes.",
-   "startSec": 263.971,
-   "endSec": 264.591,
+   "startSec": 265.171,
+   "endSec": 265.791,
    "scene": "S11"
   },
   {
    "text": "Enzymes",
-   "startSec": 265.071,
-   "endSec": 265.651,
+   "startSec": 266.271,
+   "endSec": 266.851,
    "scene": "S11"
   },
   {
    "text": "were",
-   "startSec": 265.651,
-   "endSec": 265.811,
-   "scene": "S11"
-  },
-  {
-   "text": "never",
-   "startSec": 265.811,
-   "endSec": 266.051,
-   "scene": "S11"
-  },
-  {
-   "text": "alive.",
-   "startSec": 266.051,
-   "endSec": 266.391,
-   "scene": "S11"
-  },
-  {
-   "text": "An",
-   "startSec": 266.911,
+   "startSec": 266.851,
    "endSec": 267.011,
    "scene": "S11"
   },
   {
-   "text": "enzyme",
+   "text": "never",
    "startSec": 267.011,
-   "endSec": 267.571,
+   "endSec": 267.251,
    "scene": "S11"
   },
   {
-   "text": "is",
-   "startSec": 267.571,
-   "endSec": 267.731,
+   "text": "alive.",
+   "startSec": 267.251,
+   "endSec": 267.591,
    "scene": "S11"
   },
   {
-   "text": "a",
-   "startSec": 267.731,
-   "endSec": 267.891,
+   "text": "An",
+   "startSec": 268.111,
+   "endSec": 268.211,
    "scene": "S11"
   },
   {
-   "text": "molecule,",
-   "startSec": 267.891,
-   "endSec": 268.531,
-   "scene": "S11"
-  },
-  {
-   "text": "a",
-   "startSec": 268.616,
+   "text": "enzyme",
+   "startSec": 268.211,
    "endSec": 268.771,
    "scene": "S11"
   },
   {
-   "text": "very",
+   "text": "is",
    "startSec": 268.771,
    "endSec": 268.931,
    "scene": "S11"
   },
   {
-   "text": "clever",
+   "text": "a",
    "startSec": 268.931,
-   "endSec": 269.331,
+   "endSec": 269.091,
+   "scene": "S11"
+  },
+  {
+   "text": "molecule,",
+   "startSec": 269.091,
+   "endSec": 269.731,
+   "scene": "S11"
+  },
+  {
+   "text": "a",
+   "startSec": 269.816,
+   "endSec": 269.971,
+   "scene": "S11"
+  },
+  {
+   "text": "very",
+   "startSec": 269.971,
+   "endSec": 270.131,
+   "scene": "S11"
+  },
+  {
+   "text": "clever",
+   "startSec": 270.131,
+   "endSec": 270.531,
    "scene": "S11"
   },
   {
    "text": "one,",
-   "startSec": 269.331,
-   "endSec": 269.651,
+   "startSec": 270.531,
+   "endSec": 270.851,
    "scene": "S11"
   },
   {
    "text": "but",
-   "startSec": 269.651,
-   "endSec": 269.801,
+   "startSec": 270.851,
+   "endSec": 271.001,
    "scene": "S11"
   },
   {
    "text": "it",
-   "startSec": 269.861,
-   "endSec": 269.911,
+   "startSec": 271.061,
+   "endSec": 271.111,
    "scene": "S11"
   },
   {
    "text": "can't",
-   "startSec": 269.891,
-   "endSec": 270.211,
+   "startSec": 271.091,
+   "endSec": 271.411,
    "scene": "S11"
   },
   {
    "text": "die.",
-   "startSec": 270.211,
-   "endSec": 270.526,
+   "startSec": 271.411,
+   "endSec": 271.726,
    "scene": "S11"
   },
   {
    "text": "It's",
-   "startSec": 271.026,
-   "endSec": 271.171,
+   "startSec": 272.226,
+   "endSec": 272.371,
    "scene": "S11"
   },
   {
    "text": "denatured.",
-   "startSec": 271.171,
-   "endSec": 272.291,
+   "startSec": 272.371,
+   "endSec": 273.491,
    "scene": "S11"
   },
   {
    "text": "Its",
-   "startSec": 272.431,
-   "endSec": 272.531,
+   "startSec": 273.631,
+   "endSec": 273.731,
    "scene": "S11"
   },
   {
    "text": "active",
-   "startSec": 272.531,
-   "endSec": 272.931,
+   "startSec": 273.731,
+   "endSec": 274.131,
    "scene": "S11"
   },
   {
    "text": "site",
-   "startSec": 272.931,
-   "endSec": 273.331,
-   "scene": "S11"
-  },
-  {
-   "text": "changes",
-   "startSec": 273.331,
-   "endSec": 273.811,
-   "scene": "S11"
-  },
-  {
-   "text": "shape,",
-   "startSec": 273.811,
-   "endSec": 274.066,
-   "scene": "S11"
-  },
-  {
-   "text": "so",
-   "startSec": 274.316,
-   "endSec": 274.451,
-   "scene": "S11"
-  },
-  {
-   "text": "the",
-   "startSec": 274.451,
+   "startSec": 274.131,
    "endSec": 274.531,
    "scene": "S11"
   },
   {
-   "text": "substrate",
+   "text": "changes",
    "startSec": 274.531,
-   "endSec": 275.091,
+   "endSec": 275.011,
    "scene": "S11"
   },
   {
-   "text": "no",
-   "startSec": 275.091,
-   "endSec": 275.331,
+   "text": "shape,",
+   "startSec": 275.011,
+   "endSec": 275.266,
    "scene": "S11"
   },
   {
-   "text": "longer",
-   "startSec": 275.331,
-   "endSec": 275.571,
+   "text": "so",
+   "startSec": 275.516,
+   "endSec": 275.651,
    "scene": "S11"
   },
   {
-   "text": "fits,",
-   "startSec": 275.571,
-   "endSec": 276.071,
+   "text": "the",
+   "startSec": 275.651,
+   "endSec": 275.731,
    "scene": "S11"
   },
   {
-   "text": "and",
-   "startSec": 276.191,
+   "text": "substrate",
+   "startSec": 275.731,
    "endSec": 276.291,
    "scene": "S11"
   },
@@ -4876,1014 +4852,1038 @@
    "scene": "S11"
   },
   {
-   "text": "enzyme\u2013substrate",
+   "text": "longer",
    "startSec": 276.531,
-   "endSec": 277.651,
+   "endSec": 276.771,
+   "scene": "S11"
+  },
+  {
+   "text": "fits,",
+   "startSec": 276.771,
+   "endSec": 277.271,
+   "scene": "S11"
+  },
+  {
+   "text": "and",
+   "startSec": 277.391,
+   "endSec": 277.491,
+   "scene": "S11"
+  },
+  {
+   "text": "no",
+   "startSec": 277.491,
+   "endSec": 277.731,
+   "scene": "S11"
+  },
+  {
+   "text": "enzyme\u2013substrate",
+   "startSec": 277.731,
+   "endSec": 278.851,
    "scene": "S11"
   },
   {
    "text": "complex",
-   "startSec": 277.651,
-   "endSec": 278.266,
+   "startSec": 278.851,
+   "endSec": 279.466,
    "scene": "S11"
   },
   {
    "text": "can",
-   "startSec": 278.366,
-   "endSec": 278.531,
+   "startSec": 279.566,
+   "endSec": 279.731,
    "scene": "S11"
   },
   {
    "text": "form.",
-   "startSec": 278.531,
-   "endSec": 279.171,
-   "scene": "S11"
-  },
-  {
-   "text": "In",
-   "startSec": 279.276,
-   "endSec": 279.331,
-   "scene": "S11"
-  },
-  {
-   "text": "an",
-   "startSec": 279.331,
-   "endSec": 279.571,
-   "scene": "S11"
-  },
-  {
-   "text": "exam,",
-   "startSec": 279.571,
-   "endSec": 279.981,
-   "scene": "S11"
-  },
-  {
-   "text": "that's",
-   "startSec": 280.091,
-   "endSec": 280.291,
-   "scene": "S11"
-  },
-  {
-   "text": "the",
-   "startSec": 280.291,
+   "startSec": 279.731,
    "endSec": 280.371,
    "scene": "S11"
   },
   {
-   "text": "answer",
-   "startSec": 280.371,
+   "text": "In",
+   "startSec": 280.476,
+   "endSec": 280.531,
+   "scene": "S11"
+  },
+  {
+   "text": "an",
+   "startSec": 280.531,
    "endSec": 280.771,
    "scene": "S11"
   },
   {
-   "text": "that",
+   "text": "exam,",
    "startSec": 280.771,
-   "endSec": 280.916,
+   "endSec": 281.181,
+   "scene": "S11"
+  },
+  {
+   "text": "that's",
+   "startSec": 281.291,
+   "endSec": 281.491,
+   "scene": "S11"
+  },
+  {
+   "text": "the",
+   "startSec": 281.491,
+   "endSec": 281.571,
+   "scene": "S11"
+  },
+  {
+   "text": "answer",
+   "startSec": 281.571,
+   "endSec": 281.971,
+   "scene": "S11"
+  },
+  {
+   "text": "that",
+   "startSec": 281.971,
+   "endSec": 282.116,
    "scene": "S11"
   },
   {
    "text": "gets",
-   "startSec": 280.986,
-   "endSec": 281.171,
+   "startSec": 282.186,
+   "endSec": 282.371,
    "scene": "S11"
   },
   {
    "text": "the",
-   "startSec": 281.171,
-   "endSec": 281.331,
+   "startSec": 282.371,
+   "endSec": 282.531,
    "scene": "S11"
   },
   {
    "text": "marks.",
-   "startSec": 281.331,
-   "endSec": 281.766,
+   "startSec": 282.531,
+   "endSec": 282.966,
    "scene": "S11"
   },
   {
    "text": "pH,",
-   "startSec": 282.287,
-   "endSec": 283.052,
+   "startSec": 283.487,
+   "endSec": 284.252,
    "scene": "S12"
   },
   {
    "text": "how",
-   "startSec": 283.052,
-   "endSec": 283.212,
+   "startSec": 284.252,
+   "endSec": 284.412,
    "scene": "S12"
   },
   {
    "text": "acidic",
-   "startSec": 283.212,
-   "endSec": 283.712,
+   "startSec": 284.412,
+   "endSec": 284.912,
    "scene": "S12"
   },
   {
    "text": "or",
-   "startSec": 283.792,
-   "endSec": 283.932,
+   "startSec": 284.992,
+   "endSec": 285.132,
    "scene": "S12"
   },
   {
    "text": "alkaline",
-   "startSec": 283.932,
-   "endSec": 284.652,
+   "startSec": 285.132,
+   "endSec": 285.852,
    "scene": "S12"
   },
   {
    "text": "something",
-   "startSec": 284.732,
-   "endSec": 285.052,
+   "startSec": 285.932,
+   "endSec": 286.252,
    "scene": "S12"
   },
   {
    "text": "is,",
-   "startSec": 285.052,
-   "endSec": 285.312,
+   "startSec": 286.252,
+   "endSec": 286.512,
    "scene": "S12"
   },
   {
    "text": "can",
-   "startSec": 285.677,
-   "endSec": 285.772,
-   "scene": "S12"
-  },
-  {
-   "text": "denature",
-   "startSec": 285.772,
-   "endSec": 286.492,
-   "scene": "S12"
-  },
-  {
-   "text": "enzymes",
-   "startSec": 286.492,
+   "startSec": 286.877,
    "endSec": 286.972,
    "scene": "S12"
   },
   {
+   "text": "denature",
+   "startSec": 286.972,
+   "endSec": 287.692,
+   "scene": "S12"
+  },
+  {
+   "text": "enzymes",
+   "startSec": 287.692,
+   "endSec": 288.172,
+   "scene": "S12"
+  },
+  {
    "text": "too.",
-   "startSec": 287.212,
-   "endSec": 287.932,
+   "startSec": 288.412,
+   "endSec": 289.132,
    "scene": "S12"
   },
   {
    "text": "Too",
-   "startSec": 288.042,
-   "endSec": 288.252,
+   "startSec": 289.242,
+   "endSec": 289.452,
    "scene": "S12"
   },
   {
    "text": "far",
-   "startSec": 288.252,
-   "endSec": 288.492,
-   "scene": "S12"
-  },
-  {
-   "text": "either",
-   "startSec": 288.572,
-   "endSec": 288.972,
-   "scene": "S12"
-  },
-  {
-   "text": "way,",
-   "startSec": 288.972,
-   "endSec": 289.147,
-   "scene": "S12"
-  },
-  {
-   "text": "and",
-   "startSec": 289.472,
-   "endSec": 289.532,
-   "scene": "S12"
-  },
-  {
-   "text": "the",
-   "startSec": 289.532,
+   "startSec": 289.452,
    "endSec": 289.692,
    "scene": "S12"
   },
   {
-   "text": "bonds",
-   "startSec": 289.692,
-   "endSec": 290.077,
+   "text": "either",
+   "startSec": 289.772,
+   "endSec": 290.172,
    "scene": "S12"
   },
   {
-   "text": "holding",
-   "startSec": 290.127,
-   "endSec": 290.412,
+   "text": "way,",
+   "startSec": 290.172,
+   "endSec": 290.347,
+   "scene": "S12"
+  },
+  {
+   "text": "and",
+   "startSec": 290.672,
+   "endSec": 290.732,
    "scene": "S12"
   },
   {
    "text": "the",
-   "startSec": 290.412,
-   "endSec": 290.572,
-   "scene": "S12"
-  },
-  {
-   "text": "active",
-   "startSec": 290.572,
+   "startSec": 290.732,
    "endSec": 290.892,
    "scene": "S12"
   },
   {
-   "text": "site",
+   "text": "bonds",
    "startSec": 290.892,
-   "endSec": 291.292,
+   "endSec": 291.277,
+   "scene": "S12"
+  },
+  {
+   "text": "holding",
+   "startSec": 291.327,
+   "endSec": 291.612,
+   "scene": "S12"
+  },
+  {
+   "text": "the",
+   "startSec": 291.612,
+   "endSec": 291.772,
+   "scene": "S12"
+  },
+  {
+   "text": "active",
+   "startSec": 291.772,
+   "endSec": 292.092,
+   "scene": "S12"
+  },
+  {
+   "text": "site",
+   "startSec": 292.092,
+   "endSec": 292.492,
    "scene": "S12"
   },
   {
    "text": "in",
-   "startSec": 291.292,
-   "endSec": 291.452,
+   "startSec": 292.492,
+   "endSec": 292.652,
    "scene": "S12"
   },
   {
    "text": "shape",
-   "startSec": 291.452,
-   "endSec": 291.652,
+   "startSec": 292.652,
+   "endSec": 292.852,
    "scene": "S12"
   },
   {
    "text": "are",
-   "startSec": 291.802,
-   "endSec": 291.932,
+   "startSec": 293.002,
+   "endSec": 293.132,
    "scene": "S12"
   },
   {
    "text": "disrupted.",
-   "startSec": 291.932,
-   "endSec": 292.892,
-   "scene": "S12"
-  },
-  {
-   "text": "So",
-   "startSec": 292.932,
-   "endSec": 292.982,
-   "scene": "S12"
-  },
-  {
-   "text": "every",
-   "startSec": 293.052,
-   "endSec": 293.292,
-   "scene": "S12"
-  },
-  {
-   "text": "enzyme",
-   "startSec": 293.292,
-   "endSec": 293.932,
-   "scene": "S12"
-  },
-  {
-   "text": "has",
-   "startSec": 293.932,
+   "startSec": 293.132,
    "endSec": 294.092,
    "scene": "S12"
   },
   {
-   "text": "an",
-   "startSec": 294.092,
-   "endSec": 294.252,
+   "text": "So",
+   "startSec": 294.132,
+   "endSec": 294.182,
    "scene": "S12"
   },
   {
-   "text": "optimum",
+   "text": "every",
    "startSec": 294.252,
-   "endSec": 294.732,
+   "endSec": 294.492,
    "scene": "S12"
   },
   {
-   "text": "pH.",
-   "startSec": 294.732,
+   "text": "enzyme",
+   "startSec": 294.492,
+   "endSec": 295.132,
+   "scene": "S12"
+  },
+  {
+   "text": "has",
+   "startSec": 295.132,
    "endSec": 295.292,
    "scene": "S12"
   },
   {
+   "text": "an",
+   "startSec": 295.292,
+   "endSec": 295.452,
+   "scene": "S12"
+  },
+  {
+   "text": "optimum",
+   "startSec": 295.452,
+   "endSec": 295.932,
+   "scene": "S12"
+  },
+  {
+   "text": "pH.",
+   "startSec": 295.932,
+   "endSec": 296.492,
+   "scene": "S12"
+  },
+  {
    "text": "Amylase,",
-   "startSec": 295.807,
-   "endSec": 296.332,
+   "startSec": 297.007,
+   "endSec": 297.532,
    "scene": "S12"
   },
   {
    "text": "in",
-   "startSec": 296.412,
-   "endSec": 296.572,
+   "startSec": 297.612,
+   "endSec": 297.772,
    "scene": "S12"
   },
   {
    "text": "your",
-   "startSec": 296.572,
-   "endSec": 296.652,
-   "scene": "S12"
-  },
-  {
-   "text": "mouth,",
-   "startSec": 296.652,
-   "endSec": 297.052,
-   "scene": "S12"
-  },
-  {
-   "text": "works",
-   "startSec": 297.052,
-   "endSec": 297.327,
-   "scene": "S12"
-  },
-  {
-   "text": "best",
-   "startSec": 297.382,
-   "endSec": 297.587,
-   "scene": "S12"
-  },
-  {
-   "text": "close",
-   "startSec": 297.632,
+   "startSec": 297.772,
    "endSec": 297.852,
    "scene": "S12"
   },
   {
-   "text": "to",
+   "text": "mouth,",
    "startSec": 297.852,
-   "endSec": 298.012,
-   "scene": "S12"
-  },
-  {
-   "text": "neutral,",
-   "startSec": 298.012,
-   "endSec": 298.732,
-   "scene": "S12"
-  },
-  {
-   "text": "around",
-   "startSec": 298.732,
-   "endSec": 298.972,
-   "scene": "S12"
-  },
-  {
-   "text": "pH",
-   "startSec": 298.972,
-   "endSec": 299.372,
-   "scene": "S12"
-  },
-  {
-   "text": "7.",
-   "startSec": 299.612,
-   "endSec": 300.492,
-   "scene": "S12"
-  },
-  {
-   "text": "Your",
-   "startSec": 300.567,
-   "endSec": 300.652,
-   "scene": "S12"
-  },
-  {
-   "text": "stomach",
-   "startSec": 300.652,
-   "endSec": 301.132,
-   "scene": "S12"
-  },
-  {
-   "text": "is",
-   "startSec": 301.132,
-   "endSec": 301.292,
-   "scene": "S12"
-  },
-  {
-   "text": "strongly",
-   "startSec": 301.292,
-   "endSec": 301.772,
-   "scene": "S12"
-  },
-  {
-   "text": "acidic,",
-   "startSec": 301.772,
-   "endSec": 302.572,
-   "scene": "S12"
-  },
-  {
-   "text": "often",
-   "startSec": 302.572,
-   "endSec": 302.972,
-   "scene": "S12"
-  },
-  {
-   "text": "around",
-   "startSec": 302.972,
-   "endSec": 303.272,
-   "scene": "S12"
-  },
-  {
-   "text": "pH",
-   "startSec": 303.357,
-   "endSec": 303.692,
-   "scene": "S12"
-  },
-  {
-   "text": "2.",
-   "startSec": 303.932,
-   "endSec": 304.652,
-   "scene": "S12"
-  },
-  {
-   "text": "And",
-   "startSec": 304.742,
-   "endSec": 304.812,
-   "scene": "S12"
-  },
-  {
-   "text": "pepsin,",
-   "startSec": 304.812,
-   "endSec": 305.407,
-   "scene": "S12"
-  },
-  {
-   "text": "a",
-   "startSec": 305.552,
-   "endSec": 305.692,
-   "scene": "S12"
-  },
-  {
-   "text": "protease",
-   "startSec": 305.692,
-   "endSec": 306.412,
-   "scene": "S12"
-  },
-  {
-   "text": "that",
-   "startSec": 306.412,
-   "endSec": 306.572,
-   "scene": "S12"
-  },
-  {
-   "text": "digests",
-   "startSec": 306.572,
-   "endSec": 307.042,
-   "scene": "S12"
-  },
-  {
-   "text": "protein",
-   "startSec": 307.162,
-   "endSec": 307.532,
-   "scene": "S12"
-  },
-  {
-   "text": "there,",
-   "startSec": 307.612,
-   "endSec": 307.787,
+   "endSec": 298.252,
    "scene": "S12"
   },
   {
    "text": "works",
-   "startSec": 308.032,
-   "endSec": 308.412,
+   "startSec": 298.252,
+   "endSec": 298.527,
    "scene": "S12"
   },
   {
    "text": "best",
-   "startSec": 308.412,
-   "endSec": 308.732,
+   "startSec": 298.582,
+   "endSec": 298.787,
    "scene": "S12"
   },
   {
-   "text": "right",
-   "startSec": 308.732,
-   "endSec": 308.972,
+   "text": "close",
+   "startSec": 298.832,
+   "endSec": 299.052,
+   "scene": "S12"
+  },
+  {
+   "text": "to",
+   "startSec": 299.052,
+   "endSec": 299.212,
+   "scene": "S12"
+  },
+  {
+   "text": "neutral,",
+   "startSec": 299.212,
+   "endSec": 299.932,
    "scene": "S12"
   },
   {
    "text": "around",
-   "startSec": 308.972,
-   "endSec": 309.212,
+   "startSec": 299.932,
+   "endSec": 300.172,
+   "scene": "S12"
+  },
+  {
+   "text": "pH",
+   "startSec": 300.172,
+   "endSec": 300.572,
+   "scene": "S12"
+  },
+  {
+   "text": "7.",
+   "startSec": 300.812,
+   "endSec": 301.692,
+   "scene": "S12"
+  },
+  {
+   "text": "Your",
+   "startSec": 301.767,
+   "endSec": 301.852,
+   "scene": "S12"
+  },
+  {
+   "text": "stomach",
+   "startSec": 301.852,
+   "endSec": 302.332,
+   "scene": "S12"
+  },
+  {
+   "text": "is",
+   "startSec": 302.332,
+   "endSec": 302.492,
+   "scene": "S12"
+  },
+  {
+   "text": "strongly",
+   "startSec": 302.492,
+   "endSec": 302.972,
+   "scene": "S12"
+  },
+  {
+   "text": "acidic,",
+   "startSec": 302.972,
+   "endSec": 303.772,
+   "scene": "S12"
+  },
+  {
+   "text": "often",
+   "startSec": 303.772,
+   "endSec": 304.172,
+   "scene": "S12"
+  },
+  {
+   "text": "around",
+   "startSec": 304.172,
+   "endSec": 304.472,
+   "scene": "S12"
+  },
+  {
+   "text": "pH",
+   "startSec": 304.557,
+   "endSec": 304.892,
+   "scene": "S12"
+  },
+  {
+   "text": "2.",
+   "startSec": 305.132,
+   "endSec": 305.852,
+   "scene": "S12"
+  },
+  {
+   "text": "And",
+   "startSec": 305.942,
+   "endSec": 306.012,
+   "scene": "S12"
+  },
+  {
+   "text": "pepsin,",
+   "startSec": 306.012,
+   "endSec": 306.607,
+   "scene": "S12"
+  },
+  {
+   "text": "a",
+   "startSec": 306.752,
+   "endSec": 306.892,
+   "scene": "S12"
+  },
+  {
+   "text": "protease",
+   "startSec": 306.892,
+   "endSec": 307.612,
+   "scene": "S12"
+  },
+  {
+   "text": "that",
+   "startSec": 307.612,
+   "endSec": 307.772,
+   "scene": "S12"
+  },
+  {
+   "text": "digests",
+   "startSec": 307.772,
+   "endSec": 308.242,
+   "scene": "S12"
+  },
+  {
+   "text": "protein",
+   "startSec": 308.362,
+   "endSec": 308.732,
+   "scene": "S12"
+  },
+  {
+   "text": "there,",
+   "startSec": 308.812,
+   "endSec": 308.987,
+   "scene": "S12"
+  },
+  {
+   "text": "works",
+   "startSec": 309.232,
+   "endSec": 309.612,
+   "scene": "S12"
+  },
+  {
+   "text": "best",
+   "startSec": 309.612,
+   "endSec": 309.932,
+   "scene": "S12"
+  },
+  {
+   "text": "right",
+   "startSec": 309.932,
+   "endSec": 310.172,
+   "scene": "S12"
+  },
+  {
+   "text": "around",
+   "startSec": 310.172,
+   "endSec": 310.412,
    "scene": "S12"
   },
   {
    "text": "that.",
-   "startSec": 309.212,
-   "endSec": 309.852,
+   "startSec": 310.412,
+   "endSec": 311.052,
    "scene": "S12"
   },
   {
    "text": "Different",
-   "startSec": 309.982,
-   "endSec": 310.252,
+   "startSec": 311.182,
+   "endSec": 311.452,
    "scene": "S12"
   },
   {
    "text": "enzymes,",
-   "startSec": 310.252,
-   "endSec": 310.892,
-   "scene": "S12"
-  },
-  {
-   "text": "tuned",
-   "startSec": 311.052,
-   "endSec": 311.372,
-   "scene": "S12"
-  },
-  {
-   "text": "to",
-   "startSec": 311.372,
-   "endSec": 311.532,
-   "scene": "S12"
-  },
-  {
-   "text": "different",
-   "startSec": 311.532,
-   "endSec": 311.692,
-   "scene": "S12"
-  },
-  {
-   "text": "places.",
-   "startSec": 311.692,
+   "startSec": 311.452,
    "endSec": 312.092,
    "scene": "S12"
   },
   {
+   "text": "tuned",
+   "startSec": 312.252,
+   "endSec": 312.572,
+   "scene": "S12"
+  },
+  {
+   "text": "to",
+   "startSec": 312.572,
+   "endSec": 312.732,
+   "scene": "S12"
+  },
+  {
+   "text": "different",
+   "startSec": 312.732,
+   "endSec": 312.892,
+   "scene": "S12"
+  },
+  {
+   "text": "places.",
+   "startSec": 312.892,
+   "endSec": 313.292,
+   "scene": "S12"
+  },
+  {
    "text": "So,",
-   "startSec": 312.948,
-   "endSec": 313.053,
+   "startSec": 314.148,
+   "endSec": 314.253,
    "scene": "S13"
   },
   {
    "text": "back",
-   "startSec": 313.213,
-   "endSec": 313.413,
+   "startSec": 314.413,
+   "endSec": 314.613,
    "scene": "S13"
   },
   {
    "text": "to",
-   "startSec": 313.498,
-   "endSec": 313.613,
+   "startSec": 314.698,
+   "endSec": 314.813,
    "scene": "S13"
   },
   {
    "text": "that",
-   "startSec": 313.613,
-   "endSec": 313.708,
+   "startSec": 314.813,
+   "endSec": 314.908,
    "scene": "S13"
   },
   {
    "text": "cracker.",
-   "startSec": 313.783,
-   "endSec": 314.208,
+   "startSec": 314.983,
+   "endSec": 315.408,
    "scene": "S13"
   },
   {
    "text": "As",
-   "startSec": 314.678,
-   "endSec": 314.733,
-   "scene": "S13"
-  },
-  {
-   "text": "you",
-   "startSec": 314.733,
-   "endSec": 314.893,
-   "scene": "S13"
-  },
-  {
-   "text": "chew,",
-   "startSec": 314.893,
-   "endSec": 315.263,
-   "scene": "S13"
-  },
-  {
-   "text": "amylase",
-   "startSec": 315.413,
+   "startSec": 315.878,
    "endSec": 315.933,
    "scene": "S13"
   },
   {
+   "text": "you",
+   "startSec": 315.933,
+   "endSec": 316.093,
+   "scene": "S13"
+  },
+  {
+   "text": "chew,",
+   "startSec": 316.093,
+   "endSec": 316.463,
+   "scene": "S13"
+  },
+  {
+   "text": "amylase",
+   "startSec": 316.613,
+   "endSec": 317.133,
+   "scene": "S13"
+  },
+  {
    "text": "meets",
-   "startSec": 316.013,
-   "endSec": 316.333,
+   "startSec": 317.213,
+   "endSec": 317.533,
    "scene": "S13"
   },
   {
    "text": "the",
-   "startSec": 316.333,
-   "endSec": 316.493,
+   "startSec": 317.533,
+   "endSec": 317.693,
    "scene": "S13"
   },
   {
    "text": "starch.",
-   "startSec": 316.493,
-   "endSec": 316.848,
+   "startSec": 317.693,
+   "endSec": 318.048,
    "scene": "S13"
   },
   {
    "text": "The",
-   "startSec": 317.338,
-   "endSec": 317.388,
+   "startSec": 318.538,
+   "endSec": 318.588,
    "scene": "S13"
   },
   {
    "text": "chains",
-   "startSec": 317.373,
-   "endSec": 317.853,
+   "startSec": 318.573,
+   "endSec": 319.053,
    "scene": "S13"
   },
   {
    "text": "slot",
-   "startSec": 317.853,
-   "endSec": 318.173,
-   "scene": "S13"
-  },
-  {
-   "text": "into",
-   "startSec": 318.173,
-   "endSec": 318.413,
-   "scene": "S13"
-  },
-  {
-   "text": "its",
-   "startSec": 318.413,
-   "endSec": 318.573,
-   "scene": "S13"
-  },
-  {
-   "text": "active",
-   "startSec": 318.573,
-   "endSec": 318.803,
-   "scene": "S13"
-  },
-  {
-   "text": "site,",
-   "startSec": 318.818,
-   "endSec": 319.173,
-   "scene": "S13"
-  },
-  {
-   "text": "and",
-   "startSec": 319.273,
+   "startSec": 319.053,
    "endSec": 319.373,
    "scene": "S13"
   },
   {
-   "text": "it",
+   "text": "into",
    "startSec": 319.373,
-   "endSec": 319.453,
+   "endSec": 319.613,
+   "scene": "S13"
+  },
+  {
+   "text": "its",
+   "startSec": 319.613,
+   "endSec": 319.773,
+   "scene": "S13"
+  },
+  {
+   "text": "active",
+   "startSec": 319.773,
+   "endSec": 320.003,
+   "scene": "S13"
+  },
+  {
+   "text": "site,",
+   "startSec": 320.018,
+   "endSec": 320.373,
+   "scene": "S13"
+  },
+  {
+   "text": "and",
+   "startSec": 320.473,
+   "endSec": 320.573,
+   "scene": "S13"
+  },
+  {
+   "text": "it",
+   "startSec": 320.573,
+   "endSec": 320.653,
    "scene": "S13"
   },
   {
    "text": "snips",
-   "startSec": 319.453,
-   "endSec": 319.853,
-   "scene": "S13"
-  },
-  {
-   "text": "them",
-   "startSec": 319.853,
-   "endSec": 319.933,
-   "scene": "S13"
-  },
-  {
-   "text": "into",
-   "startSec": 319.933,
-   "endSec": 320.093,
-   "scene": "S13"
-  },
-  {
-   "text": "maltose,",
-   "startSec": 320.093,
-   "endSec": 320.813,
-   "scene": "S13"
-  },
-  {
-   "text": "over",
-   "startSec": 320.813,
+   "startSec": 320.653,
    "endSec": 321.053,
    "scene": "S13"
   },
   {
-   "text": "and",
+   "text": "them",
    "startSec": 321.053,
+   "endSec": 321.133,
+   "scene": "S13"
+  },
+  {
+   "text": "into",
+   "startSec": 321.133,
    "endSec": 321.293,
    "scene": "S13"
   },
   {
-   "text": "over,",
+   "text": "maltose,",
    "startSec": 321.293,
-   "endSec": 321.533,
-   "scene": "S13"
-  },
-  {
-   "text": "without",
-   "startSec": 321.533,
-   "endSec": 321.853,
-   "scene": "S13"
-  },
-  {
-   "text": "being",
-   "startSec": 321.853,
    "endSec": 322.013,
    "scene": "S13"
   },
   {
-   "text": "used",
+   "text": "over",
    "startSec": 322.013,
-   "endSec": 322.333,
-   "scene": "S13"
-  },
-  {
-   "text": "up.",
-   "startSec": 322.333,
-   "endSec": 322.813,
-   "scene": "S13"
-  },
-  {
-   "text": "Your",
-   "startSec": 322.958,
-   "endSec": 323.053,
-   "scene": "S13"
-  },
-  {
-   "text": "mouth",
-   "startSec": 323.053,
-   "endSec": 323.453,
-   "scene": "S13"
-  },
-  {
-   "text": "is",
-   "startSec": 323.453,
-   "endSec": 323.613,
-   "scene": "S13"
-  },
-  {
-   "text": "about",
-   "startSec": 323.613,
-   "endSec": 323.783,
-   "scene": "S13"
-  },
-  {
-   "text": "37",
-   "startSec": 323.933,
-   "endSec": 324.493,
-   "scene": "S13"
-  },
-  {
-   "text": "degrees,",
-   "startSec": 324.493,
-   "endSec": 324.973,
+   "endSec": 322.253,
    "scene": "S13"
   },
   {
    "text": "and",
-   "startSec": 324.973,
-   "endSec": 325.203,
+   "startSec": 322.253,
+   "endSec": 322.493,
+   "scene": "S13"
+  },
+  {
+   "text": "over,",
+   "startSec": 322.493,
+   "endSec": 322.733,
+   "scene": "S13"
+  },
+  {
+   "text": "without",
+   "startSec": 322.733,
+   "endSec": 323.053,
+   "scene": "S13"
+  },
+  {
+   "text": "being",
+   "startSec": 323.053,
+   "endSec": 323.213,
+   "scene": "S13"
+  },
+  {
+   "text": "used",
+   "startSec": 323.213,
+   "endSec": 323.533,
+   "scene": "S13"
+  },
+  {
+   "text": "up.",
+   "startSec": 323.533,
+   "endSec": 324.013,
+   "scene": "S13"
+  },
+  {
+   "text": "Your",
+   "startSec": 324.158,
+   "endSec": 324.253,
+   "scene": "S13"
+  },
+  {
+   "text": "mouth",
+   "startSec": 324.253,
+   "endSec": 324.653,
+   "scene": "S13"
+  },
+  {
+   "text": "is",
+   "startSec": 324.653,
+   "endSec": 324.813,
+   "scene": "S13"
+  },
+  {
+   "text": "about",
+   "startSec": 324.813,
+   "endSec": 324.983,
+   "scene": "S13"
+  },
+  {
+   "text": "37",
+   "startSec": 325.133,
+   "endSec": 325.693,
+   "scene": "S13"
+  },
+  {
+   "text": "degrees,",
+   "startSec": 325.693,
+   "endSec": 326.173,
+   "scene": "S13"
+  },
+  {
+   "text": "and",
+   "startSec": 326.173,
+   "endSec": 326.403,
    "scene": "S13"
   },
   {
    "text": "close",
-   "startSec": 325.258,
-   "endSec": 325.373,
+   "startSec": 326.458,
+   "endSec": 326.573,
    "scene": "S13"
   },
   {
    "text": "to",
-   "startSec": 325.373,
-   "endSec": 325.533,
-   "scene": "S13"
-  },
-  {
-   "text": "neutral.",
-   "startSec": 325.533,
-   "endSec": 326.413,
-   "scene": "S13"
-  },
-  {
-   "text": "Just",
-   "startSec": 326.428,
+   "startSec": 326.573,
    "endSec": 326.733,
    "scene": "S13"
   },
   {
-   "text": "right.",
+   "text": "neutral.",
    "startSec": 326.733,
-   "endSec": 326.908,
+   "endSec": 327.613,
    "scene": "S13"
   },
   {
-   "text": "Links",
-   "startSec": 327.443,
-   "endSec": 327.853,
-   "scene": "S13"
-  },
-  {
-   "text": "that",
-   "startSec": 327.853,
+   "text": "Just",
+   "startSec": 327.628,
    "endSec": 327.933,
    "scene": "S13"
   },
   {
-   "text": "would",
+   "text": "right.",
    "startSec": 327.933,
-   "endSec": 328.093,
+   "endSec": 328.108,
    "scene": "S13"
   },
   {
-   "text": "last",
-   "startSec": 328.093,
-   "endSec": 328.333,
+   "text": "Links",
+   "startSec": 328.643,
+   "endSec": 329.053,
    "scene": "S13"
   },
   {
-   "text": "a",
-   "startSec": 328.333,
-   "endSec": 328.493,
-   "scene": "S13"
-  },
-  {
-   "text": "million",
-   "startSec": 328.493,
-   "endSec": 328.893,
-   "scene": "S13"
-  },
-  {
-   "text": "years",
-   "startSec": 328.893,
+   "text": "that",
+   "startSec": 329.053,
    "endSec": 329.133,
    "scene": "S13"
   },
   {
-   "text": "or",
+   "text": "would",
    "startSec": 329.133,
    "endSec": 329.293,
    "scene": "S13"
   },
   {
-   "text": "more",
+   "text": "last",
    "startSec": 329.293,
    "endSec": 329.533,
    "scene": "S13"
   },
   {
-   "text": "on",
+   "text": "a",
    "startSec": 329.533,
    "endSec": 329.693,
    "scene": "S13"
   },
   {
-   "text": "their",
+   "text": "million",
    "startSec": 329.693,
-   "endSec": 329.853,
+   "endSec": 330.093,
+   "scene": "S13"
+  },
+  {
+   "text": "years",
+   "startSec": 330.093,
+   "endSec": 330.333,
+   "scene": "S13"
+  },
+  {
+   "text": "or",
+   "startSec": 330.333,
+   "endSec": 330.493,
+   "scene": "S13"
+  },
+  {
+   "text": "more",
+   "startSec": 330.493,
+   "endSec": 330.733,
+   "scene": "S13"
+  },
+  {
+   "text": "on",
+   "startSec": 330.733,
+   "endSec": 330.893,
+   "scene": "S13"
+  },
+  {
+   "text": "their",
+   "startSec": 330.893,
+   "endSec": 331.053,
    "scene": "S13"
   },
   {
    "text": "own?",
-   "startSec": 329.853,
-   "endSec": 330.018,
+   "startSec": 331.053,
+   "endSec": 331.218,
    "scene": "S13"
   },
   {
    "text": "Broken",
-   "startSec": 330.393,
-   "endSec": 330.813,
+   "startSec": 331.593,
+   "endSec": 332.013,
    "scene": "S13"
   },
   {
    "text": "while",
-   "startSec": 330.813,
-   "endSec": 330.973,
+   "startSec": 332.013,
+   "endSec": 332.173,
    "scene": "S13"
   },
   {
    "text": "you",
-   "startSec": 330.973,
-   "endSec": 331.133,
+   "startSec": 332.173,
+   "endSec": 332.333,
    "scene": "S13"
   },
   {
    "text": "chew.",
-   "startSec": 331.133,
-   "endSec": 331.853,
-   "scene": "S13"
-  },
-  {
-   "text": "That",
-   "startSec": 331.913,
-   "endSec": 332.093,
-   "scene": "S13"
-  },
-  {
-   "text": "sweet",
-   "startSec": 332.093,
-   "endSec": 332.493,
-   "scene": "S13"
-  },
-  {
-   "text": "taste",
-   "startSec": 332.493,
-   "endSec": 332.813,
-   "scene": "S13"
-  },
-  {
-   "text": "is",
-   "startSec": 332.813,
+   "startSec": 332.333,
    "endSec": 333.053,
    "scene": "S13"
   },
   {
+   "text": "That",
+   "startSec": 333.113,
+   "endSec": 333.293,
+   "scene": "S13"
+  },
+  {
+   "text": "sweet",
+   "startSec": 333.293,
+   "endSec": 333.693,
+   "scene": "S13"
+  },
+  {
+   "text": "taste",
+   "startSec": 333.693,
+   "endSec": 334.013,
+   "scene": "S13"
+  },
+  {
+   "text": "is",
+   "startSec": 334.013,
+   "endSec": 334.253,
+   "scene": "S13"
+  },
+  {
    "text": "you,",
-   "startSec": 333.053,
-   "endSec": 333.183,
+   "startSec": 334.253,
+   "endSec": 334.383,
    "scene": "S13"
   },
   {
    "text": "tasting",
-   "startSec": 333.418,
-   "endSec": 333.853,
+   "startSec": 334.618,
+   "endSec": 335.053,
    "scene": "S13"
   },
   {
    "text": "enzymes",
-   "startSec": 333.853,
-   "endSec": 334.493,
+   "startSec": 335.053,
+   "endSec": 335.693,
    "scene": "S13"
   },
   {
    "text": "at",
-   "startSec": 334.493,
-   "endSec": 334.608,
+   "startSec": 335.693,
+   "endSec": 335.808,
    "scene": "S13"
   },
   {
    "text": "work.",
-   "startSec": 334.733,
-   "endSec": 335.373,
+   "startSec": 335.933,
+   "endSec": 336.573,
    "scene": "S13"
   },
   {
    "text": "It",
-   "startSec": 335.478,
-   "endSec": 335.533,
+   "startSec": 336.678,
+   "endSec": 336.733,
    "scene": "S13"
   },
   {
    "text": "all",
-   "startSec": 335.533,
-   "endSec": 335.773,
+   "startSec": 336.733,
+   "endSec": 336.973,
    "scene": "S13"
   },
   {
    "text": "comes",
-   "startSec": 335.773,
-   "endSec": 336.093,
+   "startSec": 336.973,
+   "endSec": 337.293,
    "scene": "S13"
   },
   {
    "text": "down",
-   "startSec": 336.093,
-   "endSec": 336.253,
-   "scene": "S13"
-  },
-  {
-   "text": "to",
-   "startSec": 336.253,
-   "endSec": 336.413,
-   "scene": "S13"
-  },
-  {
-   "text": "shape.",
-   "startSec": 336.413,
-   "endSec": 336.698,
-   "scene": "S13"
-  },
-  {
-   "text": "And",
-   "startSec": 337.173,
-   "endSec": 337.223,
-   "scene": "S13"
-  },
-  {
-   "text": "that's",
-   "startSec": 337.213,
+   "startSec": 337.293,
    "endSec": 337.453,
    "scene": "S13"
   },
   {
-   "text": "how",
+   "text": "to",
    "startSec": 337.453,
    "endSec": 337.613,
    "scene": "S13"
   },
   {
-   "text": "enzymes",
+   "text": "shape.",
    "startSec": 337.613,
-   "endSec": 338.333,
+   "endSec": 337.898,
+   "scene": "S13"
+  },
+  {
+   "text": "And",
+   "startSec": 338.373,
+   "endSec": 338.423,
+   "scene": "S13"
+  },
+  {
+   "text": "that's",
+   "startSec": 338.413,
+   "endSec": 338.653,
+   "scene": "S13"
+  },
+  {
+   "text": "how",
+   "startSec": 338.653,
+   "endSec": 338.813,
+   "scene": "S13"
+  },
+  {
+   "text": "enzymes",
+   "startSec": 338.813,
+   "endSec": 339.533,
    "scene": "S13"
   },
   {
    "text": "actually",
-   "startSec": 338.333,
-   "endSec": 338.573,
+   "startSec": 339.533,
+   "endSec": 339.773,
    "scene": "S13"
   },
   {
    "text": "work.",
-   "startSec": 338.573,
-   "endSec": 338.863,
+   "startSec": 339.773,
+   "endSec": 340.063,
    "scene": "S13"
   }
  ],
- "durationSec": 343.091,
- "durationFrames": 10293
+ "durationSec": 344.291,
+ "durationFrames": 10329
 }

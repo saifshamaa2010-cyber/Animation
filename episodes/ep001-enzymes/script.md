@@ -29,7 +29,7 @@ Narration script. This file is read by the narration pipeline.
 
 ## S06 induced-fit
 
-[pause 0.3] {simplification} Lock and key is a brilliant model, but it's a simplification. {flex} Real enzymes aren't rigid. {grip} As the substrate binds, the active site moulds itself around it. {inducedFit} That more accurate picture is called induced fit. {exam} For GCSE and IGCSE, lock and key is all you need. Induced fit is an A-level idea. Just remember: it's a model, not a photograph.
+[pause 0.3] {simplification} Lock and key is a brilliant model, but it's a simplification. {flex} Real enzymes aren't rigid. {grip} As the substrate binds, the active site moulds itself around it. {inducedFit} That more accurate picture is called induced fit. {exam} For GCSE and IGCSE, lock and key is all you need. Induced fit is an A-level idea. Just remember: it's a model, not a photograph. [pause 0.6]
 
 ## S07 myth-used-up
 
@@ -45,7 +45,7 @@ Narration script. This file is read by the narration pipeline.
 
 ## S10 denature
 
-{reveal} Here's what actually happens. {crash} The rate crashes, and it doesn't recover. [pause 0.3] {bonds} An enzyme's shape is held together by lots of weak bonds. {shake} Too much heat, and it vibrates so violently that those bonds break. {unravel} The chain unravels, {siteLost} the active site loses its shape, {noFit} and the substrate no longer fits. {denatured} The enzyme has been denatured. [pause 0.3] {egg} It's the same kind of change that turns egg white solid in a hot pan. {noUndo} You can't uncook an egg, and cooling usually won't fix the enzyme either. [pause 0.3] {cold} Cold is different. Molecules have less kinetic energy, so there are fewer collisions. But the enzyme isn't denatured. {rewarm} Warm it up, and it recovers.
+{reveal} Here's what actually happens. {crash} The rate crashes, and it doesn't recover. [pause 0.3] {bonds} An enzyme's shape is held together by lots of weak bonds. {shake} Too much heat, and it vibrates so violently that those bonds break. {unravel} The chain unravels, {siteLost} the active site loses its shape, {noFit} and the substrate no longer fits. {denatured} The enzyme has been denatured. [pause 0.3] {egg} It's the same kind of change that turns egg white solid in a hot pan. {noUndo} You can't uncook an egg, and cooling usually won't fix the enzyme either. [pause 0.3] {cold} Cold is different. Molecules have less kinetic energy, so there are fewer collisions. But the enzyme isn't denatured. {rewarm} Warm it up, and it recovers. [pause 0.6]
 
 ## S11 myth-killed
 
