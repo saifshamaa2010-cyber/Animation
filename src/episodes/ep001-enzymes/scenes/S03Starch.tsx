@@ -244,8 +244,8 @@ export const S03Starch: React.FC = () => {
         ) : null}
         {stakes > 0 ? (
           <g opacity={stakes}>
-            <Hourglass x={W - 330} y={250} size={210} sand={prog(f, k.aeons, 150) * 0.3} progress={stakes} />
-            <Counter x={W - 330} y={450} value={years} size={60} suffix=" years" speed={years > 0 && years < 1_000_000 ? 1 : 0} />
+            <Hourglass x={W - 370} y={250} size={210} sand={prog(f, k.aeons, 150) * 0.3} progress={stakes} />
+            <Counter x={W - 370} y={450} value={years} size={60} suffix=" years" speed={years > 0 && years < 1_000_000 ? 1 : 0} />
           </g>
         ) : null}
       </svg>
