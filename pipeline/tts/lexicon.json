@@ -1,12 +1,6 @@
 {
-  "_note": "Respellings applied ONLY to the text sent to the voice. Subtitles always use the script's original words. 'all' applies to every provider; add a provider key (e.g. 'kokoro') for voice-specific fixes.",
+  "_note": "Respellings sent to the voice instead of the script's spelling. 'all' applies to every provider; a provider's own section adds to or overrides it. Kokoro needs help with a few science words; the paid voices usually say them correctly, so audition before adding entries for them.",
   "all": {
-    "denatured": "dee-natured",
-    "denature": "dee-nature",
-    "denatures": "dee-natures",
-    "denaturing": "dee-naturing",
-    "protease": "protee-aze",
-    "proteases": "protee-azes",
     "pH 7": "P H seven",
     "pH 2": "P H two",
     "pH": "P H",
@@ -17,8 +11,12 @@
     "\"kills\"": "kills",
     "“kills”": "kills"
   },
-  "kokoro": {},
-  "elevenlabs": {},
-  "openai": {},
-  "google": {}
+  "kokoro": {
+    "denatured": "dee-natured",
+    "denature": "dee-nature",
+    "denatures": "dee-natures",
+    "denaturing": "dee-naturing",
+    "protease": "protee-aze",
+    "proteases": "protee-azes"
+  }
 }

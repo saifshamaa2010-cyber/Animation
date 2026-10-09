@@ -17,7 +17,16 @@ Rule: nothing goes into a video unless it is listed here with a licence that all
 
 ## Voice
 
-_Filled in at the narration step._
+| Episode | Asset | Source | Author | Licence | Link | Date |
+|---|---|---|---|---|---|---|
+| ep001-enzymes | Narration (voice `af_heart`) | Kokoro-82M text-to-speech, run locally via kokoro-onnx 0.6.1 | hexgrad (model), thewh1teagle (kokoro-onnx wrapper) | Model weights: Apache-2.0. Wrapper: MIT. Commercial use allowed, no credit line required. | https://huggingface.co/hexgrad/Kokoro-82M · https://github.com/thewh1teagle/kokoro-onnx | 2026-10-09 |
+
+The narration is synthetic, not a cloned or imitated real person. Each video description says
+"Narration: AI voice". If the narration is re-made with a paid voice, add a row here with the plan
+that was active on the day it was generated (see `docs/voice-options.md`).
+
+Speech recognition used only for timing (not published): NVIDIA Parakeet TDT 0.6b v2 (CC-BY-4.0)
+via sherpa-onnx (Apache-2.0).
 
 ## Music
 

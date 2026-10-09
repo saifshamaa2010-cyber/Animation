@@ -92,7 +92,7 @@ class ElevenLabs(Provider):
     def __init__(self) -> None:
         self.key = _need("ELEVENLABS_API_KEY")
         self.voice = _need("ELEVENLABS_VOICE_ID")
-        self.model = os.environ.get("ELEVENLABS_MODEL", "eleven_multilingual_v2")
+        self.model = os.environ.get("ELEVENLABS_MODEL", "eleven_v4")
 
     def voice_id(self) -> str:
         return f"{self.voice}:{self.model}"
@@ -160,7 +160,74 @@ class Google(Provider):
         return audio, sr
 
 
-PROVIDERS = {"kokoro": Kokoro, "elevenlabs": ElevenLabs, "openai": OpenAI, "google": Google}
+class Gemini(Provider):
+    """Gemini text-to-speech (AI Studio key). https://ai.google.dev/gemini-api/docs/speech-generation
+
+    The accent and tone come from a short spoken-style direction in front of the text
+    (GEMINI_TTS_STYLE). Listen to the first take: if it ever reads the direction aloud, shorten it.
+    """
+
+    name = "gemini"
+
+    def __init__(self) -> None:
+        self.key = _need("GEMINI_API_KEY")
+        self.model = os.environ.get("GEMINI_TTS_MODEL", "gemini-3.8-flash-tts")
+        self.voice = os.environ.get("GEMINI_VOICE", "Kore")
+        self.style = os.environ.get(
+            "GEMINI_TTS_STYLE",
+            "Read this as a warm, curious science narrator with a natural British accent, "
+            "clear and unhurried",
+        )
+
+    def voice_id(self) -> str:
+        return f"{self.model}:{self.voice}:{self.style}"
+
+    def _synth(self, text: str):
+        prompt = f"{self.style}: {text}" if self.style else text
+        raw = _post(
+            f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent",
+            {"x-goog-api-key": self.key, "Content-Type": "application/json"},
+            {"contents": [{"parts": [{"text": prompt}]}],
+             "generationConfig": {"responseModalities": ["AUDIO"],
+                                  "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": self.voice}}}}},
+        )
+        part = json.loads(raw)["candidates"][0]["content"]["parts"][0]["inlineData"]
+        pcm = base64.b64decode(part["data"])
+        rate = 24000
+        for bit in part.get("mimeType", "").split(";"):
+            if bit.strip().startswith("rate="):
+                rate = int(bit.strip()[5:])
+        return np.frombuffer(pcm, dtype="<i2").astype(np.float32) / 32768.0, rate
+
+
+class Cartesia(Provider):
+    """https://docs.cartesia.ai/api-reference/tts/bytes"""
+
+    name = "cartesia"
+
+    def __init__(self) -> None:
+        self.key = _need("CARTESIA_API_KEY")
+        self.voice = _need("CARTESIA_VOICE_ID")
+        self.model = os.environ.get("CARTESIA_MODEL", "sonic-3")
+        self.version = os.environ.get("CARTESIA_VERSION", "2025-04-16")
+
+    def voice_id(self) -> str:
+        return f"{self.voice}:{self.model}"
+
+    def _synth(self, text: str):
+        raw = _post(
+            "https://api.cartesia.ai/tts/bytes",
+            {"X-API-Key": self.key, "Cartesia-Version": self.version, "Content-Type": "application/json"},
+            {"model_id": self.model, "transcript": text, "language": "en",
+             "voice": {"mode": "id", "id": self.voice},
+             "output_format": {"container": "wav", "encoding": "pcm_s16le", "sample_rate": 24000}},
+        )
+        audio, sr = sf.read(io.BytesIO(raw), dtype="float32")
+        return audio, sr
+
+
+PROVIDERS = {"kokoro": Kokoro, "elevenlabs": ElevenLabs, "gemini": Gemini, "cartesia": Cartesia,
+             "openai": OpenAI, "google": Google}
 
 
 def get_provider(name: str | None = None) -> Provider:
