@@ -248,6 +248,10 @@ An expressive voice, rather than a flat robotic one, also helps.
 - So a made-up narrator voice that doesn't imitate a real person, over obviously animated
   diagrams, **does not need the label**. This is my reading of YouTube's own blog post and of
   guides that quote its Help Center. I couldn't open the Help Center page itself from here.
+- A few guides read the "person's voice to narrate a video" example more broadly, as covering
+  any AI narration. Most guides, and YouTube's own framing (real people, realistic events), don't.
+  Ticking "Yes" reportedly doesn't affect earnings, so it's a safe fallback if YouTube's wording
+  changes.
 
 What we'll do:
 
@@ -262,7 +266,7 @@ Two more things:
 
 - Reports say disclosing doesn't reduce monetisation. Repeatedly failing to disclose when it's
   required can lead to penalties, up to suspension from the Partner Program.
-- Since about late May 2026, YouTube has also **added AI labels automatically**, using Google's
+- Since 27 May 2026 (rolling out gradually), YouTube has also **added AI labels automatically**, using Google's
   SynthID watermarks and other provenance data. Reports say this is aimed at photorealistic
   video. I found no evidence it targets narration **(unverified)**. Gemini audio carries a SynthID
   watermark, so a label is possible but unlikely, and it wouldn't affect earnings.
@@ -293,6 +297,10 @@ Two more things:
 - No-go voices: https://elevenlabs.io/docs/help-center/legal/what-are-no-go-voices
 - Voice Library notice period: https://elevenlabs.io/docs/help-center/product/voices/voice-library/what-is-a-notice-period
 - British voice names (secondary): https://voximplant.com/docs/references/voxengine/voicelist/elevenlabs
+- Default voices retired 31 Dec 2026, not on accounts made after March 2026, replacement list (official help centre): https://elevenlabs.io/docs/help-center/product/voices/my-voices/what-are-default-voices · https://help.elevenlabs.io/hc/en-us/articles/26942950589969-What-are-Default-voices
+- v4 model ID `eleven_v4`, API default is still Multilingual v2: https://elevenlabs.io/docs/overview/capabilities/text-to-speech/eleven-v4 · https://elevenlabs.io/docs/api-reference/text-to-speech/convert
+- Older-model API prices now $0.08? (secondary, conflicting): https://www.cartesia.ai/learn/elevenlabs-pricing · https://www.goodvibecode.com/text-to-speech/elevenlabs-api-pricing-explained
+- Prohibited Use Policy: https://elevenlabs.io/use-policy
 
 **Google**
 - Gemini 3.8 TTS launch: https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-text-to-speech/
