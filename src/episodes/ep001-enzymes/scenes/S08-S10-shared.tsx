@@ -15,10 +15,12 @@ import { useSvgId } from "../../../components/ids";
 import { Pt, smoothOpenPath } from "../../../lib/geometry";
 import { textWidth } from "../../../components/kit/text";
 import { WaterMolecule } from "../../../components/Background";
+import { HandTick } from "../../../components/kit/hand";
 import {
   BOUNCES,
   DOCKS,
   ENZ,
+  LENS_WC,
   MOL_S,
   SUB,
   WATER,
@@ -35,7 +37,7 @@ import {
 
 // ------------------------------------------------------------------ layout
 export const THERMO = { x: 212, y: 252, h: 520 } as const;
-export const LENS = { cx: 688, cy: 560, r: 292, zoom: 0.5 } as const;
+export const LENS = { cx: 688, cy: 560, r: 300, zoom: 0.47 } as const;
 export const G = { x: 1104, y: 300, w: 616, h: 460, d0: 0, d1: 70 } as const;
 export const gx = (v: number) => G.x + ((v - G.d0) / (G.d1 - G.d0)) * G.w;
 export const gy = (r: number) => G.y + G.h - r * G.h * 0.86;
@@ -69,7 +71,8 @@ export const AmbientTemp: React.FC<{ readonly T: number; readonly cx?: number; r
 };
 
 // ------------------------------------------------------------------ lens camera
-export type LensCam = { cx: number; cy: number; zoom: number; r: number };
+/** cx/cy/r: the window on screen. wx/wy: the world point at its centre. zoom: world → screen scale. */
+export type LensCam = { cx: number; cy: number; zoom: number; r: number; wx: number; wy: number };
 /** t = 0: full-frame molecular world. t = 1: the same world, smaller, framed in the lens. */
 export const lensCam = (t: number): LensCam => {
   const e = EASE.inOut(clamp01(t));
@@ -77,15 +80,22 @@ export const lensCam = (t: number): LensCam => {
   return {
     cx: WORLD_C[0] + (LENS.cx - WORLD_C[0]) * e,
     cy: WORLD_C[1] + (LENS.cy - WORLD_C[1]) * e,
+    wx: WORLD_C[0] + (LENS_WC[0] - WORLD_C[0]) * e,
+    wy: WORLD_C[1] + (LENS_WC[1] - WORLD_C[1]) * e,
     zoom: z,
     // the window closes in a little ahead of the zoom, so it reads as "pulling back to look through a lens"
     r: LENS.r + (1320 - LENS.r) * (1 - EASE.inOut(clamp01(t * 1.15))),
   };
 };
-export const worldTransform = (c: LensCam) => `translate(${c.cx} ${c.cy}) scale(${c.zoom}) translate(${-WORLD_C[0]} ${-WORLD_C[1]})`;
+/** The lens camera leaning in on one world point (k = 0..1), magnifying by `mag` (a change of scale, to focus). */
+export const lensFocus = (c: LensCam, p: readonly [number, number], k: number, mag: number): LensCam => {
+  const e = clamp01(k);
+  return { ...c, wx: c.wx + (p[0] - c.wx) * e, wy: c.wy + (p[1] - c.wy) * e, zoom: c.zoom * (1 + (mag - 1) * e) };
+};
+export const worldTransform = (c: LensCam) => `translate(${c.cx} ${c.cy}) scale(${c.zoom}) translate(${-c.wx} ${-c.wy})`;
 export const worldToScreen = (c: LensCam, p: readonly [number, number]): [number, number] => [
-  c.cx + (p[0] - WORLD_C[0]) * c.zoom,
-  c.cy + (p[1] - WORLD_C[1]) * c.zoom,
+  c.cx + (p[0] - c.wx) * c.zoom,
+  c.cy + (p[1] - c.wy) * c.zoom,
 ];
 
 /** The lens: a circular window onto the molecules (clip + glass rim + inner shade). */
@@ -152,8 +162,9 @@ export type PopulationProps = {
   readonly abs: number;
   /** 0..1 how denatured the enzymes are (S10). */
   readonly denature?: number;
+  /** "low" (cheap, no inner chain) whenever the enzymes are small on screen. */
   readonly lod?: "high" | "low";
-  /** Highlight the hero enzyme's active site (0..1). */
+  /** Highlight the hero enzyme's active site (0..1). Enzyme 0 is then drawn in full detail. */
   readonly heroSite?: number;
 };
 
@@ -170,9 +181,8 @@ export const Population: React.FC<PopulationProps> = ({ abs, denature = 0, lod =
       dy: own.dy + (ej2.dy - own.dy) * st.lock,
       rot: own.rot + (ej2.rot - own.rot) * st.lock,
     };
-    const cx = st.rings.reduce((a, r) => a + r.x, 0) / st.rings.length;
-    const cy = st.rings.reduce((a, r) => a + r.y, 0) / st.rings.length;
-    const pivot = st.lock > 0.5 ? [ep[st.lockE].x, ep[st.lockE].y] : [cx, cy];
+    // jiggle rotation pivots on the chain itself, or (blended smoothly as it locks in) on its enzyme
+    const pivot = [st.pose.x + (ep[st.lockE].x - st.pose.x) * st.lock, st.pose.y + (ep[st.lockE].y - st.pose.y) * st.lock];
     const rings: Ring[] = st.rings.map((r) => ({
       x: r.x,
       y: r.y,
@@ -184,14 +194,14 @@ export const Population: React.FC<PopulationProps> = ({ abs, denature = 0, lod =
     const links: Link[] = rings.slice(1).map((_, k) =>
       k === st.breakLink ? { a: k, b: k + 1, highlight: st.strain } : { a: k, b: k + 1 },
     );
-    return { rings, links, j, pivot, key: i };
-  });
+    return { rings, links, j, pivot, key: i, opacity: st.opacity };
+  }).filter((x) => x.opacity > 0.01);
   const prods = DOCKS.map((ev) => {
     const p = productState(ev, abs);
     if (!p) return null;
     const j = jig(p.seed, abs, 1.3);
     const rings: Ring[] = p.rings.map((r) => ({ x: r.x, y: r.y, rot: r.rot, scale: MOL_S, tone: "sugar", glow: p.glow }));
-    return { rings, j, key: ev.at };
+    return { rings, j, key: ev.at, opacity: p.opacity };
   }).filter((x): x is NonNullable<typeof x> => x !== null);
   const fl = flashes(abs);
   return (
@@ -203,12 +213,12 @@ export const Population: React.FC<PopulationProps> = ({ abs, denature = 0, lod =
       })}
       {prods.map((p) => (
         <g key={`p${p.key}`} transform={`translate(${p.j.dx} ${p.j.dy})`}>
-          <SugarChain rings={p.rings} links={[{ a: 0, b: 1 }]} />
+          <SugarChain rings={p.rings} links={[{ a: 0, b: 1 }]} opacity={p.opacity} />
         </g>
       ))}
       {subs.map((s) => (
         <g key={`s${s.key}`} transform={`translate(${s.j.dx} ${s.j.dy}) rotate(${s.j.rot} ${s.pivot[0]} ${s.pivot[1]})`}>
-          <SugarChain rings={s.rings} links={s.links} />
+          <SugarChain rings={s.rings} links={s.links} opacity={s.opacity} />
         </g>
       ))}
       {ENZ.map((_, i) => {
@@ -218,7 +228,17 @@ export const Population: React.FC<PopulationProps> = ({ abs, denature = 0, lod =
         return (
           <g key={`e${i}`} transform={`translate(${j.dx} ${j.dy}) rotate(${j.rot} ${p.x} ${p.y})`}>
             <g transform={`translate(${p.x} ${p.y}) scale(${k}) translate(${-p.x} ${-p.y})`}>
-              <Enzyme x={p.x} y={p.y} scale={MOL_S} rotate={p.rot} still lod={lod} denature={denature} seed={11 + i} showSite={i === 0 ? heroSite : 0} />
+              <Enzyme
+                x={p.x}
+                y={p.y}
+                scale={MOL_S}
+                rotate={p.rot}
+                still
+                lod={i === 0 && heroSite > 0 ? "high" : lod}
+                denature={denature}
+                seed={11 + i}
+                showSite={i === 0 ? heroSite : 0}
+              />
             </g>
           </g>
         );
@@ -267,16 +287,24 @@ export type TempGraphProps = {
   /** The true curve beyond the optimum, drawn up to `fallTo`. */
   readonly fallTo?: number;
   readonly fallO?: number;
-  /** Marker dot. y defaults to the curve. */
+  /** Marker dot (= the sample in the lens, at the thermometer's temperature). y defaults to the curve. */
   readonly dot?: { readonly x: number; readonly y?: number; readonly o: number; readonly pulses?: readonly number[]; readonly hot?: number };
+  /** Faint memory of the dot at the peak (S09: "we know the rate up to here"). */
+  readonly ghost?: { readonly x: number; readonly o: number };
+  /** S09: the rate past the peak is unknown — a hollow "?" marker rides the reading line at x. */
+  readonly query?: { readonly x: number; readonly o: number };
+  /** S10: the pen tip drawing the true curve. */
+  readonly pen?: { readonly x: number; readonly o: number };
+  /** S10: "after heating" beside the dot on the floor. */
+  readonly floorTag?: { readonly x: number; readonly o: number };
   /** Temperature pointer under the x-axis (follows the thermometer). */
   readonly pointer?: { readonly x: number; readonly o: number };
   /** 0..1 dashed guide down from the peak. */
   readonly guide?: number;
   /** Dashed reading line from the axis up (S09: "what's the rate here?"). */
   readonly probe?: { readonly x: number; readonly o: number };
-  /** The two predictions past the peak. */
-  readonly guesses?: { readonly up: number; readonly down: number; readonly o: number };
+  /** The two predictions past the peak. upO/downO fade one guess; tick (0..1) swaps the "falls?" ? for a ✓. */
+  readonly guesses?: { readonly up: number; readonly down: number; readonly o: number; readonly upO?: number; readonly downO?: number; readonly tick?: number };
   /** S10: cooled back down, the dot slides along the floor. */
   readonly floor?: { readonly from: number; readonly to: number; readonly o: number };
   readonly labels?: number;
@@ -301,6 +329,10 @@ export const TempGraph: React.FC<TempGraphProps> = ({
   fallTo = 37,
   fallO = 1,
   dot,
+  ghost,
+  query,
+  pen,
+  floorTag,
   pointer,
   guide = 0,
   probe,
@@ -357,7 +389,7 @@ export const TempGraph: React.FC<TempGraphProps> = ({
         <text x={x0 - 30} y={G.y + G.h / 2} textAnchor="middle" fontFamily={FONT} fontWeight={500} fontSize={40} fill={C.ink300} transform={`rotate(-90 ${x0 - 30} ${G.y + G.h / 2})`}>
           rate of reaction
         </text>
-        <text x={x0 + G.w / 2} y={yB + 98} textAnchor="middle" fontFamily={FONT} fontWeight={500} fontSize={40} fill={C.ink300}>
+        <text x={x0 + G.w / 2} y={yB + 108} textAnchor="middle" fontFamily={FONT} fontWeight={500} fontSize={40} fill={C.ink300}>
           temperature (°C)
         </text>
       </g>
@@ -367,11 +399,11 @@ export const TempGraph: React.FC<TempGraphProps> = ({
             <line x1={gx(t.v)} x2={gx(t.v)} y1={yB} y2={yB + 14} stroke={C.ink300} strokeWidth={3} strokeLinecap="round" />
             <text
               x={gx(t.v)}
-              y={yB + 52 - (1 - t.o) * 8}
+              y={yB + 60 - (1 - t.o) * 8}
               textAnchor="middle"
               fontFamily={FONT}
               fontWeight={t.hi ? 700 : 500}
-              fontSize={36}
+              fontSize={40}
               fill={t.hi ? interpolateHex(C.ink300, C.amberLight, t.hi) : C.ink300}
             >
               {t.v}
@@ -396,17 +428,17 @@ export const TempGraph: React.FC<TempGraphProps> = ({
         {/* predictions */}
         {guesses && guesses.o > 0 ? (
           <g opacity={guesses.o}>
-            {guesses.up > 0 ? (
-              <>
+            {guesses.up > 0 && (guesses.upO ?? 1) > 0 ? (
+              <g opacity={guesses.upO ?? 1}>
                 <line x1={peak[0]} y1={peak[1]} x2={lineTo(peak, guessUpEnd, EASE.out(guesses.up))[0]} y2={lineTo(peak, guessUpEnd, EASE.out(guesses.up))[1]} stroke={C.paper} strokeWidth={5} strokeDasharray="3 15" strokeLinecap="round" opacity={0.85} />
                 {qGlyph(guessUpEnd[0] + 32, guessUpEnd[1] + 18, clamp01((guesses.up - 0.7) / 0.3))}
-              </>
+              </g>
             ) : null}
-            {guesses.down > 0 ? (
-              <>
+            {guesses.down > 0 && (guesses.downO ?? 1) > 0 ? (
+              <g opacity={guesses.downO ?? 1}>
                 <line x1={peak[0]} y1={peak[1]} x2={lineTo(peak, guessDownEnd, EASE.out(guesses.down))[0]} y2={lineTo(peak, guessDownEnd, EASE.out(guesses.down))[1]} stroke={C.paper} strokeWidth={5} strokeDasharray="3 15" strokeLinecap="round" opacity={0.85} />
-                {qGlyph(guessDownEnd[0] + 32, guessDownEnd[1] + 18, clamp01((guesses.down - 0.7) / 0.3))}
-              </>
+                {qGlyph(guessDownEnd[0] + 32, guessDownEnd[1] + 18, clamp01((guesses.down - 0.7) / 0.3) * (1 - clamp01((guesses.tick ?? 0) * 3)))}
+              </g>
             ) : null}
           </g>
         ) : null}
@@ -430,6 +462,57 @@ export const TempGraph: React.FC<TempGraphProps> = ({
           <line x1={gx(floor.from)} y1={gy(0) - 2} x2={gx(floor.to)} y2={gy(0) - 2} stroke={C.coral} strokeWidth={5} strokeDasharray="3 13" strokeLinecap="round" opacity={floor.o * 0.9} />
         ) : null}
       </g>
+
+      {/* the right prediction gets a tick (drawn outside the plot clip) */}
+      {guesses && (guesses.tick ?? 0) > 0 ? (
+        <HandTick cx={guessDownEnd[0] + 34} cy={guessDownEnd[1] - 4} size={56} progress={guesses.tick ?? 0} opacity={guesses.o * (guesses.downO ?? 1)} seed={23} />
+      ) : null}
+
+      {/* what we already know: the rate at the peak */}
+      {ghost && ghost.o > 0 ? (
+        <g opacity={ghost.o}>
+          <circle cx={gx(ghost.x)} cy={gy(rate(ghost.x))} r={13} fill="none" stroke={C.teal} strokeWidth={4} opacity={0.7} />
+          <circle cx={gx(ghost.x)} cy={gy(rate(ghost.x))} r={5} fill={C.teal} opacity={0.7} />
+        </g>
+      ) : null}
+
+      {/* what we don't know yet: the rate out here */}
+      {query && query.o > 0 ? (
+        <g opacity={query.o} transform={`translate(${gx(query.x)} ${gy(0.55)})`}>
+          <circle r={30} fill={C.ink900} stroke={heatColor(query.x)} strokeWidth={4} strokeDasharray="7 7" />
+          <text y={15} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={42} fill={C.paper}>
+            ?
+          </text>
+        </g>
+      ) : null}
+
+      {/* the pen drawing the true curve */}
+      {pen && pen.o > 0 ? (
+        <g opacity={pen.o}>
+          <circle cx={gx(pen.x)} cy={gy(rate(pen.x))} r={16} fill={C.paper} opacity={0.25} />
+          <circle cx={gx(pen.x)} cy={gy(rate(pen.x))} r={7} fill={C.paper} />
+        </g>
+      ) : null}
+
+      {/* after heating, the sample's dot sits on the floor */}
+      {floorTag && floorTag.o > 0 ? (
+        <text
+          x={gx(floorTag.x) + 30}
+          y={gy(0) - 30}
+          textAnchor="start"
+          fontFamily={FONT}
+          fontWeight={600}
+          fontSize={40}
+          fill={C.coral}
+          opacity={floorTag.o}
+          stroke={C.ink900}
+          strokeWidth={8}
+          strokeOpacity={0.6}
+          paintOrder="stroke"
+        >
+          after heating
+        </text>
+      ) : null}
 
       {/* temperature pointer on the axis */}
       {pointer && pointer.o > 0 ? (

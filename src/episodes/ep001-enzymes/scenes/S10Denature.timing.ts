@@ -51,7 +51,7 @@ export const s10Timing = (t: CueFns) => {
   const arrowA = coolB - 6; // "can't climb back up" arrow, then ✕
   const crossA = arrowA + 8;
   const closeA = shape - 6; // graph + lens focus out…
-  const heroInA = closeA + 4; // …one enzyme focuses in, tagged "before heating"
+  const heroInA = closeA + 10; // …then one enzyme focuses in, tagged "before heating"
   const heroInB = heroInA + 18;
   // ---- 2. why: one enzyme close up
   const bondsA = weak; // weak bonds light up
@@ -183,11 +183,11 @@ export const s10Sfx = (t: CueFns): SfxEvent[] => {
     { frame: k.popA + 8, sfx: "strike", gainDb: -15 },
     { frame: Math.round((k.popA + 2 * k.popB) / 3), sfx: "strike", gainDb: -13 },
     { frame: k.bounce, sfx: "bonk_misfit", gainDb: -3 },
-    { frame: k.eggA + 10, sfx: "sizzle_heat", gainDb: -12 },
+    { frame: k.eggA + 22, sfx: "sizzle_heat", gainDb: -12 },
     { frame: k.chillA, sfx: "whoosh_soft", gainDb: -12 },
     { frame: k.backA + 4, sfx: "whoosh_soft", gainDb: -12 },
     { frame: k.siteDock, sfx: "pop_bind", gainDb: -10 },
+    // "it recovers": the first reaction after warming is the sound of it working again (no extra tick sound)
     { frame: k.reSnip, sfx: "snip", gainDb: -7 },
-    { frame: k.tick, sfx: "ui_blip", gainDb: -8 },
   ];
 };

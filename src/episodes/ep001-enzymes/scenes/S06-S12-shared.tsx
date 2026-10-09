@@ -6,8 +6,9 @@ import React from "react";
 import { noise2D } from "@remotion/noise";
 import { C, EASE } from "../../../brand/tokens";
 import { FONT } from "../../../brand/fonts";
-import { Pt } from "../../../lib/geometry";
+import { Pt, distToPolygon, pointInPolygon, rng, roundedPolygon, smoothClosedPath, smoothOpenPath } from "../../../lib/geometry";
 import { useSvgId } from "../../../components/ids";
+import { ENZYME_PALETTES } from "../../../components/Enzyme";
 import { HandLayer, InkPath, LitShape, StrikeThrough, inkGeometry, penEase, prepareStroke, seg, textBox, textWidth } from "../../../components/kit";
 import { roundRectPath } from "../../../components/kit/shared";
 import { foldedChain } from "../../../components/molecule-geometry";
@@ -70,6 +71,8 @@ export type MythCardProps = {
   readonly scale?: number;
   readonly opacity?: number;
   readonly seed?: number;
+  /** 0..1 the sentence is written on left → right (drive it from the spoken words). Default 1. */
+  readonly reveal?: number;
 };
 
 /**
@@ -90,7 +93,9 @@ export const MythCard2: React.FC<MythCardProps> = ({
   scale = 1,
   opacity = 1,
   seed = 4,
+  reveal = 1,
 }) => {
+  const id = useSvgId("myth");
   if (enter <= 0 || opacity <= 0) return null;
   const fs = 84;
   const wB = textWidth(before, fs, 600);
@@ -131,7 +136,18 @@ export const MythCard2: React.FC<MythCardProps> = ({
           {tagText}
         </text>
       </g>
-      <text x={x0} y={base} fontFamily={FONT} fontWeight={600} fontSize={fs} fill={C.paper} xmlSpace="preserve" letterSpacing={0}>
+      {reveal < 1 ? (
+        <defs>
+          <linearGradient id={`${id}-g`} gradientUnits="userSpaceOnUse" x1={x0 - 50 + (total + 100) * clamp01(reveal) - 50} y1="0" x2={x0 - 50 + (total + 100) * clamp01(reveal)} y2="0">
+            <stop offset="0" stopColor="#fff" stopOpacity={1} />
+            <stop offset="1" stopColor="#fff" stopOpacity={0} />
+          </linearGradient>
+          <mask id={`${id}-m`} maskUnits="userSpaceOnUse" x={x0 - 60} y={base - fs * 1.4} width={total + 120} height={fs * 2}>
+            <rect x={x0 - 60} y={base - fs * 1.4} width={total + 120} height={fs * 2} fill={`url(#${id}-g)`} />
+          </mask>
+        </defs>
+      ) : null}
+      <text x={x0} y={base} fontFamily={FONT} fontWeight={600} fontSize={fs} fill={C.paper} xmlSpace="preserve" letterSpacing={0} mask={reveal < 1 ? `url(#${id}-m)` : undefined}>
         <tspan>{before}</tspan>
         <tspan fill={struck ? C.ink400 : C.paper}>{word}</tspan>
         <tspan>{after}</tspan>
@@ -401,6 +417,304 @@ export const FoldBonds: React.FC<{
           </g>
         );
       })}
+    </g>
+  );
+};
+
+// ---------------------------------------------------------------------------------------------
+// Catalase (S07). Not amylase with a different colour: its own body and its own small, rounded
+// active site, complementary to ONE hydrogen peroxide molecule (S05 taught specificity — catalase
+// must not carry amylase's glucose-shaped pocket). Units: 1 = 1 px at scale 1.
+// TODO(shared): promote foldedChainIn + a pocket-shape prop on <Enzyme> into src/components.
+
+/** Same space-filling "packed noodle" as molecule-geometry's foldedChain, for any outline. */
+const chainCache = new Map<string, Pt[]>();
+export const foldedChainIn = (poly: readonly Pt[], seed: number, cell = 44): Pt[] => {
+  const ck = `${seed}:${cell}:${poly.length}:${poly[0][0].toFixed(1)}`;
+  const hit = chainCache.get(ck);
+  if (hit) return hit;
+  const rand = rng(seed);
+  const xs = poly.map((p) => p[0]);
+  const ys = poly.map((p) => p[1]);
+  const x0 = Math.min(...xs);
+  const y0 = Math.min(...ys);
+  const cols = Math.ceil((Math.max(...xs) - x0) / cell);
+  const rows = Math.ceil((Math.max(...ys) - y0) / cell);
+  const key = (c: number, r: number) => r * cols + c;
+  const centre = (c: number, r: number): Pt => [x0 + (c + 0.5) * cell, y0 + (r + 0.5) * cell];
+  const ok = new Set<number>();
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const p = centre(c, r);
+      if (pointInPolygon(p, poly) && distToPolygon(p, poly) > cell * 0.55) ok.add(key(c, r));
+    }
+  }
+  const dirs: [number, number][] = [[0, -1], [1, 0], [0, 1], [-1, 0]];
+  const start = [...ok][Math.floor(ok.size / 2)];
+  const inTree = new Set<number>([start]);
+  const edges = new Set<string>();
+  const frontier: [number, number][] = [];
+  const pushFrontier = (k: number) => {
+    const c = k % cols;
+    const r = Math.floor(k / cols);
+    for (const [dc, dr] of dirs) {
+      const nk = key(c + dc, r + dr);
+      if (c + dc >= 0 && c + dc < cols && ok.has(nk) && !inTree.has(nk)) frontier.push([k, nk]);
+    }
+  };
+  pushFrontier(start);
+  while (frontier.length) {
+    const [a, b] = frontier.splice(Math.floor(rand() * frontier.length), 1)[0];
+    if (inTree.has(b)) continue;
+    inTree.add(b);
+    edges.add(`${Math.min(a, b)}-${Math.max(a, b)}`);
+    pushFrontier(b);
+  }
+  const has = (a: number, b: number) => edges.has(`${Math.min(a, b)}-${Math.max(a, b)}`);
+  const adj = new Map<string, string[]>();
+  const link = (u: string, v: string) => {
+    adj.set(u, [...(adj.get(u) ?? []), v]);
+    adj.set(v, [...(adj.get(v) ?? []), u]);
+  };
+  for (const k of inTree) {
+    const c = k % cols;
+    const r = Math.floor(k / cols);
+    const n = key(c, r - 1);
+    const e = key(c + 1, r);
+    const s = key(c, r + 1);
+    const w = key(c - 1, r);
+    const N = inTree.has(n) && has(k, n);
+    const E = c + 1 < cols && inTree.has(e) && has(k, e);
+    const S = inTree.has(s) && has(k, s);
+    const Wd = c - 1 >= 0 && inTree.has(w) && has(k, w);
+    if (!N) link(`${k}:0`, `${k}:1`);
+    if (!E) link(`${k}:1`, `${k}:2`);
+    if (!S) link(`${k}:2`, `${k}:3`);
+    if (!Wd) link(`${k}:3`, `${k}:0`);
+    if (E) {
+      link(`${k}:1`, `${e}:0`);
+      link(`${k}:2`, `${e}:3`);
+    }
+    if (S) {
+      link(`${k}:3`, `${s}:0`);
+      link(`${k}:2`, `${s}:1`);
+    }
+  }
+  const pos = (id: string): Pt => {
+    const [ks, qs] = id.split(":");
+    const k = Number(ks);
+    const q = Number(qs);
+    const [cx, cy] = centre(k % cols, Math.floor(k / cols));
+    const o = cell / 4;
+    return [cx + (q === 1 || q === 2 ? o : -o), cy + (q >= 2 ? o : -o)];
+  };
+  const first = `${start}:0`;
+  const order: string[] = [first];
+  let prev = "";
+  let cur = first;
+  for (let guard = 0; guard < adj.size + 2; guard++) {
+    const nb = (adj.get(cur) ?? []).find((v) => v !== prev);
+    if (!nb || nb === first) break;
+    order.push(nb);
+    prev = cur;
+    cur = nb;
+  }
+  let pts: Pt[] = [];
+  for (let i = 0; i < order.length; i++) {
+    const a = pos(order[i]);
+    const b = pos(order[(i + 1) % order.length]);
+    for (let s = 0; s < 2; s++) {
+      const t = s / 2;
+      pts.push([a[0] + (b[0] - a[0]) * t + (rand() - 0.5) * 9, a[1] + (b[1] - a[1]) * t + (rand() - 0.5) * 9]);
+    }
+  }
+  for (let it = 0; it < 4; it++) {
+    pts = pts.map((p, i) => {
+      const q = pts[(i - 1 + pts.length) % pts.length];
+      const r = pts[(i + 1) % pts.length];
+      return [p[0] * 0.4 + (q[0] + r[0]) * 0.3, p[1] * 0.4 + (q[1] + r[1]) * 0.3] as Pt;
+    });
+  }
+  chainCache.set(ck, pts);
+  return pts;
+};
+
+/** Catalase active site: a rounded slot that fits one H₂O₂ (lips at x = −156, floor at x = −72). */
+export const CAT_SITE = { lipX: -156, h: 38, floorX: -72 } as const;
+/** Where a bound H₂O₂ sits (catalase-local), and the glyph scale/rotation that fits the slot. */
+export const CAT_DOCK: Pt = [-112, 0];
+export const CAT_H2O2 = { scale: 0.46, rotate: 90 } as const;
+
+const catalaseOutline = (() => {
+  const { lipX, h, floorX } = CAT_SITE;
+  const R = (a: number) => 172 * (1 + 0.06 * Math.sin(2 * a + 0.7) + 0.045 * Math.sin(3 * a + 2.2) + 0.03 * Math.sin(5 * a + 0.4));
+  const pts: Pt[] = [];
+  const radii: number[] = [];
+  pts.push([lipX - 4, -h - 6]);
+  radii.push(12);
+  const N = 24;
+  const d = 0.5;
+  for (let i = 0; i < N; i++) {
+    const a = Math.PI + d + ((2 * Math.PI - 2 * d) * i) / (N - 1);
+    pts.push([Math.cos(a) * R(a), Math.sin(a) * R(a)]);
+    radii.push(46);
+  }
+  pts.push([lipX - 4, h + 6]);
+  radii.push(12);
+  // slot: lower wall → rounded floor → upper wall
+  const cx = floorX - h;
+  pts.push([lipX + 6, h]);
+  radii.push(5);
+  for (let i = 0; i <= 10; i++) {
+    const a = Math.PI / 2 - (Math.PI * i) / 10;
+    pts.push([cx + Math.cos(a) * h, Math.sin(a) * h]);
+    radii.push(2);
+  }
+  pts.push([lipX + 6, -h]);
+  radii.push(5);
+  return { pts, radii };
+})();
+export const CATALASE_OUTLINE: readonly Pt[] = catalaseOutline.pts;
+const CATALASE_D = roundedPolygon(catalaseOutline.pts, catalaseOutline.radii);
+/** The site's outline only (lower lip → floor → upper lip), for a highlight. */
+const CAT_SITE_PTS = catalaseOutline.pts.slice(25);
+
+export const Catalase: React.FC<{
+  readonly x: number;
+  readonly y: number;
+  readonly scale?: number;
+  readonly rotate?: number;
+  readonly opacity?: number;
+  /** 0..1 body fill (0 = only the folded chain shows, for the rebuild). */
+  readonly fill?: number;
+  /** 0..1 soft glow in the active site (a reaction happening). */
+  readonly glow?: number;
+  readonly seed?: number;
+  /** Cheap version for small/far copies: no inner chain, no blurred shadow. */
+  readonly lod?: "high" | "low";
+}> = ({ x, y, scale = 1, rotate = 0, opacity = 1, fill = 1, glow = 0, seed = 23, lod = "high" }) => {
+  const id = useSvgId("cat");
+  const pal = ENZYME_PALETTES.violet;
+  const chain = lod === "high" ? foldedChainIn(CATALASE_OUTLINE, seed * 97 + 11) : [];
+  if (opacity <= 0) return null;
+  const site = CAT_SITE;
+  return (
+    <g transform={`translate(${x} ${y}) rotate(${rotate}) scale(${scale})`} opacity={opacity}>
+      <defs>
+        <linearGradient id={`${id}-f`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor={pal.main} />
+          <stop offset="0.65" stopColor={pal.deep} />
+          <stop offset="1" stopColor={pal.dark} />
+        </linearGradient>
+        <linearGradient id={`${id}-r`} x1="0" y1="0" x2="0.4" y2="1">
+          <stop offset="0" stopColor={pal.light} stopOpacity={0.95} />
+          <stop offset="0.45" stopColor={pal.light} stopOpacity={0} />
+        </linearGradient>
+        <clipPath id={`${id}-c`}>
+          <path d={CATALASE_D} />
+        </clipPath>
+        {lod === "high" ? (
+          <filter id={`${id}-s`} x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="18" />
+          </filter>
+        ) : null}
+        <radialGradient id={`${id}-g`} cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stopColor={pal.light} stopOpacity={0.85} />
+          <stop offset="1" stopColor={pal.light} stopOpacity={0} />
+        </radialGradient>
+      </defs>
+      <path d={CATALASE_D} transform="translate(0 14)" fill={C.ink950} opacity={0.35 * fill} filter={lod === "high" ? `url(#${id}-s)` : undefined} />
+      <g opacity={fill}>
+        <path d={CATALASE_D} fill={`url(#${id}-f)`} />
+        {lod === "high" ? (
+          <g clipPath={`url(#${id}-c)`}>
+            <path d={smoothOpenPath(chain, 0.9)} fill="none" stroke={pal.dark} strokeOpacity={0.22} strokeWidth={10} strokeLinecap="round" strokeLinejoin="round" />
+            <path d={smoothOpenPath(chain, 0.9)} fill="none" stroke={pal.light} strokeOpacity={0.14} strokeWidth={3} strokeLinecap="round" transform="translate(-1.5 -2)" />
+          </g>
+        ) : null}
+        <path d={CATALASE_D} fill="none" stroke={`url(#${id}-r)`} strokeWidth={16} clipPath={`url(#${id}-c)`} />
+        {/* the active site's walls: a slightly darker rim so the pocket reads as a pocket */}
+        <path d={smoothOpenPath(CAT_SITE_PTS, 0.2)} fill="none" stroke={pal.dark} strokeOpacity={0.45} strokeWidth={5} strokeLinecap="round" />
+      </g>
+      {glow > 0.01 ? <ellipse cx={(site.lipX + site.floorX) / 2 + 4} cy={0} rx={70} ry={56} fill={`url(#${id}-g)`} opacity={glow} /> : null}
+    </g>
+  );
+};
+
+/** A generic globular protein seen from far away (no active site drawn): the crowd inside a cell. */
+export const ProteinBlob: React.FC<{
+  readonly x: number;
+  readonly y: number;
+  readonly r: number;
+  readonly seed: number;
+  readonly opacity?: number;
+}> = ({ x, y, r, seed, opacity = 1 }) => {
+  const id = useSvgId("blob");
+  if (opacity <= 0) return null;
+  const rr = rng(seed * 31 + 7);
+  const k = [rr() * 6, rr() * 6, rr() * 6];
+  const pts: Pt[] = Array.from({ length: 14 }, (_, i) => {
+    const a = (i / 14) * Math.PI * 2;
+    const m = 1 + 0.1 * Math.sin(2 * a + k[0]) + 0.07 * Math.sin(3 * a + k[1]) + 0.05 * Math.sin(5 * a + k[2]);
+    return [x + Math.cos(a) * r * m, y + Math.sin(a) * r * m * 0.9];
+  });
+  const d = smoothClosedPath(pts, 0.9);
+  const pal = ENZYME_PALETTES.violet;
+  return (
+    <g opacity={opacity}>
+      <defs>
+        <linearGradient id={`${id}-f`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor={pal.main} stopOpacity={0.75} />
+          <stop offset="1" stopColor={pal.dark} stopOpacity={0.75} />
+        </linearGradient>
+      </defs>
+      <path d={d} transform="translate(0 8)" fill={C.ink950} opacity={0.3} />
+      <path d={d} fill={`url(#${id}-f)`} />
+      <path d={d} fill="none" stroke={pal.light} strokeOpacity={0.35} strokeWidth={3} strokeDasharray={`${r * 2.2} ${r * 9}`} strokeDashoffset={r * 0.6} />
+    </g>
+  );
+};
+
+/**
+ * A small desk calendar whose pages flip over: "time passes" without claiming a number of days.
+ * `flips` counts pages turned (fractional = the current page mid-turn).
+ */
+export const Calendar: React.FC<{
+  readonly x: number;
+  readonly y: number;
+  readonly size?: number;
+  readonly flips: number;
+  readonly progress: number;
+  readonly opacity?: number;
+}> = ({ x, y, size = 150, flips, progress, opacity = 1 }) => {
+  if (progress <= 0 || opacity <= 0) return null;
+  const p = EASE.out(clamp01(progress));
+  const w = size;
+  const h = size * 1.05;
+  const head = h * 0.24;
+  const turning = flips - Math.floor(flips); // 0..1 of the page being turned
+  // the turning page hinges on its top edge: squash towards the hinge, then it is gone
+  const sy = Math.cos(turning * Math.PI);
+  const page = (key: string, shade: number, scaleY = 1) => (
+    <g key={key} transform={`translate(0 ${-h / 2 + head}) scale(1 ${scaleY}) translate(0 ${h / 2 - head})`} opacity={1 - shade}>
+      <rect x={-w / 2} y={-h / 2 + head} width={w} height={h - head} rx={12} fill={scaleY < 0 ? C.paperDim : C.paper} />
+      {scaleY >= 0
+        ? Array.from({ length: 12 }, (_, i) => (
+            <circle key={i} cx={-w / 2 + w * (0.2 + (i % 4) * 0.2)} cy={-h / 2 + head + (h - head) * (0.24 + Math.floor(i / 4) * 0.26)} r={size * 0.035} fill={C.ink400} opacity={0.7} />
+          ))
+        : null}
+    </g>
+  );
+  return (
+    <g opacity={opacity * p} transform={`translate(${x} ${y + (1 - p) * 16})`}>
+      <rect x={-w / 2} y={-h / 2 + 8} width={w} height={h} rx={14} fill={C.ink950} opacity={0.4} />
+      {page("under", 0)}
+      {turning > 0.001 ? page("turn", 0.15 * Math.abs(sy), sy) : null}
+      <rect x={-w / 2} y={-h / 2} width={w} height={head + 6} rx={12} fill={C.ink500} />
+      <rect x={-w / 2 + 12} y={-h / 2 + 5} width={w - 24} height={head * 0.3} rx={6} fill={C.paper} opacity={0.18} />
+      {[-0.22, 0.22].map((t, i) => (
+        <rect key={i} x={t * w - 6} y={-h / 2 - 14} width={12} height={34} rx={6} fill={C.paperDim} />
+      ))}
     </g>
   );
 };

@@ -1,13 +1,10 @@
 import type { CueFns, SfxEvent } from "../../../lib/cues";
 
-/** Word lookup that survives script tweaks: falls back to a cue-relative frame if the word is gone. */
-const w = (t: CueFns, text: string, nth: number, offset: number, fallback: number) => {
-  try {
-    return t.word(text, nth, offset);
-  } catch {
-    return fallback;
-  }
-};
+/**
+ * Strict word lookup: throws if the narration no longer contains the word, so a script change can
+ * never silently drop an animation beat onto a guessed frame.
+ */
+const w = (t: CueFns, text: string, nth: number, offset: number) => t.word(text, nth, offset);
 
 /** S12 key moments from the narration (shared by animation + SFX). */
 export const s12Timing = (t: CueFns) => {
@@ -19,27 +16,42 @@ export const s12Timing = (t: CueFns) => {
   const pepsin = t.cue("pepsin");
   const tuned = t.cue("tuned");
   const end = t.dur;
-  const acidic = w(t, "acidic", 1, -2, disrupt + 4);
-  const alkaline = w(t, "alkaline", 1, -2, acidic + 24);
-  const bonds = w(t, "bonds", 1, -2, alkaline + 26);
-  const disrupted = w(t, "disrupted", 1, -2, bonds + 60);
-  const far = w(t, "far", 1, -6, disrupted + 30);
-  const denatured = w(t, "denatured", 1, -2, far + 40);
-  const optimum = w(t, "optimum", 1, -2, phOptimum + 36);
-  const mouth = w(t, "mouth", 1, -2, amylase + 22);
-  const neutral = w(t, "neutral", 1, -2, mouth + 38);
-  const seven = w(t, "7", 1, -10, neutral + 28);
-  const strongly = w(t, "strongly", 1, -2, stomach + 18);
-  const two = w(t, "2", 1, -16, stomach + 70);
-  const best = w(t, "best", 2, -2, pepsin + 90);
-  return { ph, disrupt, acidic, alkaline, bonds, disrupted, far, denatured, phOptimum, optimum, amylase, mouth, neutral, seven, stomach, strongly, two, pepsin, best, tuned, end };
+  // "pH, how acidic or alkaline something is, can denature enzymes too."
+  const acidic = w(t, "acidic", 1, -2);
+  const alkaline = w(t, "alkaline", 1, -2);
+  const something = w(t, "something", 1, -2);
+  const denature = w(t, "denature", 1, -2);
+  // "Too far either way, and the bonds holding the active site in shape are disrupted."
+  const far = w(t, "far", 1, -2);
+  const either = w(t, "either", 1, -2);
+  const bonds = w(t, "bonds", 1, -2);
+  const disrupted = w(t, "disrupted", 1, -2);
+  const zoomIn = bonds - 8;
+  const zoomOut = Math.max(disrupted + 14, phOptimum - 30);
+  const zoomBack = zoomOut + 22; // back at rest before the graph's axes draw (phOptimum + 6)
+  // the graph
+  const optimum = w(t, "optimum", 1, -2);
+  const mouth = w(t, "mouth", 1, -2);
+  const neutral = w(t, "neutral", 1, -2);
+  const seven = w(t, "7", 1, -10);
+  const strongly = w(t, "strongly", 1, -2);
+  const two = w(t, "2", 1, -16);
+  const there = w(t, "there", 1, -2); // "…a protease that digests protein there": pepsin ↔ stomach
+  const best = w(t, "best", 2, -2);
+  const different = w(t, "different", 1, -2);
+  const places = w(t, "different", 2, -2); // "…tuned to different places"
+  return {
+    ph, acidic, alkaline, something, denature, disrupt, far, either, bonds, disrupted, zoomIn, zoomOut, zoomBack,
+    phOptimum, optimum, amylase, mouth, neutral, seven, stomach, strongly, two, pepsin, there, best, tuned, different, places, end,
+  };
 };
 
 export const s12Sfx = (t: CueFns): SfxEvent[] => {
   const k = s12Timing(t);
   return [
-    { frame: k.acidic, sfx: "whoosh_soft", gainDb: -12 },
-    { frame: k.bonds - 6, sfx: "whoosh_zoom", gainDb: -12 },
+    { frame: k.far, sfx: "whoosh_soft", gainDb: -12 },
+    { frame: k.zoomIn + 2, sfx: "whoosh_zoom", gainDb: -12 },
+    { frame: k.disrupted + 4, sfx: "snip", gainDb: -12 },
     { frame: k.pepsin + 2, sfx: "ui_blip", gainDb: -10 },
   ];
 };

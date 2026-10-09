@@ -41,7 +41,7 @@ export const S09Predict: React.FC = () => {
       <AmbientTemp T={T} />
       <Lens cam={cam} frame={1}>
         <g transform={worldTransform(cam)}>
-          <Population abs={abs} />
+          <Population abs={abs} lod="low" />
         </g>
       </Lens>
 
@@ -60,7 +60,9 @@ export const S09Predict: React.FC = () => {
           { v: 70, o: tick(k.t70), hi: span(f, k.t70 - 4, k.t70 + 4) * (1 - span(f, k.question, k.question + 14)) },
         ]}
         riseTo={37}
-        dot={{ x: 37, o: 1, pulses: recentSnips(abs) }}
+        dot={{ x: 37, o: 1 - span(f, k.creepA + 2, k.creepA + 14), pulses: recentSnips(abs) }}
+        ghost={{ x: 37, o: span(f, k.creepA + 2, k.creepA + 14) }}
+        query={{ x: Math.max(T, 39), o: probeO }}
         pointer={{ x: T, o: 1 }}
         guide={1}
         probe={{ x: T, o: probeO }}

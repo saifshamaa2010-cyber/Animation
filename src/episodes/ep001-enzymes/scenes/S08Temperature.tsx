@@ -11,7 +11,6 @@ import { FONT } from "../../../brand/fonts";
 import { Stage } from "../../../components/Stage";
 import { Thermometer } from "../../../components/Thermometer";
 import { Keyword, Label } from "../../../components/Label";
-import { Scrim } from "../../../components/Scrim";
 import { HandCircle } from "../../../components/kit/hand";
 import { useScene } from "../../../lib/timeline";
 import { s08Timing } from "./S08Temperature.timing";
@@ -56,7 +55,7 @@ export const OptimumNote: React.FC<{ readonly main: number; readonly approx: num
       ) : null}
       {approx > 0 ? <ApproxText x={px + 6} y={y1} after="37 °C" size={52} weight={700} color={C.amberLight} opacity={approx} /> : null}
       {body > 0 ? (
-        <text x={px} y={y1 + 50} textAnchor="middle" fontFamily={FONT} fontWeight={500} fontSize={36} fill={C.ink300} opacity={body}>
+        <text x={px} y={y1 + 52} textAnchor="middle" fontFamily={FONT} fontWeight={500} fontSize={40} fill={C.ink300} opacity={body}>
           body temperature
         </text>
       ) : null}
@@ -92,17 +91,18 @@ export const S08Temperature: React.FC = () => {
   const tickO = span(f, k.axesB - 8, k.axesB + 6);
   const hi37 = span(f, k.deg - 2, k.deg + 10);
 
-  // ---- the hero collision (full view): label anchored at the active-site mouth of enzyme 0
+  // ---- the hero collision (full view): labels anchored where the substrate meets the active site of enzyme 0.
+  // "successful collision" arrives the moment it lands; the same label becomes "enzyme–substrate complex".
   const hero = DOCKS[0];
   const heroMouth = mouthPoint(enzymePose(hero.e, Math.min(abs, hero.at + hero.hold)));
   const heroScreen = worldToScreen(cam, pushPt(heroMouth));
-  const lblIn = span(f, k.successful - 2, k.successful + 20, EASE.out);
-  const lblOut = 1 - span(f, k.complexWord - 8, k.complexWord + 4, EASE.in);
+  const lblIn = span(f, k.heroDock - 2, k.heroDock + 16, EASE.out);
+  const lblOut = 1 - span(f, k.complexWord - 10, k.complexWord - 2, EASE.in);
+  const cplxIn = span(f, k.complexWord - 2, k.complexWord + 16, EASE.out);
+  const cplxOut = 1 - span(f, k.heroSnip - 6, k.heroSnip + 6, EASE.in);
 
-  // ---- exam-term captions (bottom, over a soft scrim)
+  // ---- exam-term caption (bottom of frame; the molecules leave this band free)
   const capKE = span(f, k.kinetic - 2, k.kinetic + 12) * (1 - span(f, k.collide - 14, k.collide - 2));
-  const capES = span(f, k.complexWord - 2, k.complexWord + 12) * (1 - span(f, k.irisA - 6, k.irisA + 6));
-  const scrim = Math.max(capKE, capES);
 
   return (
     <Stage bg={{ lightX: 0.5, temperature: T }}>
@@ -110,7 +110,7 @@ export const S08Temperature: React.FC = () => {
 
       <Lens cam={cam} frame={rim}>
         <g transform={`${worldTransform(cam)} ${pushT}`}>
-          <Population abs={abs} />
+          <Population abs={abs} lod={cam.zoom * (1 + push) < 0.6 ? "low" : "high"} />
         </g>
       </Lens>
 
@@ -142,17 +142,24 @@ export const S08Temperature: React.FC = () => {
 
       <Label
         anchor={heroScreen}
-        at={[heroScreen[0] - 80, heroScreen[1] - 118]}
+        at={[heroScreen[0] + 14, heroScreen[1] + 178]}
         text="successful collision"
-        align="end"
+        align="start"
         color={C.amberLight}
         progress={lblIn}
         opacity={lblOut}
       />
+      <Label
+        anchor={heroScreen}
+        at={[heroScreen[0] + 14, heroScreen[1] + 178]}
+        text="enzyme–substrate complex"
+        align="start"
+        color={C.paper}
+        progress={cplxIn}
+        opacity={cplxOut}
+      />
 
-      <Scrim opacity={scrim * 0.9} height={260} />
-      <Keyword x={1110} y={H - 112} text="more kinetic energy" size={60} progress={capKE} />
-      <Keyword x={1110} y={H - 112} text="enzyme–substrate complex" size={60} progress={capES} />
+      <Keyword x={1150} y={H - 112} text="more kinetic energy" size={60} progress={capKE} />
     </Stage>
   );
 };
