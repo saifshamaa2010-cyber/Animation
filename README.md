@@ -27,6 +27,21 @@ You don't need to read the code. The parts you'll actually touch are plain-text 
 2. In this folder run `npm install` once.
 3. Run `npm run dev`. A browser tab opens with Remotion Studio, where you can scrub through scenes.
 
+## Making an episode (the commands, in order)
+
+```
+npm install && npm run setup          # once: Node packages, Python tools, free voice + recogniser models
+npm run narrate -- ep001-enzymes      # script.md → narration audio (voice set in .env)
+npm run align   -- ep001-enzymes      # finds every word's timing → timeline.json + subtitles (.srt)
+npm run dev                           # preview in Remotion Studio while building scenes
+npm run audio   -- ep001-enzymes      # sound effects (from the scenes' own timing) + original music + mix
+npm run render  -- ep001-enzymes      # final MP4 + narration WAV + .srt + thumbnail → out/ep001-enzymes/
+npm run qa      -- ep001-enzymes      # loudness, sync, dead-air checks + contact sheet → out/ep001-enzymes/qa-report.md
+npm run describe -- ep001-enzymes     # YouTube description with chapters → out/ep001-enzymes/youtube-description.txt
+```
+
+To check a scene's frames without rendering a video: `npm run frames -- ep001-S05 count:12 out/qa/S05`.
+
 ## How an episode gets made
 
 1. Research → script → storyboard → **check-in**.

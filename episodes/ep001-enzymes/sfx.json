@@ -1,0 +1,58 @@
+[
+  { "cue": "S01.chew", "sfx": "crunch", "offsetSec": 0.0, "gainDb": -1, "note": "first bite" },
+  { "cue": "S01.chew", "sfx": "crunch_b", "offsetSec": 0.42, "gainDb": -3, "note": "second bite" },
+  { "cue": "S01.sweet", "sfx": "shimmer_sweet", "offsetSec": 0.0, "gainDb": 0, "note": "crumbs turn amber: the 'sweet' motif" },
+  { "cue": "S01.question", "sfx": "strike", "offsetSec": 0.4, "gainDb": -4, "note": "'no sugar added' strike on the sugar cube" },
+  { "cue": "S01.millions", "sfx": "card_in", "offsetSec": 0.0, "gainDb": -5, "note": "hourglass vs stopwatch split card" },
+
+  { "cue": "S02.start", "sfx": "chime_title", "offsetSec": 0.1, "gainDb": 0, "note": "title writes on" },
+
+  { "cue": "S03.zoom", "sfx": "whoosh_zoom", "offsetSec": 0.0, "gainDb": 0, "note": "the one big zoom: 1 mm -> 1 nm" },
+
+  { "cue": "S04.snip", "sfx": "snip", "offsetSec": 0.0, "gainDb": -2, "note": "amylase snips off two rings" },
+  { "cue": "S04.sweetTaste", "sfx": "shimmer_sweet", "offsetSec": 0.0, "gainDb": -6, "note": "sweetness meter ticks up (quieter echo of the hook)" },
+  { "cue": "S04.catalyst", "sfx": "ui_blip", "offsetSec": 0.0, "gainDb": -4, "note": "key term: biological catalyst" },
+
+  { "cue": "S05.site", "sfx": "ui_blip", "offsetSec": 0.0, "gainDb": -4, "note": "key term: active site" },
+  { "cue": "S05.complex", "sfx": "pop_bind", "offsetSec": -0.1, "gainDb": 0, "note": "substrate nests in the active site" },
+  { "cue": "S05.break", "sfx": "snip", "offsetSec": 0.0, "gainDb": 1, "note": "the bond snaps (on the word 'Snap')" },
+  { "cue": "S05.differentLink", "sfx": "bonk_misfit", "offsetSec": 1.2, "gainDb": -1, "note": "cellulose bumps the pocket and bounces off" },
+
+  { "cue": "S06.grip", "sfx": "pop_bind", "offsetSec": 0.6, "gainDb": -4, "note": "active site closes around the substrate (induced fit)" },
+  { "cue": "S06.inducedFit", "sfx": "ui_blip", "offsetSec": 0.0, "gainDb": -5, "note": "key term: induced fit" },
+
+  { "cue": "S07.myth1", "sfx": "card_in", "offsetSec": 0.0, "gainDb": -2, "note": "myth card slides in" },
+  { "cue": "S07.bust1", "sfx": "strike", "offsetSec": 0.1, "gainDb": -2, "note": "'used up' struck through" },
+  { "cue": "S07.again", "sfx": "snip", "offsetSec": 0.0, "gainDb": -5, "note": "reused: snip 1" },
+  { "cue": "S07.again", "sfx": "snip", "offsetSec": 0.8, "gainDb": -7, "note": "snip 2" },
+  { "cue": "S07.again", "sfx": "snip", "offsetSec": 1.6, "gainDb": -9, "note": "snip 3" },
+  { "cue": "S07.catalase", "sfx": "bubbles", "offsetSec": 0.3, "gainDb": -3, "note": "catalase: O2 bubbles" },
+
+  { "cue": "S08.temperature", "sfx": "whoosh_soft", "offsetSec": 0.0, "gainDb": -6, "note": "thermometer slides in" },
+  { "cue": "S08.optimum", "sfx": "ui_blip", "offsetSec": 0.0, "gainDb": -4, "note": "peak marked 'optimum'" },
+
+  { "cue": "S09.t50", "sfx": "sizzle_heat", "offsetSec": 0.0, "untilCue": "S09.pauseNow", "fadeInSec": 1.5, "fadeOutSec": 1.0, "gainDb": -10, "note": "coral heat shimmer while the temperature climbs (looped bed)" },
+  { "cue": "S09.end", "sfx": "tick", "offsetSec": -4.0, "gainDb": -2, "note": "countdown 4 (ring starts at S09.end - 4 s)" },
+  { "cue": "S09.end", "sfx": "tock", "offsetSec": -3.0, "gainDb": -2, "note": "countdown 3" },
+  { "cue": "S09.end", "sfx": "tick", "offsetSec": -2.0, "gainDb": -2, "note": "countdown 2" },
+  { "cue": "S09.end", "sfx": "tock", "offsetSec": -1.0, "gainDb": -2, "note": "countdown 1" },
+
+  { "cue": "S10.reveal", "sfx": "whoosh_soft", "offsetSec": -0.15, "gainDb": -4, "note": "pause overlay lifts" },
+  { "cue": "S10.shake", "sfx": "sizzle_heat", "offsetSec": 0.0, "untilCue": "S10.siteLost", "fadeInSec": 0.4, "fadeOutSec": 0.8, "gainDb": -7, "note": "violent jiggle" },
+  { "cue": "S10.shake", "sfx": "snip", "offsetSec": 0.9, "gainDb": -11, "note": "weak bonds pop one by one" },
+  { "cue": "S10.shake", "sfx": "snip", "offsetSec": 1.4, "gainDb": -10, "note": "" },
+  { "cue": "S10.shake", "sfx": "snip", "offsetSec": 1.8, "gainDb": -9, "note": "" },
+  { "cue": "S10.noFit", "sfx": "bonk_misfit", "offsetSec": 0.5, "gainDb": -1, "note": "substrate can't nest, bounces off" },
+  { "cue": "S10.egg", "sfx": "sizzle_heat", "offsetSec": 0.0, "durationSec": 3.0, "fadeInSec": 0.3, "fadeOutSec": 1.0, "gainDb": -8, "note": "egg white in a hot pan" },
+
+  { "cue": "S11.myth2", "sfx": "card_in", "offsetSec": 0.0, "gainDb": -2, "note": "myth card #2" },
+  { "cue": "S11.notAlive", "sfx": "strike", "offsetSec": 0.1, "gainDb": -2, "note": "'kills' struck through" },
+  { "cue": "S11.marks", "sfx": "ui_blip", "offsetSec": 0.0, "gainDb": -3, "note": "the answer that gets the marks" },
+
+  { "cue": "S13.back", "sfx": "whoosh_zoom", "offsetSec": 0.0, "gainDb": -4, "note": "back into the crumbs (reverse of S03)" },
+  { "cue": "S13.cut", "sfx": "snip", "offsetSec": 0.0, "gainDb": -4, "note": "snips into maltose" },
+  { "cue": "S13.again", "sfx": "snip", "offsetSec": 0.0, "gainDb": -7, "note": "" },
+  { "cue": "S13.again", "sfx": "snip", "offsetSec": 0.7, "gainDb": -9, "note": "" },
+  { "cue": "S13.tongue", "sfx": "shimmer_sweet", "offsetSec": 0.0, "gainDb": 0, "note": "payoff: sweetness, enzymes at work" },
+  { "cue": "S13.title", "sfx": "chime_title", "offsetSec": 0.0, "gainDb": -2, "note": "title returns" }
+]

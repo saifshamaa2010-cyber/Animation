@@ -1,0 +1,122 @@
+{
+  "about": "Music plan for EP001. Read by pipeline/audio/music.py. Per scene (and optionally from a cue onwards): chords, how intense/bright, which instruments play. intensity/brightness/levels can be a number or a [from, to] ramp across the part. Chord changes snap to the nearest half bar.",
+  "key": "D major, with a B minor / borrowed-chord detour for denaturation",
+  "tempoBpm": 80,
+  "crossfadeSec": 2.0,
+  "bedLufs": -20,
+  "fadeInSec": 1.2,
+  "endFadeSec": 3.0,
+  "reverb": { "rt60": 4.2, "rt60Hf": 1.7, "return": 0.55 },
+  "scenes": {
+    "S01": {
+      "mood": "curious, sparse: an everyday mystery",
+      "parts": [
+        { "from": "start", "intensity": 0.32, "brightness": 0.32, "progression": ["Gmaj7", "Bm9"], "motif": "question", "motifAtBeat": 2 },
+        { "from": "sweet", "intensity": 0.42, "brightness": 0.5, "progression": ["Dmaj9"], "bell": 0.7, "bellEvery": 2, "bellOffset": 1, "bellProb": 0.8 },
+        { "from": "question", "intensity": 0.36, "brightness": 0.4, "progression": ["Em9"] },
+        { "from": "answer", "intensity": [0.4, 0.72], "brightness": [0.4, 0.66], "progression": ["Gmaj7", "A7sus4"], "chordBeats": 4, "sub": [0.3, 0.8] }
+      ]
+    },
+    "S02": {
+      "mood": "title: warm arrival on the home chord",
+      "intensity": 0.74, "brightness": 0.66, "progression": ["Dmaj9"], "sub": 0.8, "padAttack": 0.7
+    },
+    "S03": {
+      "mood": "light, flowing explanation begins",
+      "parts": [
+        { "from": "start", "intensity": 0.46, "progression": ["Dmaj9", "Bm9", "Gmaj7", "A7sus4"], "arp": "flow", "arpLevel": 0.55, "sub": 0.55, "bell": 0.45 },
+        { "from": "aeons", "intensity": 0.38, "brightness": 0.34, "progression": ["Em9", "A7sus4"], "arp": "sparse", "sub": 0.5 }
+      ]
+    },
+    "S04": {
+      "mood": "a new character arrives: brighter, moving",
+      "parts": [
+        { "from": "start", "intensity": 0.5, "progression": ["Gmaj7", "A", "F#m7", "Bm9"], "arp": "flow", "sub": 0.6, "bell": 0.4 },
+        { "from": "catalyst", "intensity": 0.5, "progression": ["Gmaj7", "A7sus4", "Dmaj9", "Dmaj9/F#"], "arp": "broken", "sub": 0.6, "bell": 0.3 },
+        { "from": "protein", "intensity": 0.44, "progression": ["Em9", "Gmaj7", "Bm9", "A7sus4"], "arp": "sparse", "sub": 0.5, "bell": 0.55 }
+      ]
+    },
+    "S05": {
+      "mood": "the mechanism: steady, precise",
+      "parts": [
+        { "from": "start", "intensity": 0.5, "progression": ["Dmaj9", "Gmaj7", "Bm9", "A7sus4"], "arp": "pulse", "arpLevel": 0.5, "sub": 0.6 },
+        { "from": "lockKey", "intensity": 0.48, "progression": ["Gmaj7", "Dmaj9/F#", "Em9", "A7sus4"], "arp": "broken", "sub": 0.55, "bell": 0.35 },
+        { "from": "differentLink", "intensity": 0.42, "progression": ["Gm6", "A7sus4"], "chordBeats": 4, "sub": 0.5 }
+      ]
+    },
+    "S06": {
+      "mood": "thoughtful: a better model",
+      "parts": [
+        { "from": "start", "intensity": 0.42, "brightness": 0.42, "progression": ["Em9", "Gmaj7", "Dmaj9/F#", "A7sus4"], "arp": "sparse", "bell": 0.5, "sub": 0.45 },
+        { "from": "exam", "intensity": 0.46, "progression": ["Gmaj7", "A", "Dmaj9"], "chordBeats": 4, "arp": "broken", "sub": 0.55 }
+      ]
+    },
+    "S07": {
+      "mood": "myth-busting: confident, a little playful",
+      "parts": [
+        { "from": "start", "intensity": 0.52, "progression": ["Dmaj9", "A/C#", "Bm9", "Gmaj7"], "arp": "flow", "sub": 0.6, "bell": 0.35 },
+        { "from": "catalase", "intensity": 0.58, "progression": ["Gmaj7", "A", "Bm9", "Dmaj9/F#"], "arp": "fast", "arpLevel": 0.42, "sub": 0.6 },
+        { "from": "wear", "intensity": 0.45, "progression": ["Em9", "A7sus4"], "arp": "sparse", "sub": 0.5, "bell": 0.4 }
+      ]
+    },
+    "S08": {
+      "mood": "warming up: rising energy and brightness",
+      "parts": [
+        { "from": "start", "intensity": [0.42, 0.6], "brightness": [0.4, 0.66], "progression": ["Dmaj9", "Em9", "Dmaj9/F#", "Gmaj7"], "arp": "flow", "arpLevel": [0.45, 0.65], "sub": 0.6 },
+        { "from": "optimum", "intensity": 0.6, "brightness": 0.66, "progression": ["Gmaj7", "A7sus4"], "arp": "broken", "sub": 0.65, "bell": 0.4 }
+      ]
+    },
+    "S09": {
+      "mood": "tension: an unresolved dominant over a pedal A, then near-silence for the pause",
+      "parts": [
+        { "from": "start", "intensity": 0.5, "brightness": 0.48, "pedal": "A", "progression": ["A7sus4"], "chordBeats": 16, "sub": 0.6 },
+        { "from": "t50", "intensity": [0.5, 0.62], "brightness": [0.5, 0.74], "pedal": "A", "progression": ["Gmaj7/A", "A7sus4"], "chordBeats": 4, "tremolo": [0.3, 0.7], "arp": "pulse", "arpLevel": [0.35, 0.55], "sub": 0.7 },
+        { "from": "pauseNow", "intensity": 0.45, "brightness": 0.5, "pedal": "A", "progression": ["A7sus4"], "tremolo": 0.3, "sub": 0.5 }
+      ]
+    },
+    "S10": {
+      "mood": "denaturation: darker colour (B minor, borrowed chords), then recovery",
+      "parts": [
+        { "from": "start", "intensity": 0.5, "brightness": 0.3, "progression": ["Bm9", "Gm6/Bb"], "chordBeats": 4, "sub": 0.75, "motif": "dark" },
+        { "from": "bonds", "intensity": 0.44, "brightness": 0.3, "progression": ["Bm9", "Gmaj7", "Em9", "F#sus4"], "arp": "sparse", "arpLevel": 0.45, "sub": 0.6 },
+        { "from": "shake", "intensity": 0.52, "brightness": 0.42, "progression": ["Gm6", "F#sus4"], "chordBeats": 4, "tremolo": 0.6, "tremoloRate": 4, "sub": 0.7 },
+        { "from": "denatured", "intensity": 0.38, "brightness": 0.25, "progression": ["Bm9"], "sub": 0.55 },
+        { "from": "egg", "intensity": 0.42, "brightness": 0.35, "progression": ["Gmaj7", "Em9"], "arp": "sparse", "sub": 0.5 },
+        { "from": "cold", "intensity": 0.4, "brightness": 0.28, "progression": ["Gmaj7", "A7sus4"], "bell": 0.4, "sub": 0.45 },
+        { "from": "rewarm", "intensity": 0.48, "brightness": 0.5, "progression": ["Dmaj9"], "arp": "flow", "sub": 0.55 }
+      ]
+    },
+    "S11": {
+      "mood": "myth-busting again: confident",
+      "parts": [
+        { "from": "start", "intensity": 0.5, "progression": ["Gmaj7", "A", "Bm9", "Dmaj9/F#"], "arp": "pulse", "arpLevel": 0.5, "sub": 0.6 },
+        { "from": "marks", "intensity": 0.52, "progression": ["Gmaj7", "A7sus4"], "chordBeats": 4, "arp": "broken", "sub": 0.6, "bell": 0.35 }
+      ]
+    },
+    "S12": {
+      "mood": "inquisitive, flowing; a shade darker for the acidic stomach",
+      "parts": [
+        { "from": "start", "intensity": 0.46, "progression": ["Em9", "A7sus4", "Dmaj9", "Bm9"], "arp": "broken", "sub": 0.55, "bell": 0.4 },
+        { "from": "stomach", "intensity": 0.44, "brightness": 0.36, "progression": ["Bm9", "Gm6"], "arp": "sparse", "sub": 0.55 },
+        { "from": "tuned", "intensity": 0.5, "progression": ["Gmaj7", "A7sus4"], "chordBeats": 4, "arp": "flow", "sub": 0.6 }
+      ]
+    },
+    "S13": {
+      "mood": "warm, full resolve: the hook's motif returns and finally lands home",
+      "parts": [
+        { "from": "start", "intensity": 0.5, "progression": ["Gmaj7", "Bm9"], "motif": "question", "motifAtBeat": 2, "arp": "sparse", "sub": 0.6 },
+        { "from": "conditions", "intensity": 0.62, "progression": ["Dmaj9", "A/C#", "Bm9", "Gmaj7"], "arp": "flow", "sub": 0.7, "bell": 0.4 },
+        { "from": "tongue", "intensity": 0.74, "brightness": 0.66, "progression": ["Gmaj7", "A7sus4", "Dmaj9"], "chordBeats": 4, "motif": "answer", "arp": "flow", "arpLevel": 0.5, "sub": 0.8 },
+        { "from": "title", "intensity": 0.7, "brightness": 0.62, "progression": ["Dmaj9"], "sub": 0.8 }
+      ]
+    },
+    "S14": {
+      "mood": "gentle ending tail",
+      "intensity": [0.74, 0.45], "brightness": [0.62, 0.42], "progression": ["Dmaj9"], "motif": "home", "sub": [0.7, 0.3]
+    }
+  },
+  "events": [
+    { "type": "dropout", "from": "S09.lastWordEnd-0.5", "to": "S09.end", "levelDb": -30, "fadeOutSec": 0.9, "fadeInSec": 0.1, "airNotes": [81, 88], "airDb": -26,
+      "about": "Near-silence under the 4-second pause-and-predict countdown (starts fading 0.5 s before the narrator finishes, so it never swells as the voice stops); a faint open fifth (A5 + E6), 26 dB under the music, keeps the question hanging." }
+  ]
+}

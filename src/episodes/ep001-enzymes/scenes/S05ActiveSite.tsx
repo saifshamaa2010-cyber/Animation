@@ -18,6 +18,7 @@ import { prog, thermalAmplitude, window01 } from "../../../lib/motion";
 import { track, pulse } from "../../../lib/track";
 import { blendJit, jit, jitTransform, moveRings, toScreen } from "../../../lib/world";
 import { useScene } from "../../../lib/timeline";
+import { DepthMolecules } from "../../../components/kit";
 import { s05Timing } from "./S05ActiveSite.timing";
 
 const E = { x: 1200, y: 560, s: 1.6 } as const;
@@ -225,6 +226,7 @@ export const S05ActiveSite: React.FC = () => {
         </g>
       </g>
 
+      <DepthMolecules count={4} seed={51} kind="mixed" opacity={0.3} />
       {/* ---- screen-space annotations */}
       <Label anchor={lipTop} at={[lipTop[0] - 30, lipTop[1] - 190]} text="active site" align="end" progress={prog(f, sc.word("active", 1, -2), 22)} opacity={1 - prog(f, k.complex + 30, 12)} />
       <Label anchor={subAnchor} at={[subAnchor[0] - 60, subAnchor[1] + 170]} text="substrate" sub="starch" align="end" progress={prog(f, sc.word("substrate", 1, -2), 22)} opacity={1 - prog(f, k.held, 12)} />

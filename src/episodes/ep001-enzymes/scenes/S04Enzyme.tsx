@@ -22,6 +22,7 @@ import { prog, thermalAmplitude, window01 } from "../../../lib/motion";
 import { pulse, track } from "../../../lib/track";
 import { blendJit, jit, jitTransform, moveRings, toScreen } from "../../../lib/world";
 import { useScene } from "../../../lib/timeline";
+import { DepthMolecules } from "../../../components/kit";
 import { s04Timing } from "./S04Enzyme.timing";
 
 const E = { y: 560, s: 1.35, xDock: 1240 } as const;
@@ -230,6 +231,7 @@ export const S04Enzyme: React.FC = () => {
         ) : null}
       </g>
 
+      <DepthMolecules count={4} seed={41} kind="mixed" opacity={0.3 * (1 - window01(f, k.every, k.protein + 40, 20))} />
       {/* ---------------- screen-space text */}
       <Scrim opacity={window01(f, k.every + 10, k.protein + 10, 16)} />
       <Label anchor={heroTop} at={[heroTop[0] - 120, heroTop[1] - 120]} text="amylase" sub="made in your salivary glands" align="end" color={C.tealLight} progress={prog(f, sc.word("amylase", 1, -2), 22)} opacity={1 - prog(f, k.maltose - 10, 12)} />

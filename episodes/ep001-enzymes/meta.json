@@ -1,0 +1,26 @@
+{
+  "title": "How Enzymes Actually Work",
+  "titleOptions": [
+    "How Enzymes Actually Work",
+    "Why Bread Turns Sweet When You Chew It (Enzymes Explained)",
+    "Enzymes in 5 Minutes: Active Site, Temperature & pH (GCSE/IGCSE)"
+  ],
+  "hook": "Chew a plain cracker for a minute and it starts to taste a little sweet — even though there's almost no sugar in it. The reason is an enzyme in your saliva, doing in seconds what would otherwise take a million years. In this video: what enzymes are, the active site and the lock-and-key model (and why it's a simplification), how temperature and pH affect enzymes, what 'denatured' really means — and two myths that cost marks in exams.",
+  "chapters": {
+    "S01": "Try this with a cracker",
+    "S03": "Starch: a chain of glucose",
+    "S04": "Meet amylase, a biological catalyst",
+    "S05": "Active site & lock and key",
+    "S06": "Induced fit (the better model)",
+    "S07": "Myth 1: enzymes get used up",
+    "S08": "Temperature & the optimum",
+    "S09": "Pause & predict",
+    "S10": "Denaturation",
+    "S11": "Myth 2: heat 'kills' enzymes",
+    "S12": "pH",
+    "S13": "Back to the cracker"
+  },
+  "keyTerms": ["enzyme", "biological catalyst", "active site", "substrate", "enzyme–substrate complex", "complementary", "specific", "lock and key", "induced fit", "kinetic energy", "successful collisions", "optimum", "denatured", "carbohydrase", "protease", "metabolism"],
+  "coverage": "Covers GCSE (AQA, Edexcel, OCR) and IGCSE (Cambridge 0610, Edexcel 4BI1) enzyme action, temperature and pH. Edexcel and OCR also examine substrate and enzyme concentration, which this video doesn't cover.",
+  "tags": ["enzymes", "GCSE biology", "IGCSE biology", "active site", "lock and key", "denatured", "amylase", "biology revision", "enzyme temperature", "enzyme pH"]
+}

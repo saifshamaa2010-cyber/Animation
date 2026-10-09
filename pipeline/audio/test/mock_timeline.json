@@ -1,0 +1,5837 @@
+{
+ "episode": "ep001-enzymes",
+ "fps": 30,
+ "provider": "mock",
+ "voice": "synthetic-placeholder",
+ "narration": "pipeline/audio/test/out/mock_narration.wav",
+ "durationSec": 340.635,
+ "durationFrames": 10219,
+ "scenes": [
+  {
+   "id": "S01",
+   "slug": "hook",
+   "startSec": 0.0,
+   "endSec": 23.028,
+   "startFrame": 0,
+   "endFrame": 691,
+   "cues": {
+    "cracker": {
+     "sec": 0.03,
+     "frame": 1
+    },
+    "chew": {
+     "sec": 6.332,
+     "frame": 190
+    },
+    "timer": {
+     "sec": 8.315,
+     "frame": 249
+    },
+    "sweet": {
+     "sec": 10.39,
+     "frame": 312
+    },
+    "question": {
+     "sec": 12.842,
+     "frame": 385
+    },
+    "answer": {
+     "sec": 17.462,
+     "frame": 524
+    },
+    "millions": {
+     "sec": 19.309,
+     "frame": 579
+    }
+   }
+  },
+  {
+   "id": "S02",
+   "slug": "title",
+   "startSec": 23.028,
+   "endSec": 26.028,
+   "startFrame": 691,
+   "endFrame": 781,
+   "cues": {}
+  },
+  {
+   "id": "S03",
+   "slug": "starch",
+   "startSec": 26.028,
+   "endSec": 47.534,
+   "startFrame": 781,
+   "endFrame": 1426,
+   "cues": {
+    "starch": {
+     "sec": 26.058,
+     "frame": 782
+    },
+    "zoom": {
+     "sec": 28.032,
+     "frame": 841
+    },
+    "chain": {
+     "sec": 30.434,
+     "frame": 913
+    },
+    "notSweet": {
+     "sec": 34.783,
+     "frame": 1043
+    },
+    "links": {
+     "sec": 40.008,
+     "frame": 1200
+    },
+    "aeons": {
+     "sec": 41.801,
+     "frame": 1254
+    }
+   }
+  },
+  {
+   "id": "S04",
+   "slug": "enzyme",
+   "startSec": 47.534,
+   "endSec": 85.625,
+   "startFrame": 1426,
+   "endFrame": 2569,
+   "cues": {
+    "amylase": {
+     "sec": 47.864,
+     "frame": 1436
+    },
+    "snip": {
+     "sec": 51.555,
+     "frame": 1547
+    },
+    "maltose": {
+     "sec": 54.98,
+     "frame": 1649
+    },
+    "sweetTaste": {
+     "sec": 58.923,
+     "frame": 1768
+    },
+    "catalyst": {
+     "sec": 60.786,
+     "frame": 1824
+    },
+    "unchanged": {
+     "sec": 65.544,
+     "frame": 1966
+    },
+    "everywhere": {
+     "sec": 67.849,
+     "frame": 2035
+    },
+    "protein": {
+     "sec": 78.107,
+     "frame": 2343
+    },
+    "fold": {
+     "sec": 81.882,
+     "frame": 2456
+    },
+    "shape": {
+     "sec": 83.902,
+     "frame": 2517
+    }
+   }
+  },
+  {
+   "id": "S05",
+   "slug": "active-site",
+   "startSec": 85.625,
+   "endSec": 127.089,
+   "startFrame": 2569,
+   "endFrame": 3813,
+   "cues": {
+    "site": {
+     "sec": 85.955,
+     "frame": 2579
+    },
+    "substrate": {
+     "sec": 89.659,
+     "frame": 2690
+    },
+    "complex": {
+     "sec": 92.888,
+     "frame": 2787
+    },
+    "held": {
+     "sec": 95.031,
+     "frame": 2851
+    },
+    "break": {
+     "sec": 98.225,
+     "frame": 2947
+    },
+    "release": {
+     "sec": 98.877,
+     "frame": 2966
+    },
+    "next": {
+     "sec": 99.973,
+     "frame": 2999
+    },
+    "lockKey": {
+     "sec": 103.168,
+     "frame": 3095
+    },
+    "specific": {
+     "sec": 112.655,
+     "frame": 3380
+    },
+    "cellulose": {
+     "sec": 118.422,
+     "frame": 3553
+    },
+    "differentLink": {
+     "sec": 123.772,
+     "frame": 3713
+    }
+   }
+  },
+  {
+   "id": "S06",
+   "slug": "induced-fit",
+   "startSec": 127.089,
+   "endSec": 149.231,
+   "startFrame": 3813,
+   "endFrame": 4477,
+   "cues": {
+    "simplification": {
+     "sec": 127.419,
+     "frame": 3823
+    },
+    "flex": {
+     "sec": 131.712,
+     "frame": 3951
+    },
+    "grip": {
+     "sec": 133.594,
+     "frame": 4008
+    },
+    "inducedFit": {
+     "sec": 137.336,
+     "frame": 4120
+    },
+    "exam": {
+     "sec": 140.52,
+     "frame": 4216
+    }
+   }
+  },
+  {
+   "id": "S07",
+   "slug": "myth-used-up",
+   "startSec": 149.231,
+   "endSec": 176.433,
+   "startFrame": 4477,
+   "endFrame": 5293,
+   "cues": {
+    "myth1": {
+     "sec": 149.661,
+     "frame": 4490
+    },
+    "bust1": {
+     "sec": 153.864,
+     "frame": 4616
+    },
+    "again": {
+     "sec": 157.44,
+     "frame": 4723
+    },
+    "catalase": {
+     "sec": 159.747,
+     "frame": 4792
+    },
+    "wear": {
+     "sec": 170.679,
+     "frame": 5120
+    },
+    "notConsumed": {
+     "sec": 173.864,
+     "frame": 5216
+    }
+   }
+  },
+  {
+   "id": "S08",
+   "slug": "temperature",
+   "startSec": 176.433,
+   "endSec": 208.571,
+   "startFrame": 5293,
+   "endFrame": 6257,
+   "cues": {
+    "temperature": {
+     "sec": 176.863,
+     "frame": 5306
+    },
+    "jiggle": {
+     "sec": 178.24,
+     "frame": 5347
+    },
+    "warm": {
+     "sec": 180.763,
+     "frame": 5423
+    },
+    "collide": {
+     "sec": 184.86,
+     "frame": 5546
+    },
+    "faster": {
+     "sec": 189.824,
+     "frame": 5695
+    },
+    "upToAPoint": {
+     "sec": 197.597,
+     "frame": 5928
+    },
+    "optimum": {
+     "sec": 200.147,
+     "frame": 6004
+    }
+   }
+  },
+  {
+   "id": "S09",
+   "slug": "predict",
+   "startSec": 208.571,
+   "endSec": 223.282,
+   "startFrame": 6257,
+   "endFrame": 6698,
+   "cues": {
+    "predict": {
+     "sec": 209.001,
+     "frame": 6270
+    },
+    "t50": {
+     "sec": 211.787,
+     "frame": 6354
+    },
+    "t60": {
+     "sec": 212.876,
+     "frame": 6386
+    },
+    "t70": {
+     "sec": 213.649,
+     "frame": 6409
+    },
+    "question": {
+     "sec": 214.562,
+     "frame": 6437
+    },
+    "pauseNow": {
+     "sec": 216.968,
+     "frame": 6509
+    }
+   }
+  },
+  {
+   "id": "S10",
+   "slug": "denature",
+   "startSec": 223.282,
+   "endSec": 261.363,
+   "startFrame": 6698,
+   "endFrame": 7841,
+   "cues": {
+    "reveal": {
+     "sec": 223.312,
+     "frame": 6699
+    },
+    "crash": {
+     "sec": 225.204,
+     "frame": 6756
+    },
+    "bonds": {
+     "sec": 227.894,
+     "frame": 6837
+    },
+    "shake": {
+     "sec": 231.617,
+     "frame": 6949
+    },
+    "unravel": {
+     "sec": 235.638,
+     "frame": 7069
+    },
+    "siteLost": {
+     "sec": 236.831,
+     "frame": 7105
+    },
+    "noFit": {
+     "sec": 238.798,
+     "frame": 7164
+    },
+    "denatured": {
+     "sec": 240.922,
+     "frame": 7228
+    },
+    "egg": {
+     "sec": 243.18,
+     "frame": 7295
+    },
+    "noUndo": {
+     "sec": 247.129,
+     "frame": 7414
+    },
+    "cold": {
+     "sec": 251.535,
+     "frame": 7546
+    },
+    "rewarm": {
+     "sec": 259.329,
+     "frame": 7780
+    }
+   }
+  },
+  {
+   "id": "S11",
+   "slug": "myth-killed",
+   "startSec": 261.363,
+   "endSec": 281.894,
+   "startFrame": 7841,
+   "endFrame": 8457,
+   "cues": {
+    "myth2": {
+     "sec": 261.793,
+     "frame": 7854
+    },
+    "notAlive": {
+     "sec": 265.105,
+     "frame": 7953
+    },
+    "molecule": {
+     "sec": 266.961,
+     "frame": 8009
+    },
+    "correct": {
+     "sec": 271.624,
+     "frame": 8149
+    },
+    "marks": {
+     "sec": 278.859,
+     "frame": 8366
+    }
+   }
+  },
+  {
+   "id": "S12",
+   "slug": "ph",
+   "startSec": 281.894,
+   "endSec": 310.558,
+   "startFrame": 8457,
+   "endFrame": 9317,
+   "cues": {
+    "ph": {
+     "sec": 282.324,
+     "frame": 8470
+    },
+    "disrupt": {
+     "sec": 283.984,
+     "frame": 8520
+    },
+    "phOptimum": {
+     "sec": 292.825,
+     "frame": 8785
+    },
+    "amylasePh": {
+     "sec": 295.63,
+     "frame": 8869
+    },
+    "stomach": {
+     "sec": 299.968,
+     "frame": 8999
+    },
+    "pepsin": {
+     "sec": 303.209,
+     "frame": 9096
+    },
+    "tuned": {
+     "sec": 307.836,
+     "frame": 9235
+    }
+   }
+  },
+  {
+   "id": "S13",
+   "slug": "resolve",
+   "startSec": 310.558,
+   "endSec": 336.635,
+   "startFrame": 9317,
+   "endFrame": 10099,
+   "cues": {
+    "back": {
+     "sec": 311.088,
+     "frame": 9333
+    },
+    "chew": {
+     "sec": 312.957,
+     "frame": 9389
+    },
+    "fit": {
+     "sec": 315.501,
+     "frame": 9465
+    },
+    "cut": {
+     "sec": 317.292,
+     "frame": 9519
+    },
+    "again": {
+     "sec": 319.177,
+     "frame": 9575
+    },
+    "conditions": {
+     "sec": 321.984,
+     "frame": 9660
+    },
+    "aeons": {
+     "sec": 326.031,
+     "frame": 9781
+    },
+    "tongue": {
+     "sec": 330.976,
+     "frame": 9929
+    },
+    "title": {
+     "sec": 334.511,
+     "frame": 10035
+    }
+   }
+  },
+  {
+   "id": "S14",
+   "slug": "end",
+   "startSec": 336.635,
+   "endSec": 340.635,
+   "startFrame": 10099,
+   "endFrame": 10219,
+   "cues": {}
+  }
+ ],
+ "words": [
+  {
+   "text": "Here's",
+   "startSec": 0.03,
+   "endSec": 0.416,
+   "scene": "S01"
+  },
+  {
+   "text": "an",
+   "startSec": 0.435,
+   "endSec": 0.659,
+   "scene": "S01"
+  },
+  {
+   "text": "experiment",
+   "startSec": 0.692,
+   "endSec": 1.288,
+   "scene": "S01"
+  },
+  {
+   "text": "you",
+   "startSec": 1.315,
+   "endSec": 1.49,
+   "scene": "S01"
+  },
+  {
+   "text": "can",
+   "startSec": 1.506,
+   "endSec": 1.704,
+   "scene": "S01"
+  },
+  {
+   "text": "do",
+   "startSec": 1.718,
+   "endSec": 1.938,
+   "scene": "S01"
+  },
+  {
+   "text": "with",
+   "startSec": 1.969,
+   "endSec": 2.178,
+   "scene": "S01"
+  },
+  {
+   "text": "your",
+   "startSec": 2.211,
+   "endSec": 2.405,
+   "scene": "S01"
+  },
+  {
+   "text": "lunch.",
+   "startSec": 2.454,
+   "endSec": 2.678,
+   "scene": "S01"
+  },
+  {
+   "text": "Take",
+   "startSec": 3.098,
+   "endSec": 3.308,
+   "scene": "S01"
+  },
+  {
+   "text": "a",
+   "startSec": 3.346,
+   "endSec": 3.557,
+   "scene": "S01"
+  },
+  {
+   "text": "plain",
+   "startSec": 3.567,
+   "endSec": 3.813,
+   "scene": "S01"
+  },
+  {
+   "text": "cracker,",
+   "startSec": 3.835,
+   "endSec": 4.17,
+   "scene": "S01"
+  },
+  {
+   "text": "one",
+   "startSec": 4.37,
+   "endSec": 4.711,
+   "scene": "S01"
+  },
+  {
+   "text": "without",
+   "startSec": 4.745,
+   "endSec": 5.129,
+   "scene": "S01"
+  },
+  {
+   "text": "added",
+   "startSec": 5.17,
+   "endSec": 5.51,
+   "scene": "S01"
+  },
+  {
+   "text": "sugar,",
+   "startSec": 5.548,
+   "endSec": 5.875,
+   "scene": "S01"
+  },
+  {
+   "text": "and",
+   "startSec": 6.075,
+   "endSec": 6.284,
+   "scene": "S01"
+  },
+  {
+   "text": "keep",
+   "startSec": 6.332,
+   "endSec": 6.558,
+   "scene": "S01"
+  },
+  {
+   "text": "chewing.",
+   "startSec": 6.593,
+   "endSec": 6.952,
+   "scene": "S01"
+  },
+  {
+   "text": "Don't",
+   "startSec": 7.372,
+   "endSec": 7.53,
+   "scene": "S01"
+  },
+  {
+   "text": "swallow.",
+   "startSec": 7.569,
+   "endSec": 7.895,
+   "scene": "S01"
+  },
+  {
+   "text": "Give",
+   "startSec": 8.315,
+   "endSec": 8.497,
+   "scene": "S01"
+  },
+  {
+   "text": "it",
+   "startSec": 8.533,
+   "endSec": 8.762,
+   "scene": "S01"
+  },
+  {
+   "text": "a",
+   "startSec": 8.805,
+   "endSec": 8.998,
+   "scene": "S01"
+  },
+  {
+   "text": "minute",
+   "startSec": 9.039,
+   "endSec": 9.382,
+   "scene": "S01"
+  },
+  {
+   "text": "or",
+   "startSec": 9.397,
+   "endSec": 9.627,
+   "scene": "S01"
+  },
+  {
+   "text": "so\u2026",
+   "startSec": 9.652,
+   "endSec": 9.89,
+   "scene": "S01"
+  },
+  {
+   "text": "and",
+   "startSec": 10.39,
+   "endSec": 10.6,
+   "scene": "S01"
+  },
+  {
+   "text": "it",
+   "startSec": 10.638,
+   "endSec": 10.865,
+   "scene": "S01"
+  },
+  {
+   "text": "starts",
+   "startSec": 10.91,
+   "endSec": 11.121,
+   "scene": "S01"
+  },
+  {
+   "text": "to",
+   "startSec": 11.153,
+   "endSec": 11.373,
+   "scene": "S01"
+  },
+  {
+   "text": "taste",
+   "startSec": 11.407,
+   "endSec": 11.636,
+   "scene": "S01"
+  },
+  {
+   "text": "a",
+   "startSec": 11.653,
+   "endSec": 11.835,
+   "scene": "S01"
+  },
+  {
+   "text": "little",
+   "startSec": 11.875,
+   "endSec": 12.071,
+   "scene": "S01"
+  },
+  {
+   "text": "sweet.",
+   "startSec": 12.118,
+   "endSec": 12.292,
+   "scene": "S01"
+  },
+  {
+   "text": "But",
+   "startSec": 12.842,
+   "endSec": 13.039,
+   "scene": "S01"
+  },
+  {
+   "text": "you",
+   "startSec": 13.056,
+   "endSec": 13.294,
+   "scene": "S01"
+  },
+  {
+   "text": "didn't",
+   "startSec": 13.329,
+   "endSec": 13.524,
+   "scene": "S01"
+  },
+  {
+   "text": "add",
+   "startSec": 13.573,
+   "endSec": 13.778,
+   "scene": "S01"
+  },
+  {
+   "text": "any",
+   "startSec": 13.819,
+   "endSec": 14.152,
+   "scene": "S01"
+  },
+  {
+   "text": "sugar.",
+   "startSec": 14.177,
+   "endSec": 14.498,
+   "scene": "S01"
+  },
+  {
+   "text": "So",
+   "startSec": 14.918,
+   "endSec": 15.14,
+   "scene": "S01"
+  },
+  {
+   "text": "where's",
+   "startSec": 15.159,
+   "endSec": 15.532,
+   "scene": "S01"
+  },
+  {
+   "text": "that",
+   "startSec": 15.547,
+   "endSec": 15.754,
+   "scene": "S01"
+  },
+  {
+   "text": "sweetness",
+   "startSec": 15.784,
+   "endSec": 16.163,
+   "scene": "S01"
+  },
+  {
+   "text": "coming",
+   "startSec": 16.211,
+   "endSec": 16.571,
+   "scene": "S01"
+  },
+  {
+   "text": "from?",
+   "startSec": 16.59,
+   "endSec": 16.812,
+   "scene": "S01"
+  },
+  {
+   "text": "A",
+   "startSec": 17.462,
+   "endSec": 17.664,
+   "scene": "S01"
+  },
+  {
+   "text": "molecule",
+   "startSec": 17.676,
+   "endSec": 18.135,
+   "scene": "S01"
+  },
+  {
+   "text": "in",
+   "startSec": 18.16,
+   "endSec": 18.346,
+   "scene": "S01"
+  },
+  {
+   "text": "your",
+   "startSec": 18.383,
+   "endSec": 18.591,
+   "scene": "S01"
+  },
+  {
+   "text": "saliva,",
+   "startSec": 18.622,
+   "endSec": 19.109,
+   "scene": "S01"
+  },
+  {
+   "text": "doing",
+   "startSec": 19.309,
+   "endSec": 19.499,
+   "scene": "S01"
+  },
+  {
+   "text": "in",
+   "startSec": 19.528,
+   "endSec": 19.743,
+   "scene": "S01"
+  },
+  {
+   "text": "a",
+   "startSec": 19.773,
+   "endSec": 20.003,
+   "scene": "S01"
+  },
+  {
+   "text": "minute",
+   "startSec": 20.044,
+   "endSec": 20.382,
+   "scene": "S01"
+  },
+  {
+   "text": "what",
+   "startSec": 20.393,
+   "endSec": 20.603,
+   "scene": "S01"
+  },
+  {
+   "text": "would",
+   "startSec": 20.621,
+   "endSec": 20.821,
+   "scene": "S01"
+  },
+  {
+   "text": "otherwise",
+   "startSec": 20.846,
+   "endSec": 21.319,
+   "scene": "S01"
+  },
+  {
+   "text": "take",
+   "startSec": 21.365,
+   "endSec": 21.585,
+   "scene": "S01"
+  },
+  {
+   "text": "a",
+   "startSec": 21.609,
+   "endSec": 21.854,
+   "scene": "S01"
+  },
+  {
+   "text": "million",
+   "startSec": 21.883,
+   "endSec": 22.187,
+   "scene": "S01"
+  },
+  {
+   "text": "years",
+   "startSec": 22.219,
+   "endSec": 22.422,
+   "scene": "S01"
+  },
+  {
+   "text": "or",
+   "startSec": 22.454,
+   "endSec": 22.624,
+   "scene": "S01"
+  },
+  {
+   "text": "more.",
+   "startSec": 22.672,
+   "endSec": 22.908,
+   "scene": "S01"
+  },
+  {
+   "text": "Crackers",
+   "startSec": 26.058,
+   "endSec": 26.377,
+   "scene": "S03"
+  },
+  {
+   "text": "are",
+   "startSec": 26.419,
+   "endSec": 26.748,
+   "scene": "S03"
+  },
+  {
+   "text": "packed",
+   "startSec": 26.769,
+   "endSec": 27.126,
+   "scene": "S03"
+  },
+  {
+   "text": "with",
+   "startSec": 27.15,
+   "endSec": 27.361,
+   "scene": "S03"
+  },
+  {
+   "text": "starch.",
+   "startSec": 27.394,
+   "endSec": 27.612,
+   "scene": "S03"
+  },
+  {
+   "text": "Zoom",
+   "startSec": 28.032,
+   "endSec": 28.282,
+   "scene": "S03"
+  },
+  {
+   "text": "right",
+   "startSec": 28.316,
+   "endSec": 28.558,
+   "scene": "S03"
+  },
+  {
+   "text": "in,",
+   "startSec": 28.586,
+   "endSec": 28.797,
+   "scene": "S03"
+  },
+  {
+   "text": "and",
+   "startSec": 28.997,
+   "endSec": 29.196,
+   "scene": "S03"
+  },
+  {
+   "text": "starch",
+   "startSec": 29.209,
+   "endSec": 29.437,
+   "scene": "S03"
+  },
+  {
+   "text": "is",
+   "startSec": 29.468,
+   "endSec": 29.674,
+   "scene": "S03"
+  },
+  {
+   "text": "a",
+   "startSec": 29.71,
+   "endSec": 29.911,
+   "scene": "S03"
+  },
+  {
+   "text": "chain:",
+   "startSec": 29.929,
+   "endSec": 30.154,
+   "scene": "S03"
+  },
+  {
+   "text": "hundreds,",
+   "startSec": 30.434,
+   "endSec": 30.828,
+   "scene": "S03"
+  },
+  {
+   "text": "even",
+   "startSec": 31.028,
+   "endSec": 31.368,
+   "scene": "S03"
+  },
+  {
+   "text": "thousands,",
+   "startSec": 31.389,
+   "endSec": 31.711,
+   "scene": "S03"
+  },
+  {
+   "text": "of",
+   "startSec": 31.911,
+   "endSec": 32.099,
+   "scene": "S03"
+  },
+  {
+   "text": "glucose",
+   "startSec": 32.131,
+   "endSec": 32.493,
+   "scene": "S03"
+  },
+  {
+   "text": "molecules,",
+   "startSec": 32.508,
+   "endSec": 33.119,
+   "scene": "S03"
+  },
+  {
+   "text": "linked",
+   "startSec": 33.319,
+   "endSec": 33.667,
+   "scene": "S03"
+  },
+  {
+   "text": "end",
+   "startSec": 33.712,
+   "endSec": 33.897,
+   "scene": "S03"
+  },
+  {
+   "text": "to",
+   "startSec": 33.928,
+   "endSec": 34.145,
+   "scene": "S03"
+  },
+  {
+   "text": "end.",
+   "startSec": 34.157,
+   "endSec": 34.363,
+   "scene": "S03"
+  },
+  {
+   "text": "Glucose",
+   "startSec": 34.783,
+   "endSec": 35.111,
+   "scene": "S03"
+  },
+  {
+   "text": "is",
+   "startSec": 35.152,
+   "endSec": 35.384,
+   "scene": "S03"
+  },
+  {
+   "text": "a",
+   "startSec": 35.416,
+   "endSec": 35.628,
+   "scene": "S03"
+  },
+  {
+   "text": "sugar,",
+   "startSec": 35.64,
+   "endSec": 35.998,
+   "scene": "S03"
+  },
+  {
+   "text": "but",
+   "startSec": 36.198,
+   "endSec": 36.447,
+   "scene": "S03"
+  },
+  {
+   "text": "locked",
+   "startSec": 36.467,
+   "endSec": 36.829,
+   "scene": "S03"
+  },
+  {
+   "text": "up",
+   "startSec": 36.855,
+   "endSec": 37.073,
+   "scene": "S03"
+  },
+  {
+   "text": "in",
+   "startSec": 37.111,
+   "endSec": 37.347,
+   "scene": "S03"
+  },
+  {
+   "text": "a",
+   "startSec": 37.372,
+   "endSec": 37.59,
+   "scene": "S03"
+  },
+  {
+   "text": "chain",
+   "startSec": 37.62,
+   "endSec": 37.83,
+   "scene": "S03"
+  },
+  {
+   "text": "like",
+   "startSec": 37.86,
+   "endSec": 38.091,
+   "scene": "S03"
+  },
+  {
+   "text": "this,",
+   "startSec": 38.119,
+   "endSec": 38.377,
+   "scene": "S03"
+  },
+  {
+   "text": "it",
+   "startSec": 38.577,
+   "endSec": 38.813,
+   "scene": "S03"
+  },
+  {
+   "text": "doesn't",
+   "startSec": 38.861,
+   "endSec": 39.076,
+   "scene": "S03"
+  },
+  {
+   "text": "taste",
+   "startSec": 39.099,
+   "endSec": 39.318,
+   "scene": "S03"
+  },
+  {
+   "text": "sweet.",
+   "startSec": 39.355,
+   "endSec": 39.558,
+   "scene": "S03"
+  },
+  {
+   "text": "And",
+   "startSec": 40.008,
+   "endSec": 40.231,
+   "scene": "S03"
+  },
+  {
+   "text": "those",
+   "startSec": 40.276,
+   "endSec": 40.523,
+   "scene": "S03"
+  },
+  {
+   "text": "links",
+   "startSec": 40.555,
+   "endSec": 40.791,
+   "scene": "S03"
+  },
+  {
+   "text": "are",
+   "startSec": 40.828,
+   "endSec": 41.153,
+   "scene": "S03"
+  },
+  {
+   "text": "tough.",
+   "startSec": 41.19,
+   "endSec": 41.381,
+   "scene": "S03"
+  },
+  {
+   "text": "Left",
+   "startSec": 41.801,
+   "endSec": 42.019,
+   "scene": "S03"
+  },
+  {
+   "text": "alone",
+   "startSec": 42.049,
+   "endSec": 42.397,
+   "scene": "S03"
+  },
+  {
+   "text": "in",
+   "startSec": 42.428,
+   "endSec": 42.676,
+   "scene": "S03"
+  },
+  {
+   "text": "water",
+   "startSec": 42.712,
+   "endSec": 43.06,
+   "scene": "S03"
+  },
+  {
+   "text": "at",
+   "startSec": 43.086,
+   "endSec": 43.269,
+   "scene": "S03"
+  },
+  {
+   "text": "room",
+   "startSec": 43.308,
+   "endSec": 43.488,
+   "scene": "S03"
+  },
+  {
+   "text": "temperature,",
+   "startSec": 43.532,
+   "endSec": 44.137,
+   "scene": "S03"
+  },
+  {
+   "text": "a",
+   "startSec": 44.337,
+   "endSec": 44.574,
+   "scene": "S03"
+  },
+  {
+   "text": "single",
+   "startSec": 44.59,
+   "endSec": 44.788,
+   "scene": "S03"
+  },
+  {
+   "text": "link",
+   "startSec": 44.834,
+   "endSec": 45.038,
+   "scene": "S03"
+  },
+  {
+   "text": "would",
+   "startSec": 45.059,
+   "endSec": 45.275,
+   "scene": "S03"
+  },
+  {
+   "text": "last,",
+   "startSec": 45.311,
+   "endSec": 45.522,
+   "scene": "S03"
+  },
+  {
+   "text": "on",
+   "startSec": 45.722,
+   "endSec": 45.921,
+   "scene": "S03"
+  },
+  {
+   "text": "average,",
+   "startSec": 45.957,
+   "endSec": 46.389,
+   "scene": "S03"
+  },
+  {
+   "text": "millions",
+   "startSec": 46.589,
+   "endSec": 46.931,
+   "scene": "S03"
+  },
+  {
+   "text": "of",
+   "startSec": 46.974,
+   "endSec": 47.211,
+   "scene": "S03"
+  },
+  {
+   "text": "years.",
+   "startSec": 47.238,
+   "endSec": 47.414,
+   "scene": "S03"
+  },
+  {
+   "text": "Enter",
+   "startSec": 47.864,
+   "endSec": 48.212,
+   "scene": "S04"
+  },
+  {
+   "text": "amylase:",
+   "startSec": 48.258,
+   "endSec": 48.712,
+   "scene": "S04"
+  },
+  {
+   "text": "an",
+   "startSec": 48.992,
+   "endSec": 49.217,
+   "scene": "S04"
+  },
+  {
+   "text": "enzyme",
+   "startSec": 49.234,
+   "endSec": 49.544,
+   "scene": "S04"
+  },
+  {
+   "text": "made",
+   "startSec": 49.59,
+   "endSec": 49.802,
+   "scene": "S04"
+  },
+  {
+   "text": "in",
+   "startSec": 49.817,
+   "endSec": 50.008,
+   "scene": "S04"
+  },
+  {
+   "text": "your",
+   "startSec": 50.034,
+   "endSec": 50.264,
+   "scene": "S04"
+  },
+  {
+   "text": "salivary",
+   "startSec": 50.303,
+   "endSec": 50.895,
+   "scene": "S04"
+  },
+  {
+   "text": "glands.",
+   "startSec": 50.931,
+   "endSec": 51.135,
+   "scene": "S04"
+  },
+  {
+   "text": "It's",
+   "startSec": 51.555,
+   "endSec": 51.804,
+   "scene": "S04"
+  },
+  {
+   "text": "a",
+   "startSec": 51.84,
+   "endSec": 52.035,
+   "scene": "S04"
+  },
+  {
+   "text": "carbohydrase:",
+   "startSec": 52.073,
+   "endSec": 52.677,
+   "scene": "S04"
+  },
+  {
+   "text": "it",
+   "startSec": 52.957,
+   "endSec": 53.218,
+   "scene": "S04"
+  },
+  {
+   "text": "snips",
+   "startSec": 53.245,
+   "endSec": 53.463,
+   "scene": "S04"
+  },
+  {
+   "text": "starch",
+   "startSec": 53.48,
+   "endSec": 53.695,
+   "scene": "S04"
+  },
+  {
+   "text": "into",
+   "startSec": 53.739,
+   "endSec": 54.073,
+   "scene": "S04"
+  },
+  {
+   "text": "smaller",
+   "startSec": 54.092,
+   "endSec": 54.441,
+   "scene": "S04"
+  },
+  {
+   "text": "sugars,",
+   "startSec": 54.459,
+   "endSec": 54.78,
+   "scene": "S04"
+  },
+  {
+   "text": "like",
+   "startSec": 54.98,
+   "endSec": 55.23,
+   "scene": "S04"
+  },
+  {
+   "text": "maltose,",
+   "startSec": 55.273,
+   "endSec": 55.636,
+   "scene": "S04"
+  },
+  {
+   "text": "which",
+   "startSec": 55.836,
+   "endSec": 56.052,
+   "scene": "S04"
+  },
+  {
+   "text": "is",
+   "startSec": 56.08,
+   "endSec": 56.281,
+   "scene": "S04"
+  },
+  {
+   "text": "just",
+   "startSec": 56.323,
+   "endSec": 56.557,
+   "scene": "S04"
+  },
+  {
+   "text": "two",
+   "startSec": 56.587,
+   "endSec": 56.793,
+   "scene": "S04"
+  },
+  {
+   "text": "glucose",
+   "startSec": 56.825,
+   "endSec": 57.184,
+   "scene": "S04"
+  },
+  {
+   "text": "units",
+   "startSec": 57.214,
+   "endSec": 57.576,
+   "scene": "S04"
+  },
+  {
+   "text": "joined",
+   "startSec": 57.623,
+   "endSec": 57.966,
+   "scene": "S04"
+  },
+  {
+   "text": "together.",
+   "startSec": 58.002,
+   "endSec": 58.503,
+   "scene": "S04"
+  },
+  {
+   "text": "And",
+   "startSec": 58.923,
+   "endSec": 59.142,
+   "scene": "S04"
+  },
+  {
+   "text": "maltose",
+   "startSec": 59.158,
+   "endSec": 59.517,
+   "scene": "S04"
+  },
+  {
+   "text": "does",
+   "startSec": 59.566,
+   "endSec": 59.777,
+   "scene": "S04"
+  },
+  {
+   "text": "taste",
+   "startSec": 59.802,
+   "endSec": 60.014,
+   "scene": "S04"
+  },
+  {
+   "text": "sweet.",
+   "startSec": 60.057,
+   "endSec": 60.236,
+   "scene": "S04"
+  },
+  {
+   "text": "That's",
+   "startSec": 60.786,
+   "endSec": 61.008,
+   "scene": "S04"
+  },
+  {
+   "text": "what",
+   "startSec": 61.026,
+   "endSec": 61.225,
+   "scene": "S04"
+  },
+  {
+   "text": "an",
+   "startSec": 61.255,
+   "endSec": 61.481,
+   "scene": "S04"
+  },
+  {
+   "text": "enzyme",
+   "startSec": 61.522,
+   "endSec": 61.871,
+   "scene": "S04"
+  },
+  {
+   "text": "is:",
+   "startSec": 61.91,
+   "endSec": 62.114,
+   "scene": "S04"
+  },
+  {
+   "text": "a",
+   "startSec": 62.394,
+   "endSec": 62.645,
+   "scene": "S04"
+  },
+  {
+   "text": "biological",
+   "startSec": 62.663,
+   "endSec": 63.305,
+   "scene": "S04"
+  },
+  {
+   "text": "catalyst.",
+   "startSec": 63.315,
+   "endSec": 63.81,
+   "scene": "S04"
+  },
+  {
+   "text": "It",
+   "startSec": 64.23,
+   "endSec": 64.446,
+   "scene": "S04"
+  },
+  {
+   "text": "speeds",
+   "startSec": 64.465,
+   "endSec": 64.669,
+   "scene": "S04"
+  },
+  {
+   "text": "up",
+   "startSec": 64.695,
+   "endSec": 64.887,
+   "scene": "S04"
+  },
+  {
+   "text": "a",
+   "startSec": 64.915,
+   "endSec": 65.137,
+   "scene": "S04"
+  },
+  {
+   "text": "reaction",
+   "startSec": 65.185,
+   "endSec": 65.496,
+   "scene": "S04"
+  },
+  {
+   "text": "without",
+   "startSec": 65.544,
+   "endSec": 65.906,
+   "scene": "S04"
+  },
+  {
+   "text": "being",
+   "startSec": 65.954,
+   "endSec": 66.187,
+   "scene": "S04"
+  },
+  {
+   "text": "used",
+   "startSec": 66.227,
+   "endSec": 66.572,
+   "scene": "S04"
+  },
+  {
+   "text": "up",
+   "startSec": 66.6,
+   "endSec": 66.789,
+   "scene": "S04"
+  },
+  {
+   "text": "or",
+   "startSec": 66.824,
+   "endSec": 67.057,
+   "scene": "S04"
+  },
+  {
+   "text": "changed.",
+   "startSec": 67.073,
+   "endSec": 67.429,
+   "scene": "S04"
+  },
+  {
+   "text": "And",
+   "startSec": 67.849,
+   "endSec": 68.055,
+   "scene": "S04"
+  },
+  {
+   "text": "nearly",
+   "startSec": 68.066,
+   "endSec": 68.402,
+   "scene": "S04"
+  },
+  {
+   "text": "every",
+   "startSec": 68.428,
+   "endSec": 68.878,
+   "scene": "S04"
+  },
+  {
+   "text": "reaction",
+   "startSec": 68.896,
+   "endSec": 69.232,
+   "scene": "S04"
+  },
+  {
+   "text": "in",
+   "startSec": 69.244,
+   "endSec": 69.44,
+   "scene": "S04"
+  },
+  {
+   "text": "your",
+   "startSec": 69.462,
+   "endSec": 69.675,
+   "scene": "S04"
+  },
+  {
+   "text": "body,",
+   "startSec": 69.714,
+   "endSec": 70.077,
+   "scene": "S04"
+  },
+  {
+   "text": "building",
+   "startSec": 70.277,
+   "endSec": 70.61,
+   "scene": "S04"
+  },
+  {
+   "text": "things",
+   "startSec": 70.648,
+   "endSec": 70.87,
+   "scene": "S04"
+  },
+  {
+   "text": "up",
+   "startSec": 70.893,
+   "endSec": 71.13,
+   "scene": "S04"
+  },
+  {
+   "text": "or",
+   "startSec": 71.15,
+   "endSec": 71.303,
+   "scene": "S04"
+  },
+  {
+   "text": "breaking",
+   "startSec": 71.343,
+   "endSec": 71.675,
+   "scene": "S04"
+  },
+  {
+   "text": "them",
+   "startSec": 71.699,
+   "endSec": 71.901,
+   "scene": "S04"
+  },
+  {
+   "text": "down,",
+   "startSec": 71.949,
+   "endSec": 72.195,
+   "scene": "S04"
+  },
+  {
+   "text": "has",
+   "startSec": 72.395,
+   "endSec": 72.589,
+   "scene": "S04"
+  },
+  {
+   "text": "one.",
+   "startSec": 72.629,
+   "endSec": 73.003,
+   "scene": "S04"
+  },
+  {
+   "text": "Without",
+   "startSec": 73.423,
+   "endSec": 73.771,
+   "scene": "S04"
+  },
+  {
+   "text": "enzymes,",
+   "startSec": 73.806,
+   "endSec": 74.283,
+   "scene": "S04"
+  },
+  {
+   "text": "your",
+   "startSec": 74.483,
+   "endSec": 74.715,
+   "scene": "S04"
+  },
+  {
+   "text": "metabolism",
+   "startSec": 74.763,
+   "endSec": 75.38,
+   "scene": "S04"
+  },
+  {
+   "text": "would",
+   "startSec": 75.407,
+   "endSec": 75.669,
+   "scene": "S04"
+  },
+  {
+   "text": "be",
+   "startSec": 75.69,
+   "endSec": 75.886,
+   "scene": "S04"
+  },
+  {
+   "text": "far",
+   "startSec": 75.904,
+   "endSec": 76.112,
+   "scene": "S04"
+  },
+  {
+   "text": "too",
+   "startSec": 76.158,
+   "endSec": 76.375,
+   "scene": "S04"
+  },
+  {
+   "text": "slow",
+   "startSec": 76.418,
+   "endSec": 76.62,
+   "scene": "S04"
+  },
+  {
+   "text": "to",
+   "startSec": 76.666,
+   "endSec": 76.83,
+   "scene": "S04"
+  },
+  {
+   "text": "keep",
+   "startSec": 76.848,
+   "endSec": 77.094,
+   "scene": "S04"
+  },
+  {
+   "text": "you",
+   "startSec": 77.116,
+   "endSec": 77.317,
+   "scene": "S04"
+  },
+  {
+   "text": "alive.",
+   "startSec": 77.33,
+   "endSec": 77.687,
+   "scene": "S04"
+  },
+  {
+   "text": "Nearly",
+   "startSec": 78.107,
+   "endSec": 78.456,
+   "scene": "S04"
+  },
+  {
+   "text": "all",
+   "startSec": 78.468,
+   "endSec": 78.696,
+   "scene": "S04"
+  },
+  {
+   "text": "enzymes",
+   "startSec": 78.737,
+   "endSec": 79.227,
+   "scene": "S04"
+  },
+  {
+   "text": "are",
+   "startSec": 79.245,
+   "endSec": 79.625,
+   "scene": "S04"
+  },
+  {
+   "text": "proteins,",
+   "startSec": 79.666,
+   "endSec": 80.009,
+   "scene": "S04"
+  },
+  {
+   "text": "long",
+   "startSec": 80.209,
+   "endSec": 80.414,
+   "scene": "S04"
+  },
+  {
+   "text": "chains",
+   "startSec": 80.445,
+   "endSec": 80.677,
+   "scene": "S04"
+  },
+  {
+   "text": "of",
+   "startSec": 80.708,
+   "endSec": 80.944,
+   "scene": "S04"
+  },
+  {
+   "text": "amino",
+   "startSec": 80.957,
+   "endSec": 81.459,
+   "scene": "S04"
+  },
+  {
+   "text": "acids",
+   "startSec": 81.499,
+   "endSec": 81.842,
+   "scene": "S04"
+  },
+  {
+   "text": "folded",
+   "startSec": 81.882,
+   "endSec": 82.233,
+   "scene": "S04"
+  },
+  {
+   "text": "into",
+   "startSec": 82.258,
+   "endSec": 82.606,
+   "scene": "S04"
+  },
+  {
+   "text": "a",
+   "startSec": 82.631,
+   "endSec": 82.84,
+   "scene": "S04"
+  },
+  {
+   "text": "precise",
+   "startSec": 82.884,
+   "endSec": 83.221,
+   "scene": "S04"
+  },
+  {
+   "text": "shape.",
+   "startSec": 83.239,
+   "endSec": 83.482,
+   "scene": "S04"
+  },
+  {
+   "text": "And",
+   "startSec": 83.902,
+   "endSec": 84.12,
+   "scene": "S04"
+  },
+  {
+   "text": "that",
+   "startSec": 84.144,
+   "endSec": 84.332,
+   "scene": "S04"
+  },
+  {
+   "text": "shape",
+   "startSec": 84.378,
+   "endSec": 84.622,
+   "scene": "S04"
+  },
+  {
+   "text": "is",
+   "startSec": 84.638,
+   "endSec": 84.838,
+   "scene": "S04"
+  },
+  {
+   "text": "everything.",
+   "startSec": 84.871,
+   "endSec": 85.505,
+   "scene": "S04"
+  },
+  {
+   "text": "Every",
+   "startSec": 85.955,
+   "endSec": 86.449,
+   "scene": "S05"
+  },
+  {
+   "text": "enzyme",
+   "startSec": 86.487,
+   "endSec": 86.855,
+   "scene": "S05"
+  },
+  {
+   "text": "has",
+   "startSec": 86.874,
+   "endSec": 87.092,
+   "scene": "S05"
+  },
+  {
+   "text": "a",
+   "startSec": 87.105,
+   "endSec": 87.335,
+   "scene": "S05"
+  },
+  {
+   "text": "small",
+   "startSec": 87.347,
+   "endSec": 87.592,
+   "scene": "S05"
+  },
+  {
+   "text": "pocket",
+   "startSec": 87.634,
+   "endSec": 88.019,
+   "scene": "S05"
+  },
+  {
+   "text": "called",
+   "startSec": 88.049,
+   "endSec": 88.408,
+   "scene": "S05"
+  },
+  {
+   "text": "the",
+   "startSec": 88.426,
+   "endSec": 88.634,
+   "scene": "S05"
+  },
+  {
+   "text": "active",
+   "startSec": 88.652,
+   "endSec": 89.012,
+   "scene": "S05"
+  },
+  {
+   "text": "site.",
+   "startSec": 89.035,
+   "endSec": 89.239,
+   "scene": "S05"
+  },
+  {
+   "text": "The",
+   "startSec": 89.659,
+   "endSec": 89.871,
+   "scene": "S05"
+  },
+  {
+   "text": "molecule",
+   "startSec": 89.911,
+   "endSec": 90.412,
+   "scene": "S05"
+  },
+  {
+   "text": "it",
+   "startSec": 90.437,
+   "endSec": 90.654,
+   "scene": "S05"
+  },
+  {
+   "text": "works",
+   "startSec": 90.679,
+   "endSec": 90.915,
+   "scene": "S05"
+  },
+  {
+   "text": "on,",
+   "startSec": 90.949,
+   "endSec": 91.137,
+   "scene": "S05"
+  },
+  {
+   "text": "the",
+   "startSec": 91.337,
+   "endSec": 91.555,
+   "scene": "S05"
+  },
+  {
+   "text": "substrate,",
+   "startSec": 91.603,
+   "endSec": 91.936,
+   "scene": "S05"
+  },
+  {
+   "text": "fits",
+   "startSec": 92.136,
+   "endSec": 92.353,
+   "scene": "S05"
+  },
+  {
+   "text": "inside,",
+   "startSec": 92.364,
+   "endSec": 92.688,
+   "scene": "S05"
+  },
+  {
+   "text": "forming",
+   "startSec": 92.888,
+   "endSec": 93.249,
+   "scene": "S05"
+  },
+  {
+   "text": "an",
+   "startSec": 93.262,
+   "endSec": 93.488,
+   "scene": "S05"
+  },
+  {
+   "text": "enzyme\u2013substrate",
+   "startSec": 93.523,
+   "endSec": 94.232,
+   "scene": "S05"
+  },
+  {
+   "text": "complex.",
+   "startSec": 94.274,
+   "endSec": 94.611,
+   "scene": "S05"
+  },
+  {
+   "text": "Held",
+   "startSec": 95.031,
+   "endSec": 95.23,
+   "scene": "S05"
+  },
+  {
+   "text": "there,",
+   "startSec": 95.271,
+   "endSec": 95.496,
+   "scene": "S05"
+  },
+  {
+   "text": "a",
+   "startSec": 95.696,
+   "endSec": 95.909,
+   "scene": "S05"
+  },
+  {
+   "text": "bond",
+   "startSec": 95.94,
+   "endSec": 96.176,
+   "scene": "S05"
+  },
+  {
+   "text": "becomes",
+   "startSec": 96.209,
+   "endSec": 96.675,
+   "scene": "S05"
+  },
+  {
+   "text": "much",
+   "startSec": 96.696,
+   "endSec": 96.934,
+   "scene": "S05"
+  },
+  {
+   "text": "easier",
+   "startSec": 96.958,
+   "endSec": 97.329,
+   "scene": "S05"
+  },
+  {
+   "text": "to",
+   "startSec": 97.339,
+   "endSec": 97.551,
+   "scene": "S05"
+  },
+  {
+   "text": "break.",
+   "startSec": 97.598,
+   "endSec": 97.805,
+   "scene": "S05"
+  },
+  {
+   "text": "Snap.",
+   "startSec": 98.225,
+   "endSec": 98.457,
+   "scene": "S05"
+  },
+  {
+   "text": "The",
+   "startSec": 98.877,
+   "endSec": 99.106,
+   "scene": "S05"
+  },
+  {
+   "text": "products",
+   "startSec": 99.144,
+   "endSec": 99.488,
+   "scene": "S05"
+  },
+  {
+   "text": "leave,",
+   "startSec": 99.524,
+   "endSec": 99.773,
+   "scene": "S05"
+  },
+  {
+   "text": "and",
+   "startSec": 99.973,
+   "endSec": 100.24,
+   "scene": "S05"
+  },
+  {
+   "text": "the",
+   "startSec": 100.26,
+   "endSec": 100.476,
+   "scene": "S05"
+  },
+  {
+   "text": "active",
+   "startSec": 100.52,
+   "endSec": 100.87,
+   "scene": "S05"
+  },
+  {
+   "text": "site",
+   "startSec": 100.895,
+   "endSec": 101.088,
+   "scene": "S05"
+  },
+  {
+   "text": "is",
+   "startSec": 101.137,
+   "endSec": 101.321,
+   "scene": "S05"
+  },
+  {
+   "text": "free",
+   "startSec": 101.352,
+   "endSec": 101.57,
+   "scene": "S05"
+  },
+  {
+   "text": "for",
+   "startSec": 101.584,
+   "endSec": 101.816,
+   "scene": "S05"
+  },
+  {
+   "text": "the",
+   "startSec": 101.829,
+   "endSec": 102.016,
+   "scene": "S05"
+  },
+  {
+   "text": "next",
+   "startSec": 102.031,
+   "endSec": 102.258,
+   "scene": "S05"
+  },
+  {
+   "text": "one.",
+   "startSec": 102.298,
+   "endSec": 102.618,
+   "scene": "S05"
+  },
+  {
+   "text": "The",
+   "startSec": 103.168,
+   "endSec": 103.378,
+   "scene": "S05"
+  },
+  {
+   "text": "active",
+   "startSec": 103.403,
+   "endSec": 103.745,
+   "scene": "S05"
+  },
+  {
+   "text": "site's",
+   "startSec": 103.784,
+   "endSec": 104.136,
+   "scene": "S05"
+  },
+  {
+   "text": "shape",
+   "startSec": 104.151,
+   "endSec": 104.393,
+   "scene": "S05"
+  },
+  {
+   "text": "is",
+   "startSec": 104.406,
+   "endSec": 104.642,
+   "scene": "S05"
+  },
+  {
+   "text": "complementary",
+   "startSec": 104.681,
+   "endSec": 105.431,
+   "scene": "S05"
+  },
+  {
+   "text": "to",
+   "startSec": 105.48,
+   "endSec": 105.712,
+   "scene": "S05"
+  },
+  {
+   "text": "the",
+   "startSec": 105.738,
+   "endSec": 105.985,
+   "scene": "S05"
+  },
+  {
+   "text": "substrate:",
+   "startSec": 106.016,
+   "endSec": 106.371,
+   "scene": "S05"
+  },
+  {
+   "text": "not",
+   "startSec": 106.651,
+   "endSec": 106.873,
+   "scene": "S05"
+  },
+  {
+   "text": "the",
+   "startSec": 106.917,
+   "endSec": 107.136,
+   "scene": "S05"
+  },
+  {
+   "text": "same",
+   "startSec": 107.167,
+   "endSec": 107.388,
+   "scene": "S05"
+  },
+  {
+   "text": "shape,",
+   "startSec": 107.405,
+   "endSec": 107.623,
+   "scene": "S05"
+  },
+  {
+   "text": "but",
+   "startSec": 107.823,
+   "endSec": 108.038,
+   "scene": "S05"
+  },
+  {
+   "text": "a",
+   "startSec": 108.08,
+   "endSec": 108.334,
+   "scene": "S05"
+  },
+  {
+   "text": "perfect",
+   "startSec": 108.351,
+   "endSec": 108.697,
+   "scene": "S05"
+  },
+  {
+   "text": "fit.",
+   "startSec": 108.717,
+   "endSec": 108.946,
+   "scene": "S05"
+  },
+  {
+   "text": "The",
+   "startSec": 109.366,
+   "endSec": 109.557,
+   "scene": "S05"
+  },
+  {
+   "text": "enzyme",
+   "startSec": 109.574,
+   "endSec": 109.919,
+   "scene": "S05"
+  },
+  {
+   "text": "is",
+   "startSec": 109.948,
+   "endSec": 110.162,
+   "scene": "S05"
+  },
+  {
+   "text": "the",
+   "startSec": 110.203,
+   "endSec": 110.401,
+   "scene": "S05"
+  },
+  {
+   "text": "lock;",
+   "startSec": 110.413,
+   "endSec": 110.657,
+   "scene": "S05"
+  },
+  {
+   "text": "the",
+   "startSec": 110.907,
+   "endSec": 111.128,
+   "scene": "S05"
+  },
+  {
+   "text": "substrate",
+   "startSec": 111.175,
+   "endSec": 111.529,
+   "scene": "S05"
+  },
+  {
+   "text": "is",
+   "startSec": 111.568,
+   "endSec": 111.777,
+   "scene": "S05"
+  },
+  {
+   "text": "the",
+   "startSec": 111.813,
+   "endSec": 112.034,
+   "scene": "S05"
+  },
+  {
+   "text": "key.",
+   "startSec": 112.044,
+   "endSec": 112.235,
+   "scene": "S05"
+  },
+  {
+   "text": "That's",
+   "startSec": 112.655,
+   "endSec": 112.892,
+   "scene": "S05"
+  },
+  {
+   "text": "why",
+   "startSec": 112.932,
+   "endSec": 113.142,
+   "scene": "S05"
+  },
+  {
+   "text": "enzymes",
+   "startSec": 113.183,
+   "endSec": 113.664,
+   "scene": "S05"
+  },
+  {
+   "text": "are",
+   "startSec": 113.713,
+   "endSec": 114.028,
+   "scene": "S05"
+  },
+  {
+   "text": "specific:",
+   "startSec": 114.072,
+   "endSec": 114.538,
+   "scene": "S05"
+  },
+  {
+   "text": "each",
+   "startSec": 114.818,
+   "endSec": 115.058,
+   "scene": "S05"
+  },
+  {
+   "text": "one",
+   "startSec": 115.088,
+   "endSec": 115.426,
+   "scene": "S05"
+  },
+  {
+   "text": "only",
+   "startSec": 115.461,
+   "endSec": 115.824,
+   "scene": "S05"
+  },
+  {
+   "text": "fits,",
+   "startSec": 115.852,
+   "endSec": 116.059,
+   "scene": "S05"
+  },
+  {
+   "text": "and",
+   "startSec": 116.259,
+   "endSec": 116.465,
+   "scene": "S05"
+  },
+  {
+   "text": "works",
+   "startSec": 116.483,
+   "endSec": 116.724,
+   "scene": "S05"
+  },
+  {
+   "text": "on,",
+   "startSec": 116.767,
+   "endSec": 116.981,
+   "scene": "S05"
+  },
+  {
+   "text": "its",
+   "startSec": 117.181,
+   "endSec": 117.419,
+   "scene": "S05"
+  },
+  {
+   "text": "own",
+   "startSec": 117.458,
+   "endSec": 117.646,
+   "scene": "S05"
+  },
+  {
+   "text": "substrate.",
+   "startSec": 117.658,
+   "endSec": 118.002,
+   "scene": "S05"
+  },
+  {
+   "text": "Amylase",
+   "startSec": 118.422,
+   "endSec": 118.931,
+   "scene": "S05"
+  },
+  {
+   "text": "can't",
+   "startSec": 118.969,
+   "endSec": 119.139,
+   "scene": "S05"
+  },
+  {
+   "text": "even",
+   "startSec": 119.179,
+   "endSec": 119.535,
+   "scene": "S05"
+  },
+  {
+   "text": "break",
+   "startSec": 119.583,
+   "endSec": 119.82,
+   "scene": "S05"
+  },
+  {
+   "text": "down",
+   "startSec": 119.851,
+   "endSec": 120.062,
+   "scene": "S05"
+  },
+  {
+   "text": "cellulose,",
+   "startSec": 120.081,
+   "endSec": 120.538,
+   "scene": "S05"
+  },
+  {
+   "text": "in",
+   "startSec": 120.738,
+   "endSec": 120.957,
+   "scene": "S05"
+  },
+  {
+   "text": "paper,",
+   "startSec": 120.979,
+   "endSec": 121.333,
+   "scene": "S05"
+  },
+  {
+   "text": "though",
+   "startSec": 121.533,
+   "endSec": 121.756,
+   "scene": "S05"
+  },
+  {
+   "text": "that's",
+   "startSec": 121.769,
+   "endSec": 121.994,
+   "scene": "S05"
+  },
+  {
+   "text": "a",
+   "startSec": 122.017,
+   "endSec": 122.258,
+   "scene": "S05"
+  },
+  {
+   "text": "chain",
+   "startSec": 122.297,
+   "endSec": 122.497,
+   "scene": "S05"
+  },
+  {
+   "text": "of",
+   "startSec": 122.515,
+   "endSec": 122.722,
+   "scene": "S05"
+  },
+  {
+   "text": "glucose",
+   "startSec": 122.758,
+   "endSec": 123.124,
+   "scene": "S05"
+  },
+  {
+   "text": "too.",
+   "startSec": 123.153,
+   "endSec": 123.352,
+   "scene": "S05"
+  },
+  {
+   "text": "Its",
+   "startSec": 123.772,
+   "endSec": 123.971,
+   "scene": "S05"
+  },
+  {
+   "text": "links",
+   "startSec": 124.015,
+   "endSec": 124.208,
+   "scene": "S05"
+  },
+  {
+   "text": "are",
+   "startSec": 124.237,
+   "endSec": 124.577,
+   "scene": "S05"
+  },
+  {
+   "text": "joined",
+   "startSec": 124.611,
+   "endSec": 124.97,
+   "scene": "S05"
+  },
+  {
+   "text": "differently,",
+   "startSec": 124.999,
+   "endSec": 125.62,
+   "scene": "S05"
+  },
+  {
+   "text": "so",
+   "startSec": 125.82,
+   "endSec": 126.015,
+   "scene": "S05"
+  },
+  {
+   "text": "it",
+   "startSec": 126.032,
+   "endSec": 126.248,
+   "scene": "S05"
+  },
+  {
+   "text": "just",
+   "startSec": 126.275,
+   "endSec": 126.514,
+   "scene": "S05"
+  },
+  {
+   "text": "doesn't",
+   "startSec": 126.546,
+   "endSec": 126.747,
+   "scene": "S05"
+  },
+  {
+   "text": "fit.",
+   "startSec": 126.76,
+   "endSec": 126.969,
+   "scene": "S05"
+  },
+  {
+   "text": "Lock",
+   "startSec": 127.419,
+   "endSec": 127.649,
+   "scene": "S06"
+  },
+  {
+   "text": "and",
+   "startSec": 127.671,
+   "endSec": 127.909,
+   "scene": "S06"
+  },
+  {
+   "text": "key",
+   "startSec": 127.951,
+   "endSec": 128.161,
+   "scene": "S06"
+  },
+  {
+   "text": "is",
+   "startSec": 128.18,
+   "endSec": 128.4,
+   "scene": "S06"
+  },
+  {
+   "text": "a",
+   "startSec": 128.433,
+   "endSec": 128.613,
+   "scene": "S06"
+  },
+  {
+   "text": "brilliant",
+   "startSec": 128.646,
+   "endSec": 129.024,
+   "scene": "S06"
+  },
+  {
+   "text": "model,",
+   "startSec": 129.045,
+   "endSec": 129.4,
+   "scene": "S06"
+  },
+  {
+   "text": "but",
+   "startSec": 129.6,
+   "endSec": 129.863,
+   "scene": "S06"
+  },
+  {
+   "text": "it",
+   "startSec": 129.901,
+   "endSec": 130.098,
+   "scene": "S06"
+  },
+  {
+   "text": "is",
+   "startSec": 130.143,
+   "endSec": 130.355,
+   "scene": "S06"
+  },
+  {
+   "text": "a",
+   "startSec": 130.365,
+   "endSec": 130.533,
+   "scene": "S06"
+  },
+  {
+   "text": "simplification.",
+   "startSec": 130.57,
+   "endSec": 131.292,
+   "scene": "S06"
+  },
+  {
+   "text": "Real",
+   "startSec": 131.712,
+   "endSec": 131.93,
+   "scene": "S06"
+  },
+  {
+   "text": "enzymes",
+   "startSec": 131.946,
+   "endSec": 132.438,
+   "scene": "S06"
+  },
+  {
+   "text": "aren't",
+   "startSec": 132.449,
+   "endSec": 132.778,
+   "scene": "S06"
+  },
+  {
+   "text": "rigid.",
+   "startSec": 132.801,
+   "endSec": 133.174,
+   "scene": "S06"
+  },
+  {
+   "text": "As",
+   "startSec": 133.594,
+   "endSec": 133.803,
+   "scene": "S06"
+  },
+  {
+   "text": "the",
+   "startSec": 133.846,
+   "endSec": 134.066,
+   "scene": "S06"
+  },
+  {
+   "text": "substrate",
+   "startSec": 134.083,
+   "endSec": 134.459,
+   "scene": "S06"
+  },
+  {
+   "text": "binds,",
+   "startSec": 134.503,
+   "endSec": 134.739,
+   "scene": "S06"
+  },
+  {
+   "text": "the",
+   "startSec": 134.939,
+   "endSec": 135.144,
+   "scene": "S06"
+  },
+  {
+   "text": "active",
+   "startSec": 135.16,
+   "endSec": 135.48,
+   "scene": "S06"
+  },
+  {
+   "text": "site",
+   "startSec": 135.498,
+   "endSec": 135.734,
+   "scene": "S06"
+  },
+  {
+   "text": "moulds",
+   "startSec": 135.755,
+   "endSec": 135.971,
+   "scene": "S06"
+  },
+  {
+   "text": "itself",
+   "startSec": 135.983,
+   "endSec": 136.336,
+   "scene": "S06"
+  },
+  {
+   "text": "around",
+   "startSec": 136.364,
+   "endSec": 136.687,
+   "scene": "S06"
+  },
+  {
+   "text": "it.",
+   "startSec": 136.718,
+   "endSec": 136.916,
+   "scene": "S06"
+  },
+  {
+   "text": "That",
+   "startSec": 137.336,
+   "endSec": 137.537,
+   "scene": "S06"
+  },
+  {
+   "text": "more",
+   "startSec": 137.557,
+   "endSec": 137.769,
+   "scene": "S06"
+  },
+  {
+   "text": "accurate",
+   "startSec": 137.8,
+   "endSec": 138.308,
+   "scene": "S06"
+  },
+  {
+   "text": "picture",
+   "startSec": 138.33,
+   "endSec": 138.7,
+   "scene": "S06"
+  },
+  {
+   "text": "is",
+   "startSec": 138.73,
+   "endSec": 138.935,
+   "scene": "S06"
+  },
+  {
+   "text": "called",
+   "startSec": 138.979,
+   "endSec": 139.317,
+   "scene": "S06"
+  },
+  {
+   "text": "induced",
+   "startSec": 139.367,
+   "endSec": 139.83,
+   "scene": "S06"
+  },
+  {
+   "text": "fit.",
+   "startSec": 139.853,
+   "endSec": 140.1,
+   "scene": "S06"
+  },
+  {
+   "text": "For",
+   "startSec": 140.52,
+   "endSec": 140.754,
+   "scene": "S06"
+  },
+  {
+   "text": "GCSE",
+   "startSec": 140.802,
+   "endSec": 141.027,
+   "scene": "S06"
+  },
+  {
+   "text": "and",
+   "startSec": 141.076,
+   "endSec": 141.307,
+   "scene": "S06"
+  },
+  {
+   "text": "IGCSE,",
+   "startSec": 141.338,
+   "endSec": 141.57,
+   "scene": "S06"
+  },
+  {
+   "text": "you",
+   "startSec": 141.77,
+   "endSec": 142.037,
+   "scene": "S06"
+  },
+  {
+   "text": "only",
+   "startSec": 142.084,
+   "endSec": 142.475,
+   "scene": "S06"
+  },
+  {
+   "text": "need",
+   "startSec": 142.491,
+   "endSec": 142.699,
+   "scene": "S06"
+  },
+  {
+   "text": "lock",
+   "startSec": 142.729,
+   "endSec": 142.978,
+   "scene": "S06"
+  },
+  {
+   "text": "and",
+   "startSec": 143.01,
+   "endSec": 143.226,
+   "scene": "S06"
+  },
+  {
+   "text": "key;",
+   "startSec": 143.263,
+   "endSec": 143.474,
+   "scene": "S06"
+  },
+  {
+   "text": "induced",
+   "startSec": 143.724,
+   "endSec": 144.217,
+   "scene": "S06"
+  },
+  {
+   "text": "fit",
+   "startSec": 144.247,
+   "endSec": 144.451,
+   "scene": "S06"
+  },
+  {
+   "text": "is",
+   "startSec": 144.465,
+   "endSec": 144.687,
+   "scene": "S06"
+  },
+  {
+   "text": "an",
+   "startSec": 144.706,
+   "endSec": 144.933,
+   "scene": "S06"
+  },
+  {
+   "text": "A-level",
+   "startSec": 144.969,
+   "endSec": 145.418,
+   "scene": "S06"
+  },
+  {
+   "text": "idea.",
+   "startSec": 145.438,
+   "endSec": 145.782,
+   "scene": "S06"
+  },
+  {
+   "text": "Just",
+   "startSec": 146.202,
+   "endSec": 146.414,
+   "scene": "S06"
+  },
+  {
+   "text": "remember:",
+   "startSec": 146.45,
+   "endSec": 146.882,
+   "scene": "S06"
+  },
+  {
+   "text": "it's",
+   "startSec": 147.162,
+   "endSec": 147.376,
+   "scene": "S06"
+  },
+  {
+   "text": "a",
+   "startSec": 147.397,
+   "endSec": 147.619,
+   "scene": "S06"
+  },
+  {
+   "text": "model,",
+   "startSec": 147.654,
+   "endSec": 148.008,
+   "scene": "S06"
+  },
+  {
+   "text": "not",
+   "startSec": 148.208,
+   "endSec": 148.386,
+   "scene": "S06"
+  },
+  {
+   "text": "a",
+   "startSec": 148.407,
+   "endSec": 148.626,
+   "scene": "S06"
+  },
+  {
+   "text": "photograph.",
+   "startSec": 148.662,
+   "endSec": 149.111,
+   "scene": "S06"
+  },
+  {
+   "text": "Which",
+   "startSec": 149.661,
+   "endSec": 149.843,
+   "scene": "S07"
+  },
+  {
+   "text": "brings",
+   "startSec": 149.89,
+   "endSec": 150.112,
+   "scene": "S07"
+  },
+  {
+   "text": "us",
+   "startSec": 150.122,
+   "endSec": 150.303,
+   "scene": "S07"
+  },
+  {
+   "text": "to",
+   "startSec": 150.342,
+   "endSec": 150.499,
+   "scene": "S07"
+  },
+  {
+   "text": "myth",
+   "startSec": 150.535,
+   "endSec": 150.792,
+   "scene": "S07"
+  },
+  {
+   "text": "number",
+   "startSec": 150.828,
+   "endSec": 151.178,
+   "scene": "S07"
+  },
+  {
+   "text": "one:",
+   "startSec": 151.226,
+   "endSec": 151.598,
+   "scene": "S07"
+  },
+  {
+   "text": "that",
+   "startSec": 151.878,
+   "endSec": 152.067,
+   "scene": "S07"
+  },
+  {
+   "text": "enzymes",
+   "startSec": 152.108,
+   "endSec": 152.585,
+   "scene": "S07"
+  },
+  {
+   "text": "get",
+   "startSec": 152.614,
+   "endSec": 152.847,
+   "scene": "S07"
+  },
+  {
+   "text": "used",
+   "startSec": 152.86,
+   "endSec": 153.192,
+   "scene": "S07"
+  },
+  {
+   "text": "up.",
+   "startSec": 153.237,
+   "endSec": 153.444,
+   "scene": "S07"
+  },
+  {
+   "text": "They",
+   "startSec": 153.864,
+   "endSec": 154.088,
+   "scene": "S07"
+  },
+  {
+   "text": "don't.",
+   "startSec": 154.125,
+   "endSec": 154.334,
+   "scene": "S07"
+  },
+  {
+   "text": "After",
+   "startSec": 154.754,
+   "endSec": 155.088,
+   "scene": "S07"
+  },
+  {
+   "text": "each",
+   "startSec": 155.1,
+   "endSec": 155.308,
+   "scene": "S07"
+  },
+  {
+   "text": "reaction,",
+   "startSec": 155.356,
+   "endSec": 155.697,
+   "scene": "S07"
+  },
+  {
+   "text": "the",
+   "startSec": 155.897,
+   "endSec": 156.12,
+   "scene": "S07"
+  },
+  {
+   "text": "enzyme",
+   "startSec": 156.155,
+   "endSec": 156.483,
+   "scene": "S07"
+  },
+  {
+   "text": "is",
+   "startSec": 156.496,
+   "endSec": 156.691,
+   "scene": "S07"
+  },
+  {
+   "text": "unchanged,",
+   "startSec": 156.736,
+   "endSec": 157.24,
+   "scene": "S07"
+  },
+  {
+   "text": "ready",
+   "startSec": 157.44,
+   "endSec": 157.764,
+   "scene": "S07"
+  },
+  {
+   "text": "to",
+   "startSec": 157.774,
+   "endSec": 157.957,
+   "scene": "S07"
+  },
+  {
+   "text": "go",
+   "startSec": 157.984,
+   "endSec": 158.169,
+   "scene": "S07"
+  },
+  {
+   "text": "again,",
+   "startSec": 158.211,
+   "endSec": 158.545,
+   "scene": "S07"
+  },
+  {
+   "text": "and",
+   "startSec": 158.745,
+   "endSec": 158.962,
+   "scene": "S07"
+  },
+  {
+   "text": "again.",
+   "startSec": 158.977,
+   "endSec": 159.327,
+   "scene": "S07"
+  },
+  {
+   "text": "And",
+   "startSec": 159.747,
+   "endSec": 159.976,
+   "scene": "S07"
+  },
+  {
+   "text": "some",
+   "startSec": 159.996,
+   "endSec": 160.206,
+   "scene": "S07"
+  },
+  {
+   "text": "are",
+   "startSec": 160.223,
+   "endSec": 160.532,
+   "scene": "S07"
+  },
+  {
+   "text": "astonishingly",
+   "startSec": 160.573,
+   "endSec": 161.34,
+   "scene": "S07"
+  },
+  {
+   "text": "fast.",
+   "startSec": 161.366,
+   "endSec": 161.571,
+   "scene": "S07"
+  },
+  {
+   "text": "One",
+   "startSec": 161.991,
+   "endSec": 162.369,
+   "scene": "S07"
+  },
+  {
+   "text": "molecule",
+   "startSec": 162.405,
+   "endSec": 162.867,
+   "scene": "S07"
+  },
+  {
+   "text": "of",
+   "startSec": 162.901,
+   "endSec": 163.097,
+   "scene": "S07"
+  },
+  {
+   "text": "catalase,",
+   "startSec": 163.118,
+   "endSec": 163.633,
+   "scene": "S07"
+  },
+  {
+   "text": "found",
+   "startSec": 163.833,
+   "endSec": 164.044,
+   "scene": "S07"
+  },
+  {
+   "text": "in",
+   "startSec": 164.057,
+   "endSec": 164.26,
+   "scene": "S07"
+  },
+  {
+   "text": "almost",
+   "startSec": 164.277,
+   "endSec": 164.588,
+   "scene": "S07"
+  },
+  {
+   "text": "all",
+   "startSec": 164.613,
+   "endSec": 164.842,
+   "scene": "S07"
+  },
+  {
+   "text": "your",
+   "startSec": 164.873,
+   "endSec": 165.1,
+   "scene": "S07"
+  },
+  {
+   "text": "cells,",
+   "startSec": 165.124,
+   "endSec": 165.305,
+   "scene": "S07"
+  },
+  {
+   "text": "can",
+   "startSec": 165.505,
+   "endSec": 165.745,
+   "scene": "S07"
+  },
+  {
+   "text": "break",
+   "startSec": 165.758,
+   "endSec": 165.942,
+   "scene": "S07"
+  },
+  {
+   "text": "down",
+   "startSec": 165.974,
+   "endSec": 166.19,
+   "scene": "S07"
+  },
+  {
+   "text": "hundreds",
+   "startSec": 166.237,
+   "endSec": 166.586,
+   "scene": "S07"
+  },
+  {
+   "text": "of",
+   "startSec": 166.629,
+   "endSec": 166.848,
+   "scene": "S07"
+  },
+  {
+   "text": "thousands",
+   "startSec": 166.879,
+   "endSec": 167.223,
+   "scene": "S07"
+  },
+  {
+   "text": "of",
+   "startSec": 167.272,
+   "endSec": 167.427,
+   "scene": "S07"
+  },
+  {
+   "text": "molecules",
+   "startSec": 167.454,
+   "endSec": 168.027,
+   "scene": "S07"
+  },
+  {
+   "text": "of",
+   "startSec": 168.062,
+   "endSec": 168.292,
+   "scene": "S07"
+  },
+  {
+   "text": "hydrogen",
+   "startSec": 168.328,
+   "endSec": 168.795,
+   "scene": "S07"
+  },
+  {
+   "text": "peroxide",
+   "startSec": 168.821,
+   "endSec": 169.319,
+   "scene": "S07"
+  },
+  {
+   "text": "every",
+   "startSec": 169.351,
+   "endSec": 169.845,
+   "scene": "S07"
+  },
+  {
+   "text": "second.",
+   "startSec": 169.879,
+   "endSec": 170.229,
+   "scene": "S07"
+  },
+  {
+   "text": "Your",
+   "startSec": 170.679,
+   "endSec": 170.923,
+   "scene": "S07"
+  },
+  {
+   "text": "cells",
+   "startSec": 170.963,
+   "endSec": 171.197,
+   "scene": "S07"
+  },
+  {
+   "text": "do",
+   "startSec": 171.24,
+   "endSec": 171.439,
+   "scene": "S07"
+  },
+  {
+   "text": "replace",
+   "startSec": 171.472,
+   "endSec": 171.826,
+   "scene": "S07"
+  },
+  {
+   "text": "old",
+   "startSec": 171.875,
+   "endSec": 172.091,
+   "scene": "S07"
+  },
+  {
+   "text": "enzymes,",
+   "startSec": 172.106,
+   "endSec": 172.603,
+   "scene": "S07"
+  },
+  {
+   "text": "eventually.",
+   "startSec": 172.803,
+   "endSec": 173.444,
+   "scene": "S07"
+  },
+  {
+   "text": "But",
+   "startSec": 173.864,
+   "endSec": 174.084,
+   "scene": "S07"
+  },
+  {
+   "text": "the",
+   "startSec": 174.133,
+   "endSec": 174.36,
+   "scene": "S07"
+  },
+  {
+   "text": "reaction",
+   "startSec": 174.388,
+   "endSec": 174.735,
+   "scene": "S07"
+  },
+  {
+   "text": "itself",
+   "startSec": 174.764,
+   "endSec": 175.139,
+   "scene": "S07"
+  },
+  {
+   "text": "never",
+   "startSec": 175.161,
+   "endSec": 175.485,
+   "scene": "S07"
+  },
+  {
+   "text": "uses",
+   "startSec": 175.508,
+   "endSec": 175.82,
+   "scene": "S07"
+  },
+  {
+   "text": "them",
+   "startSec": 175.847,
+   "endSec": 176.04,
+   "scene": "S07"
+  },
+  {
+   "text": "up.",
+   "startSec": 176.085,
+   "endSec": 176.313,
+   "scene": "S07"
+  },
+  {
+   "text": "Now,",
+   "startSec": 176.863,
+   "endSec": 177.045,
+   "scene": "S08"
+  },
+  {
+   "text": "temperature.",
+   "startSec": 177.245,
+   "endSec": 177.82,
+   "scene": "S08"
+  },
+  {
+   "text": "Molecules",
+   "startSec": 178.24,
+   "endSec": 178.834,
+   "scene": "S08"
+  },
+  {
+   "text": "are",
+   "startSec": 178.858,
+   "endSec": 179.201,
+   "scene": "S08"
+  },
+  {
+   "text": "always",
+   "startSec": 179.221,
+   "endSec": 179.551,
+   "scene": "S08"
+  },
+  {
+   "text": "jiggling",
+   "startSec": 179.588,
+   "endSec": 179.943,
+   "scene": "S08"
+  },
+  {
+   "text": "around.",
+   "startSec": 179.968,
+   "endSec": 180.343,
+   "scene": "S08"
+  },
+  {
+   "text": "Heat",
+   "startSec": 180.763,
+   "endSec": 180.979,
+   "scene": "S08"
+  },
+  {
+   "text": "them",
+   "startSec": 181.016,
+   "endSec": 181.216,
+   "scene": "S08"
+  },
+  {
+   "text": "up,",
+   "startSec": 181.228,
+   "endSec": 181.423,
+   "scene": "S08"
+  },
+  {
+   "text": "and",
+   "startSec": 181.623,
+   "endSec": 181.853,
+   "scene": "S08"
+  },
+  {
+   "text": "they",
+   "startSec": 181.872,
+   "endSec": 182.067,
+   "scene": "S08"
+  },
+  {
+   "text": "gain",
+   "startSec": 182.112,
+   "endSec": 182.339,
+   "scene": "S08"
+  },
+  {
+   "text": "kinetic",
+   "startSec": 182.353,
+   "endSec": 182.817,
+   "scene": "S08"
+  },
+  {
+   "text": "energy:",
+   "startSec": 182.857,
+   "endSec": 183.337,
+   "scene": "S08"
+  },
+  {
+   "text": "they",
+   "startSec": 183.617,
+   "endSec": 183.815,
+   "scene": "S08"
+  },
+  {
+   "text": "move",
+   "startSec": 183.856,
+   "endSec": 184.065,
+   "scene": "S08"
+  },
+  {
+   "text": "faster.",
+   "startSec": 184.084,
+   "endSec": 184.44,
+   "scene": "S08"
+  },
+  {
+   "text": "Enzymes",
+   "startSec": 184.86,
+   "endSec": 185.309,
+   "scene": "S08"
+  },
+  {
+   "text": "and",
+   "startSec": 185.333,
+   "endSec": 185.55,
+   "scene": "S08"
+  },
+  {
+   "text": "substrates",
+   "startSec": 185.6,
+   "endSec": 186.079,
+   "scene": "S08"
+  },
+  {
+   "text": "bump",
+   "startSec": 186.102,
+   "endSec": 186.308,
+   "scene": "S08"
+  },
+  {
+   "text": "into",
+   "startSec": 186.336,
+   "endSec": 186.696,
+   "scene": "S08"
+  },
+  {
+   "text": "each",
+   "startSec": 186.742,
+   "endSec": 186.97,
+   "scene": "S08"
+  },
+  {
+   "text": "other",
+   "startSec": 187.02,
+   "endSec": 187.369,
+   "scene": "S08"
+  },
+  {
+   "text": "more",
+   "startSec": 187.418,
+   "endSec": 187.649,
+   "scene": "S08"
+  },
+  {
+   "text": "often,",
+   "startSec": 187.662,
+   "endSec": 187.995,
+   "scene": "S08"
+  },
+  {
+   "text": "and",
+   "startSec": 188.195,
+   "endSec": 188.399,
+   "scene": "S08"
+  },
+  {
+   "text": "with",
+   "startSec": 188.438,
+   "endSec": 188.654,
+   "scene": "S08"
+  },
+  {
+   "text": "more",
+   "startSec": 188.672,
+   "endSec": 188.867,
+   "scene": "S08"
+  },
+  {
+   "text": "energy.",
+   "startSec": 188.9,
+   "endSec": 189.404,
+   "scene": "S08"
+  },
+  {
+   "text": "More",
+   "startSec": 189.824,
+   "endSec": 190.003,
+   "scene": "S08"
+  },
+  {
+   "text": "successful",
+   "startSec": 190.032,
+   "endSec": 190.52,
+   "scene": "S08"
+  },
+  {
+   "text": "collisions,",
+   "startSec": 190.562,
+   "endSec": 191.034,
+   "scene": "S08"
+  },
+  {
+   "text": "where",
+   "startSec": 191.234,
+   "endSec": 191.465,
+   "scene": "S08"
+  },
+  {
+   "text": "the",
+   "startSec": 191.509,
+   "endSec": 191.744,
+   "scene": "S08"
+  },
+  {
+   "text": "substrate",
+   "startSec": 191.779,
+   "endSec": 192.157,
+   "scene": "S08"
+  },
+  {
+   "text": "lands",
+   "startSec": 192.193,
+   "endSec": 192.439,
+   "scene": "S08"
+  },
+  {
+   "text": "in",
+   "startSec": 192.452,
+   "endSec": 192.686,
+   "scene": "S08"
+  },
+  {
+   "text": "the",
+   "startSec": 192.7,
+   "endSec": 192.885,
+   "scene": "S08"
+  },
+  {
+   "text": "active",
+   "startSec": 192.925,
+   "endSec": 193.254,
+   "scene": "S08"
+  },
+  {
+   "text": "site,",
+   "startSec": 193.3,
+   "endSec": 193.494,
+   "scene": "S08"
+  },
+  {
+   "text": "mean",
+   "startSec": 193.694,
+   "endSec": 193.942,
+   "scene": "S08"
+  },
+  {
+   "text": "more",
+   "startSec": 193.957,
+   "endSec": 194.15,
+   "scene": "S08"
+  },
+  {
+   "text": "enzyme\u2013substrate",
+   "startSec": 194.187,
+   "endSec": 194.941,
+   "scene": "S08"
+  },
+  {
+   "text": "complexes:",
+   "startSec": 194.988,
+   "endSec": 195.474,
+   "scene": "S08"
+  },
+  {
+   "text": "a",
+   "startSec": 195.754,
+   "endSec": 196.011,
+   "scene": "S08"
+  },
+  {
+   "text": "faster",
+   "startSec": 196.041,
+   "endSec": 196.387,
+   "scene": "S08"
+  },
+  {
+   "text": "rate",
+   "startSec": 196.398,
+   "endSec": 196.626,
+   "scene": "S08"
+  },
+  {
+   "text": "of",
+   "startSec": 196.66,
+   "endSec": 196.816,
+   "scene": "S08"
+  },
+  {
+   "text": "reaction.",
+   "startSec": 196.853,
+   "endSec": 197.177,
+   "scene": "S08"
+  },
+  {
+   "text": "Up",
+   "startSec": 197.597,
+   "endSec": 197.848,
+   "scene": "S08"
+  },
+  {
+   "text": "to",
+   "startSec": 197.86,
+   "endSec": 198.056,
+   "scene": "S08"
+  },
+  {
+   "text": "a",
+   "startSec": 198.076,
+   "endSec": 198.317,
+   "scene": "S08"
+  },
+  {
+   "text": "point,",
+   "startSec": 198.355,
+   "endSec": 198.554,
+   "scene": "S08"
+  },
+  {
+   "text": "warmer",
+   "startSec": 198.754,
+   "endSec": 199.089,
+   "scene": "S08"
+  },
+  {
+   "text": "means",
+   "startSec": 199.129,
+   "endSec": 199.347,
+   "scene": "S08"
+  },
+  {
+   "text": "faster.",
+   "startSec": 199.378,
+   "endSec": 199.727,
+   "scene": "S08"
+  },
+  {
+   "text": "The",
+   "startSec": 200.147,
+   "endSec": 200.389,
+   "scene": "S08"
+  },
+  {
+   "text": "temperature",
+   "startSec": 200.419,
+   "endSec": 200.992,
+   "scene": "S08"
+  },
+  {
+   "text": "where",
+   "startSec": 201.027,
+   "endSec": 201.246,
+   "scene": "S08"
+  },
+  {
+   "text": "the",
+   "startSec": 201.275,
+   "endSec": 201.477,
+   "scene": "S08"
+  },
+  {
+   "text": "rate",
+   "startSec": 201.499,
+   "endSec": 201.72,
+   "scene": "S08"
+  },
+  {
+   "text": "peaks",
+   "startSec": 201.745,
+   "endSec": 201.979,
+   "scene": "S08"
+  },
+  {
+   "text": "is",
+   "startSec": 202.016,
+   "endSec": 202.212,
+   "scene": "S08"
+  },
+  {
+   "text": "called",
+   "startSec": 202.252,
+   "endSec": 202.614,
+   "scene": "S08"
+  },
+  {
+   "text": "the",
+   "startSec": 202.641,
+   "endSec": 202.851,
+   "scene": "S08"
+  },
+  {
+   "text": "optimum.",
+   "startSec": 202.867,
+   "endSec": 203.34,
+   "scene": "S08"
+  },
+  {
+   "text": "For",
+   "startSec": 203.76,
+   "endSec": 203.955,
+   "scene": "S08"
+  },
+  {
+   "text": "many",
+   "startSec": 203.974,
+   "endSec": 204.352,
+   "scene": "S08"
+  },
+  {
+   "text": "enzymes",
+   "startSec": 204.383,
+   "endSec": 204.862,
+   "scene": "S08"
+  },
+  {
+   "text": "in",
+   "startSec": 204.894,
+   "endSec": 205.136,
+   "scene": "S08"
+  },
+  {
+   "text": "your",
+   "startSec": 205.181,
+   "endSec": 205.396,
+   "scene": "S08"
+  },
+  {
+   "text": "body,",
+   "startSec": 205.411,
+   "endSec": 205.753,
+   "scene": "S08"
+  },
+  {
+   "text": "it's",
+   "startSec": 205.953,
+   "endSec": 206.18,
+   "scene": "S08"
+  },
+  {
+   "text": "around",
+   "startSec": 206.197,
+   "endSec": 206.579,
+   "scene": "S08"
+  },
+  {
+   "text": "37",
+   "startSec": 206.618,
+   "endSec": 206.818,
+   "scene": "S08"
+  },
+  {
+   "text": "degrees:",
+   "startSec": 206.852,
+   "endSec": 207.206,
+   "scene": "S08"
+  },
+  {
+   "text": "body",
+   "startSec": 207.486,
+   "endSec": 207.84,
+   "scene": "S08"
+  },
+  {
+   "text": "temperature.",
+   "startSec": 207.858,
+   "endSec": 208.451,
+   "scene": "S08"
+  },
+  {
+   "text": "So",
+   "startSec": 209.001,
+   "endSec": 209.207,
+   "scene": "S09"
+  },
+  {
+   "text": "what",
+   "startSec": 209.244,
+   "endSec": 209.46,
+   "scene": "S09"
+  },
+  {
+   "text": "if",
+   "startSec": 209.482,
+   "endSec": 209.739,
+   "scene": "S09"
+  },
+  {
+   "text": "we",
+   "startSec": 209.765,
+   "endSec": 209.971,
+   "scene": "S09"
+  },
+  {
+   "text": "keep",
+   "startSec": 209.999,
+   "endSec": 210.229,
+   "scene": "S09"
+  },
+  {
+   "text": "turning",
+   "startSec": 210.258,
+   "endSec": 210.609,
+   "scene": "S09"
+  },
+  {
+   "text": "up",
+   "startSec": 210.657,
+   "endSec": 210.843,
+   "scene": "S09"
+  },
+  {
+   "text": "the",
+   "startSec": 210.889,
+   "endSec": 211.096,
+   "scene": "S09"
+  },
+  {
+   "text": "heat?",
+   "startSec": 211.111,
+   "endSec": 211.337,
+   "scene": "S09"
+  },
+  {
+   "text": "Fifty",
+   "startSec": 211.787,
+   "endSec": 212.093,
+   "scene": "S09"
+  },
+  {
+   "text": "degrees.",
+   "startSec": 212.127,
+   "endSec": 212.456,
+   "scene": "S09"
+  },
+  {
+   "text": "Sixty.",
+   "startSec": 212.876,
+   "endSec": 213.229,
+   "scene": "S09"
+  },
+  {
+   "text": "Seventy.",
+   "startSec": 213.649,
+   "endSec": 214.142,
+   "scene": "S09"
+  },
+  {
+   "text": "Does",
+   "startSec": 214.562,
+   "endSec": 214.795,
+   "scene": "S09"
+  },
+  {
+   "text": "it",
+   "startSec": 214.837,
+   "endSec": 214.995,
+   "scene": "S09"
+  },
+  {
+   "text": "just",
+   "startSec": 215.032,
+   "endSec": 215.264,
+   "scene": "S09"
+  },
+  {
+   "text": "keep",
+   "startSec": 215.291,
+   "endSec": 215.486,
+   "scene": "S09"
+  },
+  {
+   "text": "getting",
+   "startSec": 215.505,
+   "endSec": 215.876,
+   "scene": "S09"
+  },
+  {
+   "text": "faster?",
+   "startSec": 215.89,
+   "endSec": 216.218,
+   "scene": "S09"
+  },
+  {
+   "text": "Pause",
+   "startSec": 216.968,
+   "endSec": 217.181,
+   "scene": "S09"
+  },
+  {
+   "text": "the",
+   "startSec": 217.206,
+   "endSec": 217.4,
+   "scene": "S09"
+  },
+  {
+   "text": "video,",
+   "startSec": 217.447,
+   "endSec": 217.798,
+   "scene": "S09"
+  },
+  {
+   "text": "and",
+   "startSec": 217.998,
+   "endSec": 218.225,
+   "scene": "S09"
+  },
+  {
+   "text": "make",
+   "startSec": 218.247,
+   "endSec": 218.463,
+   "scene": "S09"
+  },
+  {
+   "text": "your",
+   "startSec": 218.476,
+   "endSec": 218.699,
+   "scene": "S09"
+  },
+  {
+   "text": "prediction.",
+   "startSec": 218.712,
+   "endSec": 219.162,
+   "scene": "S09"
+  },
+  {
+   "text": "Here's",
+   "startSec": 223.312,
+   "endSec": 223.681,
+   "scene": "S10"
+  },
+  {
+   "text": "what",
+   "startSec": 223.692,
+   "endSec": 223.91,
+   "scene": "S10"
+  },
+  {
+   "text": "actually",
+   "startSec": 223.943,
+   "endSec": 224.397,
+   "scene": "S10"
+  },
+  {
+   "text": "happens.",
+   "startSec": 224.429,
+   "endSec": 224.784,
+   "scene": "S10"
+  },
+  {
+   "text": "The",
+   "startSec": 225.204,
+   "endSec": 225.417,
+   "scene": "S10"
+  },
+  {
+   "text": "rate",
+   "startSec": 225.459,
+   "endSec": 225.66,
+   "scene": "S10"
+  },
+  {
+   "text": "crashes,",
+   "startSec": 225.694,
+   "endSec": 226.034,
+   "scene": "S10"
+  },
+  {
+   "text": "and",
+   "startSec": 226.234,
+   "endSec": 226.431,
+   "scene": "S10"
+  },
+  {
+   "text": "it",
+   "startSec": 226.443,
+   "endSec": 226.664,
+   "scene": "S10"
+  },
+  {
+   "text": "doesn't",
+   "startSec": 226.695,
+   "endSec": 226.911,
+   "scene": "S10"
+  },
+  {
+   "text": "recover.",
+   "startSec": 226.946,
+   "endSec": 227.444,
+   "scene": "S10"
+  },
+  {
+   "text": "An",
+   "startSec": 227.894,
+   "endSec": 228.117,
+   "scene": "S10"
+  },
+  {
+   "text": "enzyme's",
+   "startSec": 228.148,
+   "endSec": 228.618,
+   "scene": "S10"
+  },
+  {
+   "text": "shape",
+   "startSec": 228.638,
+   "endSec": 228.865,
+   "scene": "S10"
+  },
+  {
+   "text": "is",
+   "startSec": 228.911,
+   "endSec": 229.132,
+   "scene": "S10"
+  },
+  {
+   "text": "held",
+   "startSec": 229.18,
+   "endSec": 229.362,
+   "scene": "S10"
+  },
+  {
+   "text": "together",
+   "startSec": 229.411,
+   "endSec": 229.878,
+   "scene": "S10"
+  },
+  {
+   "text": "by",
+   "startSec": 229.908,
+   "endSec": 230.147,
+   "scene": "S10"
+  },
+  {
+   "text": "lots",
+   "startSec": 230.18,
+   "endSec": 230.365,
+   "scene": "S10"
+  },
+  {
+   "text": "of",
+   "startSec": 230.409,
+   "endSec": 230.634,
+   "scene": "S10"
+  },
+  {
+   "text": "weak",
+   "startSec": 230.672,
+   "endSec": 230.909,
+   "scene": "S10"
+  },
+  {
+   "text": "bonds.",
+   "startSec": 230.955,
+   "endSec": 231.197,
+   "scene": "S10"
+  },
+  {
+   "text": "Too",
+   "startSec": 231.617,
+   "endSec": 231.839,
+   "scene": "S10"
+  },
+  {
+   "text": "much",
+   "startSec": 231.864,
+   "endSec": 232.085,
+   "scene": "S10"
+  },
+  {
+   "text": "heat,",
+   "startSec": 232.133,
+   "endSec": 232.344,
+   "scene": "S10"
+  },
+  {
+   "text": "and",
+   "startSec": 232.544,
+   "endSec": 232.745,
+   "scene": "S10"
+  },
+  {
+   "text": "it",
+   "startSec": 232.793,
+   "endSec": 232.989,
+   "scene": "S10"
+  },
+  {
+   "text": "vibrates",
+   "startSec": 233.013,
+   "endSec": 233.502,
+   "scene": "S10"
+  },
+  {
+   "text": "so",
+   "startSec": 233.53,
+   "endSec": 233.774,
+   "scene": "S10"
+  },
+  {
+   "text": "violently",
+   "startSec": 233.813,
+   "endSec": 234.258,
+   "scene": "S10"
+  },
+  {
+   "text": "that",
+   "startSec": 234.305,
+   "endSec": 234.51,
+   "scene": "S10"
+  },
+  {
+   "text": "those",
+   "startSec": 234.53,
+   "endSec": 234.702,
+   "scene": "S10"
+  },
+  {
+   "text": "bonds",
+   "startSec": 234.732,
+   "endSec": 234.953,
+   "scene": "S10"
+  },
+  {
+   "text": "break.",
+   "startSec": 235.0,
+   "endSec": 235.218,
+   "scene": "S10"
+  },
+  {
+   "text": "The",
+   "startSec": 235.638,
+   "endSec": 235.877,
+   "scene": "S10"
+  },
+  {
+   "text": "chain",
+   "startSec": 235.898,
+   "endSec": 236.134,
+   "scene": "S10"
+  },
+  {
+   "text": "unravels,",
+   "startSec": 236.148,
+   "endSec": 236.631,
+   "scene": "S10"
+  },
+  {
+   "text": "the",
+   "startSec": 236.831,
+   "endSec": 237.054,
+   "scene": "S10"
+  },
+  {
+   "text": "active",
+   "startSec": 237.101,
+   "endSec": 237.471,
+   "scene": "S10"
+  },
+  {
+   "text": "site",
+   "startSec": 237.503,
+   "endSec": 237.704,
+   "scene": "S10"
+  },
+  {
+   "text": "loses",
+   "startSec": 237.737,
+   "endSec": 238.068,
+   "scene": "S10"
+  },
+  {
+   "text": "its",
+   "startSec": 238.104,
+   "endSec": 238.34,
+   "scene": "S10"
+  },
+  {
+   "text": "shape,",
+   "startSec": 238.381,
+   "endSec": 238.598,
+   "scene": "S10"
+  },
+  {
+   "text": "and",
+   "startSec": 238.798,
+   "endSec": 239.032,
+   "scene": "S10"
+  },
+  {
+   "text": "the",
+   "startSec": 239.069,
+   "endSec": 239.254,
+   "scene": "S10"
+  },
+  {
+   "text": "substrate",
+   "startSec": 239.288,
+   "endSec": 239.659,
+   "scene": "S10"
+  },
+  {
+   "text": "no",
+   "startSec": 239.681,
+   "endSec": 239.854,
+   "scene": "S10"
+  },
+  {
+   "text": "longer",
+   "startSec": 239.904,
+   "endSec": 240.249,
+   "scene": "S10"
+  },
+  {
+   "text": "fits.",
+   "startSec": 240.277,
+   "endSec": 240.502,
+   "scene": "S10"
+  },
+  {
+   "text": "The",
+   "startSec": 240.922,
+   "endSec": 241.139,
+   "scene": "S10"
+  },
+  {
+   "text": "enzyme",
+   "startSec": 241.18,
+   "endSec": 241.502,
+   "scene": "S10"
+  },
+  {
+   "text": "has",
+   "startSec": 241.54,
+   "endSec": 241.794,
+   "scene": "S10"
+  },
+  {
+   "text": "been",
+   "startSec": 241.821,
+   "endSec": 242.063,
+   "scene": "S10"
+  },
+  {
+   "text": "denatured.",
+   "startSec": 242.111,
+   "endSec": 242.73,
+   "scene": "S10"
+  },
+  {
+   "text": "It's",
+   "startSec": 243.18,
+   "endSec": 243.394,
+   "scene": "S10"
+  },
+  {
+   "text": "the",
+   "startSec": 243.418,
+   "endSec": 243.616,
+   "scene": "S10"
+  },
+  {
+   "text": "same",
+   "startSec": 243.644,
+   "endSec": 243.879,
+   "scene": "S10"
+  },
+  {
+   "text": "kind",
+   "startSec": 243.897,
+   "endSec": 244.132,
+   "scene": "S10"
+  },
+  {
+   "text": "of",
+   "startSec": 244.145,
+   "endSec": 244.351,
+   "scene": "S10"
+  },
+  {
+   "text": "change",
+   "startSec": 244.385,
+   "endSec": 244.605,
+   "scene": "S10"
+  },
+  {
+   "text": "that",
+   "startSec": 244.652,
+   "endSec": 244.87,
+   "scene": "S10"
+  },
+  {
+   "text": "turns",
+   "startSec": 244.883,
+   "endSec": 245.088,
+   "scene": "S10"
+  },
+  {
+   "text": "egg",
+   "startSec": 245.103,
+   "endSec": 245.321,
+   "scene": "S10"
+  },
+  {
+   "text": "white",
+   "startSec": 245.34,
+   "endSec": 245.552,
+   "scene": "S10"
+  },
+  {
+   "text": "solid",
+   "startSec": 245.583,
+   "endSec": 245.932,
+   "scene": "S10"
+  },
+  {
+   "text": "in",
+   "startSec": 245.945,
+   "endSec": 246.138,
+   "scene": "S10"
+  },
+  {
+   "text": "a",
+   "startSec": 246.168,
+   "endSec": 246.402,
+   "scene": "S10"
+  },
+  {
+   "text": "hot",
+   "startSec": 246.427,
+   "endSec": 246.671,
+   "scene": "S10"
+  },
+  {
+   "text": "pan,",
+   "startSec": 246.703,
+   "endSec": 246.929,
+   "scene": "S10"
+  },
+  {
+   "text": "and,",
+   "startSec": 247.129,
+   "endSec": 247.347,
+   "scene": "S10"
+  },
+  {
+   "text": "like",
+   "startSec": 247.547,
+   "endSec": 247.737,
+   "scene": "S10"
+  },
+  {
+   "text": "a",
+   "startSec": 247.768,
+   "endSec": 247.993,
+   "scene": "S10"
+  },
+  {
+   "text": "cooked",
+   "startSec": 248.024,
+   "endSec": 248.408,
+   "scene": "S10"
+  },
+  {
+   "text": "egg,",
+   "startSec": 248.421,
+   "endSec": 248.628,
+   "scene": "S10"
+  },
+  {
+   "text": "cooling",
+   "startSec": 248.828,
+   "endSec": 249.196,
+   "scene": "S10"
+  },
+  {
+   "text": "it",
+   "startSec": 249.243,
+   "endSec": 249.436,
+   "scene": "S10"
+  },
+  {
+   "text": "down",
+   "startSec": 249.484,
+   "endSec": 249.685,
+   "scene": "S10"
+  },
+  {
+   "text": "usually",
+   "startSec": 249.735,
+   "endSec": 250.219,
+   "scene": "S10"
+  },
+  {
+   "text": "doesn't",
+   "startSec": 250.26,
+   "endSec": 250.465,
+   "scene": "S10"
+  },
+  {
+   "text": "undo",
+   "startSec": 250.508,
+   "endSec": 250.856,
+   "scene": "S10"
+  },
+  {
+   "text": "it.",
+   "startSec": 250.879,
+   "endSec": 251.085,
+   "scene": "S10"
+  },
+  {
+   "text": "Cold",
+   "startSec": 251.535,
+   "endSec": 251.755,
+   "scene": "S10"
+  },
+  {
+   "text": "is",
+   "startSec": 251.784,
+   "endSec": 251.999,
+   "scene": "S10"
+  },
+  {
+   "text": "different.",
+   "startSec": 252.047,
+   "endSec": 252.563,
+   "scene": "S10"
+  },
+  {
+   "text": "Molecules",
+   "startSec": 252.983,
+   "endSec": 253.572,
+   "scene": "S10"
+  },
+  {
+   "text": "have",
+   "startSec": 253.585,
+   "endSec": 253.82,
+   "scene": "S10"
+  },
+  {
+   "text": "less",
+   "startSec": 253.867,
+   "endSec": 254.08,
+   "scene": "S10"
+  },
+  {
+   "text": "kinetic",
+   "startSec": 254.121,
+   "endSec": 254.59,
+   "scene": "S10"
+  },
+  {
+   "text": "energy,",
+   "startSec": 254.608,
+   "endSec": 255.077,
+   "scene": "S10"
+  },
+  {
+   "text": "so",
+   "startSec": 255.277,
+   "endSec": 255.509,
+   "scene": "S10"
+  },
+  {
+   "text": "there",
+   "startSec": 255.521,
+   "endSec": 255.72,
+   "scene": "S10"
+  },
+  {
+   "text": "are",
+   "startSec": 255.736,
+   "endSec": 256.072,
+   "scene": "S10"
+  },
+  {
+   "text": "fewer",
+   "startSec": 256.11,
+   "endSec": 256.455,
+   "scene": "S10"
+  },
+  {
+   "text": "collisions,",
+   "startSec": 256.496,
+   "endSec": 256.976,
+   "scene": "S10"
+  },
+  {
+   "text": "but",
+   "startSec": 257.176,
+   "endSec": 257.382,
+   "scene": "S10"
+  },
+  {
+   "text": "the",
+   "startSec": 257.41,
+   "endSec": 257.603,
+   "scene": "S10"
+  },
+  {
+   "text": "enzyme",
+   "startSec": 257.625,
+   "endSec": 257.961,
+   "scene": "S10"
+  },
+  {
+   "text": "isn't",
+   "startSec": 258.007,
+   "endSec": 258.241,
+   "scene": "S10"
+  },
+  {
+   "text": "denatured.",
+   "startSec": 258.267,
+   "endSec": 258.909,
+   "scene": "S10"
+  },
+  {
+   "text": "Warm",
+   "startSec": 259.329,
+   "endSec": 259.57,
+   "scene": "S10"
+  },
+  {
+   "text": "it",
+   "startSec": 259.585,
+   "endSec": 259.834,
+   "scene": "S10"
+  },
+  {
+   "text": "up,",
+   "startSec": 259.863,
+   "endSec": 260.07,
+   "scene": "S10"
+  },
+  {
+   "text": "and",
+   "startSec": 260.27,
+   "endSec": 260.492,
+   "scene": "S10"
+  },
+  {
+   "text": "it",
+   "startSec": 260.51,
+   "endSec": 260.731,
+   "scene": "S10"
+  },
+  {
+   "text": "recovers.",
+   "startSec": 260.759,
+   "endSec": 261.243,
+   "scene": "S10"
+  },
+  {
+   "text": "And",
+   "startSec": 261.793,
+   "endSec": 262.023,
+   "scene": "S11"
+  },
+  {
+   "text": "that's",
+   "startSec": 262.054,
+   "endSec": 262.278,
+   "scene": "S11"
+  },
+  {
+   "text": "myth",
+   "startSec": 262.319,
+   "endSec": 262.548,
+   "scene": "S11"
+  },
+  {
+   "text": "number",
+   "startSec": 262.582,
+   "endSec": 262.935,
+   "scene": "S11"
+  },
+  {
+   "text": "two:",
+   "startSec": 262.958,
+   "endSec": 263.186,
+   "scene": "S11"
+  },
+  {
+   "text": "that",
+   "startSec": 263.466,
+   "endSec": 263.681,
+   "scene": "S11"
+  },
+  {
+   "text": "heat",
+   "startSec": 263.723,
+   "endSec": 263.922,
+   "scene": "S11"
+  },
+  {
+   "text": "\"kills\"",
+   "startSec": 263.961,
+   "endSec": 264.169,
+   "scene": "S11"
+  },
+  {
+   "text": "enzymes.",
+   "startSec": 264.19,
+   "endSec": 264.685,
+   "scene": "S11"
+  },
+  {
+   "text": "Enzymes",
+   "startSec": 265.105,
+   "endSec": 265.563,
+   "scene": "S11"
+  },
+  {
+   "text": "were",
+   "startSec": 265.59,
+   "endSec": 265.775,
+   "scene": "S11"
+  },
+  {
+   "text": "never",
+   "startSec": 265.823,
+   "endSec": 266.169,
+   "scene": "S11"
+  },
+  {
+   "text": "alive.",
+   "startSec": 266.207,
+   "endSec": 266.541,
+   "scene": "S11"
+  },
+  {
+   "text": "An",
+   "startSec": 266.961,
+   "endSec": 267.134,
+   "scene": "S11"
+  },
+  {
+   "text": "enzyme",
+   "startSec": 267.181,
+   "endSec": 267.526,
+   "scene": "S11"
+  },
+  {
+   "text": "is",
+   "startSec": 267.539,
+   "endSec": 267.734,
+   "scene": "S11"
+  },
+  {
+   "text": "a",
+   "startSec": 267.752,
+   "endSec": 267.97,
+   "scene": "S11"
+  },
+  {
+   "text": "molecule,",
+   "startSec": 268.002,
+   "endSec": 268.448,
+   "scene": "S11"
+  },
+  {
+   "text": "a",
+   "startSec": 268.648,
+   "endSec": 268.91,
+   "scene": "S11"
+  },
+  {
+   "text": "very",
+   "startSec": 268.925,
+   "endSec": 269.263,
+   "scene": "S11"
+  },
+  {
+   "text": "clever",
+   "startSec": 269.281,
+   "endSec": 269.629,
+   "scene": "S11"
+  },
+  {
+   "text": "one,",
+   "startSec": 269.664,
+   "endSec": 270.032,
+   "scene": "S11"
+  },
+  {
+   "text": "but",
+   "startSec": 270.232,
+   "endSec": 270.44,
+   "scene": "S11"
+  },
+  {
+   "text": "it",
+   "startSec": 270.476,
+   "endSec": 270.682,
+   "scene": "S11"
+  },
+  {
+   "text": "can't",
+   "startSec": 270.693,
+   "endSec": 270.922,
+   "scene": "S11"
+  },
+  {
+   "text": "die.",
+   "startSec": 270.955,
+   "endSec": 271.204,
+   "scene": "S11"
+  },
+  {
+   "text": "It's",
+   "startSec": 271.624,
+   "endSec": 271.838,
+   "scene": "S11"
+  },
+  {
+   "text": "denatured:",
+   "startSec": 271.854,
+   "endSec": 272.478,
+   "scene": "S11"
+  },
+  {
+   "text": "its",
+   "startSec": 272.758,
+   "endSec": 272.935,
+   "scene": "S11"
+  },
+  {
+   "text": "active",
+   "startSec": 272.969,
+   "endSec": 273.327,
+   "scene": "S11"
+  },
+  {
+   "text": "site",
+   "startSec": 273.367,
+   "endSec": 273.583,
+   "scene": "S11"
+  },
+  {
+   "text": "changes",
+   "startSec": 273.619,
+   "endSec": 273.953,
+   "scene": "S11"
+  },
+  {
+   "text": "shape,",
+   "startSec": 273.988,
+   "endSec": 274.177,
+   "scene": "S11"
+  },
+  {
+   "text": "so",
+   "startSec": 274.377,
+   "endSec": 274.555,
+   "scene": "S11"
+  },
+  {
+   "text": "the",
+   "startSec": 274.599,
+   "endSec": 274.796,
+   "scene": "S11"
+  },
+  {
+   "text": "substrate",
+   "startSec": 274.845,
+   "endSec": 275.219,
+   "scene": "S11"
+  },
+  {
+   "text": "no",
+   "startSec": 275.268,
+   "endSec": 275.474,
+   "scene": "S11"
+  },
+  {
+   "text": "longer",
+   "startSec": 275.49,
+   "endSec": 275.834,
+   "scene": "S11"
+  },
+  {
+   "text": "fits,",
+   "startSec": 275.853,
+   "endSec": 276.08,
+   "scene": "S11"
+  },
+  {
+   "text": "and",
+   "startSec": 276.28,
+   "endSec": 276.499,
+   "scene": "S11"
+  },
+  {
+   "text": "no",
+   "startSec": 276.544,
+   "endSec": 276.775,
+   "scene": "S11"
+  },
+  {
+   "text": "enzyme\u2013substrate",
+   "startSec": 276.822,
+   "endSec": 277.595,
+   "scene": "S11"
+  },
+  {
+   "text": "complex",
+   "startSec": 277.639,
+   "endSec": 277.951,
+   "scene": "S11"
+  },
+  {
+   "text": "can",
+   "startSec": 277.991,
+   "endSec": 278.213,
+   "scene": "S11"
+  },
+  {
+   "text": "form.",
+   "startSec": 278.246,
+   "endSec": 278.439,
+   "scene": "S11"
+  },
+  {
+   "text": "In",
+   "startSec": 278.859,
+   "endSec": 279.046,
+   "scene": "S11"
+  },
+  {
+   "text": "an",
+   "startSec": 279.068,
+   "endSec": 279.27,
+   "scene": "S11"
+  },
+  {
+   "text": "exam,",
+   "startSec": 279.291,
+   "endSec": 279.658,
+   "scene": "S11"
+  },
+  {
+   "text": "that's",
+   "startSec": 279.858,
+   "endSec": 280.061,
+   "scene": "S11"
+  },
+  {
+   "text": "the",
+   "startSec": 280.107,
+   "endSec": 280.33,
+   "scene": "S11"
+  },
+  {
+   "text": "answer",
+   "startSec": 280.378,
+   "endSec": 280.734,
+   "scene": "S11"
+  },
+  {
+   "text": "that",
+   "startSec": 280.757,
+   "endSec": 280.96,
+   "scene": "S11"
+  },
+  {
+   "text": "gets",
+   "startSec": 281.005,
+   "endSec": 281.26,
+   "scene": "S11"
+  },
+  {
+   "text": "the",
+   "startSec": 281.288,
+   "endSec": 281.521,
+   "scene": "S11"
+  },
+  {
+   "text": "marks.",
+   "startSec": 281.564,
+   "endSec": 281.774,
+   "scene": "S11"
+  },
+  {
+   "text": "pH",
+   "startSec": 282.324,
+   "endSec": 282.549,
+   "scene": "S12"
+  },
+  {
+   "text": "can",
+   "startSec": 282.592,
+   "endSec": 282.788,
+   "scene": "S12"
+  },
+  {
+   "text": "do",
+   "startSec": 282.813,
+   "endSec": 283.04,
+   "scene": "S12"
+  },
+  {
+   "text": "this",
+   "startSec": 283.067,
+   "endSec": 283.299,
+   "scene": "S12"
+  },
+  {
+   "text": "too.",
+   "startSec": 283.328,
+   "endSec": 283.564,
+   "scene": "S12"
+  },
+  {
+   "text": "Too",
+   "startSec": 283.984,
+   "endSec": 284.184,
+   "scene": "S12"
+  },
+  {
+   "text": "acidic,",
+   "startSec": 284.205,
+   "endSec": 284.71,
+   "scene": "S12"
+  },
+  {
+   "text": "or",
+   "startSec": 284.91,
+   "endSec": 285.141,
+   "scene": "S12"
+  },
+  {
+   "text": "too",
+   "startSec": 285.188,
+   "endSec": 285.409,
+   "scene": "S12"
+  },
+  {
+   "text": "alkaline,",
+   "startSec": 285.436,
+   "endSec": 285.911,
+   "scene": "S12"
+  },
+  {
+   "text": "and",
+   "startSec": 286.111,
+   "endSec": 286.334,
+   "scene": "S12"
+  },
+  {
+   "text": "the",
+   "startSec": 286.352,
+   "endSec": 286.567,
+   "scene": "S12"
+  },
+  {
+   "text": "bonds",
+   "startSec": 286.613,
+   "endSec": 286.808,
+   "scene": "S12"
+  },
+  {
+   "text": "holding",
+   "startSec": 286.84,
+   "endSec": 287.215,
+   "scene": "S12"
+  },
+  {
+   "text": "the",
+   "startSec": 287.226,
+   "endSec": 287.418,
+   "scene": "S12"
+  },
+  {
+   "text": "active",
+   "startSec": 287.431,
+   "endSec": 287.777,
+   "scene": "S12"
+  },
+  {
+   "text": "site",
+   "startSec": 287.789,
+   "endSec": 287.99,
+   "scene": "S12"
+  },
+  {
+   "text": "in",
+   "startSec": 288.023,
+   "endSec": 288.229,
+   "scene": "S12"
+  },
+  {
+   "text": "shape",
+   "startSec": 288.267,
+   "endSec": 288.493,
+   "scene": "S12"
+  },
+  {
+   "text": "are",
+   "startSec": 288.513,
+   "endSec": 288.85,
+   "scene": "S12"
+  },
+  {
+   "text": "disrupted.",
+   "startSec": 288.88,
+   "endSec": 289.365,
+   "scene": "S12"
+  },
+  {
+   "text": "Go",
+   "startSec": 289.785,
+   "endSec": 289.975,
+   "scene": "S12"
+  },
+  {
+   "text": "far",
+   "startSec": 290.021,
+   "endSec": 290.247,
+   "scene": "S12"
+  },
+  {
+   "text": "enough,",
+   "startSec": 290.265,
+   "endSec": 290.609,
+   "scene": "S12"
+  },
+  {
+   "text": "and",
+   "startSec": 290.809,
+   "endSec": 291.021,
+   "scene": "S12"
+  },
+  {
+   "text": "the",
+   "startSec": 291.031,
+   "endSec": 291.232,
+   "scene": "S12"
+  },
+  {
+   "text": "enzyme",
+   "startSec": 291.253,
+   "endSec": 291.606,
+   "scene": "S12"
+  },
+  {
+   "text": "is",
+   "startSec": 291.632,
+   "endSec": 291.826,
+   "scene": "S12"
+  },
+  {
+   "text": "denatured.",
+   "startSec": 291.843,
+   "endSec": 292.405,
+   "scene": "S12"
+  },
+  {
+   "text": "So",
+   "startSec": 292.825,
+   "endSec": 293.056,
+   "scene": "S12"
+  },
+  {
+   "text": "every",
+   "startSec": 293.103,
+   "endSec": 293.583,
+   "scene": "S12"
+  },
+  {
+   "text": "enzyme",
+   "startSec": 293.617,
+   "endSec": 293.96,
+   "scene": "S12"
+  },
+  {
+   "text": "has",
+   "startSec": 293.987,
+   "endSec": 294.221,
+   "scene": "S12"
+  },
+  {
+   "text": "an",
+   "startSec": 294.264,
+   "endSec": 294.496,
+   "scene": "S12"
+  },
+  {
+   "text": "optimum",
+   "startSec": 294.516,
+   "endSec": 294.975,
+   "scene": "S12"
+  },
+  {
+   "text": "pH.",
+   "startSec": 295.002,
+   "endSec": 295.21,
+   "scene": "S12"
+  },
+  {
+   "text": "Amylase,",
+   "startSec": 295.63,
+   "endSec": 296.099,
+   "scene": "S12"
+  },
+  {
+   "text": "in",
+   "startSec": 296.299,
+   "endSec": 296.5,
+   "scene": "S12"
+  },
+  {
+   "text": "your",
+   "startSec": 296.546,
+   "endSec": 296.761,
+   "scene": "S12"
+  },
+  {
+   "text": "mouth,",
+   "startSec": 296.782,
+   "endSec": 296.977,
+   "scene": "S12"
+  },
+  {
+   "text": "works",
+   "startSec": 297.177,
+   "endSec": 297.381,
+   "scene": "S12"
+  },
+  {
+   "text": "best",
+   "startSec": 297.392,
+   "endSec": 297.633,
+   "scene": "S12"
+  },
+  {
+   "text": "close",
+   "startSec": 297.653,
+   "endSec": 297.896,
+   "scene": "S12"
+  },
+  {
+   "text": "to",
+   "startSec": 297.916,
+   "endSec": 298.108,
+   "scene": "S12"
+  },
+  {
+   "text": "neutral,",
+   "startSec": 298.13,
+   "endSec": 298.456,
+   "scene": "S12"
+  },
+  {
+   "text": "around",
+   "startSec": 298.656,
+   "endSec": 299.008,
+   "scene": "S12"
+  },
+  {
+   "text": "pH",
+   "startSec": 299.05,
+   "endSec": 299.259,
+   "scene": "S12"
+  },
+  {
+   "text": "7.",
+   "startSec": 299.284,
+   "endSec": 299.548,
+   "scene": "S12"
+  },
+  {
+   "text": "Your",
+   "startSec": 299.968,
+   "endSec": 300.188,
+   "scene": "S12"
+  },
+  {
+   "text": "stomach",
+   "startSec": 300.218,
+   "endSec": 300.578,
+   "scene": "S12"
+  },
+  {
+   "text": "is",
+   "startSec": 300.589,
+   "endSec": 300.802,
+   "scene": "S12"
+  },
+  {
+   "text": "strongly",
+   "startSec": 300.838,
+   "endSec": 301.135,
+   "scene": "S12"
+  },
+  {
+   "text": "acidic,",
+   "startSec": 301.178,
+   "endSec": 301.631,
+   "scene": "S12"
+  },
+  {
+   "text": "often",
+   "startSec": 301.831,
+   "endSec": 302.154,
+   "scene": "S12"
+  },
+  {
+   "text": "around",
+   "startSec": 302.182,
+   "endSec": 302.527,
+   "scene": "S12"
+  },
+  {
+   "text": "pH",
+   "startSec": 302.575,
+   "endSec": 302.794,
+   "scene": "S12"
+  },
+  {
+   "text": "2,",
+   "startSec": 302.808,
+   "endSec": 303.009,
+   "scene": "S12"
+  },
+  {
+   "text": "and",
+   "startSec": 303.209,
+   "endSec": 303.394,
+   "scene": "S12"
+  },
+  {
+   "text": "pepsin,",
+   "startSec": 303.442,
+   "endSec": 303.794,
+   "scene": "S12"
+  },
+  {
+   "text": "a",
+   "startSec": 303.994,
+   "endSec": 304.211,
+   "scene": "S12"
+  },
+  {
+   "text": "protease",
+   "startSec": 304.257,
+   "endSec": 304.62,
+   "scene": "S12"
+  },
+  {
+   "text": "that",
+   "startSec": 304.636,
+   "endSec": 304.837,
+   "scene": "S12"
+  },
+  {
+   "text": "digests",
+   "startSec": 304.854,
+   "endSec": 305.231,
+   "scene": "S12"
+  },
+  {
+   "text": "protein",
+   "startSec": 305.251,
+   "endSec": 305.602,
+   "scene": "S12"
+  },
+  {
+   "text": "there,",
+   "startSec": 305.648,
+   "endSec": 305.867,
+   "scene": "S12"
+  },
+  {
+   "text": "works",
+   "startSec": 306.067,
+   "endSec": 306.291,
+   "scene": "S12"
+  },
+  {
+   "text": "best",
+   "startSec": 306.331,
+   "endSec": 306.543,
+   "scene": "S12"
+  },
+  {
+   "text": "right",
+   "startSec": 306.587,
+   "endSec": 306.785,
+   "scene": "S12"
+  },
+  {
+   "text": "around",
+   "startSec": 306.823,
+   "endSec": 307.182,
+   "scene": "S12"
+  },
+  {
+   "text": "that.",
+   "startSec": 307.2,
+   "endSec": 307.416,
+   "scene": "S12"
+  },
+  {
+   "text": "Different",
+   "startSec": 307.836,
+   "endSec": 308.294,
+   "scene": "S12"
+  },
+  {
+   "text": "enzymes,",
+   "startSec": 308.336,
+   "endSec": 308.823,
+   "scene": "S12"
+  },
+  {
+   "text": "tuned",
+   "startSec": 309.023,
+   "endSec": 309.338,
+   "scene": "S12"
+  },
+  {
+   "text": "to",
+   "startSec": 309.366,
+   "endSec": 309.592,
+   "scene": "S12"
+  },
+  {
+   "text": "different",
+   "startSec": 309.611,
+   "endSec": 310.063,
+   "scene": "S12"
+  },
+  {
+   "text": "places.",
+   "startSec": 310.078,
+   "endSec": 310.438,
+   "scene": "S12"
+  },
+  {
+   "text": "So,",
+   "startSec": 311.088,
+   "endSec": 311.267,
+   "scene": "S13"
+  },
+  {
+   "text": "back",
+   "startSec": 311.467,
+   "endSec": 311.667,
+   "scene": "S13"
+  },
+  {
+   "text": "to",
+   "startSec": 311.701,
+   "endSec": 311.895,
+   "scene": "S13"
+  },
+  {
+   "text": "that",
+   "startSec": 311.934,
+   "endSec": 312.144,
+   "scene": "S13"
+  },
+  {
+   "text": "cracker.",
+   "startSec": 312.184,
+   "endSec": 312.537,
+   "scene": "S13"
+  },
+  {
+   "text": "As",
+   "startSec": 312.957,
+   "endSec": 313.181,
+   "scene": "S13"
+  },
+  {
+   "text": "you",
+   "startSec": 313.219,
+   "endSec": 313.462,
+   "scene": "S13"
+  },
+  {
+   "text": "chew,",
+   "startSec": 313.474,
+   "endSec": 313.71,
+   "scene": "S13"
+  },
+  {
+   "text": "amylase",
+   "startSec": 313.91,
+   "endSec": 314.354,
+   "scene": "S13"
+  },
+  {
+   "text": "meets",
+   "startSec": 314.378,
+   "endSec": 314.57,
+   "scene": "S13"
+  },
+  {
+   "text": "the",
+   "startSec": 314.596,
+   "endSec": 314.815,
+   "scene": "S13"
+  },
+  {
+   "text": "starch.",
+   "startSec": 314.862,
+   "endSec": 315.081,
+   "scene": "S13"
+  },
+  {
+   "text": "The",
+   "startSec": 315.501,
+   "endSec": 315.739,
+   "scene": "S13"
+  },
+  {
+   "text": "chains",
+   "startSec": 315.781,
+   "endSec": 316.008,
+   "scene": "S13"
+  },
+  {
+   "text": "fit",
+   "startSec": 316.036,
+   "endSec": 316.237,
+   "scene": "S13"
+  },
+  {
+   "text": "its",
+   "startSec": 316.275,
+   "endSec": 316.492,
+   "scene": "S13"
+  },
+  {
+   "text": "active",
+   "startSec": 316.516,
+   "endSec": 316.87,
+   "scene": "S13"
+  },
+  {
+   "text": "site,",
+   "startSec": 316.9,
+   "endSec": 317.092,
+   "scene": "S13"
+  },
+  {
+   "text": "and",
+   "startSec": 317.292,
+   "endSec": 317.516,
+   "scene": "S13"
+  },
+  {
+   "text": "it",
+   "startSec": 317.555,
+   "endSec": 317.732,
+   "scene": "S13"
+  },
+  {
+   "text": "snips",
+   "startSec": 317.752,
+   "endSec": 317.96,
+   "scene": "S13"
+  },
+  {
+   "text": "them",
+   "startSec": 317.977,
+   "endSec": 318.225,
+   "scene": "S13"
+  },
+  {
+   "text": "into",
+   "startSec": 318.235,
+   "endSec": 318.559,
+   "scene": "S13"
+  },
+  {
+   "text": "maltose,",
+   "startSec": 318.601,
+   "endSec": 318.977,
+   "scene": "S13"
+  },
+  {
+   "text": "over",
+   "startSec": 319.177,
+   "endSec": 319.504,
+   "scene": "S13"
+  },
+  {
+   "text": "and",
+   "startSec": 319.536,
+   "endSec": 319.76,
+   "scene": "S13"
+  },
+  {
+   "text": "over,",
+   "startSec": 319.809,
+   "endSec": 320.165,
+   "scene": "S13"
+  },
+  {
+   "text": "without",
+   "startSec": 320.365,
+   "endSec": 320.702,
+   "scene": "S13"
+  },
+  {
+   "text": "being",
+   "startSec": 320.719,
+   "endSec": 320.935,
+   "scene": "S13"
+  },
+  {
+   "text": "used",
+   "startSec": 320.974,
+   "endSec": 321.318,
+   "scene": "S13"
+  },
+  {
+   "text": "up.",
+   "startSec": 321.351,
+   "endSec": 321.564,
+   "scene": "S13"
+  },
+  {
+   "text": "Your",
+   "startSec": 321.984,
+   "endSec": 322.208,
+   "scene": "S13"
+  },
+  {
+   "text": "mouth",
+   "startSec": 322.246,
+   "endSec": 322.463,
+   "scene": "S13"
+  },
+  {
+   "text": "is",
+   "startSec": 322.504,
+   "endSec": 322.722,
+   "scene": "S13"
+  },
+  {
+   "text": "about",
+   "startSec": 322.756,
+   "endSec": 323.09,
+   "scene": "S13"
+  },
+  {
+   "text": "37",
+   "startSec": 323.122,
+   "endSec": 323.359,
+   "scene": "S13"
+  },
+  {
+   "text": "degrees",
+   "startSec": 323.37,
+   "endSec": 323.702,
+   "scene": "S13"
+  },
+  {
+   "text": "and",
+   "startSec": 323.726,
+   "endSec": 323.957,
+   "scene": "S13"
+  },
+  {
+   "text": "close",
+   "startSec": 323.986,
+   "endSec": 324.194,
+   "scene": "S13"
+  },
+  {
+   "text": "to",
+   "startSec": 324.223,
+   "endSec": 324.455,
+   "scene": "S13"
+  },
+  {
+   "text": "neutral:",
+   "startSec": 324.491,
+   "endSec": 324.868,
+   "scene": "S13"
+  },
+  {
+   "text": "just",
+   "startSec": 325.148,
+   "endSec": 325.347,
+   "scene": "S13"
+  },
+  {
+   "text": "right.",
+   "startSec": 325.393,
+   "endSec": 325.611,
+   "scene": "S13"
+  },
+  {
+   "text": "Links",
+   "startSec": 326.031,
+   "endSec": 326.247,
+   "scene": "S13"
+  },
+  {
+   "text": "that",
+   "startSec": 326.289,
+   "endSec": 326.525,
+   "scene": "S13"
+  },
+  {
+   "text": "would",
+   "startSec": 326.565,
+   "endSec": 326.808,
+   "scene": "S13"
+  },
+  {
+   "text": "last",
+   "startSec": 326.841,
+   "endSec": 327.052,
+   "scene": "S13"
+  },
+  {
+   "text": "a",
+   "startSec": 327.067,
+   "endSec": 327.284,
+   "scene": "S13"
+  },
+  {
+   "text": "million",
+   "startSec": 327.328,
+   "endSec": 327.665,
+   "scene": "S13"
+  },
+  {
+   "text": "years",
+   "startSec": 327.676,
+   "endSec": 327.889,
+   "scene": "S13"
+  },
+  {
+   "text": "or",
+   "startSec": 327.93,
+   "endSec": 328.139,
+   "scene": "S13"
+  },
+  {
+   "text": "more",
+   "startSec": 328.159,
+   "endSec": 328.388,
+   "scene": "S13"
+  },
+  {
+   "text": "on",
+   "startSec": 328.417,
+   "endSec": 328.635,
+   "scene": "S13"
+  },
+  {
+   "text": "their",
+   "startSec": 328.652,
+   "endSec": 328.886,
+   "scene": "S13"
+  },
+  {
+   "text": "own",
+   "startSec": 328.934,
+   "endSec": 329.118,
+   "scene": "S13"
+  },
+  {
+   "text": "are",
+   "startSec": 329.146,
+   "endSec": 329.518,
+   "scene": "S13"
+  },
+  {
+   "text": "broken",
+   "startSec": 329.539,
+   "endSec": 329.892,
+   "scene": "S13"
+  },
+  {
+   "text": "while",
+   "startSec": 329.935,
+   "endSec": 330.124,
+   "scene": "S13"
+  },
+  {
+   "text": "you",
+   "startSec": 330.145,
+   "endSec": 330.331,
+   "scene": "S13"
+  },
+  {
+   "text": "chew.",
+   "startSec": 330.354,
+   "endSec": 330.556,
+   "scene": "S13"
+  },
+  {
+   "text": "That",
+   "startSec": 330.976,
+   "endSec": 331.197,
+   "scene": "S13"
+  },
+  {
+   "text": "sweetness",
+   "startSec": 331.227,
+   "endSec": 331.61,
+   "scene": "S13"
+  },
+  {
+   "text": "is",
+   "startSec": 331.641,
+   "endSec": 331.878,
+   "scene": "S13"
+  },
+  {
+   "text": "enzymes",
+   "startSec": 331.901,
+   "endSec": 332.365,
+   "scene": "S13"
+  },
+  {
+   "text": "at",
+   "startSec": 332.382,
+   "endSec": 332.625,
+   "scene": "S13"
+  },
+  {
+   "text": "work,",
+   "startSec": 332.647,
+   "endSec": 332.874,
+   "scene": "S13"
+  },
+  {
+   "text": "in",
+   "startSec": 333.074,
+   "endSec": 333.291,
+   "scene": "S13"
+  },
+  {
+   "text": "real",
+   "startSec": 333.31,
+   "endSec": 333.523,
+   "scene": "S13"
+  },
+  {
+   "text": "time.",
+   "startSec": 333.548,
+   "endSec": 333.761,
+   "scene": "S13"
+  },
+  {
+   "text": "And",
+   "startSec": 334.511,
+   "endSec": 334.737,
+   "scene": "S13"
+  },
+  {
+   "text": "that's",
+   "startSec": 334.761,
+   "endSec": 334.962,
+   "scene": "S13"
+  },
+  {
+   "text": "how",
+   "startSec": 334.983,
+   "endSec": 335.229,
+   "scene": "S13"
+  },
+  {
+   "text": "enzymes",
+   "startSec": 335.278,
+   "endSec": 335.78,
+   "scene": "S13"
+  },
+  {
+   "text": "actually",
+   "startSec": 335.811,
+   "endSec": 336.275,
+   "scene": "S13"
+  },
+  {
+   "text": "work.",
+   "startSec": 336.317,
+   "endSec": 336.515,
+   "scene": "S13"
+  }
+ ]
+}

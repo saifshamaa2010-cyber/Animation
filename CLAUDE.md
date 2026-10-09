@@ -70,7 +70,9 @@ copying them into an episode. Episode-specific scenes live in `src/episodes/<id>
    cue's frame). The animation is timed to this real audio.
    - **Never speed the voice up or time-stretch it to fit.** Change the animation or the script.
 3. Build a ~20-second test scene with real narration → check in (owner judges the voice).
-4. Animate all scenes against `timeline.json`, add music + SFX, render.
+4. Animate all scenes against `timeline.json` (follow `docs/scene-guide.md`), then
+   `npm run audio -- <id>` (SFX placed from each scene's own timing + original music + mix) and
+   `npm run render -- <id>`.
 5. **QA before showing anyone**: `npm run qa -- <id>` — inspect frames, A/V sync at cue points,
    loudness (target −14 LUFS integrated, true peak ≤ −1 dBTP, music ≥ 15 dB under the voice),
    no clipped text, no frames outside safe area. Then make a contact sheet and report honestly
