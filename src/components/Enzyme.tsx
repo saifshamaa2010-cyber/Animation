@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useCurrentFrame } from "remotion";
 import { noise2D } from "@remotion/noise";
 import { C } from "../brand/tokens";
-import { Pt, lerp, lerpPts, roundedPolygon, smoothOpenPath } from "../lib/geometry";
+import { Pt, lerp, lerpPts, rng, roundedPolygon, smoothOpenPath } from "../lib/geometry";
 import { jitter, thermalAmplitude } from "../lib/motion";
 import { useSvgId } from "./ids";
 import {
@@ -10,6 +10,7 @@ import {
   ENZYME_OPEN,
   ENZYME_RADII,
   ENZYME_REST,
+  LIP_BOT,
   POCKET_INDICES,
   foldedChain,
   unfoldedChain,
@@ -45,6 +46,10 @@ export type EnzymeProps = {
   readonly still?: boolean;
   readonly seed?: number;
   readonly opacity?: number;
+  /** Different body silhouette (same pocket) — for crowds of different enzymes. 0 = the hero shape. */
+  readonly variant?: number;
+  /** "low" = distant/background enzyme: no inner chain, no blurred shadow (much cheaper to render). */
+  readonly lod?: "high" | "low";
 };
 
 export const Enzyme: React.FC<EnzymeProps> = ({
@@ -64,6 +69,8 @@ export const Enzyme: React.FC<EnzymeProps> = ({
   still = false,
   seed = 7,
   opacity = 1,
+  variant = 0,
+  lod = "high",
 }) => {
   const frame = useCurrentFrame();
   const pal = ENZYME_PALETTES[palette];
@@ -73,11 +80,17 @@ export const Enzyme: React.FC<EnzymeProps> = ({
     let pts: Pt[] = ENZYME_REST;
     if (open > 0) pts = lerpPts(pts, ENZYME_OPEN, open);
     if (denature > 0) pts = lerpPts(pts, ENZYME_DENATURED, denature);
+    if (variant) {
+      const r = rng(variant * 7919 + 13);
+      const k = Array.from({ length: LIP_BOT - 1 }, () => 1 + (r() - 0.5) * 0.34);
+      const sx = 0.85 + r() * 0.3;
+      pts = pts.map(([px, py], i) => (i >= 1 && i < LIP_BOT ? ([px * k[i - 1] * sx, py * k[i - 1]] as Pt) : [px, py]));
+    }
     return pts;
-  }, [open, denature]);
+  }, [open, denature, variant]);
   const d = roundedPolygon(outline, ENZYME_RADII);
 
-  const folded = useMemo(() => foldedChain(seed * 97 + 11), [seed]);
+  const folded = useMemo(() => (lod === "low" ? [] : foldedChain(seed * 97 + 11)), [seed, lod]);
   const stretched = useMemo(() => unfoldedChain(folded.length), [folded.length]);
   const wb = useMemo(() => weakBonds(folded), [folded]);
 
@@ -104,6 +117,30 @@ export const Enzyme: React.FC<EnzymeProps> = ({
     POCKET_INDICES.map((i) => outline[i]),
     0.2,
   );
+
+  if (lod === "low") {
+    return (
+      <g transform={`translate(${x + j.dx} ${y + j.dy}) rotate(${rotate + j.rot}) scale(${scale})`} opacity={opacity}>
+        <defs>
+          <linearGradient id={`${id}-fill`} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor={pal.main} />
+            <stop offset="0.65" stopColor={pal.deep} />
+            <stop offset="1" stopColor={pal.dark} />
+          </linearGradient>
+          <linearGradient id={`${id}-rim`} x1="0" y1="0" x2="0.4" y2="1">
+            <stop offset="0" stopColor={pal.light} stopOpacity={0.9} />
+            <stop offset="0.45" stopColor={pal.light} stopOpacity={0} />
+          </linearGradient>
+          <clipPath id={`${id}-clip`}>
+            <path d={d} />
+          </clipPath>
+        </defs>
+        <path d={d} transform="translate(0 12)" fill={C.ink950} opacity={0.3} />
+        <path d={d} fill={`url(#${id}-fill)`} />
+        <path d={d} fill="none" stroke={`url(#${id}-rim)`} strokeWidth={16} clipPath={`url(#${id}-clip)`} />
+      </g>
+    );
+  }
 
   return (
     <g

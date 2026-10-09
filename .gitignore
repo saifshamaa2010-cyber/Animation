@@ -10,3 +10,7 @@ out
 .venv/
 models/
 __pycache__/
+.cache/
+
+# Generated audio (re-created by npm run narrate / npm run audio)
+public/episodes/

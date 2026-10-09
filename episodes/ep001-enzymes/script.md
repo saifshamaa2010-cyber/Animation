@@ -9,7 +9,7 @@ Narration script. This file is read by the narration pipeline.
 
 ## S01 hook
 
-{cracker} Try this with your lunch. Take a plain cracker, and {chew} keep chewing. Don't swallow. {timer} Give it a minute or so… {sweet} and it starts to taste sweet. [pause 0.4] {question} But you didn't add any sugar. So where's that sweetness coming from? [pause 0.5] {answer} A molecule in your saliva, {millions} doing something that would otherwise take millions of years.
+{cracker} Here's an experiment you can do with your lunch. Take a plain cracker, and {chew} keep chewing. Don't swallow. {timer} Give it a minute or so… {sweet} and it starts to taste sweet. [pause 0.4] {question} But you didn't add any sugar. So where's that sweetness coming from? [pause 0.5] {answer} A molecule in your saliva, {millions} doing something that would otherwise take millions of years.
 
 ## S02 title
 
@@ -21,15 +21,15 @@ Narration script. This file is read by the narration pipeline.
 
 ## S04 enzyme
 
-[pause 0.3] {amylase} Enter amylase: an enzyme in your saliva. {snip} It snips starch into smaller sugars, {maltose} like maltose, which is just two glucose units joined together. {sweetTaste} And maltose does taste sweet. [pause 0.4] {catalyst} That's what an enzyme is: a biological catalyst. It speeds up a reaction {unchanged} without being used up. {protein} Nearly all enzymes are proteins, long chains of amino acids {fold} folded into a precise shape. {shape} And that shape is everything.
+[pause 0.3] {amylase} Enter amylase: an enzyme in your saliva. {snip} It snips starch into smaller sugars, {maltose} like maltose, which is just two glucose units joined together. {sweetTaste} And maltose does taste sweet. [pause 0.4] {catalyst} That's what an enzyme is: a biological catalyst. It speeds up a reaction {unchanged} without being used up. {everywhere} And nearly every reaction in your body has one. Without enzymes, the chemistry that keeps you alive would be far too slow. {protein} Nearly all enzymes are proteins, long chains of amino acids {fold} folded into a precise shape. {shape} And that shape is everything.
 
 ## S05 active-site
 
-[pause 0.3] {site} Every enzyme has a small pocket called the active site. {substrate} The molecule it works on, the substrate, fits inside, {complex} forming an enzyme–substrate complex. {held} Held there, a bond becomes much easier to break. {break} Snap. {release} The products leave, {next} and the active site is free for the next one. [pause 0.4] {lockKey} The shapes have to match, like a lock and a key. {specific} That's why enzymes are so specific. {cellulose} Amylase can't even break down cellulose, in paper, though that's a chain of glucose too. {differentLink} Its links are joined differently, so it just doesn't fit.
+[pause 0.3] {site} Every enzyme has a small pocket called the active site. {substrate} The molecule it works on, the substrate, fits inside, {complex} forming an enzyme–substrate complex. {held} Held there, a bond becomes much easier to break. {break} Snap. {release} The products leave, {next} and the active site is free for the next one. [pause 0.4] {lockKey} The active site's shape is complementary to the substrate: they fit together like a lock and a key. {specific} That's why enzymes are so specific. {cellulose} Amylase can't even break down cellulose, in paper, though that's a chain of glucose too. {differentLink} Its links are joined differently, so it just doesn't fit.
 
 ## S06 induced-fit
 
-[pause 0.3] {simplification} Lock and key is a brilliant model, but it is a simplification. {flex} Real enzymes aren't rigid. {grip} As the substrate binds, the active site moulds itself around it. {inducedFit} That more accurate picture is called induced fit. {exam} For GCSE, lock and key is the one to use. Just remember: it's a model, not a photograph.
+[pause 0.3] {simplification} Lock and key is a brilliant model, but it is a simplification. {flex} Real enzymes aren't rigid. {grip} As the substrate binds, the active site moulds itself around it. {inducedFit} That more accurate picture is called induced fit. {exam} For GCSE and IGCSE, lock and key is the model to use. Just remember: it's a model, not a photograph.
 
 ## S07 myth-used-up
 
@@ -37,7 +37,7 @@ Narration script. This file is read by the narration pipeline.
 
 ## S08 temperature
 
-[pause 0.4] {temperature} Now, temperature. {jiggle} Molecules are always jiggling around. {warm} Heat them up, and they move faster. {collide} Enzymes and substrates collide more often, with more energy, {faster} so more reactions happen. {upToAPoint} Up to a point, warmer means faster. {optimum} For many enzymes in your body, that peak, the optimum, is around 37 degrees: body temperature.
+[pause 0.4] {temperature} Now, temperature. {jiggle} Molecules are always jiggling around. {warm} Heat them up, and they move faster. {collide} Enzymes and substrates bump into each other more often, and with more energy. {faster} More successful collisions means more reactions every second. {upToAPoint} Up to a point, warmer means faster. {optimum} For many enzymes in your body, that peak, the optimum, is around 37 degrees: body temperature.
 
 ## S09 predict
 
@@ -53,7 +53,7 @@ Narration script. This file is read by the narration pipeline.
 
 ## S12 ph
 
-[pause 0.4] {ph} pH can do this too. {disrupt} Too acidic, or too alkaline, and the bonds holding an enzyme's shape are disrupted. {phOptimum} So every enzyme has an optimum pH. {amylasePh} Amylase, in your mouth, works best close to neutral, around pH 7. {stomach} Your stomach is strongly acidic, often around pH 2, {pepsin} and pepsin, the enzyme that digests protein there, works best right around that. {tuned} Different enzymes, tuned to different places.
+[pause 0.4] {ph} pH can do this too. {disrupt} Too acidic, or too alkaline, and the bonds holding the active site in shape are disrupted. Go far enough, and the enzyme is denatured. {phOptimum} So every enzyme has an optimum pH. {amylasePh} Amylase, in your mouth, works best close to neutral, around pH 7. {stomach} Your stomach is strongly acidic, often around pH 2, {pepsin} and pepsin, the enzyme that digests protein there, works best right around that. {tuned} Different enzymes, tuned to different places.
 
 ## S13 resolve
 

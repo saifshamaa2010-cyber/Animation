@@ -1,12 +1,42 @@
 import React from "react";
-import { Folder, Still } from "remotion";
+import { Composition, Folder, Still } from "remotion";
 import { StoryboardSheet, StyleFrame } from "./episodes/ep001-enzymes/StyleFrames";
 import { Thumbnail } from "./episodes/ep001-enzymes/Thumbnail";
+import { Episode, ScenePreview } from "./episodes/ep001-enzymes/Episode";
+import { TL } from "./episodes/ep001-enzymes/timeline";
+
+const sceneLen = (id: string) => {
+  const s = TL.scenes.find((x) => x.id === id);
+  return s ? Math.max(1, s.endFrame - s.startFrame) : 1;
+};
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
       <Folder name="ep001-enzymes">
+        <Composition
+          id="ep001"
+          component={Episode}
+          durationInFrames={TL.durationFrames}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ audio: "episodes/ep001-enzymes/narration.wav" }}
+        />
+        <Folder name="ep001-scenes">
+          {TL.scenes.map((s) => (
+            <Composition
+              key={s.id}
+              id={`ep001-${s.id}`}
+              component={ScenePreview}
+              durationInFrames={sceneLen(s.id)}
+              fps={30}
+              width={1920}
+              height={1080}
+              defaultProps={{ sceneId: s.id, audio: "episodes/ep001-enzymes/narration.wav" }}
+            />
+          ))}
+        </Folder>
         <Folder name="style-frames">
           <Still id="sf-hook" component={StyleFrame} width={1920} height={1080} defaultProps={{ name: "hook" as const }} />
           <Still id="sf-starch" component={StyleFrame} width={1920} height={1080} defaultProps={{ name: "starch" as const }} />

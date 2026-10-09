@@ -1,0 +1,17 @@
+{
+  "_note": "Respellings applied ONLY to the text sent to the voice. Subtitles always use the script's original words. 'all' applies to every provider; add a provider key (e.g. 'kokoro') for voice-specific fixes.",
+  "all": {
+    "pH 7": "P H seven",
+    "pH 2": "P H two",
+    "pH": "P H",
+    "enzyme–substrate": "enzyme substrate",
+    "IGCSE": "I G C S E",
+    "GCSE": "G C S E",
+    "…": "...",
+    "\"kills\"": "kills"
+  },
+  "kokoro": {},
+  "elevenlabs": {},
+  "openai": {},
+  "google": {}
+}

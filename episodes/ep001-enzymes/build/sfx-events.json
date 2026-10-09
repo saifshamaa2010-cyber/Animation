@@ -1,0 +1,47 @@
+{
+ "episode": "ep001-enzymes",
+ "events": [
+  {
+   "sec": 74.7,
+   "sfx": "ui_blip",
+   "gainDb": -10,
+   "scene": "S05"
+  },
+  {
+   "sec": 80,
+   "sfx": "pop_bind",
+   "gainDb": 0,
+   "scene": "S05"
+  },
+  {
+   "sec": 87,
+   "sfx": "snip",
+   "gainDb": 0,
+   "scene": "S05"
+  },
+  {
+   "sec": 88,
+   "sfx": "shimmer_sweet",
+   "gainDb": -9,
+   "scene": "S05"
+  },
+  {
+   "sec": 95.2,
+   "sfx": "pop_bind",
+   "gainDb": -2,
+   "scene": "S05"
+  },
+  {
+   "sec": 98.933,
+   "sfx": "snip",
+   "gainDb": -7,
+   "scene": "S05"
+  },
+  {
+   "sec": 108.267,
+   "sfx": "bonk_misfit",
+   "gainDb": 0,
+   "scene": "S05"
+  }
+ ]
+}

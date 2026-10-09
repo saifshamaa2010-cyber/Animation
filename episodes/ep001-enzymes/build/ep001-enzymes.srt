@@ -1,0 +1,584 @@
+1
+00:00:00,065 --> 00:00:02,265
+Here's an experiment you
+can do with your lunch.
+
+2
+00:00:02,485 --> 00:00:03,580
+Take a plain cracker,
+
+3
+00:00:03,600 --> 00:00:04,635
+and keep chewing.
+
+4
+00:00:04,770 --> 00:00:05,755
+Don't swallow.
+
+5
+00:00:05,965 --> 00:00:07,130
+Give it a minute or so…
+
+6
+00:00:07,150 --> 00:00:08,815
+and it starts to taste sweet.
+
+7
+00:00:09,100 --> 00:00:10,570
+But you didn't add any sugar.
+
+8
+00:00:10,660 --> 00:00:12,960
+So where's that
+sweetness coming from?
+
+9
+00:00:12,980 --> 00:00:14,865
+A molecule in your saliva,
+
+10
+00:00:14,885 --> 00:00:17,865
+doing something that would
+otherwise take millions of years.
+
+11
+00:00:20,741 --> 00:00:22,846
+Crackers are packed with starch.
+
+12
+00:00:22,866 --> 00:00:25,250
+Zoom right in, and starch is a chain:
+
+13
+00:00:25,395 --> 00:00:26,910
+hundreds, even thousands,
+
+14
+00:00:26,930 --> 00:00:28,401
+of glucose molecules,
+
+15
+00:00:28,421 --> 00:00:29,755
+linked end to end.
+
+16
+00:00:30,191 --> 00:00:31,466
+Glucose is a sugar,
+
+17
+00:00:31,486 --> 00:00:33,261
+but locked up in a chain like this,
+
+18
+00:00:33,291 --> 00:00:34,620
+it doesn't taste sweet.
+
+19
+00:00:34,800 --> 00:00:36,485
+And those links are tough.
+
+20
+00:00:36,505 --> 00:00:37,881
+Left alone in water,
+
+21
+00:00:37,901 --> 00:00:40,651
+a single link would take
+millions of years to break.
+
+22
+00:00:40,826 --> 00:00:42,161
+Enter amylase:
+
+23
+00:00:42,181 --> 00:00:43,891
+an enzyme in your saliva.
+
+24
+00:00:44,151 --> 00:00:46,436
+It snips starch into smaller sugars,
+
+25
+00:00:46,456 --> 00:00:49,971
+like maltose, which is just two
+glucose units joined together.
+
+26
+00:00:50,246 --> 00:00:52,201
+And maltose does taste sweet.
+
+27
+00:00:52,481 --> 00:00:53,896
+That's what an enzyme is:
+
+28
+00:00:53,916 --> 00:00:55,711
+a biological catalyst.
+
+29
+00:00:55,896 --> 00:00:58,546
+It speeds up a reaction
+without being used up.
+
+30
+00:00:58,566 --> 00:01:01,386
+And nearly every reaction
+in your body has one.
+
+31
+00:01:01,406 --> 00:01:06,071
+Without enzymes, the chemistry that
+keeps you alive would be far too slow.
+
+32
+00:01:06,091 --> 00:01:08,321
+Nearly all enzymes are proteins,
+
+33
+00:01:08,386 --> 00:01:12,326
+long chains of amino acids
+folded into a precise shape.
+
+34
+00:01:12,346 --> 00:01:13,996
+And that shape is everything.
+
+35
+00:01:14,171 --> 00:01:17,271
+Every enzyme has a small
+pocket called the active site.
+
+36
+00:01:17,521 --> 00:01:18,921
+The molecule it works on,
+
+37
+00:01:18,941 --> 00:01:21,050
+the substrate, fits inside,
+
+38
+00:01:21,111 --> 00:01:23,556
+forming an enzyme–substrate complex.
+
+39
+00:01:23,861 --> 00:01:27,061
+Held there, a bond becomes
+much easier to break.
+
+40
+00:01:27,081 --> 00:01:29,051
+Snap. The products leave,
+
+41
+00:01:29,071 --> 00:01:31,776
+and the active site is
+free for the next one.
+
+42
+00:01:31,796 --> 00:01:34,831
+The active site's shape is
+complementary to the substrate:
+
+43
+00:01:35,081 --> 00:01:37,651
+they fit together like
+a lock and a key.
+
+44
+00:01:37,671 --> 00:01:40,280
+That's why enzymes are so specific.
+
+45
+00:01:40,300 --> 00:01:42,700
+Amylase can't even
+break down cellulose,
+
+46
+00:01:42,720 --> 00:01:45,586
+in paper, though that's
+a chain of glucose too.
+
+47
+00:01:45,856 --> 00:01:47,666
+Its links are joined differently,
+
+48
+00:01:47,686 --> 00:01:49,085
+so it just doesn't fit.
+
+49
+00:01:49,258 --> 00:01:51,228
+Lock and key is a brilliant model,
+
+50
+00:01:51,248 --> 00:01:52,868
+but it is a simplification.
+
+51
+00:01:53,098 --> 00:01:55,053
+Real enzymes aren't rigid.
+
+52
+00:01:55,308 --> 00:01:56,623
+As the substrate binds,
+
+53
+00:01:56,643 --> 00:01:58,858
+the active site moulds
+itself around it.
+
+54
+00:01:59,143 --> 00:02:01,948
+That more accurate picture
+is called induced fit.
+
+55
+00:02:02,238 --> 00:02:05,178
+For GCSE and IGCSE,
+
+56
+00:02:05,248 --> 00:02:07,663
+lock and key is the model to use.
+
+57
+00:02:07,683 --> 00:02:08,713
+Just remember:
+
+58
+00:02:08,788 --> 00:02:10,458
+it's a model, not a photograph.
+
+59
+00:02:10,845 --> 00:02:12,595
+Which brings us to myth number one:
+
+60
+00:02:12,765 --> 00:02:14,505
+that enzymes get used up.
+
+61
+00:02:14,525 --> 00:02:15,565
+They don't.
+
+62
+00:02:15,585 --> 00:02:16,950
+After each reaction,
+
+63
+00:02:16,970 --> 00:02:18,790
+the enzyme is unchanged,
+
+64
+00:02:18,815 --> 00:02:19,830
+ready to go again,
+
+65
+00:02:19,850 --> 00:02:20,865
+and again.
+
+66
+00:02:20,885 --> 00:02:23,030
+And some are astonishingly fast.
+
+67
+00:02:23,255 --> 00:02:24,830
+One molecule of catalase,
+
+68
+00:02:24,850 --> 00:02:29,195
+from your liver, can break down millions
+of molecules of hydrogen peroxide
+
+69
+00:02:29,215 --> 00:02:30,015
+a second.
+
+70
+00:02:30,105 --> 00:02:31,835
+Enzymes don't last forever:
+
+71
+00:02:31,925 --> 00:02:33,775
+your cells replace old ones.
+
+72
+00:02:33,990 --> 00:02:36,380
+But the reaction itself
+never uses them up.
+
+73
+00:02:36,759 --> 00:02:37,914
+Now, temperature.
+
+74
+00:02:38,044 --> 00:02:40,304
+Molecules are always jiggling around.
+
+75
+00:02:40,499 --> 00:02:42,634
+Heat them up, and they move faster.
+
+76
+00:02:42,654 --> 00:02:45,639
+Enzymes and substrates bump
+into each other more often,
+
+77
+00:02:45,659 --> 00:02:47,284
+and with more energy.
+
+78
+00:02:47,304 --> 00:02:50,874
+More successful collisions means
+more reactions every second.
+
+79
+00:02:51,064 --> 00:02:53,499
+Up to a point, warmer means faster.
+
+80
+00:02:53,814 --> 00:02:55,379
+For many enzymes in your body,
+
+81
+00:02:55,399 --> 00:02:56,859
+that peak, the optimum,
+
+82
+00:02:56,879 --> 00:02:58,609
+is around 37 degrees:
+
+83
+00:02:58,714 --> 00:02:59,809
+body temperature.
+
+84
+00:03:00,097 --> 00:03:01,832
+So what if we keep
+turning up the heat?
+
+85
+00:03:01,912 --> 00:03:02,937
+Fifty degrees.
+
+86
+00:03:03,052 --> 00:03:04,697
+Sixty. Seventy.
+
+87
+00:03:04,757 --> 00:03:06,832
+Does it just keep getting faster?
+
+88
+00:03:06,852 --> 00:03:09,992
+Pause the video, and
+make your prediction.
+
+89
+00:03:13,062 --> 00:03:14,562
+Here's what actually happens.
+
+90
+00:03:14,737 --> 00:03:16,932
+The rate crashes, and
+it doesn't recover.
+
+91
+00:03:17,122 --> 00:03:20,737
+An enzyme's shape is held
+together by lots of weak bonds.
+
+92
+00:03:20,757 --> 00:03:25,167
+Too much heat, and it vibrates so
+violently that those bonds break.
+
+93
+00:03:25,187 --> 00:03:26,552
+The chain unravels,
+
+94
+00:03:26,572 --> 00:03:28,487
+the active site loses its shape,
+
+95
+00:03:28,637 --> 00:03:30,687
+and the substrate no longer fits.
+
+96
+00:03:30,922 --> 00:03:32,942
+The enzyme has been denatured.
+
+97
+00:03:32,962 --> 00:03:36,857
+It's the same kind of change that
+turns egg white solid in a hot pan,
+
+98
+00:03:37,087 --> 00:03:38,427
+and, like a cooked egg,
+
+99
+00:03:38,557 --> 00:03:40,742
+cooling it down usually
+doesn't undo it.
+
+100
+00:03:40,892 --> 00:03:41,957
+Cold is different:
+
+101
+00:03:41,977 --> 00:03:43,742
+it just slows enzymes down.
+
+102
+00:03:43,932 --> 00:03:45,592
+Warm them up, and they recover.
+
+103
+00:03:45,891 --> 00:03:47,346
+And that's myth number two:
+
+104
+00:03:47,416 --> 00:03:49,131
+that heat "kills" enzymes.
+
+105
+00:03:49,356 --> 00:03:51,296
+Enzymes were never alive.
+
+106
+00:03:51,316 --> 00:03:53,051
+An enzyme is a molecule,
+
+107
+00:03:53,071 --> 00:03:54,086
+a very clever one,
+
+108
+00:03:54,106 --> 00:03:55,246
+but it can't die.
+
+109
+00:03:55,486 --> 00:03:56,646
+It's denatured:
+
+110
+00:03:56,666 --> 00:03:58,446
+its active site changes shape,
+
+111
+00:03:58,466 --> 00:04:00,791
+so the substrate no longer fits.
+
+112
+00:04:00,811 --> 00:04:03,656
+In an exam, that's the
+answer that gets the marks.
+
+113
+00:04:03,961 --> 00:04:05,331
+pH can do this too.
+
+114
+00:04:05,526 --> 00:04:07,141
+Too acidic, or too alkaline,
+
+115
+00:04:07,161 --> 00:04:10,131
+and the bonds holding the active
+site in shape are disrupted.
+
+116
+00:04:10,421 --> 00:04:12,876
+Go far enough, and the
+enzyme is denatured.
+
+117
+00:04:12,896 --> 00:04:15,461
+So every enzyme has an optimum pH.
+
+118
+00:04:15,706 --> 00:04:16,826
+Amylase, in your mouth,
+
+119
+00:04:16,846 --> 00:04:18,341
+works best close to neutral,
+
+120
+00:04:18,361 --> 00:04:19,896
+around pH 7.
+
+121
+00:04:19,916 --> 00:04:21,626
+Your stomach is strongly acidic,
+
+122
+00:04:21,646 --> 00:04:23,211
+often around pH 2,
+
+123
+00:04:23,286 --> 00:04:26,106
+and pepsin, the enzyme that
+digests protein there,
+
+124
+00:04:26,126 --> 00:04:28,046
+works best right around that.
+
+125
+00:04:28,066 --> 00:04:29,051
+Different enzymes,
+
+126
+00:04:29,071 --> 00:04:30,551
+tuned to different places.
+
+127
+00:04:30,912 --> 00:04:32,447
+So, back to that cracker.
+
+128
+00:04:32,672 --> 00:04:35,162
+As you chew, amylase
+meets the starch.
+
+129
+00:04:35,427 --> 00:04:37,187
+The chains fit its active site,
+
+130
+00:04:37,252 --> 00:04:38,837
+and it snips them into maltose,
+
+131
+00:04:38,857 --> 00:04:41,127
+over and over, without being used up.
+
+132
+00:04:41,147 --> 00:04:44,597
+Your mouth is about 37
+degrees and close to neutral:
+
+133
+00:04:44,617 --> 00:04:45,427
+just right.
+
+134
+00:04:45,707 --> 00:04:48,917
+Links that would last millions of
+years on their own are broken while you
+
+135
+00:04:48,937 --> 00:04:51,907
+chew. That sweetness
+is enzymes at work,
+
+136
+00:04:51,927 --> 00:04:53,507
+in real time.
+
+137
+00:04:53,527 --> 00:04:55,462
+And that's how enzymes actually work.
