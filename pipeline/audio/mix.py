@@ -138,8 +138,13 @@ def _smooth_db(target: np.ndarray, attack: float, release: float) -> np.ndarray:
     return out
 
 
-def duck_gain(music: np.ndarray, active: np.ndarray, v_lufs: float, s: dict, extra_db: float = 0.0) -> tuple[np.ndarray, float, np.ndarray]:
-    """Per-sample music gain. Returns (gain, static_db, ducking curve in dB on the control grid)."""
+def duck_gain(music: np.ndarray, active: np.ndarray, v_lufs: float, s: dict, extra_db: float = 0.0,
+              voice: np.ndarray | None = None) -> tuple[np.ndarray, float, np.ndarray]:
+    """Per-sample music gain. Returns (gain, static_db, ducking curve in dB on the control grid).
+    In pauses the music may rise to (voice loudness + musicGapLU). While speaking it is held at least
+    minDuckDb down AND under (local voice loudness + musicUnderLU), where 'local' follows softer
+    phrases down by up to 6 dB, so quiet sentences get a slightly deeper dip instead of the whole
+    music bed being turned down."""
     t_ms, m_st = loudness_profile(music, window=3.0, hop=1 / CTRL)
     n_ctrl = len(active)
     grid = np.arange(n_ctrl) / CTRL
@@ -148,8 +153,16 @@ def duck_gain(music: np.ndarray, active: np.ndarray, v_lufs: float, s: dict, ext
     p90 = np.percentile(audible, 90) if audible.size else -20.0
     static = (v_lufs + s["musicGapLU"]) - p90 + extra_db
     lvl = m + static
+    v_ref = np.full(n_ctrl, v_lufs)
+    if voice is not None:
+        t_v, v_loc = loudness_profile(voice, window=1.0, hop=1 / CTRL)
+        v_loc = np.interp(grid, t_v, v_loc)
+        # slow down the follower so it tracks phrases, not syllables
+        k = int(0.6 * CTRL)
+        v_loc = np.convolve(np.pad(v_loc, (k // 2, k - k // 2 - 1), mode="edge"), np.ones(k) / k, mode="valid")
+        v_ref = np.clip(v_loc, v_lufs - 6.0, v_lufs)
     gap_target = np.minimum(0.0, (v_lufs + s["musicGapLU"]) - lvl)
-    under_target = np.minimum(s["minDuckDb"], (v_lufs + s["musicUnderLU"]) - lvl)
+    under_target = np.minimum(s["minDuckDb"], (v_ref + s["musicUnderLU"]) - lvl)
     target = np.where(active, under_target, gap_target)
     sm = _smooth_db(target, s["duckAttackSec"], s["duckReleaseSec"])
     g = undb(static + np.interp(np.arange(len(music)) / SR, grid, sm))
@@ -335,7 +348,7 @@ def mix(tl: tlmod.Timeline, music_path: Path, sfx_entries: list[dict], out_dir: 
     # duck, then verify the 15 dB rule and tighten if any passage is too close
     extra = 0.0
     for _ in range(4):
-        g, static, duck_db = duck_gain(music, act, v_lufs, s, extra)
+        g, static, duck_db = duck_gain(music, act, v_lufs, s, extra, voice_st)
         music_d = music * g[:, None]
         stats = ducking_stats(voice_st, music_d, raw_act)
         p5 = stats["voiceMinusMusicWhileSpeaking"]["p5"]

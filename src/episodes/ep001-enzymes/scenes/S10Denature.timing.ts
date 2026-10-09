@@ -69,8 +69,8 @@ export const s10Timing = (t: CueFns) => {
   const chillA = cooling - 4; // cooled to 5 °C: egg stays cooked, enzyme stays denatured
   const chillB = chillA + 34;
   const coldA = cold - 8; // egg + denatured enzyme clear away…
-  const backA = cold + 2; // …a fresh sample returns to the lens + graph, at 5 °C
-  const backB = backA + 30;
+  const backA = coldA + 16; // …then a fresh sample returns to the lens + graph, at 5 °C
+  const backB = backA + 26;
   const notDen = isnt - 4; // "but the enzyme isn't denatured"
   const rewarmA = rewarm + 2; // 5 °C → 37 °C: the dot climbs back up the curve
   const rewarmB = rewarmA + 28;

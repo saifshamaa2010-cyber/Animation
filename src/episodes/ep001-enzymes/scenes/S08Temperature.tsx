@@ -1,15 +1,17 @@
 /**
  * S08 · Temperature. The thermometer drives everything you see: how fast the molecules jiggle and
- * wander, how often (and how hard) enzymes and substrates bump into each other, and how many bumps
- * succeed. Then the camera pulls back so the crowd sits in a lens, and the rate graph is plotted
- * from it — the dot rides the curve in step with the thermometer and pulses with every reaction.
+ * wander (kinetic energy), how often (and how hard) enzymes and substrates bump into each other, and
+ * how many bumps succeed (the substrate lands in the active site → enzyme–substrate complex → maltose).
+ * Then the camera pulls back so the crowd sits in a lens, and the rate graph is plotted from it — the
+ * dot rides the curve in step with the thermometer and pulses with every reaction.
  */
 import React from "react";
-import { C, EASE } from "../../../brand/tokens";
+import { C, EASE, H } from "../../../brand/tokens";
 import { FONT } from "../../../brand/fonts";
 import { Stage } from "../../../components/Stage";
 import { Thermometer } from "../../../components/Thermometer";
-import { Label } from "../../../components/Label";
+import { Keyword, Label } from "../../../components/Label";
+import { Scrim } from "../../../components/Scrim";
 import { HandCircle } from "../../../components/kit/hand";
 import { useScene } from "../../../lib/timeline";
 import { s08Timing } from "./S08Temperature.timing";
@@ -31,7 +33,7 @@ import {
   worldTransform,
 } from "./S08-S10-shared";
 
-/** The optimum annotation (also drawn by S09 so the cut between them is seamless). */
+/** The optimum annotation (also drawn by S09/S10 so the cuts between them are seamless). */
 export const OptimumNote: React.FC<{ readonly main: number; readonly approx: number; readonly body: number; readonly circle: number; readonly circleO?: number }> = ({
   main,
   approx,
@@ -69,7 +71,7 @@ export const S08Temperature: React.FC = () => {
   const abs = sc.scene.startFrame + f;
   const T = tempAt(abs);
 
-  // ---- lens: the full-frame crowd pulls back into a circular window on "more reactions every second"
+  // ---- lens: the full-frame crowd pulls back into a circular window on "a faster rate of reaction"
   const irisT = Math.max(0, Math.min(1, (f - k.irisA) / (k.irisB - k.irisA)));
   const cam = lensCam(irisT);
   const rim = span(f, k.irisA + 10, k.irisB + 4);
@@ -91,7 +93,12 @@ export const S08Temperature: React.FC = () => {
   const heroMouth = mouthPoint(enzymePose(hero.e, Math.min(abs, hero.at + hero.hold)));
   const heroScreen = worldToScreen(cam, heroMouth);
   const lblIn = span(f, k.successful - 2, k.successful + 20, EASE.out);
-  const lblOut = 1 - span(f, k.irisA + 4, k.irisA + 16, EASE.in);
+  const lblOut = 1 - span(f, k.complexWord - 8, k.complexWord + 4, EASE.in);
+
+  // ---- exam-term captions (bottom, over a soft scrim)
+  const capKE = span(f, k.kinetic - 2, k.kinetic + 12) * (1 - span(f, k.collide - 14, k.collide - 2));
+  const capES = span(f, k.complexWord - 2, k.complexWord + 12) * (1 - span(f, k.irisA - 6, k.irisA + 6));
+  const scrim = Math.max(capKE, capES);
 
   return (
     <Stage bg={{ lightX: 0.5, temperature: T }}>
@@ -131,13 +138,17 @@ export const S08Temperature: React.FC = () => {
 
       <Label
         anchor={heroScreen}
-        at={[heroScreen[0] - 40, heroScreen[1] + 250]}
-        text="successful collisions"
+        at={[heroScreen[0] - 80, heroScreen[1] - 118]}
+        text="successful collision"
         align="end"
         color={C.amberLight}
         progress={lblIn}
         opacity={lblOut}
       />
+
+      <Scrim opacity={scrim * 0.9} height={260} />
+      <Keyword x={1110} y={H - 112} text="more kinetic energy" size={60} progress={capKE} />
+      <Keyword x={1110} y={H - 112} text="enzyme–substrate complex" size={60} progress={capES} />
     </Stage>
   );
 };

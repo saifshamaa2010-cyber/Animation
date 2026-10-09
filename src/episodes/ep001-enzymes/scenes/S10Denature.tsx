@@ -6,8 +6,9 @@
  *     → the bonds pop one by one → the chain unravels → the active site loses its shape → a starch
  *     chain can't fit and bounces off. "denatured".
  *  3. Same kind of change as egg white setting in a hot pan; cooling undoes neither.
- *  4. Cold is different: a healthy enzyme at 5 °C barely moves but keeps its shape; warmed to 37 °C
- *     it docks and snips again (amber maltose = sweet).
+ *  4. Cold is different: a fresh sample back in the lens at 5 °C — molecules barely move, few collisions,
+ *     shapes intact; on the graph the dot sits low on the LEFT of the curve. Warm it up and the dot climbs
+ *     straight back to the peak (rhymes with the "can't climb back ✕" after overheating).
  * The thermometer on the left stays the spine of the whole sequence.
  */
 import React from "react";
@@ -18,7 +19,7 @@ import { Stage } from "../../../components/Stage";
 import { Thermometer } from "../../../components/Thermometer";
 import { PausePredict } from "../../../components/PausePredict";
 import { Enzyme } from "../../../components/Enzyme";
-import { Link, Ring, SugarChain } from "../../../components/SugarChain";
+import { SugarChain } from "../../../components/SugarChain";
 import { dockedChain } from "../../../components/dock";
 import { Label, Keyword } from "../../../components/Label";
 import { Snowflake } from "../../../components/Icons";
@@ -32,8 +33,8 @@ import { track } from "../../../lib/track";
 import { moveRings } from "../../../lib/world";
 import { useScene } from "../../../lib/timeline";
 import { s10Timing } from "./S10Denature.timing";
-import { jig } from "./S08-S10-arc";
-import { AmbientTemp, LENS, Lens, Population, THERMO, TempGraph, gx, gy, lensCam, rate, span, tempAt, worldTransform } from "./S08-S10-shared";
+import { enzymePose, jig } from "./S08-S10-arc";
+import { AmbientTemp, LENS, Lens, Population, THERMO, TempGraph, gx, gy, lensCam, rate, recentSnips, span, tempAt, worldToScreen, worldTransform } from "./S08-S10-shared";
 import { OptimumNote } from "./S08Temperature";
 import { S09_QUESTION } from "./S09Predict";
 
@@ -296,7 +297,6 @@ const FryingPan: React.FC<{
 const HERO = { x: 1196, y: 548, s: 1.55 } as const;
 const HERO_EGG = { x: 1500, y: 520, s: 0.95 } as const;
 const PAN = { x: 800, y: 560 } as const;
-const COLD = { x: 1250, y: 548, s: 1.4 } as const;
 
 export const S10Denature: React.FC = () => {
   const sc = useScene();
@@ -346,8 +346,8 @@ export const S10Denature: React.FC = () => {
 
   // where the hero is (moves aside for the egg, leaves for the cold beat)
   const toEgg = span(f, k.eggA, k.eggA + 36, EASE.inOut);
-  const leave = span(f, k.coldA, k.coldA + 26, EASE.in);
-  const hx = lerp(HERO.x, HERO_EGG.x, toEgg) - 520 * leave;
+  const leave = span(f, k.coldA, k.coldA + 16, EASE.in);
+  const hx = lerp(HERO.x, HERO_EGG.x, toEgg) + 40 * leave;
   const hy = lerp(HERO.y, HERO_EGG.y, toEgg);
   const hs = lerp(HERO.s, HERO_EGG.s, toEgg);
   // thermal jiggle (follows the thermometer) + violent vibration while it's too hot
@@ -373,36 +373,24 @@ export const S10Denature: React.FC = () => {
 
   // ---------------- 3. egg
   const panIn = span(f, k.eggA + 4, k.eggA + 40, EASE.out);
-  const panOut = span(f, k.coldA, k.coldA + 26, EASE.in);
-  const panX = PAN.x - 260 * (1 - panIn) - 560 * panOut;
+  const panOut = span(f, k.coldA, k.coldA + 16, EASE.in);
+  const panX = PAN.x - 260 * (1 - panIn) - 50 * panOut;
   const cooked = span(f, k.setA, k.setB, EASE.inOut);
   const heat = span(f, k.eggA + 10, k.eggA + 40) * (1 - span(f, k.chillA, k.chillB));
   const frost = span(f, k.chillA + 10, k.chillB + 10);
-  const snow = span(f, k.chillA + 4, k.chillA + 22) * (1 - span(f, k.coldA, k.coldA + 16));
+  const snow = span(f, k.chillA + 4, k.chillA + 22) * (1 - span(f, k.coldA, k.coldA + 12));
 
-  // ---------------- 4. cold vs rewarm: a healthy enzyme
-  const coldIn = span(f, k.coldA + 10, k.coldA + 36, EASE.out);
-  const coldFocus = 9 * (1 - span(f, k.coldA + 10, k.coldA + 34, EASE.out));
-  const cj = jig("COLD", abs, 1.1);
-  const settle = 1 + 0.02 * Math.sin(Math.PI * Math.max(0, Math.min(1, (f - k.dock + 2) / 12))) * (f > k.dock - 2 && f < k.dock + 10 ? 1 : 0) - 0.012 * Math.sin(Math.PI * Math.max(0, Math.min(1, (f - k.snip) / 8))) * (f > k.snip && f < k.snip + 8 ? 1 : 0);
-  // the starch chain creeps in slowly while it's cold, then docks fast once warm
-  const cx2 = track(f, [[k.coldA, -300], [k.rewarmA, -210, EASE.inOut], [k.dock - 12, -120, out], [k.dock, 0, out], [k.snip, 0], [k.snip + 10, -60, EASE.snap], [k.end + 30, -200]]);
-  const cy2 = track(f, [[k.coldA, 60], [k.rewarmA, 40, EASE.inOut], [k.dock - 12, 10, out], [k.dock, 0, out], [k.snip + 10, 20, EASE.snap]]);
-  const freed = f >= k.snip + 3;
-  const coldChain = dockedChain(6, COLD.x, COLD.y, COLD.s, { wave: 1.4 * Math.sin(f * 0.05) * (1 - span(f, k.dock - 14, k.dock)) });
-  const dockAmt = span(f, k.dock - 12, k.dock);
-  const cjc = jig("COLDCHAIN", abs, 1.2);
-  const chainJ = { dx: cjc.dx + (cj.dx - cjc.dx) * dockAmt, dy: cjc.dy + (cj.dy - cjc.dy) * dockAmt };
-  const restRings = moveRings(coldChain.rings.slice(0, 4), cx2 + chainJ.dx, cy2 + chainJ.dy);
-  const mx = track(f, [[k.snip + 6, 0], [k.snip + 30, -190, out]]);
-  const my = track(f, [[k.snip + 6, 0], [k.snip + 30, -230, out]]);
-  const maltose = moveRings(coldChain.rings.slice(4), (freed ? mx : cx2) + chainJ.dx, (freed ? my : cy2) + chainJ.dy, freed ? -14 * span(f, k.snip + 6, k.snip + 30) : 0).map(
-    (r): Ring => ({ ...r, tone: freed ? "sugar" : "starch", glow: span(f, k.snip + 2, k.snip + 18) }),
-  );
-  const coldLinks: Link[] = coldChain.links.map((l, i) =>
-    i === 3 ? { ...l, highlight: span(f, k.snip - 8, k.snip) * (1 - span(f, k.snip, k.snip + 4)), broken: span(f, k.snip, k.snip + 6, EASE.snap), opacity: 1 - span(f, k.snip + 10, k.snip + 18) } : l,
-  );
-  const showCold = f > k.coldA;
+  // ---------------- 4. cold is different: a fresh sample back in the lens. Cold only slides the dot down the
+  // LEFT side of the curve (fewer, gentler collisions; shapes intact). Warm it up and it climbs straight back.
+  const back = span(f, k.backA, k.backB, EASE.out);
+  const backFocus = 8 * (1 - back);
+  const showBack = f > k.backA - 1;
+  const e0 = enzymePose(0, abs);
+  const e0j = jig("E0", abs, 0.9);
+  const e0s = worldToScreen(cam, [e0.x + e0j.dx, e0.y + e0j.dy - 120]);
+  const notDenP = span(f, k.notDen, k.notDen + 20);
+  const notDenO = 1 - span(f, k.rewarmA + 8, k.rewarmA + 20);
+  const siteBack = span(f, k.notDen - 4, k.notDen + 10) * notDenO;
 
   // ---------------- labels (screen space)
   const heroTop: Pt = [hx + hjx + 40 * (hs / HERO.s), hy + hjy - 190 * (hs / HERO.s)];
@@ -413,7 +401,6 @@ export const S10Denature: React.FC = () => {
   })();
   const lipTop: Pt = [HERO.x + HERO.s * -150 + hjx, HERO.y + HERO.s * -36 + hjy];
   const eggEdge: Pt = [panX - 120, PAN.y - 70];
-  const coldTop: Pt = [COLD.x + 60 + cj.dx, COLD.y - 180 + cj.dy];
 
   return (
     <Stage bg={{ lightX: 0.5, temperature: T }}>
@@ -481,7 +468,7 @@ export const S10Denature: React.FC = () => {
       </defs>
       {heroIn > 0 && leave < 1 ? (
         <g clipPath={heroClipped ? "url(#s10-heroclip)" : undefined}>
-        <FocusPull blur={heroFocus} dim={0.2}>
+        <FocusPull blur={heroFocus + 9 * leave} dim={0.2}>
           {showNoFit ? (
             <g opacity={span(f, k.subIn, k.subIn + 14) * (1 - span(f, k.eggA, k.eggA + 18))}>
               <SugarChain rings={noFitRings} links={noFitChain.links} />
@@ -509,31 +496,44 @@ export const S10Denature: React.FC = () => {
       ) : null}
 
       {/* 3 · egg */}
-      {panIn > 0 && panOut < 1 ? <FryingPan x={panX} y={PAN.y} cooked={cooked} heat={heat} frost={frost} f={f} opacity={panIn * (1 - panOut)} /> : null}
+      {panIn > 0 && panOut < 1 ? (
+        <FocusPull blur={9 * panOut} dim={0.2}>
+          <FryingPan x={panX} y={PAN.y} cooked={cooked} heat={heat} frost={frost} f={f} opacity={panIn * (1 - panOut)} />
+        </FocusPull>
+      ) : null}
       {snow > 0 ? (
         <g opacity={snow} transform={`translate(${1160} ${540}) scale(${0.85 + 0.15 * snow}) translate(${-1160} ${-540})`}>
           <Snowflake x={1160} y={540} size={112} color={C.ice} stroke={6} />
         </g>
       ) : null}
 
-      {/* 4 · cold: a healthy enzyme, slow but intact; warm it up and it works again */}
-      {showCold ? (
-        <FocusPull blur={coldFocus} dim={0.2}>
-          <g opacity={coldIn}>
-            <g transform={`translate(${chainJ.dx * 0} 0)`}>
-              <SugarChain rings={[...restRings, ...maltose]} links={coldLinks} />
+      {/* 4 · cold: a fresh sample, slow but intact; warm it up and the dot climbs back to the peak */}
+      {showBack ? (
+        <FocusPull blur={backFocus} opacity={back} dim={0.2}>
+          <Lens cam={cam} frame={1}>
+            <g transform={worldTransform(cam)}>
+              <Population abs={abs} heroSite={siteBack} />
             </g>
-            <g transform={`translate(${cj.dx} ${cj.dy}) rotate(${cj.rot * 0.4} ${COLD.x} ${COLD.y})`}>
-              <g transform={`translate(${COLD.x} ${COLD.y}) scale(${settle}) translate(${-COLD.x} ${-COLD.y})`}>
-                <Enzyme x={COLD.x} y={COLD.y} scale={COLD.s} still showSite={span(f, k.cold + 10, k.cold + 24) * (1 - span(f, k.rewarmA, k.rewarmA + 14))} seed={HERO_SEED} />
-              </g>
-              {f >= k.snip && f < k.snip + 14 ? (
-                <g opacity={1 - span(f, k.snip, k.snip + 14)}>
-                  <circle cx={COLD.x + COLD.s * DOCK.cut[0]} cy={COLD.y} r={16 + 60 * span(f, k.snip, k.snip + 14)} fill="none" stroke={C.amberLight} strokeWidth={4} />
-                </g>
-              ) : null}
-            </g>
-          </g>
+          </Lens>
+          <TempGraph
+            f={abs}
+            axes={1}
+            axisTo={70}
+            ticks={[
+              { v: 0, o: 1 },
+              { v: 20, o: 1 },
+              { v: 37, o: 1, hi: span(f, k.rewarmB - 6, k.rewarmB + 6) },
+              { v: 50, o: 1 },
+              { v: 60, o: 1 },
+              { v: 70, o: 1 },
+            ]}
+            riseTo={37}
+            fallTo={70}
+            dot={{ x: T, o: 1, pulses: recentSnips(abs) }}
+            pointer={{ x: T, o: 1 }}
+            guide={1}
+          />
+          <OptimumNote main={1} approx={1} body={0} circle={0} />
         </FocusPull>
       ) : null}
 
@@ -569,7 +569,7 @@ export const S10Denature: React.FC = () => {
         color={C.coral}
         size={56}
         progress={span(f, k.denWord - 2, k.denWord + 20)}
-        opacity={1 - span(f, k.coldA - 6, k.coldA + 8)}
+        opacity={1 - span(f, k.coldA - 4, k.coldA + 6)}
       />
       {panIn > 0 ? (
         <Label
@@ -582,20 +582,11 @@ export const S10Denature: React.FC = () => {
           opacity={(1 - span(f, k.chillA - 6, k.chillA + 8)) * (1 - panOut)}
         />
       ) : null}
-      <Keyword x={(PAN.x + HERO_EGG.x) / 2 + 40} y={H - 116} text="cooling doesn't undo it" size={56} progress={span(f, k.undo - 10, k.undo + 6) * (1 - span(f, k.coldA - 6, k.coldA + 8))} />
-      {showCold ? (
+      <Keyword x={(PAN.x + HERO_EGG.x) / 2 + 40} y={H - 116} text="cooling doesn't undo it" size={56} progress={span(f, k.undo - 10, k.undo + 6) * (1 - span(f, k.coldA - 4, k.coldA + 6))} />
+      {showBack ? (
         <>
-          <Label
-            anchor={coldTop}
-            at={[coldTop[0] - 130, coldTop[1] - 90]}
-            text="shape intact"
-            sub="just slower"
-            align="end"
-            color={C.tealLight}
-            progress={span(f, k.cold + 14, k.cold + 36)}
-            opacity={1 - span(f, k.rewarmA + 4, k.rewarmA + 16)}
-          />
-          <HandTick cx={coldTop[0] + 70} cy={coldTop[1] - 96} size={70} progress={Math.max(0, Math.min(1, (f - k.cold - 30) / 14))} opacity={1 - span(f, k.rewarmA + 4, k.rewarmA + 16)} />
+          <Label anchor={e0s} at={[e0s[0] + 60, 214]} text="not denatured" color={C.tealLight} progress={notDenP} opacity={notDenO} />
+          <HandTick cx={gx(37) + 62} cy={gy(1) - 34} size={64} progress={Math.max(0, Math.min(1, (f - k.tick) / 14))} />
         </>
       ) : null}
 

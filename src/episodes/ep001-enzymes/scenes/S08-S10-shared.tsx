@@ -199,7 +199,7 @@ export const Population: React.FC<PopulationProps> = ({ abs, denature = 0, lod =
       {WATER.map((w, i) => {
         const p = waterPose(i, abs);
         const j = jig(`W${i}`, abs, 2.2);
-        return <WaterMolecule key={`w${i}`} x={p.x + j.dx} y={p.y + j.dy} s={w.s * 1.5} rot={p.rot + j.rot * 8} opacity={0.16} />;
+        return <WaterMolecule key={`w${i}`} x={p.x + j.dx} y={p.y + j.dy} s={w.s * 1.25} rot={p.rot + j.rot * 8} opacity={0.11} />;
       })}
       {prods.map((p) => (
         <g key={`p${p.key}`} transform={`translate(${p.j.dx} ${p.j.dy})`}>

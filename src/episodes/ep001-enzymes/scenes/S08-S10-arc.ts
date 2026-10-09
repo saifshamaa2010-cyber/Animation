@@ -361,16 +361,22 @@ export const substrateState = (i: number, abs: number): SubState => {
       const d = Math.hypot(dx, dy) || 1;
       const ux = dx / d;
       const uy = dy / d;
-      const reach = (205 + ((n - 1) * SPACING) / 2 + 34) * MOL_S;
-      const contact: Pose = { x: e.x + ux * reach, y: e.y + uy * reach, rot: (Math.atan2(-uy, -ux) * 180) / Math.PI };
+      // turn part-way towards end-on, then sit the chain so its nearest ring just touches the enzyme
+      const aligned = (Math.atan2(-uy, -ux) * 180) / Math.PI;
+      const rotC = lerpAngle(freeSub(i, ev.at).rot, aligned, 0.55);
+      const dX = Math.cos(rad(rotC));
+      const dY = Math.sin(rad(rotC));
+      const halfL = (((n - 1) / 2) * SPACING) * MOL_S;
+      const reach = (192 + 24) * MOL_S + halfL * Math.abs(dX * ux + dY * uy);
+      const contact: Pose = { x: e.x + ux * reach, y: e.y + uy * reach, rot: rotC };
       const w =
         abs <= ev.at ? ramp(abs, ev.at - ev.A, ev.at, EASE.in) : 1 - ramp(abs, ev.at, ev.at + BOUNCE_OUT, EASE.out);
+      const rw = abs <= ev.at ? ramp(abs, ev.at - ev.A, ev.at, EASE.inOut) : 1 - ramp(abs, ev.at, ev.at + BOUNCE_OUT, EASE.inOut);
       const kick = abs > ev.at ? Math.sin(clamp01((abs - ev.at) / BOUNCE_OUT) * Math.PI) * 40 * ev.energy : 0;
-      const rotW = 0.55;
       const pose: Pose = {
         x: lerp(freeP.x, contact.x, w) + ux * kick,
         y: lerp(freeP.y, contact.y, w) + uy * kick,
-        rot: lerpAngle(freeP.rot, contact.rot, w * rotW),
+        rot: lerpAngle(freeP.rot, contact.rot, rw),
       };
       return { rings: layout(pose, n), breakLink: -1, broken: 0, strain: 0, lock: 0, lockE: ev.e, sweet };
     }
@@ -456,7 +462,7 @@ export const flashes = (abs: number) =>
       const e = enzymePose(ev.e, ev.at);
       const s0 = freeSub(ev.s, ev.at - ev.A);
       const d = Math.hypot(s0.x - e.x, s0.y - e.y) || 1;
-      const r = 200 * MOL_S;
+      const r = 192 * MOL_S;
       out.push({ x: e.x + ((s0.x - e.x) / d) * r, y: e.y + ((s0.y - e.y) / d) * r, p: (abs - ev.at) / span, kind: "bump", energy: ev.energy });
     }
     if (ev.kind === "dock") {

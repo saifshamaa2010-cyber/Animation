@@ -25,7 +25,7 @@ import { pulse, track } from "../../../lib/track";
 import { blendJit, jit, jitTransform, moveRings, toScreen } from "../../../lib/world";
 import { useScene } from "../../../lib/timeline";
 import { s07Timing } from "./S07MythUsedUp.timing";
-import { LiverIcon, MythCard2 } from "./S06-S12-shared";
+import { MythCard2 } from "./S06-S12-shared";
 
 const A = { x: 1250, y: 610, s: 1.35 } as const; // amylase
 const CT = { x: 2580, y: 610, s: 1.3, seed: 23, variant: 5 } as const; // catalase
@@ -34,8 +34,12 @@ const CELL = { x: 2330, y: 580, rx: 1240, ry: 740 } as const;
 const SP = SPACING * A.s;
 const N0 = 12;
 const ENZ_PATH = roundedPolygon(ENZYME_REST, ENZYME_RADII);
-/** Width of "1,000,000" on the 92 px odometer (7 wheels + 2 separators), for placing the "+". */
-const COUNTER_W = 7 * 92 * 0.64 + 2 * (textWidth(",", 92, 600) + 92 * 0.04);
+/**
+ * The counter lands on 100,000 in one second, then a "+": measured catalase turnover is
+ * 54,000–833,000 per second (sources.md #13), i.e. "hundreds of thousands".
+ */
+const COUNTER_DIGITS = 6;
+const COUNTER_W = COUNTER_DIGITS * 92 * 0.64 + (textWidth(",", 92, 600) + 92 * 0.04);
 
 const MALTOSE_TARGETS: readonly (readonly [number, number])[] = [
   [830, 330],
@@ -177,8 +181,8 @@ export const S07MythUsedUp: React.FC = () => {
   const tc0 = k.brk;
   const tc1 = k.second + 6;
   const cp = prog(f, tc0, tc1 - tc0, EASE.inOut);
-  const cval = f < tc0 ? 0 : Math.pow(10, 6 * cp);
-  const cvalPrev = f - 1 < tc0 ? 0 : Math.pow(10, 6 * prog(f - 1, tc0, tc1 - tc0, EASE.inOut));
+  const cval = f < tc0 ? 0 : Math.pow(10, (COUNTER_DIGITS - 1) * cp);
+  const cvalPrev = f - 1 < tc0 ? 0 : Math.pow(10, (COUNTER_DIGITS - 1) * prog(f - 1, tc0, tc1 - tc0, EASE.inOut));
   const counterVis = prog(f, tc0 - 4, 14) * (1 - prog(f, k.wear - 6, 14));
   const ringP = prog(f, tc0, tc1 - tc0, (t) => t);
 
@@ -189,8 +193,8 @@ export const S07MythUsedUp: React.FC = () => {
   const beadIdx = chainPts.map((_, i) => i).filter((i) => i % 6 === 0);
   const NB = beadIdx.length;
   /** Bead j sets off at travelStart(j) — in chain order, like a chain being built one link at a time. */
-  const travelStart = (j: number) => k.build + (j / NB) * 26;
-  const TRAVEL = 20;
+  const travelStart = (j: number) => k.build + (j / NB) * 22;
+  const TRAVEL = 18;
   const arrived = beadIdx.filter((_, j) => f >= travelStart(j) + TRAVEL).length;
   const buildDone = travelStart(NB - 1) + TRAVEL;
   const newVis = prog(f, buildDone - 6, 18);
@@ -213,7 +217,7 @@ export const S07MythUsedUp: React.FC = () => {
 
   // ---------------- screen anchors
   const ghostAnchor = S([A.x + 220, A.y - 170]);
-  const catAnchor = S([CT.x + CT.s * 150 + ctj.dx, CT.y + CT.s * 150 + ctj.dy]);
+  const catAnchor = S([CT.x + CT.s * 205 + ctj.dx, CT.y - CT.s * 40 + ctj.dy]);
 
   return (
     <Stage bg={{ particles: 40, lightX: 0.55 }}>
@@ -374,7 +378,7 @@ export const S07MythUsedUp: React.FC = () => {
 
       {/* amylase reaction counter */}
       <g opacity={prog(f, k.s1 - 6, 14) * (1 - prog(f, k.cat + 10, 20))}>
-        <text x={330} y={190} textAnchor="middle" fontFamily={FONT} fontWeight={500} fontSize={44} fill={C.ink300}>
+        <text x={330} y={176} textAnchor="middle" fontFamily={FONT} fontWeight={500} fontSize={44} fill={C.ink300}>
           reactions
         </text>
         <Counter x={330} y={278} value={reactions} size={110} align="middle" />
@@ -384,13 +388,21 @@ export const S07MythUsedUp: React.FC = () => {
       ) : null}
 
       {/* catalase labels */}
-      <Label anchor={catAnchor} at={[catAnchor[0] + 70, catAnchor[1] + 120]} text="catalase" color={C.violetLight} size={56} progress={prog(f, k.catWord, 22)} opacity={1 - prog(f, k.wear - 8, 12)} />
-      <g opacity={prog(f, k.liver, 16) * (1 - prog(f, k.millions + 10, 14))}>
-        <LiverIcon x={catAnchor[0] + 140} y={catAnchor[1] + 214} size={90} progress={prog(f, k.liver, 22, (t) => t)} />
-        <text x={catAnchor[0] + 205} y={catAnchor[1] + 228} fontFamily={FONT} fontWeight={500} fontSize={42} fill={C.ink300}>
-          from your liver
-        </text>
-      </g>
+      <Label anchor={catAnchor} at={[catAnchor[0] + 70, catAnchor[1] + 150]} text="catalase" color={C.violetLight} size={56} progress={prog(f, k.catWord, 22)} opacity={1 - prog(f, k.wear - 8, 12)} />
+      {(() => {
+        const txt = "in almost all your cells";
+        const tw = textWidth(txt, 42, 500);
+        const x0 = S([CT.x, CT.y])[0] - tw / 2 + 40;
+        return (
+          <g opacity={prog(f, k.cells, 16) * (1 - prog(f, k.many + 30, 14))}>
+            <CellOutline cx={x0 - 56} cy={948} rx={34} ry={27} progress={prog(f, k.cells, 22, (t) => t)} seed={3} color={C.paperDim} flow={0} />
+            <circle cx={x0 - 62} cy={950} r={9} fill={C.ink300} opacity={prog(f, k.cells + 10, 12)} />
+            <text x={x0} y={964} fontFamily={FONT} fontWeight={500} fontSize={42} fill={C.ink300}>
+              {txt}
+            </text>
+          </g>
+        );
+      })()}
       {(() => {
         const p = inPath(Math.floor(phase) + 3);
         const u = 1 - (Math.floor(phase) + 3 - phase) / Q;
@@ -404,19 +416,19 @@ export const S07MythUsedUp: React.FC = () => {
       {/* reactions in one second */}
       {counterVis > 0 ? (
         <g opacity={counterVis}>
-          <g transform={`translate(1070 226)`}>
+          <g transform={`translate(1070 238)`}>
             <circle r={52} fill="none" stroke={C.ink600} strokeWidth={9} />
             <circle r={52} fill="none" stroke={C.violetLight} strokeWidth={9} strokeLinecap="round" pathLength={1} strokeDasharray={`${ringP} 1`} transform="rotate(-90)" />
             <text x={0} y={15} textAnchor="middle" fontFamily={FONT} fontWeight={600} fontSize={42} fill={C.paper}>
               1 s
             </text>
           </g>
-          <text x={1172} y={152} fontFamily={FONT} fontWeight={500} fontSize={44} fill={C.ink300}>
+          <text x={1172} y={140} fontFamily={FONT} fontWeight={500} fontSize={44} fill={C.ink300}>
             reactions
           </text>
-          <Counter x={1170} y={226} value={cval} size={92} align="start" speed={cval - cvalPrev} />
+          <Counter x={1170} y={238} value={cval} size={92} align="start" speed={cval - cvalPrev} />
           {ringP >= 1 ? (
-            <text x={1170 + COUNTER_W + 14} y={226 + 33} fontFamily={FONT} fontWeight={600} fontSize={92} fill={C.violetLight} opacity={prog(f, tc1, 10)}>
+            <text x={1170 + COUNTER_W + 14} y={238 + 33} fontFamily={FONT} fontWeight={600} fontSize={92} fill={C.violetLight} opacity={prog(f, tc1, 10)}>
               +
             </text>
           ) : null}

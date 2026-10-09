@@ -309,29 +309,6 @@ export const Pin: React.FC<{ readonly x: number; readonly y: number; readonly co
 };
 
 // ---------------------------------------------------------------------------------------------
-/** Simple line icon of a liver (two lobes), in the channel's diagram-line style. */
-export const LiverIcon: React.FC<{ readonly x: number; readonly y: number; readonly size?: number; readonly color?: string; readonly progress: number }> = ({
-  x,
-  y,
-  size = 120,
-  color = C.paperDim,
-  progress,
-}) => {
-  if (progress <= 0) return null;
-  const k = size / 100;
-  const d =
-    "M-48,-6 C-50,-26 -24,-34 6,-32 C26,-31 46,-28 52,-14 C57,-2 46,8 30,16 C10,26 -8,34 -22,30 C-30,28 -32,20 -40,14 C-46,10 -47,2 -48,-6 Z";
-  return (
-    <g transform={`translate(${x} ${y}) scale(${k})`} opacity={EASE.out(clamp01(progress))}>
-      <path d={d} fill={C.ink700} opacity={0.6} />
-      <path d={d} fill="none" stroke={color} strokeWidth={5 / k} strokeLinejoin="round" pathLength={1} strokeDasharray={`${clamp01(progress * 1.3)} 1`} />
-      {/* the fissure between the lobes */}
-      <path d="M6,-32 C2,-16 -2,-2 -8,10" fill="none" stroke={color} strokeWidth={4 / k} strokeLinecap="round" opacity={clamp01(progress * 2 - 1)} />
-    </g>
-  );
-};
-
-// ---------------------------------------------------------------------------------------------
 /**
  * The weak bonds holding an enzyme's fold together, drawn big enough to read: pairs of points that
  * are close in space but far apart along the folded chain. Sorted so the bonds nearest the active

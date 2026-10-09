@@ -8,6 +8,7 @@
 import React from "react";
 import { noise2D } from "@remotion/noise";
 import { C, EASE, H, W } from "../../../brand/tokens";
+import { FONT } from "../../../brand/fonts";
 import { Stage } from "../../../components/Stage";
 import { Enzyme } from "../../../components/Enzyme";
 import { Link, Ring, SugarChain } from "../../../components/SugarChain";
@@ -215,8 +216,19 @@ export const S11MythKilled: React.FC = () => {
       <Label anchor={[CELL.x - 110, CELL.y - CELL.ry + 14]} at={[CELL.x - 190, CELL.y - CELL.ry - 120]} text="living cell" align="end" progress={prog(f, k.cellIn + 10, 22)} opacity={cellOut} />
       <Label anchor={[EI.x + 40, EI.y - 170]} at={[EI.x + 170, EI.y - 330]} text="a molecule" color={C.tealLight} progress={prog(f, k.molWord, 22)} opacity={1 - prog(f, k.die, 14)} />
 
+      {/* the left pair IS an enzyme–substrate complex: a soft boundary around enzyme + docked substrate */}
+      {f > k.complex - 4 ? (
+        <g opacity={window01(f, k.complex, k.marks + 6, 12) * (1 - 0.5 * focus)}>
+          <ellipse cx={EL.x - 35} cy={EL.y + 4} rx={330} ry={236} fill="none" stroke={C.tealLight} strokeWidth={3} strokeDasharray="10 12" opacity={0.75} />
+          <text x={EL.x - 35} y={EL.y + 300} textAnchor="middle" fontFamily={FONT} fontWeight={600} fontSize={46} fill={C.tealLight}>
+            complex
+          </text>
+        </g>
+      ) : null}
       <HandTick cx={EL.x - 150} cy={EL.y - 215} size={92} progress={prog(f, k.dock + 2, 18, (t) => t)} opacity={1 - 0.5 * focus} seed={3} />
-      <HandCross cx={ER.x - 150} cy={ER.y - 215} size={80} progress={prog(f, k.bounce + 2, 18, (t) => t)} opacity={1 - 0.5 * focus} seed={4} />
+      <g transform={`translate(${ER.x - 150} ${ER.y - 215}) scale(${1 + 0.18 * pulse(f, k.form, 16)}) translate(${-(ER.x - 150)} ${-(ER.y - 215)})`}>
+        <HandCross cx={ER.x - 150} cy={ER.y - 215} size={80} progress={prog(f, k.bounce + 2, 18, (t) => t)} opacity={1 - 0.5 * focus} seed={4} />
+      </g>
 
       {/* the marks-earning phrase: highlighter swipe + tick */}
       {hl > 0 ? (
