@@ -79,7 +79,7 @@ export const Graph: React.FC<GraphProps> = ({
       </defs>
       <path d={axisPath} fill="none" stroke={C.ink300} strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" {...ev} />
       {axes > 0.9 && xLabel ? (
-        <text x={x + width / 2} y={y + height + 96} textAnchor="middle" fontFamily={FONT} fontWeight={500} fontSize={36} fill={C.ink300}>
+        <text x={x + width / 2} y={y + height + 100} textAnchor="middle" fontFamily={FONT} fontWeight={500} fontSize={40} fill={C.ink300}>
           {xLabel}
         </text>
       ) : null}
@@ -90,7 +90,7 @@ export const Graph: React.FC<GraphProps> = ({
           textAnchor="middle"
           fontFamily={FONT}
           fontWeight={500}
-          fontSize={36}
+          fontSize={40}
           fill={C.ink300}
           transform={`rotate(-90 ${x - 30} ${y + height / 2})`}
         >
@@ -100,7 +100,7 @@ export const Graph: React.FC<GraphProps> = ({
       {xTicks.map((t) => (
         <g key={t} opacity={interpolate(axes, [0.7, 1], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>
           <line x1={sx(t)} x2={sx(t)} y1={y + height} y2={y + height + 14} stroke={C.ink300} strokeWidth={3} />
-          <text x={sx(t)} y={y + height + 52} textAnchor="middle" fontFamily={FONT} fontWeight={500} fontSize={32} fill={C.ink300}>
+          <text x={sx(t)} y={y + height + 56} textAnchor="middle" fontFamily={FONT} fontWeight={500} fontSize={40} fill={C.ink300}>
             {xTickFormat(t)}
           </text>
         </g>
@@ -109,7 +109,7 @@ export const Graph: React.FC<GraphProps> = ({
         <g key={i} opacity={g.opacity}>
           <line x1={sx(g.x)} x2={sx(g.x)} y1={y + 10} y2={y + height} stroke={g.color ?? C.paper} strokeWidth={3} strokeDasharray="8 10" />
           {g.label ? (
-            <text x={sx(g.x)} y={y - 8} textAnchor="middle" fontFamily={FONT} fontWeight={600} fontSize={38} fill={g.color ?? C.paper}>
+            <text x={sx(g.x)} y={y - 8} textAnchor="middle" fontFamily={FONT} fontWeight={600} fontSize={40} fill={g.color ?? C.paper}>
               {g.label}
             </text>
           ) : null}

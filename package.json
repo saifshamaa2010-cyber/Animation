@@ -43,6 +43,7 @@
     "audio": "bash scripts/audio.sh",
     "render": "tsx scripts/render.ts",
     "qa": ".venv/bin/python -m pipeline.qa",
+    "textaudit": "tsx scripts/text-audit.ts",
     "frames": "tsx scripts/frames.ts",
     "describe": ".venv/bin/python -m pipeline.describe"
   }

@@ -73,7 +73,8 @@ copying them into an episode. Episode-specific scenes live in `src/episodes/<id>
 4. Animate all scenes against `timeline.json` (follow `docs/scene-guide.md`), then
    `npm run audio -- <id>` (SFX placed from each scene's own timing + original music + mix) and
    `npm run render -- <id>`.
-5. **QA before showing anyone**: `npm run qa -- <id>` — inspect frames, A/V sync at cue points,
+5. **QA before showing anyone**: `npm run textaudit -- <composition> every:15 out/<id>/text-audit.md`
+   (measures every visible word), then `npm run qa -- <id>` — inspect frames, A/V sync at cue points,
    loudness (target −14 LUFS integrated, true peak ≤ −1 dBTP, music ≥ 15 dB under the voice),
    no clipped text, no frames outside safe area. Then make a contact sheet and report honestly
    what is weak.

@@ -73,11 +73,11 @@ export const Label: React.FC<LabelProps> = ({
         {sub ? (
           <text
             x={textX}
-            y={ty + size * 0.34 + size * 0.95}
+            y={ty + size * 0.34 + Math.max(size * 0.95, 46)}
             textAnchor={align}
             fontFamily={FONT}
             fontWeight={400}
-            fontSize={size * 0.68}
+            fontSize={Math.max(40, size * 0.68)}
             fill={C.ink300}
             stroke={C.ink900}
             strokeWidth={6}

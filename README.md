@@ -36,7 +36,8 @@ npm run align   -- ep001-enzymes      # finds every word's timing → timeline.j
 npm run dev                           # preview in Remotion Studio while building scenes
 npm run audio   -- ep001-enzymes      # sound effects (from the scenes' own timing) + original music + mix
 npm run render  -- ep001-enzymes      # final MP4 + narration WAV + .srt + thumbnail → out/ep001-enzymes/
-npm run qa      -- ep001-enzymes      # loudness, sync, dead-air checks + contact sheet → out/ep001-enzymes/qa-report.md
+npm run textaudit -- ep001 every:15 out/ep001-enzymes/text-audit.md   # every on-screen word: size ≥ 40 px, inside safe area
+npm run qa      -- ep001-enzymes      # loudness, sync, dead-air + text checks + contact sheet → out/ep001-enzymes/qa-report.md
 npm run describe -- ep001-enzymes     # YouTube description with chapters → out/ep001-enzymes/youtube-description.txt
 ```
 

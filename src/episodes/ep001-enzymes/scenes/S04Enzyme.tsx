@@ -239,7 +239,7 @@ export const S04Enzyme: React.FC = () => {
         <Label anchor={maltAnchor} at={[maltAnchor[0] + 60, maltAnchor[1] - 110]} text="maltose" sub="two glucose units" color={C.amberLight} progress={prog(f, sc.word("maltose", 1, -2), 22)} opacity={1 - prog(f, k.catalyst, 12)} />
       ) : null}
       <Keyword x={W / 2} y={H - 110} text="carbohydrase" size={64} color={C.tealLight} progress={prog(f, sc.word("carbohydrase", 1, -2), 14) * (1 - prog(f, k.maltose + 20, 10))} />
-      <SweetnessMeter x={W - 520} y={140} value={sweetV} opacity={window01(f, k.sweet - 4, k.every + 16, 12)} />
+      <SweetnessMeter x={W - 520} y={172} value={sweetV} opacity={window01(f, k.sweet - 4, k.every + 16, 12)} />
       <Keyword x={W / 2} y={H - 110} text="biological catalyst" size={68} progress={prog(f, sc.word("catalyst", 1, -2), 14) * (1 - prog(f, k.used - 4, 10))} />
       {ghostVis > 0 ? (
         <Label anchor={ghostAnchor} at={[ghostAnchor[0] + 60, ghostAnchor[1] - 120]} text="unchanged" progress={prog(f, k.used + 8, 20)} opacity={1 - prog(f, k.every + 6, 10)} />
@@ -251,7 +251,7 @@ export const S04Enzyme: React.FC = () => {
           without enzymes: far too slow
         </text>
       </g>
-      <Keyword x={W / 2} y={150} text="protein" size={72} color={C.tealLight} progress={prog(f, sc.word("proteins", 1, -2), 14) * (1 - prog(f, k.shape - 10, 12))} />
+      <Keyword x={W / 2} y={178} text="protein" size={72} color={C.tealLight} progress={prog(f, sc.word("proteins", 1, -2), 14) * (1 - prog(f, k.shape - 10, 12))} />
       {unfold > 0.2 ? (
         <Label
           anchor={S([E.xDock - 420, E.y + 60])}

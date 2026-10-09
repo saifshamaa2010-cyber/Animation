@@ -172,6 +172,15 @@ def main(ep: str) -> None:
     check(len(allowed_black) == 0, f"black frames: {', '.join(blacks) if blacks else 'none'}")
     report.append(f"- {'✅' if not freezes else '⚠️'} frozen > 2.5 s: {', '.join(freezes) if freezes else 'none'}")
 
+    report.append("\n## On-screen text (≥ 40 px, inside the 100 px safe area, never cut off)")
+    audit = out / "text-audit.md"
+    if audit.exists():
+        rows = [r for r in audit.read_text().splitlines() if r.startswith("| ") and not r.startswith("| Text")]
+        check(not rows, f"text audit: {len(rows)} problem(s){' (see text-audit.md)' if rows else ''}")
+        report.extend(f"  {r}" for r in rows[:30])
+    else:
+        report.append("- ⚠️ text audit not run (npm run textaudit -- ep001 every:15 out/<id>/text-audit.md)")
+
     sheet = contact_sheet(mp4, out, tl)
     report.append(f"\nContact sheet: `{sheet.relative_to(ROOT)}`")
     report.append(f"\n**Overall: {'PASS' if ok else 'NEEDS WORK'}**")

@@ -30,7 +30,7 @@ export const SweetnessMeter: React.FC<{
           <feGaussianBlur stdDeviation="8" />
         </filter>
       </defs>
-      <text x={0} y={-22} fontFamily={FONT} fontWeight={500} fontSize={36} fill={C.ink300}>
+      <text x={0} y={-22} fontFamily={FONT} fontWeight={500} fontSize={40} fill={C.ink300}>
         {label}
       </text>
       <rect x={0} y={0} width={width} height={h} rx={h / 2} fill={C.ink700} />

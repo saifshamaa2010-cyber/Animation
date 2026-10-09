@@ -50,7 +50,7 @@ export const FONT_SIZES = {
   headline: 84,
   title: 64,
   label: 44,
-  small: 34,
+  small: 40,
 } as const;
 
 /** Safe area: keep key content this far inside the 1920×1080 frame. */
