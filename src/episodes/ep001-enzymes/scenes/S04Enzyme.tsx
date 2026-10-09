@@ -232,10 +232,11 @@ export const S04Enzyme: React.FC = () => {
 
       {/* ---------------- screen-space text */}
       <Scrim opacity={window01(f, k.every + 10, k.protein + 10, 16)} />
-      <Label anchor={heroTop} at={[heroTop[0] - 120, heroTop[1] - 120]} text="amylase" sub="an enzyme in your saliva" align="end" color={C.tealLight} progress={prog(f, sc.word("amylase", 1, -2), 22)} opacity={1 - prog(f, k.maltose - 10, 12)} />
+      <Label anchor={heroTop} at={[heroTop[0] - 120, heroTop[1] - 120]} text="amylase" sub="made in your salivary glands" align="end" color={C.tealLight} progress={prog(f, sc.word("amylase", 1, -2), 22)} opacity={1 - prog(f, k.maltose - 10, 12)} />
       {pair0 ? (
         <Label anchor={maltAnchor} at={[maltAnchor[0] + 60, maltAnchor[1] - 110]} text="maltose" sub="two glucose units" color={C.amberLight} progress={prog(f, sc.word("maltose", 1, -2), 22)} opacity={1 - prog(f, k.catalyst, 12)} />
       ) : null}
+      <Keyword x={W / 2} y={H - 110} text="carbohydrase" size={64} color={C.tealLight} progress={prog(f, sc.word("carbohydrase", 1, -2), 14) * (1 - prog(f, k.maltose + 20, 10))} />
       <SweetnessMeter x={W - 520} y={140} value={sweetV} opacity={window01(f, k.sweet - 4, k.every + 16, 12)} />
       <Keyword x={W / 2} y={H - 110} text="biological catalyst" size={68} progress={prog(f, sc.word("catalyst", 1, -2), 14) * (1 - prog(f, k.used - 4, 10))} />
       {ghostVis > 0 ? (

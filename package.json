@@ -38,6 +38,11 @@
     "lint": "eslint src && tsc",
     "setup": "bash pipeline/setup.sh",
     "narrate": ".venv/bin/python -m pipeline.narrate",
-    "align": ".venv/bin/python -m pipeline.align"
+    "align": ".venv/bin/python -m pipeline.align",
+    "sfx": "tsx scripts/sfx-events.ts",
+    "audio": "bash scripts/audio.sh",
+    "render": "tsx scripts/render.ts",
+    "qa": ".venv/bin/python -m pipeline.qa",
+    "frames": "tsx scripts/frames.ts"
   }
 }

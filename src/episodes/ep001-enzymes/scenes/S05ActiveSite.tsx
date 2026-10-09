@@ -10,6 +10,7 @@ import { Link, Ring, SugarChain } from "../../../components/SugarChain";
 import { dockedChain } from "../../../components/dock";
 import { Label, Keyword } from "../../../components/Label";
 import { Cross, PaperSheet } from "../../../components/Icons";
+import { HandTick, StrikeThrough, textBox } from "../../../components/kit";
 import { DOCK, ENZYME_REST, POCKET_INDICES } from "../../../components/molecule-geometry";
 import { roundedPolygon } from "../../../lib/geometry";
 import { camAt, camTransform } from "../../../lib/camera";
@@ -229,7 +230,36 @@ export const S05ActiveSite: React.FC = () => {
       <Label anchor={subAnchor} at={[subAnchor[0] - 60, subAnchor[1] + 170]} text="substrate" sub="starch" align="end" progress={prog(f, sc.word("substrate", 1, -2), 22)} opacity={1 - prog(f, k.held, 12)} />
       <Keyword x={W / 2} y={H - 120} text="enzyme–substrate complex" size={58} progress={prog(f, sc.word("complex", 1, -4), 14) * (1 - prog(f, k.held + 30, 12))} />
       <Label anchor={maltAnchor} at={[maltAnchor[0] - 40, maltAnchor[1] - 120]} text="products" sub="maltose" align="end" color={C.amberLight} progress={prog(f, sc.word("products", 1, -2), 22)} opacity={1 - prog(f, k.lock - 10, 12)} />
-      <Keyword x={W / 2} y={H - 110} text="complementary shapes" size={64} progress={prog(f, sc.word("complementary", 1, -4), 14) * (1 - prog(f, k.specific - 4, 10))} />
+      {(() => {
+        // "complementary — not the same shape": the exam term, and the classic wrong answer struck out
+        const vis = 1 - prog(f, k.specific - 4, 10);
+        const y = H - 110;
+        const a = textBox("complementary", W / 2 - 300, y, 64, 700, "middle");
+        const bx = textBox("same shape", W / 2 + 330, y, 56, 600, "middle");
+        const sameAt = sc.word("same", 1, -2);
+        return (
+          <g opacity={vis}>
+            <Keyword x={a.cx} y={y} text="complementary" size={64} color={C.tealLight} progress={prog(f, sc.word("complementary", 1, -4), 14)} />
+            <HandTick cx={a.x1 + 56} cy={y - 26} size={70} progress={prog(f, sc.word("complementary", 1, 10), 14, (v) => v)} width={8} seed={12} />
+            <Keyword x={bx.cx} y={y} text="same shape" size={56} weight={600} color={C.ink300} progress={prog(f, sameAt - 2, 12)} />
+            <StrikeThrough x1={bx.x0 - 8} x2={bx.x1 + 8} y={bx.strikeY} progress={prog(f, sameAt + 8, 12, (v) => v)} width={7} seed={13} />
+          </g>
+        );
+      })()}
+      {/* "The enzyme is the lock; the substrate is the key." */}
+      {(() => {
+        const lockAt = sc.word("lock", 1, -2);
+        const keyAt = sc.word("key", 1, -2);
+        const vis = 1 - prog(f, k.specific + 10, 10);
+        const enzTop = S([E.x + 120 + ej.dx, E.y - E.s * 180 + ej.dy]);
+        const keyAnchor = S([chainB[3].x + cj2.dx, chainB[3].y + 36 + cj2.dy]);
+        return (
+          <g opacity={vis}>
+            <Label anchor={enzTop} at={[enzTop[0] + 40, enzTop[1] - 90]} text="lock" color={C.tealLight} progress={prog(f, lockAt, 18)} />
+            <Label anchor={keyAnchor} at={[keyAnchor[0] - 30, keyAnchor[1] + 120]} text="key" align="end" color={C.amberLight} progress={prog(f, keyAt, 18)} />
+          </g>
+        );
+      })()}
       <Keyword x={W / 2} y={H - 110} text="specific" size={72} color={C.tealLight} progress={prog(f, sc.word("specific", 1, -2), 14) * (1 - prog(f, k.cell + 10, 12))} />
       {showCell ? (
         <g opacity={prog(f, sc.word("cellulose", 1, -4), 14) * (1 - prog(f, k.diff + 10, 12))}>
