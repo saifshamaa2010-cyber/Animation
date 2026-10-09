@@ -1,57 +1,43 @@
 import type { CueFns, SfxEvent } from "../../../lib/cues";
 
-/** A spoken word's frame, or a cue-relative fallback if the script wording changes later. */
-const w = (t: CueFns, text: string, nth: number, fallback: number) => {
-  try {
-    return t.word(text, nth);
-  } catch {
-    return fallback;
-  }
-};
-const wEnd = (t: CueFns, text: string, nth: number, fallback: number) => {
-  try {
-    return t.wordEnd(text, nth);
-  } catch {
-    return fallback;
-  }
-};
-
 /**
  * S08 key moments (scene-relative frames), shared by the animation and the sound effects.
  * The temperature arc S08 → S09 → S10 is one continuous sequence; see S08-S10-arc.ts.
+ * Every spoken-word lookup is strict: if the script wording changes, this throws instead of
+ * silently falling back to a guessed frame.
  */
 export const s08Timing = (t: CueFns) => {
   const temperature = t.cue("temperature");
   const jiggle = t.cue("jiggle");
   const warm = t.cue("warm");
-  const kinetic = w(t, "kinetic", 1, warm + 34);
-  const moveFaster = w(t, "faster", 1, warm + 87);
+  const kinetic = t.word("kinetic", 1);
+  const moveFaster = t.word("faster", 1);
   const collide = t.cue("collide");
-  const bump = w(t, "bump", 1, collide + 39);
-  const often = w(t, "often", 1, collide + 75);
-  const energy = w(t, "energy", 2, collide + 111);
+  const bump = t.word("bump", 1);
+  const often = t.word("often", 1);
+  const energy = t.word("energy", 2);
   const faster = t.cue("faster");
-  const successful = w(t, "successful", 1, faster + 7);
-  const lands = w(t, "lands", 1, faster + 72);
-  const complexWord = w(t, "enzyme–substrate", 1, faster + 135);
-  const complexesEnd = wEnd(t, "complexes", 1, faster + 200);
-  const rateWord = w(t, "rate", 1, faster + 221);
+  const successful = t.word("successful", 1);
+  const landing = t.word("landing", 1);
+  const complexWord = t.word("enzyme–substrate", 1);
+  const complexesEnd = t.wordEnd("complexes", 1);
+  const rateWord = t.word("rate", 1);
   const upTo = t.cue("upToAPoint");
-  const warmer = w(t, "warmer", 1, upTo + 31);
+  const warmer = t.word("warmer", 1);
   const optimum = t.cue("optimum");
-  const peak = w(t, "peaks", 1, optimum + 36);
-  const optWord = w(t, "optimum", 1, optimum + 63);
-  const deg = w(t, "37", 1, optimum + 165);
-  const body = w(t, "body", 2, optimum + 208);
+  const peak = t.word("peaks", 1);
+  const optWord = t.word("optimum", 1);
+  const deg = t.word("37", 1);
+  const body = t.word("body", 2);
 
   // Derived beats.
   const thermoIn = temperature - 4; // thermometer arrives on "temperature"
   const heatA = warm + 4; // 10 °C → 25 °C over "Heat them up, and they gain kinetic energy: they move faster"
   const heatB = Math.max(heatA + 40, moveFaster + 4);
-  const heroApproach = Math.max(successful + 6, lands - 44); // a substrate heads for the active site…
-  const heroDock = lands; // …and lands in it on "lands"
+  const heroApproach = landing - 44; // a substrate drifts towards the active site…
+  const heroDock = landing; // …and lands in it on "landing"
   const heroSnip = Math.max(heroDock + 20, complexesEnd + 6); // the complex reacts once "complexes" is said
-  const irisA = Math.max(heroSnip + 10, rateWord - 22); // zoom out into the lens: "a faster rate of reaction"
+  const irisA = Math.max(heroSnip + 10, rateWord - 22); // pull back into the lens: "a faster rate of reaction"
   const irisB = irisA + 40;
   const axesA = irisA + 28; // once the lens has settled out of the graph's way
   const axesB = axesA + 20;
@@ -71,7 +57,7 @@ export const s08Timing = (t: CueFns) => {
     energy,
     faster,
     successful,
-    lands,
+    landing,
     complexWord,
     complexesEnd,
     rateWord,

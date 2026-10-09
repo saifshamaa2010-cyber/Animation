@@ -14,7 +14,8 @@ import { Enzyme } from "../../../components/Enzyme";
 import { SugarChain } from "../../../components/SugarChain";
 import { dockedChain } from "../../../components/dock";
 import { Label } from "../../../components/Label";
-import { FocusPull, HandArrow, HandTick, KeyIcon, LockIcon, POCKET_LEN, textWidth } from "../../../components/kit";
+import { FocusPull, HandArrow, HandTick, KeyIcon, LitShape, LockIcon, POCKET_LEN, textWidth } from "../../../components/kit";
+import { roundRectPath } from "../../../components/kit/shared";
 import { camAt, camTransform } from "../../../lib/camera";
 import { prog, thermalAmplitude, window01 } from "../../../lib/motion";
 import { pulse, track } from "../../../lib/track";
@@ -32,9 +33,13 @@ const LK = { x: 410, y: 395, size: 268 } as const;
  * Where the model sits for the exam beat. It is fully hidden between the two beats, so it can come
  * back further left: model (left) and the real enzyme (right) must read as two separate things.
  */
-const LK2 = { x: 72, y: 464 } as const;
-/** Exam framing: model on the left, real enzyme on the right, ≥ 250 px of air between them. */
-const EXAM_CAM = { x: 840, y: 545, z: 0.86 } as const;
+const LK2 = { x: 30, y: 452 } as const;
+/** Exam framing: the model on its own card (left), the real enzyme free on the right, clear air between. */
+const EXAM_CAM = { x: 760, y: 545, z: 0.86 } as const;
+/** The model's card (world units, relative to LK2): it reads as "a diagram", apart from the enzyme. */
+const CARD = { x0: -196, y0: -226, x1: 372, y1: 352 } as const;
+/** Substrate length in this scene: 4 rings keeps the chain's free end well clear of the model. */
+const RINGS = 4;
 const LOCK_K = (LK.size * 0.8 * 0.56) / POCKET_LEN;
 const KEY_UNITS = POCKET_LEN + 262;
 const KEY_SIZE = LOCK_K * KEY_UNITS;
@@ -95,17 +100,22 @@ export const S06InducedFit: React.FC = () => {
   // ---- the enzyme. "Real enzymes aren't rigid": it flexes, then settles with its pocket a little too
   // wide (not quite complementary). It holds that shape, steady, while the substrate arrives. The ONLY
   // change after that is the closure — and it starts after contact, because binding causes it.
-  const flexAmp = window01(f, k.flex - 4, k.subIn - 4, 20) * 0.4 + window01(f, k.subIn - 10, k.mould + 4, 10) * 0.03;
-  const wob = noise2D("s06flex", f * 0.035, 0);
-  const wob2 = noise2D("s06breath", f * 0.03, 4);
+  // Two clear flexes of the pocket walls on "aren't rigid" (the lock beside it never moves), settling a
+  // little too wide by the end of "rigid" — before the substrate is even on screen.
+  const fl = (a: number) => Math.round(k.flex + (k.flexEnd - k.flex) * a);
   const baseOpen = track(f, [
     [k.flex, 0],
-    [k.flex + 44, 1.2, out],
-    [k.mould, 1.2],
+    [fl(0.3), 0.85, EASE.inOut],
+    [fl(0.58), 0.25, EASE.inOut],
+    [fl(1), 1.15, EASE.inOut],
+    [k.mould, 1.15],
     [k.closed, 0, out],
   ]);
-  const open = Math.max(0, baseOpen + flexAmp * wob);
-  const breathe = 0.014 * wob2 * window01(f, k.flex - 4, k.subIn, 20);
+  const wob = noise2D("s06flex", f * 0.035, 0);
+  const wob2 = noise2D("s06breath", f * 0.03, 4);
+  // a faint residual flex while the substrate approaches (it is a real, floppy molecule), none once bound
+  const open = Math.max(0, baseOpen + 0.04 * wob * window01(f, k.flexEnd, k.bind - 6, 10));
+  const breathe = 0.016 * wob2 * window01(f, k.flex - 4, k.flexEnd + 6, 16);
   const sx = 1 + breathe;
   const sy = 1 - breathe;
   const ej = jit("E06", f, amp);
@@ -115,7 +125,7 @@ export const S06InducedFit: React.FC = () => {
   // ---- substrate: slides in, sits loosely in the too-wide pocket (rattling), then is gripped
   const dockAmt = prog(f, k.bind - 14, 14);
   const loose = window01(f, k.bind - 2, k.closed, 10);
-  const ch = dockedChain(5, E.x, E.y, E.s, { wave: 1.4 * Math.sin(f * 0.06) * (1 - dockAmt * 0.75) });
+  const ch = dockedChain(RINGS, E.x, E.y, E.s, { wave: 1.4 * Math.sin(f * 0.06) * (1 - dockAmt * 0.75) });
   const ax = track(f, [[k.subIn, -1000], [k.bind, 0, out]]);
   const ay = track(f, [[k.subIn, 170], [k.bind, 0, out]]);
   const arot = track(f, [[k.subIn, -10], [k.bind, 0, out]]);
@@ -132,7 +142,7 @@ export const S06InducedFit: React.FC = () => {
   const tagAngle1 = settleSwing(f, k.keyIn + 2, 14, 0, 30, 16);
 
   // ---- the model, beat 2 (exam): back in focus at LK2, only once it is well inside the frame
-  const lk2Screen = S([LK2.x - LK.size / 2, LK2.y]);
+  const lk2Screen = S([LK2.x + CARD.x0, LK2.y]); // the card's left edge must be inside the safe area
   const lockVis2 = f > k.pullStart ? Math.min(prog(f, k.pullEnd - 16, 18), Math.max(0, Math.min(1, (lk2Screen[0] - 100) / 60))) : 0;
   const tagAngle2 = 3 * pulse(f, k.model3, 18) * Math.sin((f - k.model3) * 0.4);
 
@@ -148,7 +158,6 @@ export const S06InducedFit: React.FC = () => {
   const arrowsVis = 1 - prog(f, k.closed + 14, 14);
   const lipTop = S(lipTopW);
   const lipBot = S(lipBotW);
-  const fitAnchor = S([E.x + E.s * -150 + ej.dx, E.y + E.s * -40 + ej.dy]);
 
   // exam beat
   const examOut = 1 - prog(f, k.remember, 14);
@@ -171,6 +180,18 @@ export const S06InducedFit: React.FC = () => {
         {/* the model, beat 2 (exam) */}
         {lockVis2 > 0.01 ? (
           <g opacity={lockVis2}>
+            <LitShape
+              d={roundRectPath(LK2.x + CARD.x0, LK2.y + CARD.y0, CARD.x1 - CARD.x0, CARD.y1 - CARD.y0, 40)}
+              top={C.ink700}
+              bottom={C.ink800}
+              rim={C.paper}
+              rimOpacity={0.2}
+              rimWidth={4}
+              slant={0.2}
+              shadow={0.5}
+              shadowDy={16}
+              shadowBlur={24}
+            />
             <Model x={LK2.x} y={LK2.y} keyIn={1} keySlide={0} tagP={1} tagAngle={tagAngle2} tagGlow={pulse(f, k.model3, 22)} />
           </g>
         ) : null}
@@ -192,7 +213,7 @@ export const S06InducedFit: React.FC = () => {
       {simpP > 0 && simpVis > 0 ? (
         <g opacity={simpVis}>
           <HandArrow from={[enzLeft[0], enzLeft[1]]} to={[lockRight[0], lockRight[1]]} bend={0.12} progress={simpP} width={5} head={20} color={C.paperDim} seed={6} />
-          <WipeText x={(enzLeft[0] + lockRight[0]) / 2} y={lockRight[1] - 44} text="simplified" size={48} progress={prog(f, k.approx + 4, 16, (t) => t)} anchor="middle" color={C.paper} weight={600} />
+          <WipeText x={(enzLeft[0] + lockRight[0]) / 2 + 10} y={lockRight[1] + 74} text="simplified" size={52} progress={prog(f, k.approx + 2, 14, (t) => t)} anchor="middle" color={C.paper} weight={600} />
         </g>
       ) : null}
       {arrowsP > 0 && arrowsVis > 0 ? (
@@ -201,26 +222,20 @@ export const S06InducedFit: React.FC = () => {
           <HandArrow from={[lipBot[0] - 30, lipBot[1] + 92]} to={[lipBot[0] + 6, lipBot[1] + 14]} bend={-0.22} progress={arrowsP} width={6} head={20} color={C.tealLight} opacity={arrowsVis} seed={12} />
         </>
       ) : null}
-      <Label
-        anchor={fitAnchor}
-        at={[fitAnchor[0] - 150, fitAnchor[1] - 190]}
-        text="induced fit"
-        align="end"
-        size={60}
-        color={C.tealLight}
-        progress={prog(f, k.induced, 22)}
-        opacity={1 - prog(f, k.pullStart + 10, 12)}
-      />
 
-      {/* exam: induced fit (the real enzyme, right) is beyond GCSE — an A-level idea */}
+      {/* "induced fit": named on its word, stays with the real enzyme through the pull-back, and gets its
+          "A-level" tag when that is said (the model, left, is the GCSE picture) */}
       {(() => {
-        const a = S([E.x + E.s * -150 + ej.dx, E.y + E.s * 120 + ej.dy]);
-        const tx = a[0] - 40;
-        const ty = 928;
-        const chipX = tx + 14 + textWidth("induced fit", 56, 600) + 34;
+        // anchored on the active site's lower wall (where the fit happens); text sits clear of the body
+        const a = S([E.x + E.s * -150 + ej.dx, E.y + E.s * 47 + ej.dy]);
+        const tx = a[0] - 330;
+        const ty = 920;
+        const chipX = tx + 14 + textWidth("induced fit", 58, 600) + 34;
+        const again = pulse(f, k.induced2, 24);
         return (
           <g opacity={examOut}>
-            <Label anchor={a} at={[tx, ty]} text="induced fit" align="start" size={56} color={C.tealLight} progress={prog(f, k.induced2, 22)} />
+            {again > 0.01 ? <ellipse cx={tx + 14 + textWidth("induced fit", 58, 600) / 2} cy={ty} rx={190} ry={48} fill={C.teal} opacity={0.16 * again} /> : null}
+            <Label anchor={a} at={[tx, ty]} text="induced fit" align="start" size={58} color={C.tealLight} progress={prog(f, k.induced, 22)} />
             <Chip x={chipX} y={ty - 2} text="A-level" anchor="start" progress={prog(f, k.alevel, 14)} />
           </g>
         );

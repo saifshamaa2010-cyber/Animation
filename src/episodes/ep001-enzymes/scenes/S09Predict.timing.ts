@@ -1,25 +1,17 @@
 import type { CueFns, SfxEvent } from "../../../lib/cues";
 
-const w = (t: CueFns, text: string, nth: number, fallback: number) => {
-  try {
-    return t.word(text, nth);
-  } catch {
-    return fallback;
-  }
-};
-
 /** Seconds of silence at the end of S09 (the `[pause 4]` in script.md). */
 export const S09_PAUSE_SEC = 4;
 
-/** S09 key moments (scene-relative frames). */
+/** S09 key moments (scene-relative frames). Word lookups are strict (they throw if the script changes). */
 export const s09Timing = (t: CueFns) => {
   const predict = t.cue("predict");
-  const heat = w(t, "heat", 1, predict + 38);
+  const heat = t.word("heat", 1);
   const t50 = t.cue("t50");
   const t60 = t.cue("t60");
   const t70 = t.cue("t70");
   const question = t.cue("question");
-  const faster = w(t, "faster", 1, question + 27);
+  const faster = t.word("faster", 1);
   const pauseNow = t.cue("pauseNow");
   // The silent pause is the last 4 s of the scene (word end times from speech recognition
   // run long, so we measure back from the scene end instead).
