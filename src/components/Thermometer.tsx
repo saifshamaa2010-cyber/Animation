@@ -65,7 +65,7 @@ export const Thermometer: React.FC<ThermometerProps> = ({
       {ticks.map((t) => (
         <g key={t}>
           <line x1={x + tubeW / 2 + 6} x2={x + tubeW / 2 + 22} y1={yOf(t)} y2={yOf(t)} stroke={C.ink300} strokeWidth={3} strokeLinecap="round" />
-          <text x={x + tubeW / 2 + 32} y={yOf(t) + 11} fontFamily={FONT} fontWeight={500} fontSize={30} fill={C.ink300}>
+          <text x={x + tubeW / 2 + 30} y={yOf(t) + 14} fontFamily={FONT} fontWeight={500} fontSize={40} fill={C.ink300}>
             {t}
           </text>
         </g>

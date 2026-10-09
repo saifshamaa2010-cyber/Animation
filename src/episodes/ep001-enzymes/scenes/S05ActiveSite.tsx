@@ -258,7 +258,7 @@ export const S05ActiveSite: React.FC = () => {
         return (
           <g opacity={vis}>
             <Label anchor={enzTop} at={[enzTop[0] + 40, enzTop[1] - 90]} text="lock" color={C.tealLight} progress={prog(f, lockAt, 18)} />
-            <Label anchor={keyAnchor} at={[keyAnchor[0] - 30, keyAnchor[1] + 120]} text="key" align="end" color={C.amberLight} progress={prog(f, keyAt, 18)} />
+            <Label anchor={keyAnchor} at={[keyAnchor[0] + 40, keyAnchor[1] + 120]} text="key" align="start" color={C.amberLight} progress={prog(f, keyAt, 18)} />
           </g>
         );
       })()}

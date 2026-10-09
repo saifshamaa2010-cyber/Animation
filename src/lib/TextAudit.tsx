@@ -34,6 +34,9 @@ const visibleOpacity = (el: Element): { opacity: number; blur: boolean } => {
     o *= parseFloat(cs.opacity || "1");
     if (n === el && n instanceof SVGElement) o *= parseFloat(cs.fillOpacity || "1"); // inherited, so this covers parents
     if (cs.filter && cs.filter.includes("blur")) blur = true;
+    // SVG motion blur (e.g. a rolling counter's streaking digits) — not meant to be read.
+    const ref = n.getAttribute("filter")?.match(/url\(#([^)]+)\)/)?.[1];
+    if (ref && document.getElementById(ref)?.querySelector("feGaussianBlur")) blur = true;
   }
   return { opacity: o, blur };
 };

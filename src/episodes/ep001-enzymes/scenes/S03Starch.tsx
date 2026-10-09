@@ -225,7 +225,8 @@ export const S03Starch: React.FC = () => {
           <>
             <Label
               anchor={S([freeX + 30, freeY - 30])}
-              at={[S([freeX + 30, freeY - 30])[0] + 50, S([freeX + 30, freeY - 30])[1] - 110]}
+              at={[S([freeX + 30, freeY - 30])[0] - 40, S([freeX + 30, freeY - 30])[1] - 110]}
+              align="end"
               text="on its own: sweet"
               color={C.amberLight}
               progress={prog(f, k.sugar, 18)}
@@ -243,8 +244,8 @@ export const S03Starch: React.FC = () => {
         ) : null}
         {stakes > 0 ? (
           <g opacity={stakes}>
-            <Hourglass x={W - 290} y={250} size={210} sand={prog(f, k.aeons, 150) * 0.3} progress={stakes} />
-            <Counter x={W - 290} y={450} value={years} size={60} suffix=" years" speed={years > 0 && years < 1_000_000 ? 1 : 0} />
+            <Hourglass x={W - 330} y={250} size={210} sand={prog(f, k.aeons, 150) * 0.3} progress={stakes} />
+            <Counter x={W - 330} y={450} value={years} size={60} suffix=" years" speed={years > 0 && years < 1_000_000 ? 1 : 0} />
           </g>
         ) : null}
       </svg>
