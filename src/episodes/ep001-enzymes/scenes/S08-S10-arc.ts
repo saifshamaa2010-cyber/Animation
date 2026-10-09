@@ -273,7 +273,12 @@ export const EVENTS: Ev[] = (() => {
   const out: Ev[] = [];
   const free = (busy: number[], a: number, b: number) => busy.every((x, i) => i % 2 === 1 || !(a < busy[i + 1] && b > x));
   // Fixed (hand-placed) collisions first, so nothing else takes their molecules.
+  let resetDone = false;
   for (const pl of [...PLAN.filter((x) => x.e !== undefined), ...PLAN.filter((x) => x.e === undefined)]) {
+    if (pl.e === undefined && pl.at >= RESET && !resetDone) {
+      docksDone.fill(0);
+      resetDone = true;
+    }
     const T = tempAt(pl.at);
     const A = pl.A ?? approachFrames(T);
     const hold = pl.kind === "dock" ? pl.hold ?? Math.round(lerp(16, 9, clamp01((T - 20) / 20))) : 0;

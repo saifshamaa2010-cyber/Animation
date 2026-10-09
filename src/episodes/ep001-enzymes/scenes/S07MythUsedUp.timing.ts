@@ -1,34 +1,40 @@
 import type { CueFns, SfxEvent } from "../../../lib/cues";
 
+/** Word lookup that survives script tweaks: falls back to a cue-relative frame if the word is gone. */
+const w = (t: CueFns, text: string, nth: number, offset: number, fallback: number) => {
+  try {
+    return t.word(text, nth, offset);
+  } catch {
+    return fallback;
+  }
+};
+
 /** S07 key moments from the narration (shared by animation + SFX). */
 export const s07Timing = (t: CueFns) => {
   const myth = t.cue("myth1");
-  const usedUp = t.word("used", 1, -2);
   const bust = t.cue("bust1");
-  const strike = t.word("don't", 1, -2);
-  const replace = strike + 14;
-  const after = t.word("after", 1, -2);
-  const cardOut = replace + 22;
-  const s1 = t.word("enzyme", 1, 4);
-  const unch = Math.max(t.word("unchanged", 1, -2), s1 + 10);
   const again = t.cue("again");
-  const s2 = t.word("again", 1, 2);
-  const s3 = t.word("again", 2, 2);
   const cat = t.cue("catalase");
-  const fast = t.word("fast", 1, -2);
-  const catWord = t.word("catalase", 1, -2);
-  const liver = t.word("liver", 1, -2);
-  const brk = t.word("break", 1, -2);
-  const millions = t.word("millions", 1, -2);
-  const hp = t.word("hydrogen", 1, -2);
-  const second = t.word("second", 1, -2);
   const wear = t.cue("wear");
-  const dis = t.word("forever", 1, 4);
-  const build = Math.max(dis + 20, t.word("cells", 1, -2));
-  const rep = t.word("replace", 1, -2);
   const eq = t.cue("notConsumed");
-  const never = t.word("never", 1, -2);
-  return { myth, usedUp, bust, strike, replace, cardOut, after, s1, unch, again, s2, s3, cat, fast, catWord, liver, brk, millions, hp, second, wear, dis, build, rep, eq, never, end: t.dur };
+  const end = t.dur;
+  const strike = w(t, "don't", 1, -2, bust + 4);
+  const replace = strike + 14;
+  const cardOut = replace + 22;
+  const s1 = Math.max(cardOut + 30, w(t, "enzyme", 1, 4, again - 50));
+  const unch = Math.max(w(t, "unchanged", 1, -2, s1 + 14), s1 + 10);
+  const s2 = w(t, "again", 1, 2, again + 20);
+  const s3 = w(t, "again", 2, 2, s2 + 21);
+  const catWord = w(t, "catalase", 1, -2, cat + 94);
+  const cells = w(t, "found", 1, -2, catWord + 26);
+  const brk = w(t, "break", 1, -2, catWord + 80);
+  const many = w(t, "hundreds", 1, -2, brk + 16);
+  const hp = w(t, "hydrogen", 1, -2, brk + 74);
+  const second = w(t, "second", 1, -2, wear - 26);
+  const dis = w(t, "replace", 1, 2, wear + 24);
+  const build = dis + 24;
+  const never = w(t, "never", 1, -2, eq + 36);
+  return { myth, bust, strike, replace, cardOut, s1, unch, again, s2, s3, cat, catWord, cells, brk, many, hp, second, wear, dis, build, eq, never, end };
 };
 
 export const s07Sfx = (t: CueFns): SfxEvent[] => {
