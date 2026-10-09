@@ -27,11 +27,11 @@ licences, YouTube rules and our pipeline settings). Prices are in US dollars. UK
      being retired on 31 Dec 2026, so we'd pick a current one or design our own.)
    - **Best value: Google "Gemini 3.8 Flash TTS".** It sounds almost as natural, and at our volume
      it costs **under $1 a month** on pay-as-you-go. The catches: you get a British accent by
-     describing the voice you want, so we have to listen and check it, and it needs a small
-     addition to our pipeline (our current Google setting uses Google's older voices).
+     describing the voice you want, so we have to listen and check it. (It's now wired into the
+     pipeline as `TTS_PROVIDER=gemini`, but it can't be tested until there's a key.)
    - **Good cheap subscription: Cartesia "Sonic 3.6", Pro plan.** $5 a month, comes with a
-     commercial licence and named British voices (e.g. "Gemma", "Archie"). It needs a small
-     addition to our pipeline before we can use it.
+     commercial licence and named British voices (e.g. "Gemma", "Archie"). Wired in as
+     `TTS_PROVIDER=cartesia` (also untested until there's a key).
 4. **YouTube is fine with an AI narrator.** A channel with an AI voice can be monetised. What
    YouTube demonetises is mass-produced, repetitive "template" content, and our original
    animation and fact-checked scripts are the opposite of that. The "altered or synthetic
@@ -121,14 +121,16 @@ characters, a month**. In practice we also re-record a few lines per episode, so
   - Our pipeline uses ElevenLabs' older model unless `.env` says `ELEVENLABS_MODEL=eleven_v4`
     (included in the sign-up steps below).
 
-**2. Google Gemini 3.8 Flash TTS: nearly as good for about 1/20th of the price.**
+**2. Google Gemini 3.8 Flash TTS: nearly as good for a tiny fraction of the price** (under $1 a
+month at our volume, against $22 for ElevenLabs Creator; per character it's about a fifth of
+ElevenLabs' API rate).
 
 - It's within roughly 50 Elo of the leader and very strong on pronunciation.
 - It's pay-as-you-go, so a quiet month costs almost nothing.
 - **Weaknesses:**
   - The British accent comes from describing the voice, so we need to hear it first.
-  - **It isn't wired into our pipeline yet.** Our `google` setting currently uses Google's older
-    Chirp 3 HD voices, so Gemini needs a small addition, like Cartesia.
+  - It's wired in as its own setting, `TTS_PROVIDER=gemini` (separate from the older `google`
+    Chirp 3 HD setting). It can't be tested from our build machine until there's a key.
   - Setting up Google billing is a little fiddly.
   - On the free tier Google may use your text to improve its products. Google's terms say users
     in the UK, EEA or Switzerland get the paid-tier data rules even for free. We'd switch on
@@ -143,8 +145,8 @@ characters, a month**. In practice we also re-record a few lines per episode, so
   - It's designed mainly for live voice assistants, not long narration.
   - Their claims about how good their British voices are come from their own tests.
   - Cartesia may use generated audio to train its models (there's an opt-out form).
-  - **It isn't wired into our pipeline yet**: it would need two new settings, `CARTESIA_API_KEY`
-    and `CARTESIA_VOICE_ID`.
+  - It's wired in as `TTS_PROVIDER=cartesia` with two settings, `CARTESIA_API_KEY` and
+    `CARTESIA_VOICE_ID`. It can't be tested from our build machine until there's a key.
 
 **Not picked:**
 
@@ -187,17 +189,26 @@ email or the code.
    tier, so your scripts aren't used to train Google's models (if you live in the UK, Google's
    terms say that's already true on the free tier). One user reports the ~100-a-day limit
    didn't go up with billing. **Set a budget alert of $5** so nothing can surprise you.
-3. **Tell me, and I'll add Gemini to the pipeline.** It isn't wired in yet: today
-   `TTS_PROVIDER=google` calls Cloud TTS **Chirp 3 HD** (voice `en-GB-Chirp3-HD-Aoede`), which
-   needs a Google Cloud key with the "Text-to-Speech API" turned on, not an AI Studio key.
-   (Note for the pipeline: Gemini uses a *Gemini API* key and the model `gemini-3.8-flash-tts`,
-   confirmed in Google's docs. Give it its own `.env` setting so it can't be confused with the
-   Chirp key.)
+3. Fill in `.env`:
+   ```
+   TTS_PROVIDER=gemini
+   GEMINI_API_KEY=<your AI Studio key>
+   GEMINI_VOICE=Kore
+   ```
+   The British accent comes from a short direction sent with each line (`GEMINI_TTS_STYLE` in
+   `.env.example`). We listen to the first take before narrating a whole episode.
+   (Don't confuse this with `TTS_PROVIDER=google`. That one is Google's older Cloud TTS Chirp 3 HD
+   voice and needs a different key: a Google Cloud key with the "Text-to-Speech API" turned on.)
 
 ### If you choose Cartesia
 
-Sign up at **cartesia.ai** → Pro plan ($5) → create an API key → tell me. I'll add Cartesia to the
-pipeline and the two new `.env` settings.
+Sign up at **cartesia.ai** → Pro plan ($5) → create an API key → pick a British voice and copy
+its ID, then fill in `.env`:
+```
+TTS_PROVIDER=cartesia
+CARTESIA_API_KEY=<your key>
+CARTESIA_VOICE_ID=<the voice ID>
+```
 
 ### OpenAI (not recommended, listed for completeness)
 
@@ -306,7 +317,10 @@ Two more things:
 - Gemini 3.8 TTS launch: https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-text-to-speech/
 - Gemini API pricing: https://ai.google.dev/gemini-api/docs/pricing · https://www.eesel.ai/blog/gemini-3-8-flash-tts-pricing · https://neomanex.com/news/gemini-3-8-flash-tts-flash-lite-tts-api-pricing
 - Gemini API terms (ownership, UK/EEA paid-services rule): https://ai.google.dev/gemini-api/terms
-- Daily request limit report (user report): https://note.com/ebibibi/n/nc42becd7e7de?hl=en
+- Daily request limit report, unchanged after billing (user report): https://note.com/ebibibi/n/nc42becd7e7de?hl=en
+- Model ID `gemini-3.8-flash-tts` (official docs): https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash-tts · https://ai.google.dev/gemini-api/docs/speech-generation
+- Voice design, accent "remix" coming soon, cloning blocked in UK/EU AI Studio: https://www.marktechpost.com/2026/09/23/google-releases-gemini-3-8-flash-tts-and-flash-lite-tts-with-prompt-based-voice-design/ · https://mixed-news.com/en/gemini-3-8-flash-tts-voice-cloning-30-second-sample/
+- Measured cost about 30% above page maths (single source): https://mxchat.ai/gemini-tts-pricing-tokens-per-second/
 - Cloud TTS pricing and Chirp 3 HD: https://cloud.google.com/text-to-speech/pricing · https://docs.cloud.google.com/text-to-speech/docs/chirp3-hd
 - Cloud TTS attribution (forum, not official): https://discuss.google.dev/t/text-to-speech-api-license/187973
 
@@ -319,9 +333,10 @@ Two more things:
 - OpenAI TTS guide: https://developers.openai.com/api/docs/guides/text-to-speech
 - OpenAI British accent forum thread: https://community.openai.com/t/british-accent-and-pronuciation-in-gpt-4o-mini-tts/1150812
 - OpenAI price estimate (secondary): https://costgoat.com/pricing/openai-tts
+- OpenAI arena rank, older snapshots (secondary): https://nolist.ai/item/speech-api-openai-gpt-4o-mini-tts
 - OpenAI 2026 voice releases: https://techcrunch.com/2026/07/08/openai-releases-new-voice-models-for-more-natural-live-conversations/
 - Azure HD price cut: https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/azure-speech-%E2%80%93-neural-hd-text-to-speech-recent-voice-updates/4505380 · https://azure.microsoft.com/en-us/pricing/details/speech/
-- Hume pricing (secondary, conflicting): https://fish.audio/vs/pricing/hume-ai/ · https://cognitivefuture.ai/hume-ai-octave-review/
+- Hume pricing (secondary, conflicting): https://fish.audio/vs/pricing/hume-ai/ · https://cognitivefuture.ai/hume-ai-octave-review/ · https://autogpt.net/hume-ai-pricing-every-plan-explained/
 - Inworld pricing: https://inworld.ai/tts-api · https://www.therundown.ai/tools/inworld-tts
 - MiniMax pricing: https://platform.minimax.io/docs/pricing/overview
 - Qwen-Audio 3.x: https://the-decoder.com/alibabas-qwen-audio-3-0-tts-plus-tops-the-competition-in-the-text-to-speech-rankings/ · https://alphasignal.ai/news/alibaba-s-qwen-audio-3-1-slashes-voice-api-prices-by-up-to-95
@@ -335,5 +350,8 @@ Two more things:
 - Official blog, altered or synthetic content: https://blog.youtube/news-and-events/disclosing-ai-generated-content/
 - Help Center page (couldn't be opened from here; quoted by the guides below): https://support.google.com/youtube/answer/14328491
 - Secondary guides: https://9to5google.com/2024/03/18/youtube-altered-content-disclosure/ · https://vois.so/blog/youtube-ai-voice-disclosure-rules · https://narrationbox.com/blog/youtube-ai-voice-policy-explained-clearly
-- Inauthentic-content rule (July 2025): https://ppc.land/youtube-clarifies-inauthentic-content-policy-changes/ · https://www.socialmediatoday.com/news/youtube-clarifies-monetization-update-inauthentic-repeated-content/752892/ · https://routenote.com/blog/youtube-updates-repetitive-content-policy/
-- Automatic AI labels (2026, secondary): https://www.creatorhandbook.net/youtube-expands-automatic-ai-labeling-system/ · https://chatforest.com/builders-log/youtube-ai-auto-labeling-c2pa-synthid-builder-guide/
+- Inauthentic-content rule (July 2025): https://ppc.land/youtube-clarifies-inauthentic-content-policy-changes/ · https://www.socialmediatoday.com/news/youtube-clarifies-monetization-update-inauthentic-repeated-content/752892/ · https://routenote.com/blog/youtube-updates-repetitive-content-policy/ · https://musically.com/2025/07/10/youtube-updates-mass-produced-and-repetitious-content-policy/
+- Automatic AI labels (2026, secondary): https://www.creatorhandbook.net/youtube-expands-automatic-ai-labeling-system/ · https://chatforest.com/builders-log/youtube-ai-auto-labeling-c2pa-synthid-builder-guide/ · https://thenextweb.com/news/youtube-will-now-automatically-label-ai-generated-videos-whether-creators-disclose-them-or-not
+
+**Our pipeline (read directly)**
+- `pipeline/tts/providers.py`: ElevenLabs defaults to `eleven_multilingual_v2` unless `ELEVENLABS_MODEL` is set; `google` calls Cloud TTS Chirp 3 HD (`en-GB-Chirp3-HD-Aoede`).
