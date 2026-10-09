@@ -10,7 +10,7 @@
 import { bundle } from "@remotion/bundler";
 import { openBrowser, renderStill, selectComposition } from "@remotion/renderer";
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync } from "node:fs";
+import { existsSync, mkdirSync, rmSync } from "node:fs";
 import path from "node:path";
 
 const PREINSTALLED = "/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell";
@@ -52,6 +52,8 @@ const main = async () => {
     process.stdout.write(`.${frame}`);
   }
   await browser.close({ silent: true });
+  // Each bundle copies public/ (hundreds of MB), so never leave it behind in /tmp.
+  rmSync(serveUrl, { recursive: true, force: true });
   console.log(`\n${files.length} frames → ${outDir}`);
 
   // Contact sheet: each frame labelled with its number and timestamp.

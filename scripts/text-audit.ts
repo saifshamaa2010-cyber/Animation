@@ -10,7 +10,7 @@
  */
 import { bundle } from "@remotion/bundler";
 import { openBrowser, renderStill, selectComposition } from "@remotion/renderer";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, rmSync, readFileSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
@@ -88,6 +88,8 @@ const main = async () => {
     process.stdout.write(`.${frame}`);
   }
   await browser.close({ silent: true });
+  // Each bundle copies public/ (hundreds of MB), so never leave it behind in /tmp.
+  rmSync(serveUrl, { recursive: true, force: true });
 
   const rows = [...hits.values()].sort((a, b) => a.frames[0] - b.frames[0]);
   const fmt = (fs: number[]) => (fs.length > 6 ? `${fs.slice(0, 6).join(", ")} … (${fs.length} frames)` : fs.join(", "));
