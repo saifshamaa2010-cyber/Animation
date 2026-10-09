@@ -54,8 +54,8 @@ export const S13Resolve: React.FC = () => {
   const microVis = interpolate(Z, [7, 18], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const macroVis = 1 - interpolate(Z, [5, 13], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const microZ = Z / Z_MAX;
-  const titleT = f - k.title;
-  const titleVis = prog(f, k.title - 4, 14);
+  const titleT = f - k.shapeLine;
+  const titleVis = prog(f, k.shapeLine - 4, 14);
 
   // ---- hero: docks on "fit", snips on "snips", then again and again
   const snaps = [k.snap, ...k.snaps2];
@@ -181,8 +181,8 @@ export const S13Resolve: React.FC = () => {
           </g>
         ) : null}
 
-        <SweetnessMeter x={W - 560} y={150} value={sweetV} opacity={window01(f, k.zoomOut + 30, k.title, 12)} />
-        {titleVis > 0 ? <TitleCard t={titleT} snapAt={44} opacity={titleVis} /> : null}
+        <SweetnessMeter x={W - 560} y={150} value={sweetV} opacity={window01(f, k.zoomOut + 30, k.shapeLine, 12)} />
+        {titleVis > 0 ? <TitleCard t={titleT} snapAt={k.title - k.shapeLine + 40} wordsDelay={k.title - k.shapeLine} opacity={titleVis} /> : null}
       </svg>
     </AbsoluteFill>
   );

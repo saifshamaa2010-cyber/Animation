@@ -18,12 +18,14 @@ const WORDS = ["How", "Enzymes", "Actually", "Work"];
 const SIZE = 116;
 
 /** `t` = frames since the title started. `snapAt` = when the motif snips. */
-export const TitleCard: React.FC<{ readonly t: number; readonly snapAt?: number; readonly y?: number; readonly opacity?: number }> = ({
-  t,
-  snapAt = 46,
-  y = 800,
-  opacity = 1,
-}) => {
+export const TitleCard: React.FC<{
+  readonly t: number;
+  readonly snapAt?: number;
+  readonly y?: number;
+  readonly opacity?: number;
+  /** Frames after the motif appears that the title words start (S13 shows the enzyme first). */
+  readonly wordsDelay?: number;
+}> = ({ t, snapAt = 46, y = 800, opacity = 1, wordsDelay = 0 }) => {
   const space = textWidth(" ", SIZE, 700);
   const widths = WORDS.map((w) => textWidth(w, SIZE, 700, -3));
   const total = widths.reduce((a, b) => a + b, 0) + space * (WORDS.length - 1);
@@ -62,7 +64,7 @@ export const TitleCard: React.FC<{ readonly t: number; readonly snapAt?: number;
       </defs>
       <g clipPath="url(#title-mask)">
         {WORDS.map((w, i) => {
-          const p = prog(t, 8 + i * 5, 16, EASE.out);
+          const p = prog(t, wordsDelay + 8 + i * 5, 16, EASE.out);
           return (
             <text key={w} x={xs[i]} y={y + (1 - p) * SIZE * 0.9} fontFamily={FONT} fontWeight={700} fontSize={SIZE} fill={C.paper} letterSpacing={-3}>
               {w}
@@ -70,7 +72,7 @@ export const TitleCard: React.FC<{ readonly t: number; readonly snapAt?: number;
           );
         })}
       </g>
-      <HandUnderline x1={xs[2] - 6} x2={xs[2] + widths[2] + 6} y={y + 30} progress={prog(t, 30, 16, (v) => v)} color={C.amber} width={8} seed={21} />
+      <HandUnderline x1={xs[2] - 6} x2={xs[2] + widths[2] + 6} y={y + 30} progress={prog(t, wordsDelay + 30, 16, (v) => v)} color={C.amber} width={8} seed={21} />
     </g>
   );
 };

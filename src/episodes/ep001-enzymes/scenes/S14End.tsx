@@ -16,9 +16,9 @@ import { s13Timing } from "./S13Resolve.timing";
 /** Continue S13's title exactly where it left off (S14 arrives with a hard cut). */
 const TITLE_T0 = (() => {
   const s13 = TL.scenes.find((s) => s.id === "S13");
-  if (!s13) return 200;
+  if (!s13) return { t0: 200, words: 0 };
   const k = s13Timing(cueFns(s13, TL.words, TL.fps));
-  return s13.endFrame - s13.startFrame - k.title;
+  return { t0: s13.endFrame - s13.startFrame - k.shapeLine, words: k.title - k.shapeLine };
 })();
 
 const CHIPS = [
@@ -37,7 +37,7 @@ export const S14End: React.FC = () => {
   return (
     <Stage bg={{ tone: "warm", lightX: 0.42, lightY: 0.5 }}>
       <g opacity={fade}>
-        <TitleCard t={TITLE_T0 + f} />
+        <TitleCard t={TITLE_T0.t0 + f} snapAt={TITLE_T0.words + 40} wordsDelay={TITLE_T0.words} />
         {CHIPS.map((c, i) => {
           const p = prog(f, 4 + i * 6, 16);
           const x0 = x;

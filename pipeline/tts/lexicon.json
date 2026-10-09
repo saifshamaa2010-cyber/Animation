@@ -1,14 +1,21 @@
 {
   "_note": "Respellings applied ONLY to the text sent to the voice. Subtitles always use the script's original words. 'all' applies to every provider; add a provider key (e.g. 'kokoro') for voice-specific fixes.",
   "all": {
+    "denatured": "dee-natured",
+    "denature": "dee-nature",
+    "denatures": "dee-natures",
+    "denaturing": "dee-naturing",
+    "protease": "protee-aze",
+    "proteases": "protee-azes",
     "pH 7": "P H seven",
     "pH 2": "P H two",
     "pH": "P H",
-    "enzyme–substrate": "enzyme substrate",
     "IGCSE": "I G C S E",
+    "GCSEs": "G C S Es",
     "GCSE": "G C S E",
-    "…": "...",
-    "\"kills\"": "kills"
+    "enzyme–substrate": "enzyme substrate",
+    "\"kills\"": "kills",
+    "“kills”": "kills"
   },
   "kokoro": {},
   "elevenlabs": {},

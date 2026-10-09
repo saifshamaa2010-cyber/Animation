@@ -9,33 +9,43 @@
       "slug": "hook",
       "file": "public/episodes/ep001-enzymes/narration/S01.wav",
       "offsetSec": 0.0,
-      "durationSec": 20.1665,
+      "durationSec": 21.1843,
       "segments": [
         {
-          "text": "Here's an experiment you can do with your lunch. Take a plain cracker, one without added sugar, and keep chewing. Don't swallow. Give it a minute or so\u2026 and it starts to taste a little sweet.",
-          "ttsText": "Here's an experiment you can do with your lunch. Take a plain cracker, one without added sugar, and keep chewing. Don't swallow. Give it a minute or so\u2026 and it starts to taste a little sweet.",
+          "text": "Here's an experiment you can do with your lunch. Take a plain cracker, with no added sugar. Chew it, and keep chewing. Don't swallow. Give it a minute or so,",
+          "ttsText": "Here's an experiment you can do with your lunch. Take a plain cracker, with no added sugar. Chew it, and keep chewing. Don't swallow. Give it a minute or so,",
           "startSec": 0.0,
-          "durationSec": 10.7389
+          "durationSec": 8.9076
         },
         {
           "pause": 0.4,
-          "startSec": 10.7389
+          "startSec": 8.9076
+        },
+        {
+          "text": "and it starts to taste a little sweet.",
+          "ttsText": "and it starts to taste a little sweet.",
+          "startSec": 9.3076,
+          "durationSec": 1.8731
+        },
+        {
+          "pause": 0.4,
+          "startSec": 11.1807
         },
         {
           "text": "But you didn't add any sugar. So where's that sweetness coming from?",
           "ttsText": "But you didn't add any sugar. So where's that sweetness coming from?",
-          "startSec": 11.1389,
+          "startSec": 11.5807,
           "durationSec": 3.3863
         },
         {
           "pause": 0.5,
-          "startSec": 14.5252
+          "startSec": 14.967
         },
         {
-          "text": "A molecule in your saliva, doing in a minute what would otherwise take a million years or more.",
-          "ttsText": "A molecule in your saliva, doing in a minute what would otherwise take a million years or more.",
-          "startSec": 15.0252,
-          "durationSec": 5.1413
+          "text": "A molecule in your saliva. In a minute, it does what would otherwise take at least a million years.",
+          "ttsText": "A molecule in your saliva. In a minute, it does what would otherwise take at least a million years.",
+          "startSec": 15.467,
+          "durationSec": 5.7173
         }
       ]
     },
@@ -43,7 +53,7 @@
       "id": "S02",
       "slug": "title",
       "file": "public/episodes/ep001-enzymes/narration/S02.wav",
-      "offsetSec": 20.1665,
+      "offsetSec": 21.1843,
       "durationSec": 3.0,
       "segments": [
         {
@@ -56,24 +66,24 @@
       "id": "S03",
       "slug": "starch",
       "file": "public/episodes/ep001-enzymes/narration/S03.wav",
-      "offsetSec": 23.1665,
-      "durationSec": 21.4833,
+      "offsetSec": 24.1843,
+      "durationSec": 21.0078,
       "segments": [
         {
-          "text": "Crackers are packed with starch. Zoom right in, and starch is a chain: hundreds, even thousands, of glucose molecules, linked end to end. Glucose is a sugar, but locked up in a chain like this, it doesn't taste sweet.",
-          "ttsText": "Crackers are packed with starch. Zoom right in, and starch is a chain: hundreds, even thousands, of glucose molecules, linked end to end. Glucose is a sugar, but locked up in a chain like this, it doesn't taste sweet.",
+          "text": "Crackers are packed with starch. Zoom right in, and starch turns out to be a chain. Hundreds, even thousands, of glucose molecules, linked end to end. Glucose is a sugar, but locked up in a chain like this, it doesn't taste sweet.",
+          "ttsText": "Crackers are packed with starch. Zoom right in, and starch turns out to be a chain. Hundreds, even thousands, of glucose molecules, linked end to end. Glucose is a sugar, but locked up in a chain like this, it doesn't taste sweet.",
           "startSec": 0.0,
-          "durationSec": 13.7813
+          "durationSec": 14.2933
         },
         {
           "pause": 0.3,
-          "startSec": 13.7813
+          "startSec": 14.2933
         },
         {
-          "text": "And those links are tough. Left alone in water at room temperature, a single link would last, on average, millions of years.",
-          "ttsText": "And those links are tough. Left alone in water at room temperature, a single link would last, on average, millions of years.",
-          "startSec": 14.0813,
-          "durationSec": 7.402
+          "text": "And those links are tough. Leave one in water at room temperature, and on average it would last millions of years.",
+          "ttsText": "And those links are tough. Leave one in water at room temperature, and on average it would last millions of years.",
+          "startSec": 14.5933,
+          "durationSec": 6.4145
         }
       ]
     },
@@ -81,8 +91,8 @@
       "id": "S04",
       "slug": "enzyme",
       "file": "public/episodes/ep001-enzymes/narration/S04.wav",
-      "offsetSec": 44.6498,
-      "durationSec": 38.0293,
+      "offsetSec": 45.1921,
+      "durationSec": 39.8761,
       "segments": [
         {
           "pause": 0.3,
@@ -99,10 +109,20 @@
           "startSec": 13.868
         },
         {
-          "text": "That's what an enzyme is: a biological catalyst. It speeds up a reaction without being used up or changed. And nearly every reaction in your body, building things up or breaking them down, has one. Without enzymes, your metabolism would be far too slow to keep you alive. Nearly all enzymes are proteins, long chains of amino acids folded into a precise shape. And that shape is everything.",
-          "ttsText": "That's what an enzyme is: a biological catalyst. It speeds up a reaction without being used up or changed. And nearly every reaction in your body, building things up or breaking them down, has one. Without enzymes, your metabolism would be far too slow to keep you alive. Nearly all enzymes are proteins, long chains of amino acids folded into a precise shape. And that shape is everything.",
+          "text": "That's what an enzyme is: a biological catalyst. It speeds up a reaction without being used up or changed. Nearly every reaction in your body has one, whether it's building things up or breaking them down.",
+          "ttsText": "That's what an enzyme is: a biological catalyst. It speeds up a reaction without being used up or changed. Nearly every reaction in your body has one, whether it's building things up or breaking them down.",
           "startSec": 14.268,
-          "durationSec": 23.7613
+          "durationSec": 12.502
+        },
+        {
+          "pause": 0.2,
+          "startSec": 26.77
+        },
+        {
+          "text": "Without enzymes, your metabolism would be far too slow to keep you alive. Nearly all enzymes are proteins: long chains of amino acids, folded into a precise shape. And that shape is everything.",
+          "ttsText": "Without enzymes, your metabolism would be far too slow to keep you alive. Nearly all enzymes are proteins: long chains of amino acids, folded into a precise shape. And that shape is everything.",
+          "startSec": 26.97,
+          "durationSec": 12.9061
         }
       ]
     },
@@ -110,8 +130,8 @@
       "id": "S05",
       "slug": "active-site",
       "file": "public/episodes/ep001-enzymes/narration/S05.wav",
-      "offsetSec": 82.6792,
-      "durationSec": 40.4811,
+      "offsetSec": 85.0682,
+      "durationSec": 40.965,
       "segments": [
         {
           "pause": 0.3,
@@ -128,10 +148,20 @@
           "startSec": 17.5156
         },
         {
-          "text": "The active site's shape is complementary to the substrate: not the same shape, but a perfect fit. The enzyme is the lock; the substrate is the key. That's why enzymes are specific: each one only fits, and works on, its own substrate. Amylase can't even break down cellulose, in paper, though that's a chain of glucose too. Its links are joined differently, so it just doesn't fit.",
-          "ttsText": "The active site's shape is complementary to the substrate: not the same shape, but a perfect fit. The enzyme is the lock; the substrate is the key. That's why enzymes are specific: each one only fits, and works on, its own substrate. Amylase can't even break down cellulose, in paper, though that's a chain of glucose too. Its links are joined differently, so it just doesn't fit.",
+          "text": "The active site is complementary to the substrate: not the same shape, but a perfect fit. The enzyme is the lock. The substrate is the key.",
+          "ttsText": "The active site is complementary to the substrate: not the same shape, but a perfect fit. The enzyme is the lock. The substrate is the key.",
           "startSec": 17.9156,
-          "durationSec": 22.5655
+          "durationSec": 8.6611
+        },
+        {
+          "pause": 0.2,
+          "startSec": 26.5767
+        },
+        {
+          "text": "That's why enzymes are specific. Each one only fits its own substrate. Amylase can't even digest paper. It's mostly cellulose, another chain of glucose, but its links are joined differently, so it just doesn't fit.",
+          "ttsText": "That's why enzymes are specific. Each one only fits its own substrate. Amylase can't even digest paper. It's mostly cellulose, another chain of glucose, but its links are joined differently, so it just doesn't fit.",
+          "startSec": 26.7767,
+          "durationSec": 14.1883
         }
       ]
     },
@@ -139,18 +169,18 @@
       "id": "S06",
       "slug": "induced-fit",
       "file": "public/episodes/ep001-enzymes/narration/S06.wav",
-      "offsetSec": 123.1603,
-      "durationSec": 23.0413,
+      "offsetSec": 126.0332,
+      "durationSec": 22.9128,
       "segments": [
         {
           "pause": 0.3,
           "startSec": 0.0
         },
         {
-          "text": "Lock and key is a brilliant model, but it is a simplification. Real enzymes aren't rigid. As the substrate binds, the active site moulds itself around it. That more accurate picture is called induced fit. For GCSE and IGCSE, you only need lock and key; induced fit is an A-level idea. Just remember: it's a model, not a photograph.",
-          "ttsText": "Lock and key is a brilliant model, but it is a simplification. Real enzymes aren't rigid. As the substrate binds, the active site moulds itself around it. That more accurate picture is called induced fit. For G C S E and I G C S E, you only need lock and key; induced fit is an A-level idea. Just remember: it's a model, not a photograph.",
+          "text": "Lock and key is a brilliant model, but it's a simplification. Real enzymes aren't rigid. As the substrate binds, the active site moulds itself around it. That more accurate picture is called induced fit. For GCSE and IGCSE, lock and key is all you need. Induced fit is an A-level idea. Just remember: it's a model, not a photograph.",
+          "ttsText": "Lock and key is a brilliant model, but it's a simplification. Real enzymes aren't rigid. As the substrate binds, the active site moulds itself around it. That more accurate picture is called induced fit. For G C S E and I G C S E, lock and key is all you need. Induced fit is an A-level idea. Just remember: it's a model, not a photograph.",
           "startSec": 0.3,
-          "durationSec": 22.7413
+          "durationSec": 22.6128
         }
       ]
     },
@@ -158,27 +188,27 @@
       "id": "S07",
       "slug": "myth-used-up",
       "file": "public/episodes/ep001-enzymes/narration/S07.wav",
-      "offsetSec": 146.2015,
-      "durationSec": 27.4695,
+      "offsetSec": 148.946,
+      "durationSec": 28.0458,
       "segments": [
         {
           "pause": 0.4,
           "startSec": 0.0
         },
         {
-          "text": "Which brings us to myth number one: that enzymes get used up. They don't. After each reaction, the enzyme is unchanged, ready to go again, and again. And some are astonishingly fast. One molecule of catalase, found in almost all your cells, can break down hundreds of thousands of molecules of hydrogen peroxide every second.",
-          "ttsText": "Which brings us to myth number one: that enzymes get used up. They don't. After each reaction, the enzyme is unchanged, ready to go again, and again. And some are astonishingly fast. One molecule of catalase, found in almost all your cells, can break down hundreds of thousands of molecules of hydrogen peroxide every second.",
+          "text": "Which brings us to myth number one: that enzymes get used up. They don't. After each reaction, the enzyme is unchanged, ready to go again, and again. And some are astonishingly fast. Catalase is found in almost all your cells. One molecule of it can break down hundreds of thousands of molecules of hydrogen peroxide. Every second.",
+          "ttsText": "Which brings us to myth number one: that enzymes get used up. They don't. After each reaction, the enzyme is unchanged, ready to go again, and again. And some are astonishingly fast. Catalase is found in almost all your cells. One molecule of it can break down hundreds of thousands of molecules of hydrogen peroxide. Every second.",
           "startSec": 0.4,
-          "durationSec": 20.7318
+          "durationSec": 21.308
         },
         {
           "pause": 0.3,
-          "startSec": 21.1318
+          "startSec": 21.708
         },
         {
           "text": "Your cells do replace old enzymes, eventually. But the reaction itself never uses them up.",
           "ttsText": "Your cells do replace old enzymes, eventually. But the reaction itself never uses them up.",
-          "startSec": 21.4318,
+          "startSec": 22.008,
           "durationSec": 6.0377
         }
       ]
@@ -187,18 +217,28 @@
       "id": "S08",
       "slug": "temperature",
       "file": "public/episodes/ep001-enzymes/narration/S08.wav",
-      "offsetSec": 173.6711,
-      "durationSec": 32.6448,
+      "offsetSec": 176.9918,
+      "durationSec": 32.6893,
       "segments": [
         {
           "pause": 0.4,
           "startSec": 0.0
         },
         {
-          "text": "Now, temperature. Molecules are always jiggling around. Heat them up, and they gain kinetic energy: they move faster. Enzymes and substrates bump into each other more often, and with more energy. More successful collisions, where the substrate lands in the active site, mean more enzyme\u2013substrate complexes: a faster rate of reaction. Up to a point, warmer means faster. The temperature where the rate peaks is called the optimum. For many enzymes in your body, it's around 37 degrees: body temperature.",
-          "ttsText": "Now, temperature. Molecules are always jiggling around. Heat them up, and they gain kinetic energy: they move faster. Enzymes and substrates bump into each other more often, and with more energy. More successful collisions, where the substrate lands in the active site, mean more enzyme substrate complexes: a faster rate of reaction. Up to a point, warmer means faster. The temperature where the rate peaks is called the optimum. For many enzymes in your body, it's around 37 degrees: body temperature.",
+          "text": "Now, temperature. Molecules are always jiggling around. Heat them up, and they gain kinetic energy. They move faster. Enzymes and substrates bump into each other more often, and with more energy.",
+          "ttsText": "Now, temperature. Molecules are always jiggling around. Heat them up, and they gain kinetic energy. They move faster. Enzymes and substrates bump into each other more often, and with more energy.",
           "startSec": 0.4,
-          "durationSec": 32.2448
+          "durationSec": 12.3473
+        },
+        {
+          "pause": 0.3,
+          "startSec": 12.7473
+        },
+        {
+          "text": "So more collisions are successful, with the substrate landing in the active site. More enzyme\u2013substrate complexes form, and the rate goes up. Up to a point, warmer means faster. The temperature where the rate peaks is called the optimum. For many enzymes in your body, it's around 37 degrees: body temperature.",
+          "ttsText": "So more collisions are successful, with the substrate landing in the active site. More enzyme substrate complexes form, and the rate goes up. Up to a point, warmer means faster. The temperature where the rate peaks is called the optimum. For many enzymes in your body, it's around 37 degrees: body temperature.",
+          "startSec": 13.0473,
+          "durationSec": 19.642
         }
       ]
     },
@@ -206,7 +246,7 @@
       "id": "S09",
       "slug": "predict",
       "file": "public/episodes/ep001-enzymes/narration/S09.wav",
-      "offsetSec": 206.3158,
+      "offsetSec": 209.6811,
       "durationSec": 13.2401,
       "segments": [
         {
@@ -239,8 +279,8 @@
       "id": "S10",
       "slug": "denature",
       "file": "public/episodes/ep001-enzymes/narration/S10.wav",
-      "offsetSec": 219.5559,
-      "durationSec": 37.0936,
+      "offsetSec": 222.9212,
+      "durationSec": 38.3296,
       "segments": [
         {
           "text": "Here's what actually happens. The rate crashes, and it doesn't recover.",
@@ -254,29 +294,29 @@
         },
         {
           "text": "An enzyme's shape is held together by lots of weak bonds. Too much heat, and it vibrates so violently that those bonds break. The chain unravels, the active site loses its shape, and the substrate no longer fits. The enzyme has been denatured.",
-          "ttsText": "An enzyme's shape is held together by lots of weak bonds. Too much heat, and it vibrates so violently that those bonds break. The chain unravels, the active site loses its shape, and the substrate no longer fits. The enzyme has been denatured.",
+          "ttsText": "An enzyme's shape is held together by lots of weak bonds. Too much heat, and it vibrates so violently that those bonds break. The chain unravels, the active site loses its shape, and the substrate no longer fits. The enzyme has been dee-natured.",
           "startSec": 4.1902,
-          "durationSec": 15.5444
+          "durationSec": 15.735
         },
         {
           "pause": 0.3,
-          "startSec": 19.7346
+          "startSec": 19.9252
         },
         {
-          "text": "It's the same kind of change that turns egg white solid in a hot pan, and, like a cooked egg, cooling it down usually doesn't undo it.",
-          "ttsText": "It's the same kind of change that turns egg white solid in a hot pan, and, like a cooked egg, cooling it down usually doesn't undo it.",
-          "startSec": 20.0346,
-          "durationSec": 7.6373
+          "text": "It's the same kind of change that turns egg white solid in a hot pan. You can't uncook an egg, and cooling usually won't fix the enzyme either.",
+          "ttsText": "It's the same kind of change that turns egg white solid in a hot pan. You can't uncook an egg, and cooling usually won't fix the enzyme either.",
+          "startSec": 20.2252,
+          "durationSec": 8.5333
         },
         {
           "pause": 0.3,
-          "startSec": 27.6719
+          "startSec": 28.7585
         },
         {
-          "text": "Cold is different. Molecules have less kinetic energy, so there are fewer collisions, but the enzyme isn't denatured. Warm it up, and it recovers.",
-          "ttsText": "Cold is different. Molecules have less kinetic energy, so there are fewer collisions, but the enzyme isn't denatured. Warm it up, and it recovers.",
-          "startSec": 27.9719,
-          "durationSec": 9.1217
+          "text": "Cold is different. Molecules have less kinetic energy, so there are fewer collisions. But the enzyme isn't denatured. Warm it up, and it recovers.",
+          "ttsText": "Cold is different. Molecules have less kinetic energy, so there are fewer collisions. But the enzyme isn't dee-natured. Warm it up, and it recovers.",
+          "startSec": 29.0585,
+          "durationSec": 9.271
         }
       ]
     },
@@ -284,18 +324,18 @@
       "id": "S11",
       "slug": "myth-killed",
       "file": "public/episodes/ep001-enzymes/narration/S11.wav",
-      "offsetSec": 256.6495,
-      "durationSec": 20.473,
+      "offsetSec": 261.2507,
+      "durationSec": 20.601,
       "segments": [
         {
           "pause": 0.4,
           "startSec": 0.0
         },
         {
-          "text": "And that's myth number two: that heat \"kills\" enzymes. Enzymes were never alive. An enzyme is a molecule, a very clever one, but it can't die. It's denatured: its active site changes shape, so the substrate no longer fits, and no enzyme\u2013substrate complex can form. In an exam, that's the answer that gets the marks.",
-          "ttsText": "And that's myth number two: that heat kills enzymes. Enzymes were never alive. An enzyme is a molecule, a very clever one, but it can't die. It's denatured: its active site changes shape, so the substrate no longer fits, and no enzyme substrate complex can form. In an exam, that's the answer that gets the marks.",
+          "text": "And that's myth number two: that heat \"kills\" enzymes. Enzymes were never alive. An enzyme is a molecule, a very clever one, but it can't die. It's denatured. Its active site changes shape, so the substrate no longer fits, and no enzyme\u2013substrate complex can form. In an exam, that's the answer that gets the marks.",
+          "ttsText": "And that's myth number two: that heat kills enzymes. Enzymes were never alive. An enzyme is a molecule, a very clever one, but it can't die. It's dee-natured. Its active site changes shape, so the substrate no longer fits, and no enzyme substrate complex can form. In an exam, that's the answer that gets the marks.",
           "startSec": 0.4,
-          "durationSec": 20.073
+          "durationSec": 20.201
         }
       ]
     },
@@ -303,18 +343,28 @@
       "id": "S12",
       "slug": "ph",
       "file": "public/episodes/ep001-enzymes/narration/S12.wav",
-      "offsetSec": 277.1225,
-      "durationSec": 26.9173,
+      "offsetSec": 281.8517,
+      "durationSec": 30.5617,
       "segments": [
         {
           "pause": 0.4,
           "startSec": 0.0
         },
         {
-          "text": "pH can do this too. Too acidic, or too alkaline, and the bonds holding the active site in shape are disrupted. Go far enough, and the enzyme is denatured. So every enzyme has an optimum pH. Amylase, in your mouth, works best close to neutral, around pH 7. Your stomach is strongly acidic, often around pH 2, and pepsin, a protease that digests protein there, works best right around that. Different enzymes, tuned to different places.",
-          "ttsText": "P H can do this too. Too acidic, or too alkaline, and the bonds holding the active site in shape are disrupted. Go far enough, and the enzyme is denatured. So every enzyme has an optimum P H. Amylase, in your mouth, works best close to neutral, around P H seven. Your stomach is strongly acidic, often around P H two, and pepsin, a protease that digests protein there, works best right around that. Different enzymes, tuned to different places.",
+          "text": "pH, how acidic or alkaline something is, can denature enzymes too. Too far either way, and the bonds holding the active site in shape are disrupted.",
+          "ttsText": "P H, how acidic or alkaline something is, can dee-nature enzymes too. Too far either way, and the bonds holding the active site in shape are disrupted.",
           "startSec": 0.4,
-          "durationSec": 26.5173
+          "durationSec": 10.3428
+        },
+        {
+          "pause": 0.3,
+          "startSec": 10.7428
+        },
+        {
+          "text": "So every enzyme has an optimum pH. Amylase, in your mouth, works best close to neutral, around pH 7. Your stomach is strongly acidic, often around pH 2. And pepsin, a protease that digests protein there, works best right around that. Different enzymes, tuned to different places.",
+          "ttsText": "So every enzyme has an optimum P H. Amylase, in your mouth, works best close to neutral, around P H seven. Your stomach is strongly acidic, often around P H two. And pepsin, a protee-aze that digests protein there, works best right around that. Different enzymes, tuned to different places.",
+          "startSec": 11.0428,
+          "durationSec": 19.5189
         }
       ]
     },
@@ -322,28 +372,28 @@
       "id": "S13",
       "slug": "resolve",
       "file": "public/episodes/ep001-enzymes/narration/S13.wav",
-      "offsetSec": 304.0399,
-      "durationSec": 25.5006,
+      "offsetSec": 312.4134,
+      "durationSec": 26.6773,
       "segments": [
         {
           "pause": 0.5,
           "startSec": 0.0
         },
         {
-          "text": "So, back to that cracker. As you chew, amylase meets the starch. The chains fit its active site, and it snips them into maltose, over and over, without being used up. Your mouth is about 37 degrees and close to neutral: just right. Links that would last a million years or more on their own are broken while you chew. That sweetness is enzymes at work, in real time.",
-          "ttsText": "So, back to that cracker. As you chew, amylase meets the starch. The chains fit its active site, and it snips them into maltose, over and over, without being used up. Your mouth is about 37 degrees and close to neutral: just right. Links that would last a million years or more on their own are broken while you chew. That sweetness is enzymes at work, in real time.",
+          "text": "So, back to that cracker. As you chew, amylase meets the starch. The chains slot into its active site, and it snips them into maltose, over and over, without being used up. Your mouth is about 37 degrees, and close to neutral. Just right. Links that would last a million years or more on their own? Broken while you chew. That sweet taste is you, tasting enzymes at work.",
+          "ttsText": "So, back to that cracker. As you chew, amylase meets the starch. The chains slot into its active site, and it snips them into maltose, over and over, without being used up. Your mouth is about 37 degrees, and close to neutral. Just right. Links that would last a million years or more on their own? Broken while you chew. That sweet taste is you, tasting enzymes at work.",
           "startSec": 0.5,
-          "durationSec": 22.464
+          "durationSec": 21.9307
         },
         {
           "pause": 0.6,
-          "startSec": 22.964
+          "startSec": 22.4307
         },
         {
-          "text": "And that's how enzymes actually work.",
-          "ttsText": "And that's how enzymes actually work.",
-          "startSec": 23.564,
-          "durationSec": 1.9366
+          "text": "It all comes down to shape. And that's how enzymes actually work.",
+          "ttsText": "It all comes down to shape. And that's how enzymes actually work.",
+          "startSec": 23.0307,
+          "durationSec": 3.6466
         }
       ]
     },
@@ -351,7 +401,7 @@
       "id": "S14",
       "slug": "end",
       "file": "public/episodes/ep001-enzymes/narration/S14.wav",
-      "offsetSec": 329.5405,
+      "offsetSec": 339.0907,
       "durationSec": 4.0,
       "segments": [
         {

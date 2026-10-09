@@ -17,8 +17,9 @@ export const s13Timing = (t: CueFns) => {
   const chewWord = t.word("chew", 2, -2);
   const tongue = t.cue("tongue");
   const zoomOut = tongue - 6;
+  const shapeLine = t.cue("shapeLine");
   const title = t.cue("title");
-  return { back, chew, zoomEnd, fit, dock, cut, snap, again, snaps2, conditions, deg, neutral, aeons, chewWord, tongue, zoomOut, title, end: t.dur };
+  return { back, chew, zoomEnd, fit, dock, cut, snap, again, snaps2, conditions, deg, neutral, aeons, chewWord, tongue, zoomOut, shapeLine, title, end: t.dur };
 };
 
 export const s13Sfx = (t: CueFns): SfxEvent[] => {
@@ -33,5 +34,6 @@ export const s13Sfx = (t: CueFns): SfxEvent[] => {
     { frame: k.zoomOut + 2, sfx: "whoosh_zoom", gainDb: -6 },
     { frame: k.tongue + 16, sfx: "shimmer_sweet", gainDb: -3 },
     { frame: k.title + 4, sfx: "chime_title", gainDb: -3 },
+    { frame: k.shapeLine + 2, sfx: "ui_blip", gainDb: -10 },
   ];
 };
