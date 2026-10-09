@@ -53,8 +53,8 @@ export const s08Timing = (t: CueFns) => {
   const heroSnip = Math.max(heroDock + 20, complexesEnd + 6); // the complex reacts once "complexes" is said
   const irisA = Math.max(heroSnip + 10, rateWord - 22); // zoom out into the lens: "a faster rate of reaction"
   const irisB = irisA + 40;
-  const axesA = irisA + 16;
-  const axesB = axesA + 22;
+  const axesA = irisA + 28; // once the lens has settled out of the graph's way
+  const axesB = axesA + 20;
   const traceA = axesB + 2; // the curve so far draws on
   const traceB = traceA + 22;
   const riseA = upTo + 8; // 25 °C → 37 °C on "Up to a point, warmer means faster"
@@ -106,7 +106,6 @@ export const s08Sfx = (t: CueFns): SfxEvent[] => {
     { frame: k.thermoIn, sfx: "whoosh_soft", gainDb: -10 },
     { frame: k.heroDock, sfx: "pop_bind", gainDb: -4 },
     { frame: k.heroSnip, sfx: "snip", gainDb: -4 },
-    { frame: k.heroSnip + 3, sfx: "shimmer_sweet", gainDb: -14 },
     { frame: k.irisA + 2, sfx: "whoosh_zoom", gainDb: -12 },
     { frame: k.optWord, sfx: "ui_blip", gainDb: -8 },
   ];

@@ -116,7 +116,7 @@
     }
   },
   "events": [
-    { "type": "dropout", "from": "S09.lastWordEnd-0.5", "to": "S09.end", "levelDb": -30, "fadeOutSec": 0.9, "fadeInSec": 0.1, "airNotes": [81, 88], "airDb": -26,
-      "about": "Near-silence under the 4-second pause-and-predict countdown (starts fading 0.5 s before the narrator finishes, so it never swells as the voice stops); a faint open fifth (A5 + E6), 26 dB under the music, keeps the question hanging." }
+    { "type": "dropout", "from": "S09.end-4.5", "to": "S09.end", "levelDb": -30, "fadeOutSec": 0.9, "fadeInSec": 0.1, "airNotes": [81, 88], "airDb": -26,
+      "about": "Near-silence under the 4-second pause-and-predict countdown (the scripted pause is exactly 4 s, so it starts fading ~0.4 s before the narrator finishes and never swells as the voice stops; S09.end is used rather than the last word because speech recognition often stretches a final word); a faint open fifth (A5 + E6), 26 dB under the music, keeps the question hanging." }
   ]
 }

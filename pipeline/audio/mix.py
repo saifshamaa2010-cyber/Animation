@@ -8,12 +8,14 @@ Writes (default out dir public/episodes/<id>/):
   mix_report.json                 loudness, ducking and SFX placement numbers
 
 What it does, in plain English:
-1. Voice: gentle clean-up (rumble filter + light compression), kept dead centre.
+1. Voice: gentle clean-up (rumble filter, light leveller, fast transparent peak control), dead centre.
 2. Music: automatically dips whenever the narrator speaks (it starts dipping ~150 ms *before*
    a phrase so the first word is never masked, and comes back up gently over ~600 ms in pauses).
    While speaking, music is kept at least 15 dB under the voice (we aim for ~19 dB).
-3. Sound effects: placed on the cues listed in episodes/<id>/sfx.json. Each effect's level is set
-   relative to the voice, then nudged by its gainDb. A cue that doesn't exist is reported, not fatal.
+3. Sound effects: placed on the cues listed in episodes/<id>/sfx.json. Scenes whose animation code
+   exports frame-exact effects (episodes/<id>/build/sfx-events.json) use those instead. Each
+   effect's level is set relative to the voice, then nudged by its gainDb. A cue that doesn't
+   exist is reported, not fatal.
 4. Master: set to -14 LUFS (YouTube's reference), then a look-ahead true-peak limiter keeps
    inter-sample peaks under -1 dBTP (checked with 4x oversampling).
 """

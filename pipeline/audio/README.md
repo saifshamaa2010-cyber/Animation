@@ -40,6 +40,9 @@ In Remotion, play only `staticFile("episodes/<id>/mix.wav")` as the episode's au
 - **`episodes/<id>/music.json`**: the music plan. For each scene (and optionally from a cue onwards):
   the chords, how intense and bright it is, and which instruments play (`arp`, `bell`, `motif`,
   `sub`). The `dropout` event makes the music go almost silent under the pause-and-predict moment.
+  It is anchored to `S09.end-4.5` (the scripted 4-second pause), and the countdown ticks in
+  `sfx.json` sit at `S09.end` −4, −3, −2, −1 s: the on-screen countdown ring should start at
+  `S09.end − 4 s` too.
 
 ## The sound effects
 
@@ -62,7 +65,8 @@ In Remotion, play only `staticFile("episodes/<id>/mix.wav")` as the episode's au
 
 ## How the mix behaves
 
-- The voice stays dead centre with light clean-up (rumble filter, gentle leveller).
+- The voice stays dead centre with light clean-up: rumble filter, a gentle leveller, and a fast
+  peak control that catches the TTS voice's sharp clicks/plosives so the master limiter barely works.
 - The music **dips automatically whenever the narrator speaks**. It starts dipping ~150 ms before
   each phrase, so the first word is never masked, and rises back gently (~600 ms) in pauses. Short
   gaps between words are ignored, so it doesn't "pump".

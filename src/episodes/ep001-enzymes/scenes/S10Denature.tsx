@@ -156,12 +156,11 @@ const HeroEnzyme: React.FC<HeroProps> = ({ x, y, s, denature, unfold, site, site
               if (br > 0) {
                 // snapped: the two halves spring back to their own strands, with a tiny coral flash
                 const r = EASE.snap(br);
-                const ka = 1 - 0.5 * (1 - r) - 0.5;
                 const ea: Pt = [pa[0] + (mx - pa[0]) * (1 - r) * 0.9, pa[1] + (my - pa[1]) * (1 - r) * 0.9];
                 const eb: Pt = [pb[0] + (mx - pb[0]) * (1 - r) * 0.9, pb[1] + (my - pb[1]) * (1 - r) * 0.9];
                 return (
                   <g key={k} opacity={(1 - br) * bonds}>
-                    <circle cx={mx} cy={my} r={3 + 13 * r} fill="none" stroke={C.coral} strokeWidth={2.2 * (1 - r) + 0.4} opacity={0.9 + ka * 0} />
+                    <circle cx={mx} cy={my} r={3 + 13 * r} fill="none" stroke={C.coral} strokeWidth={2.2 * (1 - r) + 0.4} opacity={0.9} />
                     <line x1={pa[0]} y1={pa[1]} x2={ea[0]} y2={ea[1]} stroke={C.amberLight} strokeWidth={2.6} strokeLinecap="round" />
                     <line x1={pb[0]} y1={pb[1]} x2={eb[0]} y2={eb[1]} stroke={C.amberLight} strokeWidth={2.6} strokeLinecap="round" />
                   </g>
@@ -332,10 +331,10 @@ export const S10Denature: React.FC = () => {
   const heroFocus = 9 * (1 - span(f, k.closeA + 8, k.closeB + 6, EASE.out));
   const heroGrow = 0.78 + 0.22 * span(f, k.closeA + 4, k.closeB + 10, EASE.out);
   const heroClipped = f < k.closeB;
-  const unfold = track(f, [[k.unravelA - 2, 0], [k.unravelB, 0.17, EASE.inOut]]);
+  const unfold = track(f, [[k.unravelA - 4, 0], [k.unravelB, 0.17, EASE.out]]);
   const denature = track(f, [[k.unravelA, 0], [k.unravelB, 0.3, EASE.inOut], [k.siteA + 4, 0.34], [k.siteB, 1, EASE.inOut]]);
   const bondsVis = span(f, k.bondsA - 6, k.bondsA + 6) * (1 - span(f, k.unravelB, k.unravelB + 20));
-  const chainHi = span(f, k.shape - 2, k.shape + 16) * (1 - span(f, k.unravelA, k.unravelA + 16));
+  const chainHi = span(f, k.shape - 2, k.shape + 16) * (1 - span(f, k.unravelA + 8, k.unravelA + 26));
   const rimPulse = Math.sin(Math.PI * Math.max(0, Math.min(1, (f - k.shape + 2) / 30))) * 0.9;
   const bondIn = (bk: number) => span(f, k.bondsA + (bk % 10) * 2.2, k.bondsA + (bk % 10) * 2.2 + 8);
   const popAt = (bk: number) => k.popA + (BOND_ORDER[bk] / Math.max(1, WB.length - 1)) * (k.popB - k.popA);
