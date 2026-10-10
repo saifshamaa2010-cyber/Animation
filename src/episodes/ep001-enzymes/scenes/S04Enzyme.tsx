@@ -159,17 +159,23 @@ export const S04Enzyme: React.FC = () => {
               const prod = alive && u > 0.55 ? (u - 0.55) / 0.45 : -1;
               const vis = 1 - prog(f, k.without + (i % 12) * 3, 18);
               const sub = dockedChain(3, 0, 0, 1, { offset: [approach, 0] });
+              // Without enzymes the substrates don't stop moving: they keep wandering (thermal
+              // motion), they just never react. Small jiggle while working, a slow drift once stranded.
+              const stranded = prog(f, k.without + (i % 12) * 3, 40);
+              const wander = jit(`field-${i}`, f, 6 + 44 * stranded);
               return (
                 <g key={i} transform={`translate(${e.x} ${e.y}) rotate(${e.rot}) scale(${e.s})`}>
-                  {e.pal === "teal" ? (
-                    <SugarChain rings={sub.rings} links={sub.links} />
-                  ) : (
-                    <g>
-                      {sub.rings.map((r, j) => (
-                        <circle key={j} cx={r.x} cy={r.y} r={24} fill={C.violetLight} stroke={C.violetDeep} strokeWidth={4} />
-                      ))}
-                    </g>
-                  )}
+                  <g transform={jitTransform(wander, [approach - 80, 0])}>
+                    {e.pal === "teal" ? (
+                      <SugarChain rings={sub.rings} links={sub.links} />
+                    ) : (
+                      <g>
+                        {sub.rings.map((r, j) => (
+                          <circle key={j} cx={r.x} cy={r.y} r={24} fill={C.violetLight} stroke={C.violetDeep} strokeWidth={4} />
+                        ))}
+                      </g>
+                    )}
+                  </g>
                   {prod >= 0 ? (
                     <g opacity={1 - prod} transform={`translate(${-60 - prod * 220} ${-prod * 160})`}>
                       {e.pal === "teal" ? (
@@ -246,7 +252,7 @@ export const S04Enzyme: React.FC = () => {
       ) : null}
       <Keyword x={W / 2} y={H - 110} text="nearly every reaction in your body" size={60} progress={prog(f, sc.word("every", 1, -2), 14) * (1 - prog(f, k.without - 6, 10))} />
       <g opacity={prog(f, k.without + 4, 14) * (1 - prog(f, k.protein - 6, 10))}>
-        <Hourglass x={W / 2 - 520} y={H - 128} size={86} color={C.coral} sand={prog(f, k.without, 90) * 0.4} />
+        <Hourglass x={W / 2 - 520} y={H - 128} size={86} color={C.coral} sand={prog(f, k.without, Math.max(30, k.protein - k.without), (t) => t) * 0.35} />
         <text x={W / 2 + 40} y={H - 110} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={60} fill={C.paper}>
           without enzymes: far too slow
         </text>

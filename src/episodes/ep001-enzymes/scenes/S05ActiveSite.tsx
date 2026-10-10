@@ -229,7 +229,7 @@ export const S05ActiveSite: React.FC = () => {
       <DepthMolecules count={4} seed={51} kind="mixed" opacity={0.3} />
       {/* ---- screen-space annotations */}
       <Label anchor={lipTop} at={[lipTop[0] - 30, lipTop[1] - 190]} text="active site" align="end" progress={prog(f, sc.word("active", 1, -2), 22)} opacity={1 - prog(f, k.complex + 30, 12)} />
-      <Label anchor={subAnchor} at={[subAnchor[0] - 60, subAnchor[1] + 170]} text="substrate" sub="starch" align="end" progress={prog(f, sc.word("substrate", 1, -2), 22)} opacity={1 - prog(f, k.held, 12)} />
+      <Label anchor={subAnchor} at={[subAnchor[0] + 60, subAnchor[1] + 170]} text="substrate" sub="starch" align="start" progress={prog(f, sc.word("substrate", 1, -2), 22)} opacity={1 - prog(f, k.held, 12)} />
       <Keyword x={W / 2} y={H - 120} text="enzyme–substrate complex" size={58} progress={prog(f, sc.word("complex", 1, -4), 14) * (1 - prog(f, k.held + 30, 12))} />
       <Label anchor={maltAnchor} at={[maltAnchor[0] - 40, maltAnchor[1] - 120]} text="products" sub="maltose" align="end" color={C.amberLight} progress={prog(f, sc.word("products", 1, -2), 22)} opacity={1 - prog(f, k.lock - 10, 12)} />
       {(() => {
