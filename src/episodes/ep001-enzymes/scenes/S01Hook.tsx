@@ -12,7 +12,8 @@ import { SweetnessMeter } from "../../../components/SweetnessMeter";
 import { Enzyme } from "../../../components/Enzyme";
 import { SugarChain, Ring } from "../../../components/SugarChain";
 import { dockedChain } from "../../../components/dock";
-import { Bubble, Counter, HandCircle, HandCross, Hourglass, Stopwatch } from "../../../components/kit";
+import { Bubble, Counter, HandCross, Hourglass, Stopwatch, textWidth } from "../../../components/kit";
+import { FONT } from "../../../brand/fonts";
 import { DOCK } from "../../../components/molecule-geometry";
 import { rng } from "../../../lib/geometry";
 import { camAt, camTransform } from "../../../lib/camera";
@@ -53,8 +54,9 @@ export const S01Hook: React.FC = () => {
   const S = (p: readonly [number, number]) => toScreen(cam, p);
 
   // cracker arrives, gets three bites, then is chewed into crumbs
-  const crackerY = track(f, [[k.drop, -420], [k.drop + 30, P.y - 90, out]]);
-  const crackerRot = track(f, [[k.drop, -22], [k.drop + 34, -8, out]]);
+  // on screen from the very first frame (it is the thumbnail of the hook), settling into place
+  const crackerY = track(f, [[k.drop, P.y - 140], [k.drop + 28, P.y - 90, out]]);
+  const crackerRot = track(f, [[k.drop, -15], [k.drop + 32, -8, out]]);
   const bites = k.bites.reduce((a, b) => a + prog(f, b, 6, out), 0);
   const crumbleP = prog(f, k.crumble, 16);
   const crackerVis = 1 - crumbleP;
@@ -66,7 +68,7 @@ export const S01Hook: React.FC = () => {
 
   // stopwatch: one minute in a couple of seconds (time-lapse)
   const swIn = prog(f, k.timer - 4, 16);
-  const swOut = 1 - prog(f, k.question + 20, 14);
+  const swOut = 1 - prog(f, k.question - 16, 12); // gone before the sugar cube arrives in its place
   const seconds = track(f, [[k.timer + 4, 0], [k.sweet + 20, 60, EASE.inOut]]);
   const sweetV = track(f, [[k.sweet - 4, 0], [k.sweet + 40, 0.85, out]]);
 
@@ -144,10 +146,11 @@ export const S01Hook: React.FC = () => {
       </g>
 
       {/* screen-space props */}
-      <HandCircle cx={S([P.x, P.y - 90])[0]} cy={S([P.x, P.y - 90])[1]} rx={390} ry={380} progress={prog(f, k.circle, 20, (t) => t)} color={C.paper} width={7} seed={3} opacity={1 - prog(f, k.chew + 10, 10)} />
+      {/* the premise, pinned to the cracker: what's in it, and what isn't */}
+      <IngredientsTag f={f} pin={S([P.x + 250, P.y - 190])} inAt={k.plain} sugarAt={k.noSugar} outAt={k.chew + 14} />
       <Stopwatch x={1460} y={460} size={370} seconds={seconds} readout progress={swIn} opacity={swOut} />
       <SweetnessMeter x={1250} y={820} value={sweetV} opacity={window01(f, k.sweet - 6, k.question + 34, 12)} />
-      <g opacity={window01(f, k.question - 2, k.answer - 4, 10)}>
+      <g opacity={window01(f, k.question + 2, k.answer - 4, 10)}>
         <g transform="translate(1460 420)">
           <path d="M0,-92 L84,-46 L0,0 L-84,-46 Z" fill={C.paper} />
           <path d="M-84,-46 L0,0 L0,96 L-84,50 Z" fill={C.paperDim} />
@@ -204,5 +207,38 @@ export const S01Hook: React.FC = () => {
         </g>
       ) : null}
     </Stage>
+  );
+};
+
+/** "flour · oil · salt / no added sugar" — a small card with a leader line to the cracker. */
+const IngredientsTag: React.FC<{ f: number; pin: readonly [number, number]; inAt: number; sugarAt: number; outAt: number }> = ({ f, pin, inAt, sugarAt, outAt }) => {
+  const p = prog(f, inAt, 16);
+  const vis = p * (1 - prog(f, outAt, 12));
+  if (vis <= 0) return null;
+  const x = 1240;
+  const y = 330;
+  const l1 = "flour · oil · salt";
+  const l2 = "no added sugar";
+  const w = Math.max(textWidth(l1, 46, 500), textWidth(l2, 46, 600)) + 80;
+  const h = 196;
+  const lead = prog(f, inAt, 12, (t) => t);
+  const s2 = prog(f, sugarAt, 14);
+  return (
+    <g opacity={vis}>
+      <line x1={pin[0]} y1={pin[1]} x2={pin[0] + (x - pin[0]) * lead} y2={pin[1] + (y + h / 2 - pin[1]) * lead} stroke={C.paper} strokeWidth={3} strokeOpacity={0.8} />
+      <circle cx={pin[0]} cy={pin[1]} r={7} fill={C.paper} />
+      <g transform={`translate(${x} ${y + (1 - p) * 18})`}>
+        <rect x={0} y={0} width={w} height={h} rx={26} fill={C.ink800} stroke={C.paper} strokeOpacity={0.35} strokeWidth={2} />
+        <rect x={6} y={4} width={w - 12} height={6} rx={3} fill="#FFFFFF" opacity={0.12} />
+        <text x={40} y={80} fontFamily={FONT} fontWeight={500} fontSize={46} fill={C.paper}>
+          {l1}
+        </text>
+        <g opacity={s2} transform={`translate(${(1 - s2) * 14} 0)`}>
+          <text x={40} y={148} fontFamily={FONT} fontWeight={600} fontSize={46} fill={C.amberLight}>
+            {l2}
+          </text>
+        </g>
+      </g>
+    </g>
   );
 };

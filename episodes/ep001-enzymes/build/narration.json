@@ -9,7 +9,7 @@
       "slug": "hook",
       "file": "public/episodes/ep001-enzymes/narration/S01.wav",
       "offsetSec": 0.0,
-      "durationSec": 21.1843,
+      "durationSec": 21.6323,
       "segments": [
         {
           "text": "Here's an experiment you can do with your lunch. Take a plain cracker, with no added sugar. Chew it, and keep chewing. Don't swallow. Give it a minute or so,",
@@ -42,10 +42,10 @@
           "startSec": 14.967
         },
         {
-          "text": "A molecule in your saliva. In a minute, it does what would otherwise take at least a million years.",
-          "ttsText": "A molecule in your saliva. In a minute, it does what would otherwise take at least a million years.",
+          "text": "A molecule in your saliva. In a minute, it breaks links that would otherwise last around a million years.",
+          "ttsText": "A molecule in your saliva. In a minute, it breaks links that would otherwise last around a million years.",
           "startSec": 15.467,
-          "durationSec": 5.7173
+          "durationSec": 6.1653
         }
       ]
     },
@@ -53,7 +53,7 @@
       "id": "S02",
       "slug": "title",
       "file": "public/episodes/ep001-enzymes/narration/S02.wav",
-      "offsetSec": 21.1843,
+      "offsetSec": 21.6323,
       "durationSec": 3.0,
       "segments": [
         {
@@ -66,7 +66,7 @@
       "id": "S03",
       "slug": "starch",
       "file": "public/episodes/ep001-enzymes/narration/S03.wav",
-      "offsetSec": 24.1843,
+      "offsetSec": 24.6323,
       "durationSec": 21.0078,
       "segments": [
         {
@@ -91,8 +91,8 @@
       "id": "S04",
       "slug": "enzyme",
       "file": "public/episodes/ep001-enzymes/narration/S04.wav",
-      "offsetSec": 45.1921,
-      "durationSec": 39.8761,
+      "offsetSec": 45.6401,
+      "durationSec": 40.8573,
       "segments": [
         {
           "pause": 0.3,
@@ -109,19 +109,19 @@
           "startSec": 13.868
         },
         {
-          "text": "That's what an enzyme is: a biological catalyst. It speeds up a reaction without being used up or changed. Nearly every reaction in your body has one, whether it's building things up or breaking them down.",
-          "ttsText": "That's what an enzyme is: a biological catalyst. It speeds up a reaction without being used up or changed. Nearly every reaction in your body has one, whether it's building things up or breaking them down.",
+          "text": "That's what an enzyme is: a biological catalyst. It speeds up a reaction without being used up, and it comes out unchanged. Nearly every reaction in your body has one, whether it's building things up or breaking them down.",
+          "ttsText": "That's what an enzyme is: a biological catalyst. It speeds up a reaction without being used up, and it comes out unchanged. Nearly every reaction in your body has one, whether it's building things up or breaking them down.",
           "startSec": 14.268,
-          "durationSec": 12.502
+          "durationSec": 13.4832
         },
         {
           "pause": 0.2,
-          "startSec": 26.77
+          "startSec": 27.7512
         },
         {
           "text": "Without enzymes, your metabolism would be far too slow to keep you alive. Nearly all enzymes are proteins: long chains of amino acids, folded into a precise shape. And that shape is everything.",
           "ttsText": "Without enzymes, your metabolism would be far too slow to keep you alive. Nearly all enzymes are proteins: long chains of amino acids, folded into a precise shape. And that shape is everything.",
-          "startSec": 26.97,
+          "startSec": 27.9512,
           "durationSec": 12.9061
         }
       ]
@@ -130,7 +130,7 @@
       "id": "S05",
       "slug": "active-site",
       "file": "public/episodes/ep001-enzymes/narration/S05.wav",
-      "offsetSec": 85.0682,
+      "offsetSec": 86.4975,
       "durationSec": 40.965,
       "segments": [
         {
@@ -169,7 +169,7 @@
       "id": "S06",
       "slug": "induced-fit",
       "file": "public/episodes/ep001-enzymes/narration/S06.wav",
-      "offsetSec": 126.0332,
+      "offsetSec": 127.4625,
       "durationSec": 23.5128,
       "segments": [
         {
@@ -192,7 +192,7 @@
       "id": "S07",
       "slug": "myth-used-up",
       "file": "public/episodes/ep001-enzymes/narration/S07.wav",
-      "offsetSec": 149.546,
+      "offsetSec": 150.9752,
       "durationSec": 28.0458,
       "segments": [
         {
@@ -221,7 +221,7 @@
       "id": "S08",
       "slug": "temperature",
       "file": "public/episodes/ep001-enzymes/narration/S08.wav",
-      "offsetSec": 177.5918,
+      "offsetSec": 179.021,
       "durationSec": 32.6893,
       "segments": [
         {
@@ -250,7 +250,7 @@
       "id": "S09",
       "slug": "predict",
       "file": "public/episodes/ep001-enzymes/narration/S09.wav",
-      "offsetSec": 210.2811,
+      "offsetSec": 211.7103,
       "durationSec": 13.2401,
       "segments": [
         {
@@ -283,7 +283,7 @@
       "id": "S10",
       "slug": "denature",
       "file": "public/episodes/ep001-enzymes/narration/S10.wav",
-      "offsetSec": 223.5212,
+      "offsetSec": 224.9504,
       "durationSec": 38.9296,
       "segments": [
         {
@@ -332,7 +332,7 @@
       "id": "S11",
       "slug": "myth-killed",
       "file": "public/episodes/ep001-enzymes/narration/S11.wav",
-      "offsetSec": 262.4507,
+      "offsetSec": 263.88,
       "durationSec": 20.601,
       "segments": [
         {
@@ -351,7 +351,7 @@
       "id": "S12",
       "slug": "ph",
       "file": "public/episodes/ep001-enzymes/narration/S12.wav",
-      "offsetSec": 283.0517,
+      "offsetSec": 284.481,
       "durationSec": 30.5617,
       "segments": [
         {
@@ -380,7 +380,7 @@
       "id": "S13",
       "slug": "resolve",
       "file": "public/episodes/ep001-enzymes/narration/S13.wav",
-      "offsetSec": 313.6134,
+      "offsetSec": 315.0427,
       "durationSec": 26.6773,
       "segments": [
         {
@@ -409,11 +409,11 @@
       "id": "S14",
       "slug": "end",
       "file": "public/episodes/ep001-enzymes/narration/S14.wav",
-      "offsetSec": 340.2907,
-      "durationSec": 4.0,
+      "offsetSec": 341.7199,
+      "durationSec": 8.0,
       "segments": [
         {
-          "pause": 4.0,
+          "pause": 8.0,
           "startSec": 0.0
         }
       ]

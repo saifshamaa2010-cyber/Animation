@@ -2,9 +2,10 @@ import type { CueFns, SfxEvent } from "../../../lib/cues";
 
 export const s01Timing = (t: CueFns) => {
   const drop = 0;
-  const circle = t.word("cracker", 1, -2);
+  const plain = t.word("plain", 1, -2); // ingredients tag pins on
+  const noSugar = t.word("no", 1, -2); // "with no added sugar"
   const chew = t.cue("chew");
-  const bites = [t.word("keep", 1, 2), t.word("chewing", 1, 4), t.word("Don't", 1, 2)];
+  const bites = [chew + 2, t.word("chewing", 1, 6), t.word("Don't", 1, 2)]; // first bite on "Chew it"
   const crumble = t.word("swallow", 1, 0);
   const timer = t.cue("timer");
   const sweet = t.cue("sweet");
@@ -13,7 +14,7 @@ export const s01Timing = (t: CueFns) => {
   const where = t.word("where's", 1, 0);
   const answer = t.cue("answer");
   const millions = t.cue("millions");
-  return { drop, circle, chew, bites, crumble, timer, sweet, question, sugar, where, answer, lensSnap: answer + 44, millions, end: t.dur };
+  return { drop, plain, noSugar, chew, bites, crumble, timer, sweet, question, sugar, where, answer, lensSnap: answer + 44, millions, end: t.dur };
 };
 
 export const s01Sfx = (t: CueFns): SfxEvent[] => {

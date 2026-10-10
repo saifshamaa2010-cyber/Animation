@@ -30,10 +30,13 @@ const N0 = 16;
 const SP = SPACING * E.s;
 const ENZ_PATH = roundedPolygon(ENZYME_REST, ENZYME_RADII);
 
-/** Other enzymes in the zoomed-out view: different shapes, two colours, each doing its own reaction. */
+/**
+ * Other enzymes in the zoomed-out view (violet = not amylase): different shapes, each with its own
+ * kind of substrate (specificity), some building molecules up and some breaking them down.
+ */
 const FIELD = (() => {
   const r = rng(404);
-  const out: { x: number; y: number; s: number; rot: number; pal: "teal" | "violet"; variant: number; phase: number; period: number }[] = [];
+  const out: { x: number; y: number; s: number; rot: number; glyph: "bead" | "square" | "drop"; build: boolean; variant: number; phase: number; period: number }[] = [];
   for (let gy = -2; gy <= 2; gy++) {
     for (let gx = -3; gx <= 3; gx++) {
       const jx = (r() - 0.5) * 260;
@@ -44,7 +47,8 @@ const FIELD = (() => {
         y: E.y + gy * 780 + jy,
         s: 0.95 + r() * 0.35,
         rot: (r() - 0.5) * 320,
-        pal: r() < 0.25 ? "violet" : "teal",
+        glyph: (["bead", "square", "drop"] as const)[Math.floor(r() * 3)],
+        build: r() < 0.4,
         variant: out.length + 1,
         phase: Math.floor(r() * 90),
         period: 72 + Math.floor(r() * 36),
@@ -133,7 +137,7 @@ export const S04Enzyme: React.FC = () => {
 
   // ---------------- ghost outline: "without being used up" — the same enzyme, before and after
   const ghostX = track(f, [[k.used - 14, 300], [k.used + 10, 0, out]]);
-  const ghostVis = window01(f, k.used - 14, k.every + 10, 10);
+  const ghostVis = window01(f, k.used - 14, k.every + 36, 10);
 
   // ---------------- the crowd of enzymes (zoomed out)
   const fieldIn = prog(f, k.every + 6, 34);
@@ -151,50 +155,67 @@ export const S04Enzyme: React.FC = () => {
       <g transform={camTransform(cam)}>
         {/* the crowd: dozens of different enzymes, each running its own reaction */}
         {fieldIn > 0 && fieldOut > 0 ? (
-          <g opacity={fieldIn * fieldOut * 0.92}>
+          <g opacity={fieldIn * fieldOut * 0.8}>
             {FIELD.map((e, i) => {
               const alive = f < k.without + (i % 12) * 3;
               const u = (((f + e.phase) % e.period) + e.period) % e.period / e.period;
-              const approach = alive ? track(u, [[0, -230], [0.25, 0, out], [0.55, 0], [0.62, -70, EASE.snap], [1, -200]]) : -200;
-              const prod = alive && u > 0.55 ? (u - 0.55) / 0.45 : -1;
               const vis = 1 - prog(f, k.without + (i % 12) * 3, 18);
-              const sub = dockedChain(3, 0, 0, 1, { offset: [approach, 0] });
               // Without enzymes the substrates don't stop moving: they keep wandering (thermal
               // motion), they just never react. Small jiggle while working, a slow drift once stranded.
               const stranded = prog(f, k.without + (i % 12) * 3, 40);
               const wander = jit(`field-${i}`, f, 6 + 44 * stranded);
+              const glyph = (x: number, y: number, key: string | number) => <FieldGlyph key={key} x={x} y={y} kind={e.glyph} />;
+              let body: React.ReactNode;
+              if (e.build) {
+                // building up: two small pieces arrive separately, are joined in the active site, leave as one
+                const a = alive ? track(u, [[0, -230], [0.25, 0, out]]) : -230;
+                const bx = alive ? track(u, [[0.05, -170], [0.32, 0, out]]) : -170;
+                const by = alive ? track(u, [[0.05, -170], [0.32, 0, out]]) : -170;
+                const joined = alive && u >= 0.55;
+                const leave = joined ? (u - 0.55) / 0.45 : 0;
+                const lx = -leave * 230;
+                const ly = -leave * 150;
+                const flash = alive ? 1 - prog(u * 100, 55, 8) : 0;
+                body = joined ? (
+                  <g opacity={1 - leave} transform={`translate(${lx} ${ly})`}>
+                    <line x1={-125} y1={0} x2={-45} y2={0} stroke={C.paper} strokeWidth={8} strokeLinecap="round" />
+                    {glyph(-125, 0, "b")}
+                    {glyph(-45, 0, "a")}
+                    {u < 0.63 ? <circle cx={-85} cy={0} r={20 + 30 * (1 - flash)} fill="none" stroke={C.paper} strokeWidth={4} opacity={flash} /> : null}
+                  </g>
+                ) : (
+                  <g transform={jitTransform(wander, [-85, 0])}>
+                    {glyph(-45 + a, 0, "a")}
+                    {glyph(-125 + bx, by, "b")}
+                  </g>
+                );
+              } else {
+                // breaking down: a three-piece molecule docks, the end two are cut off and leave
+                const approach = alive ? track(u, [[0, -230], [0.25, 0, out], [0.55, 0], [0.62, -70, EASE.snap], [1, -200]]) : -200;
+                const cut = alive && u >= 0.55;
+                const prod = cut ? (u - 0.55) / 0.45 : 0;
+                body = (
+                  <>
+                    <g transform={jitTransform(wander, [approach - 125, 0])}>
+                      {!cut ? <line x1={-205 + approach} y1={0} x2={-45 + approach} y2={0} stroke={C.paper} strokeWidth={8} strokeLinecap="round" /> : null}
+                      {glyph(-205 + approach, 0, 0)}
+                      {!cut ? glyph(-125 + approach, 0, 1) : null}
+                      {!cut ? glyph(-45 + approach, 0, 2) : null}
+                    </g>
+                    {cut ? (
+                      <g opacity={1 - prod} transform={`translate(${-prod * 220} ${-prod * 160})`}>
+                        <line x1={-125} y1={0} x2={-45} y2={0} stroke={C.paper} strokeWidth={8} strokeLinecap="round" />
+                        {glyph(-125, 0, 1)}
+                        {glyph(-45, 0, 2)}
+                      </g>
+                    ) : null}
+                  </>
+                );
+              }
               return (
                 <g key={i} transform={`translate(${e.x} ${e.y}) rotate(${e.rot}) scale(${e.s})`}>
-                  <g transform={jitTransform(wander, [approach - 80, 0])}>
-                    {e.pal === "teal" ? (
-                      <SugarChain rings={sub.rings} links={sub.links} />
-                    ) : (
-                      <g>
-                        {sub.rings.map((r, j) => (
-                          <circle key={j} cx={r.x} cy={r.y} r={24} fill={C.violetLight} stroke={C.violetDeep} strokeWidth={4} />
-                        ))}
-                      </g>
-                    )}
-                  </g>
-                  {prod >= 0 ? (
-                    <g opacity={1 - prod} transform={`translate(${-60 - prod * 220} ${-prod * 160})`}>
-                      {e.pal === "teal" ? (
-                        <SugarChain
-                          rings={[
-                            { x: -40, y: 0, tone: "sugar", glow: 0.8 },
-                            { x: 40, y: 0, tone: "sugar", glow: 0.8 },
-                          ]}
-                          links={[{ a: 0, b: 1 }]}
-                        />
-                      ) : (
-                        <>
-                          <circle cx={-14} cy={0} r={22} fill={C.violetLight} />
-                          <circle cx={30} cy={0} r={22} fill={C.violetLight} />
-                        </>
-                      )}
-                    </g>
-                  ) : null}
-                  <Enzyme x={0} y={0} scale={1} palette={e.pal} variant={e.variant} lod="low" seed={i + 3} temperature={37} opacity={vis} />
+                  {body}
+                  <Enzyme x={0} y={0} scale={1} palette="violet" variant={e.variant} lod="low" seed={i + 3} temperature={37} opacity={vis} />
                 </g>
               );
             })}
@@ -248,7 +269,7 @@ export const S04Enzyme: React.FC = () => {
       <SweetnessMeter x={W - 520} y={172} value={sweetV} opacity={window01(f, k.sweet - 4, k.every + 16, 12)} />
       <Keyword x={W / 2} y={H - 110} text="biological catalyst" size={68} progress={prog(f, sc.word("catalyst", 1, -2), 14) * (1 - prog(f, k.used - 4, 10))} />
       {ghostVis > 0 ? (
-        <Label anchor={ghostAnchor} at={[ghostAnchor[0] + 60, ghostAnchor[1] - 120]} text="unchanged" progress={prog(f, k.used + 8, 20)} opacity={1 - prog(f, k.every + 6, 10)} />
+        <Label anchor={ghostAnchor} at={[ghostAnchor[0] + 60, ghostAnchor[1] - 120]} text="unchanged" progress={prog(f, sc.word("unchanged", 1, -2), 20)} opacity={1 - prog(f, k.every + 26, 10)} />
       ) : null}
       <Keyword x={W / 2} y={H - 110} text="nearly every reaction in your body" size={60} progress={prog(f, sc.word("every", 1, -2), 14) * (1 - prog(f, k.without - 6, 10))} />
       <g opacity={prog(f, k.without + 4, 14) * (1 - prog(f, k.protein - 6, 10))}>
@@ -272,3 +293,13 @@ export const S04Enzyme: React.FC = () => {
     </Stage>
   );
 };
+
+/** A small non-sugar substrate piece for the crowd (amber stays reserved for sugars). */
+const FieldGlyph: React.FC<{ x: number; y: number; kind: "bead" | "square" | "drop" }> = ({ x, y, kind }) =>
+  kind === "bead" ? (
+    <circle cx={x} cy={y} r={26} fill={C.violetLight} stroke={C.violetDeep} strokeWidth={4} />
+  ) : kind === "square" ? (
+    <rect x={x - 24} y={y - 24} width={48} height={48} rx={11} fill={C.ice} stroke={C.ink500} strokeWidth={4} />
+  ) : (
+    <path d={`M ${x} ${y - 30} C ${x + 22} ${y - 6} ${x + 26} ${y + 24} ${x} ${y + 26} C ${x - 26} ${y + 24} ${x - 22} ${y - 6} ${x} ${y - 30} Z`} fill={C.paperDim} stroke={C.ink500} strokeWidth={4} />
+  );

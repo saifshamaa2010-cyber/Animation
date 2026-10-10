@@ -9,7 +9,7 @@ Narration script. This file is read by the narration pipeline.
 
 ## S01 hook
 
-{cracker} Here's an experiment you can do with your lunch. Take a plain cracker, with no added sugar. {chew} Chew it, and keep chewing. Don't swallow. {timer} Give it a minute or so, [pause 0.4] {sweet} and it starts to taste a little sweet. [pause 0.4] {question} But you didn't add any sugar. So where's that sweetness coming from? [pause 0.5] {answer} A molecule in your saliva. {millions} In a minute, it does what would otherwise take at least a million years.
+{cracker} Here's an experiment you can do with your lunch. Take a plain cracker, with no added sugar. {chew} Chew it, and keep chewing. Don't swallow. {timer} Give it a minute or so, [pause 0.4] {sweet} and it starts to taste a little sweet. [pause 0.4] {question} But you didn't add any sugar. So where's that sweetness coming from? [pause 0.5] {answer} A molecule in your saliva. {millions} In a minute, it breaks links that would otherwise last around a million years.
 
 ## S02 title
 
@@ -21,7 +21,7 @@ Narration script. This file is read by the narration pipeline.
 
 ## S04 enzyme
 
-[pause 0.3] {amylase} Enter amylase: an enzyme made in your salivary glands. It's a carbohydrase: {snip} it snips starch into smaller sugars, {maltose} like maltose, which is just two glucose units joined together. {sweetTaste} And maltose does taste sweet. [pause 0.4] {catalyst} That's what an enzyme is: a biological catalyst. It speeds up a reaction {unchanged} without being used up or changed. {everywhere} Nearly every reaction in your body has one, whether it's building things up or breaking them down. [pause 0.2] Without enzymes, your metabolism would be far too slow to keep you alive. {protein} Nearly all enzymes are proteins: long chains of amino acids, {fold} folded into a precise shape. {shape} And that shape is everything.
+[pause 0.3] {amylase} Enter amylase: an enzyme made in your salivary glands. It's a carbohydrase: {snip} it snips starch into smaller sugars, {maltose} like maltose, which is just two glucose units joined together. {sweetTaste} And maltose does taste sweet. [pause 0.4] {catalyst} That's what an enzyme is: a biological catalyst. It speeds up a reaction {unchanged} without being used up, and it comes out unchanged. {everywhere} Nearly every reaction in your body has one, whether it's building things up or breaking them down. [pause 0.2] Without enzymes, your metabolism would be far too slow to keep you alive. {protein} Nearly all enzymes are proteins: long chains of amino acids, {fold} folded into a precise shape. {shape} And that shape is everything.
 
 ## S05 active-site
 
@@ -61,4 +61,4 @@ Narration script. This file is read by the narration pipeline.
 
 ## S14 end
 
-[pause 4]
+[pause 8]
