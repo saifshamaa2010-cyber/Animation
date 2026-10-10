@@ -1,18 +1,21 @@
 /**
  * S09 · Pause and predict. Same shot as the end of S08 (hard cut, so it plays as one take).
  * The heat goes up: the temperature axis extends, the thermometer lands on 50, 60, 70 exactly as
- * each number is spoken, the molecules in the lens shake harder — but the graph past 37 °C stays
- * blank. Two dashed guesses (keeps rising? falls?) and then the pause: the overlay is fully up for
- * the whole 4-second silence while its ring counts down.
+ * each number is spoken. Up to ~41 °C the lens still shows reactions (the rate there is still high);
+ * as it passes ~45 °C the lens racks out of focus, so it makes no claim while the question is open —
+ * you still see the molecules shake harder and harder. The graph past 37 °C stays blank. Two dashed
+ * guesses (keeps rising? falls?) and then the pause: the overlay is fully up for the whole 4-second
+ * silence while its ring counts down.
  */
 import React from "react";
-import { EASE } from "../../../brand/tokens";
+import { C, EASE } from "../../../brand/tokens";
 import { Stage } from "../../../components/Stage";
 import { Thermometer } from "../../../components/Thermometer";
 import { PausePredict } from "../../../components/PausePredict";
 import { useScene } from "../../../lib/timeline";
 import { s09Timing } from "./S09Predict.timing";
-import { AmbientTemp, Lens, Population, THERMO, TempGraph, lensCam, recentSnips, span, tempAt, worldTransform } from "./S08-S10-shared";
+import { AmbientTemp, LENS_BLUR, Lens, Population, THERMO, TempGraph, lensCam, recentSnips, span, tempAt, worldTransform } from "./S08-S10-shared";
+import { lensSoftAt } from "./S08-S10-arc";
 import { OptimumNote } from "./S08Temperature";
 
 export const S09_QUESTION = "Hotter: faster or slower?";
@@ -35,14 +38,16 @@ export const S09Predict: React.FC = () => {
   const axisTo = 45 + 25 * span(f, k.axisA, k.axisB, EASE.inOut);
   const probeO = span(f, k.creepA + 6, k.creepA + 18) * (1 - span(f, k.guessUpA - 4, k.guessUpA + 10));
   const ov = s09Overlay(f, k);
+  const soft = lensSoftAt(abs);
 
   return (
     <Stage bg={{ lightX: 0.5, temperature: T }}>
       <AmbientTemp T={T} />
-      <Lens cam={cam} frame={1}>
+      <Lens cam={cam} frame={1} blur={LENS_BLUR * soft}>
         <g transform={worldTransform(cam)}>
           <Population abs={abs} lod="low" />
         </g>
+        {soft > 0 ? <circle cx={cam.cx} cy={cam.cy} r={cam.r} fill={C.ink950} opacity={0.32 * soft} /> : null}
       </Lens>
 
       <Thermometer x={THERMO.x} y={THERMO.y} height={THERMO.h} temperature={T} />

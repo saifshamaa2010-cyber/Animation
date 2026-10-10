@@ -88,7 +88,7 @@ export const s10Timing = (t: CueFns) => {
   const rewarmB = rewarmA + 45;
   const reDock = rewarmA + 26; // first reaction once it's warm again (T > 25 °C)
   const reSnip = reDock + 10;
-  const tick = recover2 - 2;
+  const tick = recover2 - 4; // ✓ drawn on "recovers" (done by the time the word ends, well before the scene fades)
   return {
     reveal,
     happens,

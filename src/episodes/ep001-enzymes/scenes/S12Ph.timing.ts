@@ -39,10 +39,13 @@ export const s12Timing = (t: CueFns) => {
   const there = w(t, "there", 1, -2); // "…a protease that digests protein there": pepsin ↔ stomach
   const best = w(t, "best", 2, -2);
   const different = w(t, "different", 1, -2);
-  const places = w(t, "different", 2, -2); // "…tuned to different places"
+  // "…tuned to different places": the light runs down each guide line from "tuned" and is lit well
+  // before the cut, so the payoff is held on screen rather than lost in the transition
+  const tunedW = w(t, "tuned", 1, -2);
+  const places = w(t, "places", 1, -2);
   return {
     ph, acidic, alkaline, something, denature, disrupt, far, either, bonds, disrupted, zoomIn, zoomOut, zoomBack,
-    phOptimum, optimum, amylase, mouth, neutral, seven, stomach, strongly, two, pepsin, there, best, tuned, different, places, end,
+    phOptimum, optimum, amylase, mouth, neutral, seven, stomach, strongly, two, pepsin, there, best, tuned, different, tunedW, places, end,
   };
 };
 

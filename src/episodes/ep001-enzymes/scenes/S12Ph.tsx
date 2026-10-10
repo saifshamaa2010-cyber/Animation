@@ -1,11 +1,13 @@
 /**
  * S12 · pH.
- * The pH scale draws on; its pin shows what "acidic" and "alkaline" mean. Our amylase drops onto the pin
- * ("can denature enzymes too"). "Too far either way": it rides to acid, then alkali — the active site
- * warps at each end and recovers as it passes neutral. Close up (the scale fades so nothing is clipped):
- * the weak bonds holding the site in shape are disrupted. Then the scale becomes the graph's x-axis:
- * amylase peaks near pH 7 (mouth), pepsin near pH 2 (stomach). "Different enzymes, tuned to different
- * places": each name lights, then each peak's guide line lights down to its place.
+ * The pH scale draws on with our amylase already sitting above pH 7; the pin underneath shows what
+ * "acidic" and "alkaline" mean, and on "can denature enzymes too" its active site is outlined. "Too far
+ * either way": it rides to acid, then alkali — the active site warps at the acid end and STAYS warped
+ * (denaturing isn't undone, S10/S11) as it crosses neutral, then warps further at the alkaline end. Close up
+ * (the scale fades so nothing is clipped): the weak bonds holding the site in shape are disrupted. Then the
+ * scale becomes the graph's x-axis: amylase peaks near pH 7 (mouth), pepsin near pH 2 (stomach).
+ * "Different enzymes, tuned to different places": both names step forward, then from "tuned" a light runs
+ * down each peak's guide line and its place name brightens — held on screen before the cut.
  */
 import React from "react";
 import { C, EASE } from "../../../brand/tokens";
@@ -62,16 +64,20 @@ export const S12Ph: React.FC = () => {
     [k.either + 4, 2.6],
     [k.either + 26, 11.6, EASE.inOut],
   ]);
-  const pH = f < k.far - 2 ? pin : ride;
+  const riding = f >= k.far - 2;
+  const pH = riding ? ride : pin;
   const LAST_PH = 11.6;
-  const ex = phX(f < k.far - 2 ? 7 : ride);
-  const off7 = smooth(1.2, 3.8, Math.abs(ride - 7));
-  // reversible warping at either end (recovers through neutral), then the bonds go: denatured
-  const denature = Math.min(1, (f < k.far - 2 ? 0 : 0.36 * off7) + 0.55 * prog(f, k.disrupted, 26, EASE.inOut));
+  const ex = phX(riding ? ride : 7);
+  // Damage only ever accumulates (denaturing isn't undone): the acid end warps the site and it stays
+  // warped as the enzyme crosses neutral; the alkaline end warps it further; then the bonds go.
+  const acidDmg = riding ? smooth(1.2, 3.8, Math.max(0, 7 - Math.min(ride, f >= k.either + 4 ? 2.6 : ride))) : 0;
+  const alkDmg = riding ? smooth(1.2, 3.8, Math.max(0, ride - 7)) : 0;
+  const denature = Math.min(1, 0.3 * acidDmg + 0.18 * alkDmg + 0.55 * prog(f, k.disrupted, 26, EASE.inOut));
   const bondsVis = window01(f, k.bonds - 4, k.zoomBack, 12);
   const bondsBroken = 0.12 * prog(f, k.bonds + 20, 30) + 0.88 * prog(f, k.disrupted, 26);
   const ej = jit("E12", f, thermalAmplitude(37) * 0.8);
-  const enzIn = prog(f, k.denature, 18);
+  // the enzyme is there from the start (sitting above pH 7) so the definition has its subject on screen
+  const enzIn = prog(f, k.ph + 10, 20);
   const enzVis = enzIn * (1 - prog(f, k.phOptimum, 18));
   const enzDrop = (1 - EASE.out(enzIn)) * -40;
   const siteVis = window01(f, k.denature + 10, k.phOptimum + 10, 14);
@@ -86,7 +92,8 @@ export const S12Ph: React.FC = () => {
     { f: k.zoomBack, x: 960, y: 540, z: 1 },
   ]);
   const S = (p: readonly [number, number]) => toScreen(cam, p);
-  const wash = Math.min(1, Math.abs(pH - 7) / 6) * enzVis;
+  // the surroundings take on the colour of the pH only once the enzyme itself is taken there
+  const wash = riding ? Math.min(1, Math.abs(pH - 7) / 6) * enzVis : 0;
 
   // ---------------- part 2: optimum pH graph
   const axesP = prog(f, k.phOptimum + 6, 30, (t) => t);
@@ -95,10 +102,12 @@ export const S12Ph: React.FC = () => {
   // "Different enzymes": both curves brighten once and hold (no looping pulse)
   const tuned = prog(f, k.different, 16, EASE.out);
   const curveW = 7 + 2.5 * tuned;
-  const names = pulse(f, k.different, 26);
-  // "…tuned to different places": a light runs down each peak's guide line to its place
-  const runDown = prog(f, k.places, 22, EASE.inOut);
-  const placeGlow = prog(f, k.places + 14, 14);
+  // "Different enzymes": each name steps forward a little and stays (no filled highlight pills)
+  const names = prog(f, k.different, 16, EASE.out);
+  // "…tuned to different places": from "tuned" a light runs down each peak's guide line to its place,
+  // and each place name brightens as the light reaches it — lit by ≈ 0.4 s before the cut
+  const runDown = prog(f, k.tunedW, 20, EASE.inOut);
+  const placeGlow = prog(f, k.tunedW + 14, 12);
   const guide7 = prog(f, k.seven, 18);
   const guide2 = prog(f, k.two, 18);
   const pepDot = prog(f, k.pepsin + 30, 12);
@@ -232,7 +241,7 @@ export const S12Ph: React.FC = () => {
             const y1 = BAR.y - 16;
             const yy = y0 + (y1 - y0) * runDown;
             return (
-              <g key={i} opacity={1 - prog(f, k.places + 30, 20) * 0.6}>
+              <g key={i}>
                 <line x1={x} y1={y0} x2={x} y2={yy} stroke={col} strokeWidth={6} strokeLinecap="round" opacity={0.9} />
                 <circle cx={x} cy={yy} r={9} fill={col} />
               </g>
@@ -244,11 +253,20 @@ export const S12Ph: React.FC = () => {
 
       {/* labels: the optimum, the enzymes, and where they work */}
       <Keyword x={phX(7)} y={gy(1) - 44} text="optimum" size={48} weight={600} color={C.paper} progress={prog(f, k.optimum, 14) * (1 - prog(f, k.amylase - 6, 10))} />
-      {names > 0.01
-        ? [phX(7) + 34, phX(2) + 34].map((x, i) => <ellipse key={i} cx={x} cy={gy(1) - 62} rx={150} ry={44} fill={i === 0 ? C.teal : C.violet} opacity={0.18 * names} />)
-        : null}
-      <Keyword x={phX(7) + 34} y={gy(1) - 44} text="amylase" size={52} weight={600} color={C.tealLight} progress={prog(f, k.amylase, 14)} />
-      <Keyword x={phX(2) + 34} y={gy(1) - 44} text="pepsin" size={52} weight={600} color={C.violetLight} progress={prog(f, k.pepsin, 14)} />
+      {(
+        [
+          [phX(7) + 34, "amylase", C.tealLight, k.amylase],
+          [phX(2) + 34, "pepsin", C.violetLight, k.pepsin],
+        ] as const
+      ).map(([x, txt, col, at]) => {
+        const cy = gy(1) - 62;
+        const s = 1 + 0.1 * names;
+        return (
+          <g key={txt} transform={`translate(${x} ${cy}) scale(${s}) translate(${-x} ${-cy})`}>
+            <Keyword x={x} y={gy(1) - 44} text={txt} size={52} weight={600} color={col} progress={prog(f, at, 14)} />
+          </g>
+        );
+      })}
       {/* each curve keeps its molecule beside its name */}
       {(
         [
@@ -262,13 +280,21 @@ export const S12Ph: React.FC = () => {
           </g>
         ) : null,
       )}
-      {placeGlow > 0.01 || pulse(f, k.there, 30) > 0.01
-        ? [phX(7), phX(2)].map((x, i) => (
-            <ellipse key={i} cx={x} cy={ZONE_Y - 16} rx={120} ry={40} fill={i === 0 ? C.teal : C.coral} opacity={0.16 * Math.max(placeGlow, i === 1 ? pulse(f, k.there, 30) : 0)} />
-          ))
-        : null}
-      <Keyword x={phX(7)} y={ZONE_Y} text="mouth" size={46} weight={600} color={C.tealLight} progress={prog(f, k.mouth, 14)} />
-      <Keyword x={phX(2)} y={ZONE_Y} text="stomach" size={46} weight={600} color={C.coral} progress={prog(f, k.stomach, 14)} />
+      {/* the places: "stomach" steps forward on "…digests protein there"; both brighten as the light arrives */}
+      {(
+        [
+          [phX(7), "mouth", C.tealLight, k.mouth, 0],
+          [phX(2), "stomach", C.coral, k.stomach, pulse(f, k.there, 30)],
+        ] as const
+      ).map(([x, txt, col, at, there]) => {
+        const cy = ZONE_Y - 16;
+        const s = 1 + 0.12 * Math.max(placeGlow, there);
+        return (
+          <g key={txt} transform={`translate(${x} ${cy}) scale(${s}) translate(${-x} ${-cy})`}>
+            <Keyword x={x} y={ZONE_Y} text={txt} size={46} weight={placeGlow > 0.5 ? 700 : 600} color={col} progress={prog(f, at, 14)} />
+          </g>
+        );
+      })}
 
       {/* part 1 label (follows the camera): on "bonds", gone once they are disrupted */}
       <Label

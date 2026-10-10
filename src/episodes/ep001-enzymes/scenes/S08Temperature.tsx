@@ -159,7 +159,7 @@ export const S08Temperature: React.FC = () => {
         opacity={cplxOut}
       />
 
-      <Keyword x={1150} y={H - 112} text="more kinetic energy" size={60} progress={capKE} />
+      <Keyword x={1150} y={H - 136} text="more kinetic energy" size={60} progress={capKE} />
     </Stage>
   );
 };

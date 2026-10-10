@@ -6,9 +6,11 @@
  * Pan to catalase (its own small, rounded active site that fits ONE hydrogen peroxide): H₂O₂ drifts in
  * from a pool, water and oxygen leave; the flow speeds up while the counter climbs past 100,000, and a
  * "1 s" ring sweeps exactly one second on "Every second".
- * "Your cells do replace old enzymes, eventually": we pull back to the cell. The old catalase is still
- * working while the cell builds a new one from amino acids; a calendar flips (time passes); the old one
- * is recycled and the new one takes over the same job. End: the word equation, with catalase over the
+ * "Your cells do replace old enzymes, eventually": we pull back to the cell. The old catalase keeps
+ * working while, well clear of it, the cell builds a new one from amino acids (from the start of the
+ * sentence); a calendar beside the old one flips (time passes). On "eventually" the old one is broken back
+ * into amino acids, which drift up and away from the stream, and the new one moves into its place and
+ * takes over the same job. End: the word equation, with catalase over the
  * arrow — never a reactant, never a product: the reaction never uses it up.
  */
 import React from "react";
@@ -42,28 +44,29 @@ const MALTOSE_TARGETS: readonly (readonly [number, number])[] = [
 ];
 
 const CT = { x: 2580, y: 610, s: 1.3, seed: 23 } as const; // catalase (the old one)
-const CTN = { x: 3060, y: 520 } as const; // where the cell builds the new one
+/** Where the cell builds the new one: ≈ 230 world px (≈ 180 px on screen) clear of the old one's body. */
+const CTN = { x: 3250, y: 480 } as const;
 const pocketOf = (cx: number, cy: number): Pt => [cx + CT.s * CAT_DOCK[0], cy + CT.s * CAT_DOCK[1]];
 const PC_OLD = pocketOf(CT.x, CT.y);
-const PC_NEW = pocketOf(CTN.x, CTN.y);
 /** A pool of hydrogen peroxide in the cell: the stream peels off from here (and the label points here). */
-const RES: Pt = [2060, 800];
+const RES: Pt = [2010, 800];
+/** The pool's own molecules sit clear of the edge the stream peels off from. */
 const RES_SPOTS: readonly Pt[] = [
-  [-70, -26],
-  [36, -54],
-  [92, 22],
-  [-14, 46],
-  [-112, 52],
+  [-50, -60],
+  [20, 0],
+  [-110, 20],
+  [80, 90],
+  [-30, 80],
 ];
 const MOL_S = CAT_H2O2.scale * CT.s; // H₂O₂ glyph scale that fits the catalase's slot
 const CELL = { x: 2780, y: 590, rx: 1030, ry: 560 } as const;
+/** Other proteins in the cell — placed clear of the old enzyme, the build site, the move-in path and the stream. */
 const CROWD: readonly { x: number; y: number; r: number }[] = [
-  { x: 2230, y: 300, r: 62 },
-  { x: 2700, y: 210, r: 54 },
-  { x: 3420, y: 330, r: 66 },
-  { x: 3520, y: 720, r: 58 },
-  { x: 3220, y: 1000, r: 56 },
-  { x: 2620, y: 960, r: 52 },
+  { x: 2880, y: 180, r: 52 },
+  { x: 3640, y: 760, r: 56 },
+  { x: 3000, y: 1010, r: 52 },
+  { x: 2440, y: 1030, r: 54 },
+  { x: 1960, y: 560, r: 58 },
 ];
 
 /** The counter lands on 100,000, then "+": measured catalase turnover is 54,000–833,000 per second (sources.md #13). */
@@ -71,20 +74,74 @@ const COUNTER_DIGITS = 6;
 const COUNTER_W = COUNTER_DIGITS * 92 * 0.64 + (textWidth(",", 92, 600) + 92 * 0.04);
 
 // ---- the catalase reaction stream -----------------------------------------------------------
-const Q = 5; // molecules on their way in at once (≈ 86 px apart: they never pile up)
+/**
+ * Molecules on their way in at once. Each path is ≈ 430 px long and the molecules are spaced evenly by
+ * DISTANCE along it (≈ 108 px — more than a glyph's width), so they never bunch up at the slot.
+ */
+const Q = 4;
+/** The last stretch before the slot is a straight lane: the queue lines up in single file. */
+const LANE = 230;
 const bez = (a: Pt, c: Pt, b: Pt, t: number): Pt => [
   (1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * c[0] + t * t * b[0],
   (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * c[1] + t * t * b[1],
 ];
-/** Molecule m of a stream: starts in the pool, arrives horizontally into the slot (which opens to the left). */
-const inPath = (m: number, pc: Pt, salt: number) => {
+/** The edge of the pool facing the enzyme, where molecules peel off (and its perpendicular, for spread). */
+const DEPART: Pt = (() => {
+  const dx = PC_OLD[0] - RES[0];
+  const dy = PC_OLD[1] - RES[1];
+  const d = Math.hypot(dx, dy);
+  return [RES[0] + (115 * dx) / d, RES[1] + (115 * dy) / d];
+})();
+const DEPART_N: Pt = (() => {
+  const dx = PC_OLD[0] - RES[0];
+  const dy = PC_OLD[1] - RES[1];
+  const d = Math.hypot(dx, dy);
+  return [-dy / d, dx / d];
+})();
+const SAMPLES = 16;
+type InPath = { readonly s: Pt; readonly c: Pt; readonly l: Pt; readonly pc: Pt; readonly cum: readonly number[]; readonly lenA: number; readonly total: number; readonly rot: number };
+/** Molecule m of a stream: peels off the pool's near edge, curves up into the lane, runs straight into the slot. */
+const inPath = (m: number, pc: Pt, salt: number): InPath => {
   const r = rng(9100 + m * 31 + salt);
-  const s: Pt = [RES[0] + (r() - 0.5) * 170, RES[1] + (r() - 0.5) * 110];
-  const c: Pt = [pc[0] - 230 - r() * 60, pc[1] + 10 + r() * 30];
-  return { s, c, rot: r() * 360 };
+  // paths vary only a little (they all leave the same edge of the pool), so a follower never cuts across
+  // the molecule ahead of it: centres stay ≥ 85 px apart along the whole way in
+  const sp = (r() - 0.5) * 32;
+  const s: Pt = [DEPART[0] + DEPART_N[0] * sp, DEPART[1] + DEPART_N[1] * sp];
+  const l: Pt = [pc[0] - LANE, pc[1]];
+  const c: Pt = [l[0] - 90 - r() * 20, l[1]]; // level with the lane, so the curve flows straight into it
+  const cum: number[] = [0];
+  let prev = s;
+  for (let i = 1; i <= SAMPLES; i++) {
+    const p = bez(s, c, l, i / SAMPLES);
+    cum.push(cum[i - 1] + Math.hypot(p[0] - prev[0], p[1] - prev[1]));
+    prev = p;
+  }
+  const lenA = cum[SAMPLES];
+  return { s, c, l, pc, cum, lenA, total: lenA + LANE, rot: r() * 360 };
 };
-/** Position along the path: brisk at first, easing into the active site. */
-const along = (u: number) => 1 - Math.pow(1 - Math.max(0, Math.min(1, u)), 1.15);
+/** The point a distance d along a path (arc length, so equal steps look equal on screen). */
+const pointAt = (p: InPath, d: number): Pt => {
+  if (d >= p.lenA) {
+    const t = Math.min(1, (d - p.lenA) / LANE);
+    return [p.l[0] + (p.pc[0] - p.l[0]) * t, p.l[1] + (p.pc[1] - p.l[1]) * t];
+  }
+  const dd = Math.max(0, d);
+  let i = 1;
+  while (i < SAMPLES && p.cum[i] < dd) i++;
+  const t = (i - 1 + (dd - p.cum[i - 1]) / Math.max(1e-6, p.cum[i] - p.cum[i - 1])) / SAMPLES;
+  return bez(p.s, p.c, p.l, t);
+};
+/**
+ * Distance travelled at queue position u (0..1): steady, so the gaps stay even — except the molecule
+ * entering the slot, which eases to a stop in it (always moving ahead of linear, so the gap only grows).
+ */
+const travel = (p: InPath, u: number) => {
+  const uu = Math.max(0, Math.min(1, u));
+  const lead = 1 - 1 / Q;
+  const x = (uu - lead) * Q;
+  const v = uu <= lead ? uu : lead + (1 / Q) * (-x * x * x + x * x + x);
+  return v * p.total;
+};
 
 type Stream = { phase: number; rate: number; crossings: number[] };
 /** Integrates a rate (reactions per frame) from f0; molecule m binds when the phase passes m. */
@@ -114,8 +171,7 @@ const StreamIn: React.FC<{ readonly f: number; readonly st: Stream; readonly pc:
         const u = 1 - (m - phase) / Q;
         if (u <= 0) return null;
         const p = inPath(m, pc, salt);
-        const e = along(u);
-        const pos = bez(p.s, p.c, pc, e);
+        const pos = pointAt(p, travel(p, u));
         const op = Math.min(1, u * 7);
         const settle = Math.max(0, Math.min(1, (u - 0.55) / 0.4));
         // H–O–O–H looks the same turned half a turn, so it turns the short way into the slot's orientation
@@ -124,7 +180,7 @@ const StreamIn: React.FC<{ readonly f: number; readonly st: Stream; readonly pc:
         // a soft speed trail behind fast molecules (instead of a blur filter that strobes)
         const trailOn = rate > 0.07 && u < 0.85;
         const tr = trailOn
-          ? smoothOpenPath(Array.from({ length: 6 }, (_, i) => bez(p.s, p.c, pc, along(u - 0.09 + (0.09 * i) / 5))), 0.5)
+          ? smoothOpenPath(Array.from({ length: 6 }, (_, i) => pointAt(p, travel(p, u - 0.09 + (0.09 * i) / 5))), 0.5)
           : "";
         return (
           <g key={m} opacity={op}>
@@ -274,8 +330,11 @@ export const S07MythUsedUp: React.FC = () => {
   const stA = runStream(f, a0, -2.5, rateA);
   // the old catalase keeps working right up to the moment it is recycled
   const visA = prog(f, a0, 24) * (1 - prog(f, k.swap - 2, 8));
-  const b0 = k.swap + 6;
-  const stB = runStream(f, b0, -1.0, () => 0.09);
+  // the new one's stream (same pool, same place) fades in while it moves over; its first H₂O₂ binds just
+  // after it has arrived
+  const b0 = k.swap + 10;
+  const rB = 0.09;
+  const stB = runStream(f, b0, 1 - rB * (k.arrive + 3 - b0), () => rB);
   const visB = prog(f, b0, 12);
   const flashOf = (st: Stream) => {
     const last = st.crossings.length ? st.crossings[st.crossings.length - 1] : -999;
@@ -296,16 +355,20 @@ export const S07MythUsedUp: React.FC = () => {
   const ringIn = prog(f, k.every - 2, 8);
   const ringP = prog(f, k.second, 30, (t) => t); // exactly one second of real time
 
-  // ---------------- wear: the cell builds a new catalase; time passes; the old one is recycled
+  // ---------------- wear: the cell builds a new catalase; time passes; the old one is broken down and the
+  // new one moves into its place
   const cellP = prog(f, k.wear + 4, 40, (t) => t);
   const NB = BEADS.length;
   // the new chain is made bead by bead (left → right), then folds up, starting from its first bead
-  const synth = prog(f, k.build, 18, (t) => t);
-  const foldAt = (j: number) => prog(f, k.build + 12 + (j / NB) * 14, 16, EASE.inOut);
+  const synth = prog(f, k.build, 22, (t) => t);
+  const foldAt = (j: number) => prog(f, k.build + 16 + (j / NB) * 16, 16, EASE.inOut);
   const newFill = prog(f, k.buildDone - 6, 14);
-  const oldGone = prog(f, k.swap, 14);
-  const flips = 5 * prog(f, k.replaceW + 4, k.eventually + 20 - k.replaceW - 4, (t) => t);
-  const calVis = prog(f, k.replaceW - 4, 12) * (1 - prog(f, k.eq - 4, 12));
+  const oldGone = prog(f, k.swap, 10);
+  const moveP = prog(f, k.moveIn, k.arrive - k.moveIn, EASE.inOut);
+  const NP: Pt = [CTN.x + (CT.x - CTN.x) * moveP, CTN.y + (CT.y - CTN.y) * moveP];
+  // time passes while the old one keeps working; the calendar stays while it is broken down
+  const flips = 5 * prog(f, k.wear + 12, k.swap - k.wear - 12, (t) => t);
+  const calVis = prog(f, k.wear + 8, 12) * (1 - prog(f, k.eq - 4, 12));
 
   // ---------------- equation (the scene stays visible behind it: the new catalase keeps working)
   const eqP = prog(f, k.reaction, 44, (t) => t);
@@ -377,14 +440,16 @@ export const S07MythUsedUp: React.FC = () => {
               <Catalase x={CT.x + (1 - catVis) * 120} y={CT.y} scale={CT.s} seed={CT.seed} opacity={catVis} fill={1 - oldGone} glow={flashOf(stA) * 0.8 * visA} />
             </g>
           ) : null}
-          {f >= k.swap && f < k.swap + 34
+          {/* the old one is broken back into amino acids: they drift down and away — clear of the stream (left),
+              the calendar (above) and the incoming new enzyme (upper right) — and are gone within ≈ 15 frames */}
+          {f >= k.swap && f < k.swap + 18
             ? BEADS.map((ci, j) => {
                 const [px, py] = CAT_CHAIN[ci];
                 const r = rng(4400 + j * 7);
-                const a = prog(f, k.swap, 30, out);
-                const wx = CT.x + CT.s * px * (1 + 0.35 * a) + (r() - 0.5) * 110 * a;
-                const wy = CT.y + CT.s * py * (1 + 0.35 * a) + (r() - 0.5) * 110 * a;
-                return <circle key={j} cx={wx} cy={wy} r={7 * CT.s} fill={C.violetLight} stroke={C.violetDeep} strokeWidth={2.6} opacity={prog(f, k.swap, 6) * (1 - prog(f, k.swap + 16, 18))} />;
+                const a = prog(f, k.swap, 16, out);
+                const wx = CT.x + CT.s * px * (1 + 0.2 * a) + (20 + r() * 40) * a;
+                const wy = CT.y + CT.s * py * (1 + 0.2 * a) + (50 + r() * 40) * a;
+                return <circle key={j} cx={wx} cy={wy} r={7 * CT.s} fill={C.violetLight} stroke={C.violetDeep} strokeWidth={2.6} opacity={prog(f, k.swap, 4) * (1 - prog(f, k.swap + 4, 12))} />;
               })
             : null}
 
@@ -394,8 +459,8 @@ export const S07MythUsedUp: React.FC = () => {
                 const pos: Pt[] = BEADS.map((ci, j) => {
                   const [px, py] = CAT_CHAIN[ci];
                   const t = j / (NB - 1);
-                  const lineX = CTN.x - 200 + t * 720;
-                  const line: Pt = [lineX, CTN.y + 330 + Math.sin(t * 9.5) * 26 + Math.sin(t * 23 + 1) * 9];
+                  const lineX = CTN.x - 260 + t * 520;
+                  const line: Pt = [lineX, CTN.y + 300 + Math.sin(t * 9.5) * 22 + Math.sin(t * 23 + 1) * 8];
                   const to: Pt = [CTN.x + CT.s * px, CTN.y + CT.s * py];
                   const b = foldAt(j);
                   const mid: Pt = [(line[0] + to[0]) / 2 + 40, Math.min(line[1], to[1]) + 60];
@@ -417,8 +482,8 @@ export const S07MythUsedUp: React.FC = () => {
               })()
             : null}
           {newFill > 0 ? (
-            <g transform={jitTransform(ctjN, [CTN.x, CTN.y])}>
-              <Catalase x={CTN.x} y={CTN.y} scale={CT.s} seed={CT.seed} fill={newFill} glow={flashOf(stB) * 0.8 * visB} />
+            <g transform={jitTransform(ctjN, NP)}>
+              <Catalase x={NP[0]} y={NP[1]} scale={CT.s} seed={CT.seed} fill={newFill} glow={flashOf(stB) * 0.8 * visB} />
             </g>
           ) : null}
 
@@ -427,8 +492,8 @@ export const S07MythUsedUp: React.FC = () => {
             <>
               <StreamOut f={f} st={stA} pc={PC_OLD} vis={visA} />
               <StreamIn f={f} st={stA} pc={PC_OLD} salt={0} vis={visA} />
-              <StreamOut f={f} st={stB} pc={PC_NEW} vis={visB} />
-              <StreamIn f={f} st={stB} pc={PC_NEW} salt={77} vis={visB} />
+              <StreamOut f={f} st={stB} pc={PC_OLD} vis={visB} />
+              <StreamIn f={f} st={stB} pc={PC_OLD} salt={77} vis={visB} />
             </>
           ) : null}
         </g>
@@ -490,8 +555,9 @@ export const S07MythUsedUp: React.FC = () => {
         </g>
       ) : null}
 
-      {/* time passes (no number of days claimed: protein lifetimes range from minutes to weeks) */}
-      <Calendar x={1650} y={232} size={128} flips={flips} progress={calVis} />
+      {/* time passes (no number of days claimed: protein lifetimes range from minutes to weeks) — right
+          above the old enzyme, so the flipping pages read as ITS age */}
+      <Calendar x={790} y={250} size={160} flips={flips} progress={calVis} />
 
       {/* the word equation: the enzyme sits over the arrow, never among the reactants or products */}
       {eqP > 0 ? (

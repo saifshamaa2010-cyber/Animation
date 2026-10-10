@@ -39,18 +39,22 @@ export const s07Timing = (t: CueFns) => {
   const hp = w(t, "hydrogen", 1, -2);
   const every = w(t, "every", 1, -2);
   const second = w(t, "second", 1, -2);
-  // "Your cells do replace old enzymes, eventually": the old one keeps working while a new one is
-  // built; time passes (calendar); the old one is recycled and the new one takes over.
+  // "Your cells do replace old enzymes, eventually": from the start of the sentence the cell builds a new
+  // catalase well clear of the old one (amino acids join up, the chain folds) while the old one keeps
+  // working and a calendar flips — time passes. On "eventually" the old one is broken down and the new one
+  // moves into its place and takes over the same job.
   const replaceW = w(t, "replace", 1, -2);
   const eventually = w(t, "eventually", 1, -2);
-  const build = replaceW + 2;
-  const buildDone = Math.max(build + 40, eventually - 8);
-  const swap = buildDone + 2; // old one recycled, stream moves to the new one
+  const build = wear + 6;
+  const buildDone = build + 46;
+  const swap = Math.max(buildDone + 8, eventually - 4); // the old one is broken down into amino acids
+  const moveIn = swap + 4; // the new one moves into the old one's place…
+  const arrive = moveIn + 24; // …and is there, ready for the next hydrogen peroxide
   const reaction = w(t, "reaction", 2, -2); // "But the reaction itself…" — the equation is written
   const never = w(t, "never", 1, -2);
   return {
     myth, tagIn, cardOpen, said0, said1, bust, strike, replace, cardOut, s1, unch, again, s2, s3, cat, catWord, cells, one, brk, many, hp, every, second,
-    wear, replaceW, eventually, build, buildDone, swap, eq, reaction, never, end,
+    wear, replaceW, eventually, build, buildDone, swap, moveIn, arrive, eq, reaction, never, end,
   };
 };
 

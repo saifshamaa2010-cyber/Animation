@@ -31,6 +31,7 @@ import {
   flashes,
   jig,
   productState,
+  remnantState,
   substrateState,
   tempAt,
 } from "./S08-S10-arc";
@@ -38,6 +39,8 @@ import {
 // ------------------------------------------------------------------ layout
 export const THERMO = { x: 212, y: 252, h: 520 } as const;
 export const LENS = { cx: 688, cy: 560, r: 300, zoom: 0.47 } as const;
+/** How soft the lens gets (screen px of blur) when S09 racks focus away from it. */
+export const LENS_BLUR = 7;
 export const G = { x: 1104, y: 300, w: 616, h: 460, d0: 0, d1: 70 } as const;
 export const gx = (v: number) => G.x + ((v - G.d0) / (G.d1 - G.d0)) * G.w;
 export const gy = (r: number) => G.y + G.h - r * G.h * 0.86;
@@ -196,13 +199,26 @@ export const Population: React.FC<PopulationProps> = ({ abs, denature = 0, lod =
     );
     return { rings, links, j, pivot, key: i, opacity: st.opacity };
   }).filter((x) => x.opacity > 0.01);
-  const prods = DOCKS.map((ev) => {
-    const p = productState(ev, abs);
-    if (!p) return null;
-    const j = jig(p.seed, abs, 1.3);
-    const rings: Ring[] = p.rings.map((r) => ({ x: r.x, y: r.y, rot: r.rot, scale: MOL_S, tone: "sugar", glow: p.glow }));
-    return { rings, j, key: ev.at, opacity: p.opacity };
-  }).filter((x): x is NonNullable<typeof x> => x !== null);
+  // maltose: every product, plus the last two rings of a chain cut down to maltose (each drifts off and fades)
+  const prods = DOCKS.flatMap((ev) =>
+    [productState(ev, abs), remnantState(ev, abs)].map((p, q) => {
+      if (!p || p.opacity <= 0.01) return null;
+      const own = jig(p.seed, abs, 1.3);
+      // it starts out locked to its enzyme (same jiggle, pivoting on the enzyme), and only gets its own once it's free
+      const ej2 = ej[p.lockE];
+      const cx = (p.rings[0].x + p.rings[1].x) / 2;
+      const cy = (p.rings[0].y + p.rings[1].y) / 2;
+      const j = {
+        dx: own.dx + (ej2.dx - own.dx) * p.lock,
+        dy: own.dy + (ej2.dy - own.dy) * p.lock,
+        rot: ej2.rot * p.lock,
+        px: cx + (p.pivot[0] - cx) * p.lock,
+        py: cy + (p.pivot[1] - cy) * p.lock,
+      };
+      const rings: Ring[] = p.rings.map((r) => ({ x: r.x, y: r.y, rot: r.rot, scale: MOL_S, tone: "sugar", glow: p.glow }));
+      return { rings, j, key: `${ev.at}-${q}`, opacity: p.opacity };
+    }),
+  ).filter((x): x is NonNullable<typeof x> => x !== null);
   const fl = flashes(abs);
   return (
     <g>
@@ -212,7 +228,7 @@ export const Population: React.FC<PopulationProps> = ({ abs, denature = 0, lod =
         return <WaterMolecule key={`w${i}`} x={p.x + j.dx} y={p.y + j.dy} s={w.s * 1.25} rot={p.rot + j.rot * 8} opacity={0.11} />;
       })}
       {prods.map((p) => (
-        <g key={`p${p.key}`} transform={`translate(${p.j.dx} ${p.j.dy})`}>
+        <g key={`p${p.key}`} transform={`translate(${p.j.dx} ${p.j.dy}) rotate(${p.j.rot} ${p.j.px} ${p.j.py})`}>
           <SugarChain rings={p.rings} links={[{ a: 0, b: 1 }]} opacity={p.opacity} />
         </g>
       ))}
@@ -377,7 +393,7 @@ export const TempGraph: React.FC<TempGraphProps> = ({
       </defs>
 
       {/* axes */}
-      <line x1={x0} y1={yB} x2={x0} y2={yB - (G.h + 10) * yAx} stroke={C.ink300} strokeWidth={4} strokeLinecap="round" />
+      {yAx > 0 ? <line x1={x0} y1={yB} x2={x0} y2={yB - (G.h + 10) * yAx} stroke={C.ink300} strokeWidth={4} strokeLinecap="round" /> : null}
       {xAx > 0 ? <line x1={x0} y1={yB} x2={x0 + (xEnd - x0) * xAx} y2={yB} stroke={C.ink300} strokeWidth={4} strokeLinecap="round" /> : null}
       {xAx > 0.98 ? (
         <path d={`M${xEnd - 14},${yB - 10} L${xEnd + 2},${yB} L${xEnd - 14},${yB + 10}`} fill="none" stroke={C.ink300} strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" />

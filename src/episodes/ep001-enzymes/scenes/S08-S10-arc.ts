@@ -8,26 +8,31 @@
  *
  * Motion rules this model enforces (each one is measured by the QA scripts):
  *  - Chains are always laid out from a rigid pose (centre + angle): links never shrink or fold.
+ *  - Molecules never pass through each other: free chains are gently pushed clear of enzymes and of
+ *    each other (precomputed per frame), approaches are checked against everything on the way, and
+ *    each maltose's way out is planned so it stays clear of the chains around it.
  *  - Nothing "homes in". A collision is only planned between partners that are already close and
  *    roughly facing each other, and the approach is clocked by the same thermal phase as the drift:
  *    it cruises at about twice the crowd's own drift speed at that temperature, so a cold approach
  *    is slow and a warm one is quicker — kinetic energy, not magnetism.
- *  - After a snip the leftover chain backs out and steps aside BEFORE the maltose leaves the pocket,
- *    and the two go opposite ways, so a product never slides through its own leftover chain.
- *  - A chain cut down to maltose is drawn as its own item that drifts off and fades. Its slot then
- *    gets a fresh starch chain that drifts in from the edge of the field of view (fading in while it
- *    moves, never popping up in place): the lens is a small window on a solution full of starch.
+ *  - After a snip the leftover chain backs out and steps well aside BEFORE the maltose leaves the
+ *    pocket, and it only drifts back once the maltose is on its way: a product never slides through
+ *    its own leftover chain.
+ *  - A chain cut down to maltose leaves its last two rings as their own item that drifts off and fades
+ *    (never vanishing at full opacity). Its slot then gets a fresh starch chain that drifts in from
+ *    beyond the edge of the field of view, fading in as it comes (never popping up in place): the lens
+ *    is a small window on a solution full of starch.
  *  - Successful reactions only happen where the curve says the rate is real (≤ ~41 °C on the way up;
  *    never at intact active sites at high temperature). Above that, S09 rack-focuses away from the
  *    lens (no claim while the question is open), and in S10 starch only bounces off active sites
  *    that have visibly lost their shape.
  */
-import { noise2D } from "@remotion/noise";
+import { noise2D } from "./S08-S10-noise";
 import { EASE } from "../../../brand/tokens";
 import { cueFns } from "../../../lib/cues";
 import { thermalAmplitude } from "../../../lib/motion";
 import { track, type Key } from "../../../lib/track";
-import { DOCK, ENZYME_REST, HEX_R, SPACING } from "../../../components/molecule-geometry";
+import { DOCK, ENZYME_REST, HEX_R, LIP_BOT, SPACING } from "../../../components/molecule-geometry";
 import { distToPolygon, pointInPolygon, type Pt } from "../../../lib/geometry";
 import { TL, sceneById } from "../timeline";
 import { s08Timing } from "./S08Temperature.timing";
@@ -83,16 +88,19 @@ export const tempAt = (abs: number) => track(abs, TEMP);
 // ------------------------------------------------------------------ the lens's focus (S09 → S10)
 /**
  * Past ~45 °C the outcome is the open question, so S09 rack-focuses away from the lens (the molecules
- * still visibly shake harder, but no collision is readable); S10 pulls focus back once the reveal
- * starts, while the enzymes visibly lose their shape. 0 = sharp, 1 = fully soft.
+ * still visibly shake harder, but no collision is readable); S10 pulls focus back during the reveal,
+ * as the enzymes visibly lose their shape. 0 = sharp, 1 = fully soft.
  */
-export const LENS_SOFT_A = O9 + K9.t50 - 12;
-export const LENS_SOFT_B = O9 + K9.t50 + 14;
-export const LENS_SHARP_A = O10 + K10.lift + 4;
-export const LENS_SHARP_B = O10 + K10.penMid - 6;
-/** S10: how far the enzymes in the lens have lost their shape (0..1). */
-export const LENS_DEN_A = O10 + K10.penA + 6;
-export const LENS_DEN_B = O10 + K10.penB + 6;
+const LENS_SOFT_A = O9 + K9.t50 - 6;
+const LENS_SOFT_B = O9 + K9.t50 + 18;
+// (it sharpens while its enzymes visibly lose their shape — S10 denatures them from penA + 6 to penB + 6)
+const LENS_SHARP_A = O10 + K10.penA + 8;
+const LENS_SHARP_B = O10 + K10.penB;
+/** How far the lens is out of focus (0 = sharp, 1 = fully soft): S09 past ~45 °C until the S10 reveal. */
+export const lensSoftAt = (abs: number) => {
+  const e = (a: number, b: number) => EASE.inOut(Math.max(0, Math.min(1, (abs - a) / (b - a))));
+  return e(LENS_SOFT_A, LENS_SOFT_B) * (1 - e(LENS_SHARP_A, LENS_SHARP_B));
+};
 
 // ------------------------------------------------------------------ integrated motion phases
 /** Wander speed: how fast molecules drift around, by temperature (exaggerated so it reads). */
@@ -175,9 +183,9 @@ export type Pose = { x: number; y: number; rot: number };
  */
 export const ENZ = [
   { hx: 905, hy: 405, rot: 0, R: 30 },
-  { hx: 1440, hy: 250, rot: -40, R: 36 },
+  { hx: 1440, hy: 250, rot: -15, R: 36 },
   { hx: 1170, hy: 705, rot: -20, R: 36 },
-  { hx: 1600, hy: 640, rot: 22, R: 36 },
+  { hx: 1600, hy: 650, rot: 90, R: 32 },
 ] as const;
 
 /**
@@ -187,13 +195,13 @@ export const ENZ = [
  */
 export const SUB = [
   { hx: 640, hy: 515, rot: 6, R: 30 },
-  { hx: 1195, hy: 215, rot: -20, R: 40 },
+  { hx: 1175, hy: 262, rot: -15, R: 30 },
   { hx: 1255, hy: 450, rot: -30, R: 34 },
   { hx: 850, hy: 770, rot: -24, R: 36 },
   { hx: 1430, hy: 850, rot: 4, R: 30 },
-  { hx: 1690, hy: 370, rot: 84, R: 30 },
-  { hx: 700, hy: 250, rot: 20, R: 38 },
-  { hx: 1500, hy: 478, rot: 15, R: 30 },
+  { hx: 1660, hy: 345, rot: 75, R: 28 },
+  { hx: 680, hy: 230, rot: 20, R: 30 },
+  { hx: 625, hy: 752, rot: -10, R: 26 },
 ] as const;
 
 /** Water: the solution everything happens in. Positions within the world disc. */
@@ -229,7 +237,8 @@ export const freeEnzyme = (i: number, abs: number): Pose => {
   };
 };
 
-export const freeSub = (i: number, abs: number): Pose => {
+/** A starch chain's wander before anything keeps it clear of its neighbours (see freeSub). */
+const wanderSub = (i: number, abs: number): Pose => {
   const s = SUB[i];
   const p = wanderAt(abs);
   return {
@@ -259,6 +268,153 @@ const smooth = (t: number) => {
 };
 const quadOut = (t: number) => 1 - (1 - clamp01(t)) * (1 - clamp01(t));
 const lerpPose = (a: Pose, b: Pose, t: number): Pose => ({ x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t), rot: lerpAngle(a.rot, b.rot, t) });
+
+// ------------------------------------------------------------------ free drift that never passes through anything
+/** A glucose ring's radius in world px. */
+const RING_R = HEX_R * MOL_S;
+/** The enzyme's body without its pocket (the mouth closed by a straight line), enzyme-local units. */
+const BODY_POLY: Pt[] = ENZYME_REST.slice(0, LIP_BOT + 1) as Pt[];
+/** How far the body reaches from the enzyme's centre along the local unit direction (ux, uy). */
+const bodyRadius = (ux: number, uy: number) => {
+  let best = 0;
+  for (let k = 0; k < BODY_POLY.length; k++) {
+    const [ax, ay] = BODY_POLY[k];
+    const [bx, by] = BODY_POLY[(k + 1) % BODY_POLY.length];
+    // ray t·u meets segment a + s·(b − a)
+    const ex = bx - ax;
+    const ey = by - ay;
+    const den = ux * ey - uy * ex;
+    if (Math.abs(den) < 1e-9) continue;
+    const t = (ax * ey - ay * ex) / den;
+    const sg = (ax * uy - ay * ux) / den;
+    if (t > 0 && sg >= -1e-6 && sg <= 1 + 1e-6) best = Math.max(best, t);
+  }
+  return best;
+};
+const BODY_MAX = Math.max(...BODY_POLY.map(([x, y]) => Math.hypot(x, y))) * MOL_S;
+/** Free chains keep at least this gap (world px) from enzymes and from each other; the push starts SOFT px earlier. */
+const CLEAR_E = 9;
+const CLEAR_S = 10;
+const SOFT = 14;
+/** A smooth "penetration → push" curve: 0 with zero slope at contact, ≈ pen − SOFT when deep (so the gap settles at CLEAR). */
+const softPush = (pen: number) => (pen <= 0 ? 0 : pen - SOFT * (1 - Math.exp(-pen / SOFT)));
+const HALF6 = ((SUB_RINGS - 1) / 2) * SPACING * MOL_S;
+
+/** Push (world px) that keeps a 6-ring chain at pose c clear of an enzyme at pose e. */
+const pushFromEnzyme = (c: Pose, e: Pose): [number, number] => {
+  const dx = Math.cos(rad(c.rot));
+  const dy = Math.sin(rad(c.rot));
+  const reach = BODY_MAX + RING_R + CLEAR_E + SOFT;
+  if (Math.hypot(c.x - e.x, c.y - e.y) > reach + HALF6) return [0, 0];
+  const ca = Math.cos(rad(-e.rot));
+  const sa = Math.sin(rad(-e.rot));
+  let vx = 0;
+  let vy = 0;
+  let mx = 0;
+  for (let j = 0; j < SUB_RINGS; j++) {
+    const o = (j - (SUB_RINGS - 1) / 2) * SPACING * MOL_S;
+    const rx = c.x + dx * o - e.x;
+    const ry = c.y + dy * o - e.y;
+    const d = Math.hypot(rx, ry);
+    if (d > reach || d < 1e-6) continue;
+    const lx = (rx * ca - ry * sa) / d;
+    const ly = (rx * sa + ry * ca) / d;
+    const gap = d - bodyRadius(lx, ly) * MOL_S - RING_R;
+    const p = softPush(CLEAR_E + SOFT - gap);
+    if (p <= 0) continue;
+    vx += (rx / d) * p;
+    vy += (ry / d) * p;
+    mx = Math.max(mx, p);
+  }
+  const l = Math.hypot(vx, vy);
+  return l > 1e-9 ? [(vx / l) * mx, (vy / l) * mx] : [0, 0];
+};
+
+/** Closest points between two chain axes (segments of half-lengths ha and hb, centred on the poses). */
+const segClosest = (a: Pose, b: Pose, ha = HALF6, hb = HALF6) => {
+  const ux = Math.cos(rad(a.rot));
+  const uy = Math.sin(rad(a.rot));
+  const vx = Math.cos(rad(b.rot));
+  const vy = Math.sin(rad(b.rot));
+  const wx = a.x - b.x;
+  const wy = a.y - b.y;
+  const B = ux * vx + uy * vy;
+  const D = ux * wx + uy * wy;
+  const E = vx * wx + vy * wy;
+  const den = 1 - B * B;
+  let s = den > 1e-6 ? (B * E - D) / den : 0;
+  s = Math.max(-ha, Math.min(ha, s));
+  let t = Math.max(-hb, Math.min(hb, E + B * s));
+  s = Math.max(-ha, Math.min(ha, B * t - D));
+  t = Math.max(-hb, Math.min(hb, E + B * s));
+  return { ax: a.x + ux * s, ay: a.y + uy * s, bx: b.x + vx * t, by: b.y + vy * t };
+};
+
+/**
+ * Every chain's free drift, precomputed per frame: its own wander, then gently pushed so that it never
+ * slides through an enzyme or another chain (molecules bump and slide past each other; they don't
+ * overlap). Planned collisions are layered on top of this.
+ */
+const FREE_A = O8 - 160;
+const FREE_N = SC10.endFrame + 160 - FREE_A + 1;
+const FREE_TAB: Float64Array[] = (() => {
+  const tab = SUB.map(() => new Float64Array(FREE_N * 3));
+  for (let k = 0; k < FREE_N; k++) {
+    const abs = FREE_A + k;
+    const es = ENZ.map((_, j) => freeEnzyme(j, abs));
+    let ps = SUB.map((_, i) => wanderSub(i, abs));
+    for (let it = 0; it < 6; it++) {
+      ps = ps.map((c, i) => {
+        let px = 0;
+        let py = 0;
+        for (const e of es) {
+          const [qx, qy] = pushFromEnzyme(c, e);
+          px += qx;
+          py += qy;
+        }
+        for (let o = 0; o < ps.length; o++) {
+          if (o === i) continue;
+          const q = segClosest(c, ps[o]);
+          const d = Math.hypot(q.ax - q.bx, q.ay - q.by);
+          const p = softPush(2 * RING_R + CLEAR_S + SOFT - d) / 2;
+          if (p > 0) {
+            // push apart along the line between the closest points, blended towards "away from the other
+            // chain's centre" as they get close (that line is undefined, and can flip, when two wanders touch)
+            const cx = c.x - ps[o].x;
+            const cy = c.y - ps[o].y;
+            const cl = Math.hypot(cx, cy) || 1;
+            const nx = q.ax - q.bx + (cx / cl) * 14;
+            const ny = q.ay - q.by + (cy / cl) * 14;
+            const nl = Math.hypot(nx, ny) || 1;
+            px += (nx / nl) * p;
+            py += (ny / nl) * p;
+          }
+        }
+        // relax towards the target (damped), so pushes from several sides settle smoothly
+        return { x: c.x + px * 0.45, y: c.y + py * 0.45, rot: c.rot };
+      });
+    }
+    ps.forEach((c, i) => {
+      tab[i][k * 3] = c.x;
+      tab[i][k * 3 + 1] = c.y;
+      tab[i][k * 3 + 2] = c.rot;
+    });
+  }
+  return tab;
+})();
+
+/** Where starch chain i drifts on its own (world space, no jiggle): its wander, kept clear of the others. */
+export const freeSub = (i: number, abs: number): Pose => {
+  const x = Math.max(0, Math.min(FREE_N - 1, abs - FREE_A));
+  const k = Math.min(FREE_N - 2, Math.floor(x));
+  const u = x - k;
+  const t = FREE_TAB[i];
+  return {
+    x: t[k * 3] + (t[k * 3 + 3] - t[k * 3]) * u,
+    y: t[k * 3 + 1] + (t[k * 3 + 4] - t[k * 3 + 1]) * u,
+    rot: t[k * 3 + 2] + (t[k * 3 + 5] - t[k * 3 + 2]) * u,
+  };
+};
 
 /** A speed profile → position profile (0..1 → 0..1), by integrating a velocity shape. */
 const profile = (shape: (u: number) => number) => {
@@ -306,8 +462,6 @@ export const mouthPoint = (e: Pose, s = MOL_S): [number, number] => {
   return [e.x + ox, e.y + oy];
 };
 
-/** A glucose ring's radius in world px. */
-const RING_R = HEX_R * MOL_S;
 /** An enzyme's outline (at rest) in world space. */
 const enzPoly = (e: Pose): Pt[] => {
   const a = rad(e.rot);
@@ -333,7 +487,7 @@ const supportOf = (e: Pose, ux: number, uy: number) => {
 };
 
 /** How far in front of the active site (world px) a substrate is lined up before it slides in end-on. */
-const PRE_DOCK = 1.5 * SPACING * MOL_S;
+const PRE_DOCK = 2.4 * SPACING * MOL_S;
 
 /**
  * The way a substrate comes in to dock: a gentle curve from p0 to a point PRE_DOCK in front of the
@@ -343,7 +497,7 @@ const PRE_DOCK = 1.5 * SPACING * MOL_S;
 const approachPath = (p0: readonly [number, number], e: Pose, docked: Pose) => {
   const pd = pocketDir(e);
   const q: [number, number] = [docked.x + pd[0] * PRE_DOCK, docked.y + pd[1] * PRE_DOCK];
-  const lead = Math.min(56, 0.35 * Math.hypot(p0[0] - q[0], p0[1] - q[1]));
+  const lead = Math.min(80, 0.4 * Math.hypot(p0[0] - q[0], p0[1] - q[1]));
   const c: [number, number] = [q[0] + pd[0] * lead, q[1] + pd[1] * lead];
   const bez = (w: number): [number, number] => {
     const b0 = (1 - w) * (1 - w);
@@ -376,6 +530,20 @@ const approachPath = (p0: readonly [number, number], e: Pose, docked: Pose) => {
   return { at, sq, L };
 };
 
+/**
+ * Where a docking substrate is during its approach (rigid pose): one smooth path clocked by thermal
+ * phase — out of its own drift, along a gentle curve to a point in front of the active site (turning
+ * to line up only near the end), then sliding straight in end-on. The planner checks exactly this path.
+ */
+const dockApproach = (drift: Pose, e: Pose, n: number, rel: number, u: number) => {
+  const docked = dockedPose(e, n, rel);
+  const path = approachPath([drift.x, drift.y], e, docked);
+  const sPath = PROF_DOCK(u);
+  const [x, y] = path.at(sPath);
+  const turn = smooth((sPath - (path.sq - 0.3)) / 0.3);
+  return { pose: { x, y, rot: lerpAngle(drift.rot, docked.rot, turn) } as Pose, sPath, sq: path.sq };
+};
+
 // ------------------------------------------------------------------ collisions
 export type EvKind = "dock" | "bounce";
 export type Ev = {
@@ -397,13 +565,13 @@ export type Ev = {
 const DOCK_K = 1.6; // average (cruise ≈ 2 × drift)
 const BUMP_K = 1.7;
 const RELAX_K = 1.0; // a leftover chain drifting back into the crowd
-const RESPAWN_K = 1.6; // a fresh chain drifting into view
+const RESPAWN_K = 2.0; // a fresh chain drifting into view
 const energyOf = (T: number) => 0.35 + (T / 37) * 0.65;
 const holdOf = (T: number) => Math.round(lerp(24, 9, clamp01((T - 10) / 27)));
 /** After a snip, the leftover chain backs out of the pocket (and steps aside) over this many frames. */
-const BACK_T = 16;
+const BACK_T = 20;
 const BACK_D = 44; // world px straight back out of the pocket
-const BACK_SIDE = 34; // world px sideways (away from where the maltose goes)
+const BACK_SIDE = 66; // world px sideways (out of the lane the maltose leaves by)
 /** The maltose waits this long before leaving the pocket, then takes PROD_OUT_T frames to get clear. */
 const PROD_WAIT = 5;
 const PROD_OUT_T = 32;
@@ -412,12 +580,14 @@ const PROD_VEER_T = 30;
 const PROD_VEER_OUT = 34;
 const PROD_VEER_SIDE = 62;
 /** Maltose leaving the lens: products and fully digested chains fade after this long. */
-const PRODUCT_LIFE = 60;
+const PRODUCT_LIFE = 46;
+/** Maltose is a much smaller molecule than starch, so it diffuses away faster than the crowd drifts. */
+const MALTOSE_K = 1.4;
 const PRODUCT_FADE = 28;
 /** A fresh chain drifts in from this far out (world px, radially from the middle of the lens)… */
-const RESPAWN_D = 210;
+const RESPAWN_D = 250;
 /** …starting this long after the old chain was finished off. */
-const RESPAWN_DELAY = 20;
+const RESPAWN_DELAY = 12;
 /** The farthest a substrate travels to make a collision (world px): partners must already be close. */
 const MAX_DOCK_TRAVEL = 300;
 const MAX_BUMP_TRAVEL = 200;
@@ -461,6 +631,9 @@ type Plan = {
   long?: boolean;
 };
 
+/** Until here the molecules fill the frame (S08 before the pull-back into the lens). */
+const LENS_FROM = O8 + K8.irisB;
+
 /** From this frame on, S10 shows a fresh sample: earlier reactions (and denaturing) are forgotten. */
 export const RESET = O10 + K10.coldA;
 
@@ -469,7 +642,13 @@ const PLAN: Plan[] = (() => {
   const p8 = (f: number, kind: EvKind, shift = 10): Plan => ({ at: O8 + f, kind, shift, where: "body" });
   const p9 = (f: number, kind: EvKind, shift = 8): Plan => ({ at: O9 + f, kind, shift, where: "body" });
   const p10 = (f: number, kind: EvKind, shift = 10, where: "body" | "site" = "body"): Plan => ({ at: O10 + f, kind, shift, where });
-  const lensDocks = [10, 46, 78, 104, 128, 152, 176, 200, 224, 248, 272, 296].map((d) => k.traceA + d).filter((f) => f < k.end - 12);
+  // (candidate moments: a couple while it's still warming, then every ~0.5 s once it's at 37 °C — the planner
+  // keeps the ones where a substrate is close enough and facing the active site)
+  const lensDocks = [
+    k.traceA + 14,
+    Math.round((k.riseA + k.riseB) / 2),
+    ...Array.from({ length: 24 }, (_, q) => k.riseB - 14 + q * 15),
+  ].filter((f) => f < k.end - 12);
   const lensBumps = [26, 82, 130, 178, 226, 274].map((d) => k.traceA + d).filter((f) => f < k.end - 6);
   return [
     // S08 — cold: rare, gentle bumps
@@ -489,13 +668,15 @@ const PLAN: Plan[] = (() => {
     p8(k.complexWord + 16, "dock", 10),
     p8(k.heroDock + 22, "bounce", 8),
     // the lens: reactions get more frequent as it warms to 37 °C
-    ...lensDocks.map((f) => p8(f, "dock", 12)),
+    ...lensDocks.map((f) => p8(f, "dock", 10)),
     ...lensBumps.map((f) => p8(f, "bounce", 10)),
     // S09 — still near the optimum (37 → 41 °C): reactions carry on, a little less often…
     p9(4, "dock"),
     p9(16, "bounce"),
+    p9(16, "dock"),
     p9(28, "dock"),
-    p9(50, "dock", 6),
+    p9(40, "dock"),
+    p9(50, "dock", 4),
     // …then the lens goes soft (no claim while the question is open) until the reveal.
     // S10 — once the active sites have visibly lost their shape: starch bounces off them
     ...[K10.penMid + 8, K10.penMid + 22, K10.penB + 10, K10.coolA + 22, K10.coolA + 38].map((f) => p10(f, "bounce", 8, "site")),
@@ -504,9 +685,8 @@ const PLAN: Plan[] = (() => {
     p10(K10.fewerBump, "bounce", 6),
     // (one bump on "fewer collisions"; the one successful collision is the one we lean in on)
     { at: O10 + K10.siteDock, kind: "dock" as const, e: 0, s: 0, long: true },
-    // …warm it up and the reactions come back (nothing new starts in the last second of the scene)
+    // …warm it up and it works again: one reaction, with the "snip" sound (nothing else starts before the scene ends)
     { at: O10 + K10.reDock, kind: "dock" as const, hold: K10.reSnip - K10.reDock, shift: 0, long: true },
-    { ...p10(K10.reDock + 12, "dock", 4), long: true },
   ].sort((a, b) => a.at - b.at);
 })();
 
@@ -516,7 +696,7 @@ const PLAN: Plan[] = (() => {
  * backed out to, and it relaxes back into the crowd from there; a fresh chain starts far out and
  * drifts in. Relaxation is clocked by thermal phase (slower when cold).
  */
-type Offset = { t: number; dW: number; dx: number; dy: number; dr: number; fadeIn: boolean };
+type Offset = { t: number; dW: number; dx: number; dy: number; dr: number; fadeIn: boolean; hold?: number };
 const OFFS: Offset[][] = SUB.map(() => []);
 /** Frames at which a slot starts a new chain (its earlier offsets no longer apply). */
 const GEN: number[][] = SUB.map(() => [RESET]);
@@ -545,7 +725,7 @@ export const driftPose = (i: number, abs: number): Pose => {
   const w = wanderAt(abs);
   for (const o of OFFS[i]) {
     if (o.t < g || o.t > abs) continue;
-    const k = 1 - smooth((w - wanderAt(o.t)) / o.dW);
+    const k = 1 - smooth((w - wanderAt(o.t + (o.hold ?? 0))) / o.dW);
     x += o.dx * k;
     y += o.dy * k;
     r += o.dr * k;
@@ -560,7 +740,7 @@ const fadeInOf = (i: number, abs: number) => {
   return smooth(((wanderAt(abs) - wanderAt(o.t)) / o.dW - 0.04) / 0.4);
 };
 /** When a fresh chain has drifted far enough in to take part in collisions. */
-const readyAfterRespawn = (o: Offset) => wanderInv(wanderAt(o.t) + o.dW * 0.5);
+const readyAfterRespawn = (o: Offset) => wanderInv(wanderAt(o.t) + o.dW * 0.45);
 
 /**
  * Contact pose for a bump: turned a little towards end-on (at most 25°, so it never swings round), sitting
@@ -595,8 +775,63 @@ const leftoverPose = (e: Pose, n: number, rel: number, side: number, snip: numbe
   return { x: rest.x + pd[0] * b + perp[0] * l, y: rest.y + pd[1] * b + perp[1] * l, rot: rest.rot };
 };
 
+// ------------------------------------------------------------------ maltose leaving the pocket
+/** Which way (degrees from straight out of the pocket; + = towards +perp) each maltose heads once it's clear. */
+const HEAD = new Map<number, { prod: number; rem: number }>();
+const headOf = (ev: Ev) => {
+  const h = HEAD.get(ev.at);
+  if (!h) throw new Error(`no maltose heading planned for the dock at ${ev.at}`);
+  return h;
+};
+const VEER_LEN = Math.hypot(PROD_VEER_OUT, PROD_VEER_SIDE);
+
+/** The released maltose's pose (before it's nudged clear of other molecules). */
+const productRaw = (ev: Ev, abs: number, head: number): Pose => {
+  const snip = ev.at + ev.hold;
+  // (no bump ever hits an enzyme while its maltose is leaving, so its free pose is exact)
+  const e = freeEnzyme(ev.e, Math.min(abs, snip + PROD_WAIT + PROD_OUT_T));
+  const inPocket = dockedPose(e, 2, ev.rel);
+  const pd = pocketDir(e);
+  const h = rotV(pd[0], pd[1], head);
+  const t1 = snip + PROD_WAIT;
+  const t2 = t1 + PROD_OUT_T;
+  const t3 = t2 + PROD_VEER_T;
+  // 1. straight out along the pocket's axis (it can't go sideways while it's between the lips)…
+  // 2. …then it heads off (the planner picks the clearest way: away from the leftover chain and the crowd)…
+  const k1 = ramp(abs, t1, t2, EASE.inOut);
+  const k2 = ramp(abs, t2 - 6, t3, EASE.inOut);
+  // 3. …and keeps drifting that way (a little faster than the crowd: it's a much smaller molecule)
+  const along = k2 * VEER_LEN + Math.max(0, wanderAt(abs) - wanderAt(t3)) * DRIFT_PER_PHASE * MALTOSE_K;
+  const pFree = Math.max(0, wanderAt(abs) - wanderAt(t2));
+  const seed = `m${ev.at}`;
+  const wx = (noise2D(`${seed}x`, pFree * 0.9, 0) - noise2D(`${seed}x`, 0, 0)) * 26;
+  const wy = (noise2D(`${seed}y`, pFree * 0.9, 4) - noise2D(`${seed}y`, 0, 4)) * 22;
+  const turn = Math.sign(head) * 24 * k2;
+  return {
+    x: inPocket.x + pd[0] * k1 * PROD_OUT + h[0] * along + wx,
+    y: inPocket.y + pd[1] * k1 * PROD_OUT + h[1] * along + wy,
+    rot: inPocket.rot + turn + (noise2D(`${seed}r`, pFree * 0.6, 7) - noise2D(`${seed}r`, 0, 7)) * 40,
+  };
+};
+
+/** The remnant maltose of a chain's last dock (before it's nudged clear): backs out, steps aside, drifts off. */
+const remnantRaw = (ev: Ev, abs: number, head: number): Pose => {
+  const snip = ev.at + ev.hold;
+  const tb = snip + BACK_T;
+  const e = freeEnzyme(ev.e, Math.min(abs, tb));
+  const base = leftoverPose(e, ev.n, ev.rel, ev.side, snip, Math.min(abs, tb));
+  const pd = pocketDir(e);
+  const dir = rotV(pd[0], pd[1], head);
+  // afterwards: keeps drifting away (the planner picks the clearest way) at about the crowd's drift speed
+  const w = Math.max(0, wanderAt(abs) - wanderAt(tb));
+  const away = DRIFT_PER_PHASE * MALTOSE_K * w;
+  const seed = `r${ev.at}`;
+  const wx = (noise2D(`${seed}x`, w * 0.9, 0) - noise2D(`${seed}x`, 0, 0)) * 26;
+  const wy = (noise2D(`${seed}y`, w * 0.9, 4) - noise2D(`${seed}y`, 0, 4)) * 22;
+  return { x: base.x + dir[0] * away + wx, y: base.y + dir[1] * away + wy, rot: base.rot + (noise2D(`${seed}r`, w * 0.6, 7) - noise2D(`${seed}r`, 0, 7)) * 30 };
+};
+
 // ------------------------------------------------------------------ planning
-export const DEBUG_PLAN: string[] = []; // TEMP-DEBUG
 const PLANNED = (() => {
   const busyE: [number, number][][] = ENZ.map(() => []);
   const busyS: [number, number][][] = SUB.map(() => []);
@@ -626,32 +861,115 @@ const PLANNED = (() => {
   };
   const isEmpty = (s: number, a: number, b: number) => emptyS[s].some(([x, y]) => a < y && b > x);
 
+  /** Maltose already released (each on its planned way out): later approaches must keep clear of them. */
+  const malts: { ev: Ev; rem: boolean }[] = [];
+  const maltRings = (t: number): RingXY[][] => {
+    const out: RingXY[][] = [];
+    for (const m of malts) {
+      const snip = m.ev.at + m.ev.hold;
+      if (t < snip || t > snip + PRODUCT_LIFE + PRODUCT_FADE + (m.rem ? 10 : 0) - 8) continue;
+      if (t >= RESET && m.ev.at < RESET) continue;
+      const hd = headOf(m.ev);
+      out.push(layout(m.rem ? remnantRaw(m.ev, t, hd.rem) : productRaw(m.ev, t, hd.prod), 2));
+    }
+    return out;
+  };
+  const minDistRings = (a: readonly RingXY[], b: readonly RingXY[]) => {
+    let m = 1e9;
+    for (const p of a) for (const q of b) m = Math.min(m, Math.hypot(p.x - q.x, p.y - q.y));
+    return m;
+  };
+
   /** Rough "is the way clear" test along an approach: the moving chain must not pass through another enzyme or chain. */
   const pathClear = (s: number, e: number, t0: number, at: number, poseAt: (t: number) => Pose, n: number, dock: boolean) => {
-    for (let q = 1; q <= 7; q++) {
-      const t = lerp(t0, at, q / 7.5);
+    const N = Math.max(11, Math.ceil((at - t0) / (at < LENS_FROM ? 2 : 4)));
+    for (let q = 1; q <= N; q++) {
+      const u = q / (N + 0.5);
+      const t = lerp(t0, at, u);
       const rings = layout(poseAt(t), n);
       for (let j = 0; j < ENZ.length; j++) {
         // a docking chain ends up inside its own enzyme's pocket: only check its way there
-        if (j === e && dock && q >= 6) continue;
-        if (sinkInto(rings, freeEnzyme(j, t)) > (j === e ? 4 : 0)) return false;
+        if (j === e && dock && u > 0.76) continue;
+        // (in the small lens view, a docking chain may graze its own enzyme's lip a little as it lines up;
+        // full frame, it must stay clear)
+        const sk = sinkInto(rings, freeEnzyme(j, t));
+        if (sk > (j === e ? (t < LENS_FROM ? 6 : 9) : 3)) return false;
       }
       for (let o = 0; o < SUB.length; o++) {
         if (o === s || isEmpty(o, t - 1, t + 1)) continue;
         const other = layout(driftPose(o, t), ringsAt(o, t));
-        for (const r of rings) for (const p of other) if (Math.hypot(r.x - p.x, r.y - p.y) < 36) return false;
+        if (minDistRings(rings, other) < 36) return false;
       }
+      // (a small maltose in the way gets nudged aside, so it only has to be clear of the chain itself)
+      for (const mr of maltRings(t)) if (minDistRings(rings, mr) < 26) return false;
     }
     return true;
+  };
+
+  /**
+   * How clear a maltose's way out is: the closest it comes (world px, ring centre to ring centre) to any
+   * starch chain or other maltose over its life, minus a penalty for drifting out of view.
+   */
+  const wayOutScore = (ev: Ev, poseAt: (f: number) => Pose, from: number, to: number, extra: ((f: number) => RingXY[]) | null) => {
+    const snip = ev.at + ev.hold;
+    let m = 90;
+    let out = 0;
+    for (let f = from; f <= to; f += 2) {
+      const p = poseAt(f);
+      const rings = layout(p, 2);
+      for (let o = 0; o < SUB.length; o++) {
+        if (isEmpty(o, f - 0.5, f + 0.5)) continue;
+        const other =
+          o === ev.s && f < snip + BACK_T
+            ? layout(leftoverPose(freeEnzyme(ev.e, f), ev.n, ev.rel, ev.side, snip, f), ev.n - 2)
+            : layout(driftPose(o, f), ringsAt(o, f));
+        m = Math.min(m, minDistRings(rings, other));
+      }
+      for (const mr of maltRings(f)) m = Math.min(m, minDistRings(rings, mr));
+      if (extra) m = Math.min(m, minDistRings(rings, extra(f)));
+      out = Math.max(out, Math.hypot(p.x - LENS_WC[0], p.y - LENS_WC[1]) - 520);
+    }
+    return m - Math.max(0, out) * 0.5;
+  };
+  /** Pick the clearest way out for a dock's maltose (and, for a chain's last dock, its remnant). */
+  const planWayOut = (ev: Ev) => {
+    const snip = ev.at + ev.hold;
+    const end = snip + PRODUCT_LIFE + PRODUCT_FADE - 8;
+    const final = ev.n - 2 <= 2;
+    let rem = -ev.side * 45;
+    if (final) {
+      let best = -Infinity;
+      for (const a of [20, 35, 50, 65, 80]) {
+        const head = -ev.side * a;
+        const sc = wayOutScore(ev, (f) => remnantRaw(ev, f, head), snip + BACK_T, end + 10, null) - Math.abs(a - 45) * 0.04;
+        if (sc > best) {
+          best = sc;
+          rem = head;
+        }
+      }
+    }
+    let prod = ev.side * 60;
+    let best = -Infinity;
+    for (const a of [-80, -60, -40, -20, 20, 40, 60, 80]) {
+      const head = ev.side * a;
+      const extra = final ? (f: number) => layout(remnantRaw(ev, f, rem), 2) : null;
+      const sc = wayOutScore(ev, (f) => productRaw(ev, f, head), snip + PROD_WAIT + PROD_OUT_T - 6, end, extra) - Math.abs(a - 60) * 0.04;
+      if (sc > best) {
+        best = sc;
+        prod = head;
+      }
+    }
+    HEAD.set(ev.at, { prod, rem });
+    malts.push({ ev, rem: false });
+    if (final) malts.push({ ev, rem: true });
   };
 
   // Reserve hand-placed collisions (enzyme AND substrate fixed) first.
   for (const pl of PLAN) {
     if (pl.e === undefined || pl.s === undefined) continue;
     const hold = pl.hold ?? holdOf(tempAt(pl.at));
-    const w: [number, number] = [(pl.t0 ?? pl.at - 120) - 2, pl.at + hold + BACK_T + 4];
-    busyE[pl.e].push(w);
-    busyS[pl.s].push(w);
+    busyE[pl.e].push([(pl.t0 ?? pl.at - 120) - 2, pl.at + hold + PROD_WAIT + PROD_OUT_T]);
+    busyS[pl.s].push([(pl.t0 ?? pl.at - 120) - 2, pl.at + hold + BACK_T + 4]);
   }
 
   // Docks first, in time order (they ARE the rate), then bumps fill in around them.
@@ -697,13 +1015,7 @@ const PLANNED = (() => {
             const twist = Math.min(Math.abs(angDiff(s0.rot, e0.rot)), Math.abs(angDiff(s0.rot, e0.rot + 180)));
             if (!fixed && (facing < MIN_FACING || twist > MAX_TWIST || travel > MAX_DOCK_TRAVEL)) ok = false;
             if (!pl.long && at - t0 > MAX_APPROACH) ok = false;
-            poseAt = (t) => {
-              const p0 = driftPose(s, t);
-              const eT = freeEnzyme(e, t);
-              const path = approachPath([p0.x, p0.y], eT, dockedPose(eT, nNow, rel));
-              const [x, y] = path.at(PROF_DOCK(phaseU(t0, at, t)));
-              return { x, y, rot: p0.rot };
-            };
+            poseAt = (t) => dockApproach(driftPose(s, t), freeEnzyme(e, t), nNow, rel, phaseU(t0, at, t)).pose;
           } else {
             const rotAt = driftPose(s, at).rot;
             const travelFrom = (t: number) => {
@@ -728,19 +1040,21 @@ const PLANNED = (() => {
             };
           }
           if (!Number.isFinite(t0)) ok = false;
-          if (!ok) { if (dt === 0) DEBUG_PLAN.push(`${pl.kind}@${pl.at} e${e}s${s} constraint travel=${travel.toFixed(0)}`); continue; } // TEMP-DEBUG
+          if (!ok) continue;
           const A = Math.round(at - t0);
           const ret = pl.kind === "bounce" ? Math.round(Math.max(26, Math.min(80, (travel * 0.9) / (1.4 * driftSpeed(T)) + 10))) : 0;
           const snip = at + hold;
           const final = pl.kind === "dock" && nNow - 2 <= 2;
           const [wa, wb] = pl.kind === "dock" ? [t0 - 2, final ? snip + 2 : snip + BACK_T + 2] : [t0 - 2, at + ret + 2];
-          const [ea, eb] = pl.kind === "dock" ? [at - Math.max(30, Math.round(A * 0.55)), snip + 22] : [at - Math.max(18, Math.round(A * 0.4)), at + 20];
+          // the enzyme is taken from shortly before the substrate arrives until its maltose is out of the pocket
+          // (the next substrate's way in is checked against that maltose's way out)
+          const [ea, eb] = pl.kind === "dock" ? [at - 24, snip + PROD_WAIT + PROD_OUT_T] : [at - Math.max(18, Math.round(A * 0.4)), at + 20];
           if (!fixed) {
-            if (overlaps(busyE[e], ea, eb) || overlaps(busyS[s], wa, wb)) { if (dt === 0) DEBUG_PLAN.push(`${pl.kind}@${pl.at} e${e}s${s} busy`); continue; } // TEMP-DEBUG
-            if (overlaps(notReady[s], wa, wb) || isEmpty(s, wa, wb)) { if (dt === 0) DEBUG_PLAN.push(`${pl.kind}@${pl.at} e${e}s${s} notready`); continue; } // TEMP-DEBUG
+            if (overlaps(busyE[e], ea, eb) || overlaps(busyS[s], wa, wb)) continue;
+            if (overlaps(notReady[s], wa, wb) || isEmpty(s, wa, wb)) continue;
             if (pl.at < RESET && wb > RESET) continue;
             if (pl.at >= RESET && wa < RESET) continue;
-            if (!pathClear(s, e, t0, at, poseAt, nNow, pl.kind === "dock")) { if (dt === 0) DEBUG_PLAN.push(`${pl.kind}@${pl.at} e${e}s${s} path`); continue; } // TEMP-DEBUG
+            if (!pathClear(s, e, t0, at, poseAt, nNow, pl.kind === "dock")) continue;
           }
           const twistPen = (() => {
             const s0 = driftPose(s, t0);
@@ -764,13 +1078,13 @@ const PLANNED = (() => {
         }
       }
     }
-    if (!best) { DEBUG_PLAN.push(`DROPPED ${pl.kind}@${pl.at}`); continue; } // TEMP-DEBUG
+    if (!best) continue; // (a candidate moment with no partner close enough: skipped)
     const { score: _score, ...ev } = best;
     void _score;
     const snip = ev.at + ev.hold;
     const final = ev.kind === "dock" && ev.n - 2 <= 2;
     if (!fixed) {
-      busyE[ev.e].push(ev.kind === "dock" ? [ev.at - Math.max(30, Math.round(ev.A * 0.55)), snip + 22] : [ev.at - Math.max(18, Math.round(ev.A * 0.4)), ev.at + 20]);
+      busyE[ev.e].push(ev.kind === "dock" ? [ev.at - 24, snip + PROD_WAIT + PROD_OUT_T] : [ev.at - Math.max(18, Math.round(ev.A * 0.4)), ev.at + 20]);
       busyS[ev.s].push(ev.kind === "dock" ? [ev.t0 - 2, final ? snip + 2 : snip + BACK_T + 2] : [ev.t0 - 2, ev.at + ev.ret + 2]);
     }
     events.push(ev);
@@ -779,6 +1093,20 @@ const PLANNED = (() => {
     if (ev.kind === "dock") {
       docksE[ev.e]++;
       nS[ev.s] -= 2;
+      if (!final) {
+        // the leftover chain: wherever it backed out to, it relaxes back into the crowd from there
+        const tb = snip + BACK_T;
+        const target = leftoverPose(freeEnzyme(ev.e, tb), ev.n, ev.rel, ev.side, snip, tb);
+        const here = driftPose(ev.s, tb);
+        const dx = target.x - here.x;
+        const dy = target.y - here.y;
+        const dr = angDiff(here.rot, target.rot);
+        const dW = Math.max(0.25, (Math.hypot(dx, dy) + Math.abs(dr) * 1.2) / (DRIFT_PER_PHASE * RELAX_K));
+        // it only starts drifting back once the maltose is out of the pocket and on its way (so it can't
+        // wander back across the maltose's way out)
+        OFFS[ev.s].push({ t: tb, dW, dx, dy, dr, fadeIn: false, hold: PROD_WAIT + PROD_OUT_T + 8 - BACK_T });
+      }
+      planWayOut(ev);
       if (final) {
         // cut down to maltose: the remnant drifts off as its own item; a fresh chain drifts in from the edge
         const tr = snip + RESPAWN_DELAY;
@@ -789,31 +1117,36 @@ const PLANNED = (() => {
           const dW = RESPAWN_D / (DRIFT_PER_PHASE * RESPAWN_K);
           let o: Offset | null = null;
           let bestScore = Infinity;
-          for (const da of [0, 25, -25, 50, -50, 75, -75, 100, -100]) {
+          for (const da of [0, 20, -20, 40, -40, 60, -60, 80, -80, 100, -100, 125, -125, 150, -150, 180]) {
             const a = base + rad(da);
             const cand: Offset = { t: tr, dW, dx: Math.cos(a) * RESPAWN_D, dy: Math.sin(a) * RESPAWN_D, dr: 0, fadeIn: true };
-            let clear = true;
-            for (let q = 0; q <= 8 && clear; q++) {
-              const u = (q / 8) * 0.9;
+            // how badly this way in runs into anything (0 = clear): enzymes, other chains, the maltose's way out
+            let bad = 0;
+            for (let q = 0; q <= 10; q++) {
+              const u = (q / 10) * 0.9;
               const t = wanderInv(wanderAt(tr) + dW * u);
               const kk = 1 - smooth(u);
               const b = freeSub(ev.s, t);
               const rings = layout({ x: b.x + cand.dx * kk, y: b.y + cand.dy * kk, rot: b.rot }, SUB_RINGS);
-              for (let j = 0; j < ENZ.length && clear; j++) if (sinkInto(rings, freeEnzyme(j, t)) > -4) clear = false;
-              for (let o2 = 0; o2 < SUB.length && clear; o2++) {
+              for (let j = 0; j < ENZ.length; j++) bad += Math.max(0, sinkInto(rings, freeEnzyme(j, t)) + 6);
+              for (let o2 = 0; o2 < SUB.length; o2++) {
                 if (o2 === ev.s || isEmpty(o2, t - 1, t + 1)) continue;
                 const other = layout(driftPose(o2, t), ringsAt(o2, t));
-                if (rings.some((r) => other.some((p) => Math.hypot(r.x - p.x, r.y - p.y) < 40))) clear = false;
+                let m = 1e9;
+                for (const r of rings) for (const p of other) m = Math.min(m, Math.hypot(r.x - p.x, r.y - p.y));
+                bad += Math.max(0, 42 - m);
               }
+              for (const mr of maltRings(t)) bad += Math.max(0, 50 - minDistRings(rings, mr));
             }
             const startD = Math.hypot(home.x + cand.dx - LENS_WC[0], home.y + cand.dy - LENS_WC[1]);
-            const score = Math.abs(da) + (startD < 680 ? 40 : 0);
-            if (clear && score < bestScore) {
+            // it must start out of view (or nearly), and the more direct the way in, the better
+            const score = bad * 10 + Math.abs(da) * 0.2 + Math.max(0, 640 - startD) * 0.6;
+            if (score < bestScore) {
               bestScore = score;
               o = cand;
             }
           }
-          if (!o) o = { t: tr, dW, dx: Math.cos(base) * RESPAWN_D, dy: Math.sin(base) * RESPAWN_D, dr: 0, fadeIn: true };
+          if (!o) throw new Error("respawn: no way in");
           OFFS[ev.s].push(o);
           GEN[ev.s].push(tr);
           emptyS[ev.s].push([snip, tr]);
@@ -823,16 +1156,6 @@ const PLANNED = (() => {
           emptyS[ev.s].push([snip, RESET]);
           notReady[ev.s].push([snip, RESET]); // stays gone until the fresh sample
         }
-      } else {
-        // the leftover chain: wherever it backed out to, it relaxes back into the crowd from there
-        const tb = snip + BACK_T;
-        const target = leftoverPose(freeEnzyme(ev.e, tb), ev.n, ev.rel, ev.side, snip, tb);
-        const here = driftPose(ev.s, tb);
-        const dx = target.x - here.x;
-        const dy = target.y - here.y;
-        const dr = angDiff(here.rot, target.rot);
-        const dW = Math.max(0.25, (Math.hypot(dx, dy) + Math.abs(dr) * 1.2) / (DRIFT_PER_PHASE * RELAX_K));
-        OFFS[ev.s].push({ t: tb, dW, dx, dy, dr, fadeIn: false });
       }
     }
   }
@@ -924,15 +1247,8 @@ export const substrateState = (i: number, abs: number): SubState => {
     // which link sits at the mouth depends on which way round the chain docked
     const mouthLink = ev.rel === 0 ? n - 3 : 1;
     if (abs < ev.at) {
-      // one smooth path, clocked by thermal phase: out of its own drift, along a gentle curve to a point
-      // in front of the active site (lining up only near the end), then sliding straight in end-on
-      const p0 = driftPose(i, abs);
-      const path = approachPath([p0.x, p0.y], e, docked);
-      const sPath = PROF_DOCK(phaseU(ev.t0, ev.at, abs));
-      const [x, y] = path.at(sPath);
-      const turn = smooth((sPath - (path.sq - 0.3)) / 0.3);
-      const pose: Pose = { x, y, rot: lerpAngle(p0.rot, docked.rot, turn) };
-      return state(pose, n, { lock: ramp(sPath, path.sq - 0.1, path.sq + 0.12, EASE.inOut), lockE: ev.e, opacity: fade });
+      const a = dockApproach(driftPose(i, abs), e, n, ev.rel, phaseU(ev.t0, ev.at, abs));
+      return state(a.pose, n, { lock: ramp(a.sPath, a.sq - 0.1, a.sq + 0.12, EASE.inOut), lockE: ev.e, opacity: fade });
     }
     if (abs < snip) {
       const strain = ramp(abs, snip - 8, snip, EASE.in);
@@ -978,6 +1294,39 @@ const keepInView = (x: number, y: number): [number, number] => {
 };
 
 /**
+ * Nudge a free maltose (2 rings at pose p) so it slides past the starch chains around it (and `extra`)
+ * instead of through them. k (0..1) scales it in once the maltose is out of the pocket.
+ */
+const clearOfChains = (p: Pose, abs: number, k: number, extra: Pose | null = null): Pose => {
+  if (k <= 0) return p;
+  const h2 = (SPACING * MOL_S) / 2;
+  const others: { pose: Pose; h: number; w: number }[] = [];
+  for (let i = 0; i < SUB.length; i++) {
+    const st = substrateState(i, abs);
+    // (weighted by opacity, so a chain fading in or out never switches the push on or off in one frame)
+    if (st.opacity > 0.01) others.push({ pose: st.pose, h: ((st.n - 1) / 2) * SPACING * MOL_S, w: smooth(st.opacity) });
+  }
+  if (extra) others.push({ pose: extra, h: h2, w: 1 });
+  let px = 0;
+  let py = 0;
+  for (const o of others) {
+    const q = segClosest(p, o.pose, h2, o.h);
+    const d = Math.hypot(q.ax - q.bx, q.ay - q.by);
+    const pen = softPush(2 * RING_R + CLEAR_S + SOFT - d);
+    if (pen <= 0) continue;
+    const cx = p.x - o.pose.x;
+    const cy = p.y - o.pose.y;
+    const cl = Math.hypot(cx, cy) || 1;
+    const nx = q.ax - q.bx + (cx / cl) * 14;
+    const ny = q.ay - q.by + (cy / cl) * 14;
+    const nl = Math.hypot(nx, ny) || 1;
+    px += (nx / nl) * pen * o.w;
+    py += (ny / nl) * pen * o.w;
+  }
+  return { x: p.x + px * k, y: p.y + py * k, rot: p.rot };
+};
+
+/**
  * Maltose released from the pocket: waits for the leftover chain to clear, slides straight out of the
  * mouth until it is past the lips, only then veers off (to the side the leftover chain didn't take),
  * drifts and fades.
@@ -988,26 +1337,14 @@ export const productState = (ev: Ev, abs: number): ProductState | null => {
   if (abs >= RESET && ev.at < RESET) return null; // fresh sample
   if (abs > snip + PRODUCT_LIFE + PRODUCT_FADE) return null;
   const e = enzymePose(ev.e, Math.min(abs, snip + PROD_WAIT + PROD_OUT_T));
-  const inPocket = dockedPose(e, 2, ev.rel);
-  const pd = pocketDir(e);
-  const perp: [number, number] = [-pd[1], pd[0]];
   const t1 = snip + PROD_WAIT;
   const t2 = t1 + PROD_OUT_T;
-  const t3 = t2 + PROD_VEER_T;
-  // 1. straight out along the pocket's axis (it can't go sideways while it's between the lips)…
-  // 2. …then it veers off, still moving outwards
-  const k1 = ramp(abs, t1, t2, EASE.inOut);
-  const k2 = ramp(abs, t2 - 6, t3, EASE.inOut);
-  const out = k1 * PROD_OUT + k2 * PROD_VEER_OUT;
-  const lat = ev.side * k2 * PROD_VEER_SIDE;
-  // 3. then it just drifts with the crowd
-  const pFree = Math.max(0, wanderAt(abs) - wanderAt(t2));
   const seed = `m${ev.at}`;
-  const wx = (noise2D(`${seed}x`, pFree * 0.9, 0) - noise2D(`${seed}x`, 0, 0)) * 60;
-  const wy = (noise2D(`${seed}y`, pFree * 0.9, 4) - noise2D(`${seed}y`, 0, 4)) * 50;
-  const [x, y] = keepInView(inPocket.x + pd[0] * out + perp[0] * lat + wx, inPocket.y + pd[1] * out + perp[1] * lat + wy);
-  const turn = ev.side * 24 * k2;
-  const pose: Pose = { x, y, rot: inPocket.rot + turn + (noise2D(`${seed}r`, pFree * 0.6, 7) - noise2D(`${seed}r`, 0, 7)) * 40 };
+  const raw = productRaw(ev, abs, headOf(ev).prod);
+  // once it's out between the lips, it slides past the leftover chain (and anything else) rather than through it
+  const cleared = clearOfChains(raw, abs, ramp(abs, t1 + PROD_OUT_T * 0.45, t2, EASE.inOut), ev.n - 2 <= 2 ? remnantPose(ev, abs) : null);
+  const [x, y] = keepInView(cleared.x, cleared.y);
+  const pose: Pose = { x, y, rot: cleared.rot };
   return {
     rings: layout(pose, 2),
     glow: ramp(abs, snip, snip + 14, EASE.out),
@@ -1020,6 +1357,14 @@ export const productState = (ev: Ev, abs: number): ProductState | null => {
   };
 };
 
+/** Where the remnant maltose of a chain's last dock is (see remnantState). */
+const remnantPose = (ev: Ev, abs: number): Pose => {
+  const snip = ev.at + ev.hold;
+  const cleared = clearOfChains(remnantRaw(ev, abs, headOf(ev).rem), abs, ramp(abs, snip + 4, snip + BACK_T, EASE.inOut));
+  const [x, y] = keepInView(cleared.x, cleared.y);
+  return { x, y, rot: cleared.rot };
+};
+
 /** A chain cut down to maltose by its last dock: it backs out, steps aside, drifts off and fades (its own item). */
 export const remnantState = (ev: Ev, abs: number): ProductState | null => {
   if (ev.kind !== "dock" || ev.n - 2 > 2) return null;
@@ -1027,22 +1372,9 @@ export const remnantState = (ev: Ev, abs: number): ProductState | null => {
   if (abs < snip) return null;
   if (abs >= RESET && ev.at < RESET) return null;
   if (abs > snip + PRODUCT_LIFE + PRODUCT_FADE + 10) return null;
-  const tb = snip + BACK_T;
-  const e = enzymePose(ev.e, Math.min(abs, tb));
-  const base = leftoverPose(e, ev.n, ev.rel, ev.side, snip, Math.min(abs, tb));
-  const pd = pocketDir(e);
-  const perp: [number, number] = [-pd[1], pd[0]];
-  // afterwards: keeps drifting away from the enzyme (and the product) at about the crowd's drift speed
-  const T = tempAt(abs);
-  const after = Math.max(0, abs - tb);
-  const away = Math.min(after, 40) * driftSpeed(T) * 0.9 + Math.max(0, after - 40) * driftSpeed(T) * 0.5;
-  const p = Math.max(0, wanderAt(abs) - wanderAt(tb));
+  const e = enzymePose(ev.e, Math.min(abs, snip + BACK_T));
   const seed = `r${ev.at}`;
-  const wx = (noise2D(`${seed}x`, p * 0.9, 0) - noise2D(`${seed}x`, 0, 0)) * 50;
-  const wy = (noise2D(`${seed}y`, p * 0.9, 4) - noise2D(`${seed}y`, 0, 4)) * 40;
-  const dir: [number, number] = [pd[0] * 0.7 - perp[0] * ev.side * 0.7, pd[1] * 0.7 - perp[1] * ev.side * 0.7];
-  const [x, y] = keepInView(base.x + dir[0] * away + wx, base.y + dir[1] * away + wy);
-  const pose: Pose = { x, y, rot: base.rot + (noise2D(`${seed}r`, p * 0.6, 7) - noise2D(`${seed}r`, 0, 7)) * 30 };
+  const pose = remnantPose(ev, abs);
   return {
     rings: layout(pose, 2),
     glow: ramp(abs, snip, snip + 16, EASE.out),
@@ -1054,6 +1386,77 @@ export const remnantState = (ev: Ev, abs: number): ProductState | null => {
     pivot: [e.x, e.y],
   };
 };
+
+/**
+ * Second look at each maltose's way out, now that every collision is planned: the planner chose it before
+ * later approaches existed, so pick again (if clearly better) the heading that stays clearest of every
+ * chain as it really moves (approaches and fresh chains included) and of the other maltose.
+ */
+{
+  const ringsMin = (a: readonly RingXY[], b: readonly RingXY[]) => {
+    let m = 1e9;
+    for (const p of a) for (const q of b) m = Math.min(m, Math.hypot(p.x - q.x, p.y - q.y));
+    return m;
+  };
+  const others = (f: number, skip: Ev) => {
+    const out: RingXY[][] = [];
+    for (let i = 0; i < SUB.length; i++) {
+      const st = substrateState(i, f);
+      if (st.opacity > 0.3) out.push(st.rings);
+    }
+    for (const d of DOCKS) {
+      if (d === skip) continue;
+      const sn = d.at + d.hold;
+      if (f < sn || f > sn + PRODUCT_LIFE + PRODUCT_FADE - 8 || (f >= RESET && d.at < RESET)) continue;
+      const h = headOf(d);
+      out.push(layout(productRaw(d, f, h.prod), 2));
+      if (d.n - 2 <= 2) out.push(layout(remnantRaw(d, f, h.rem), 2));
+    }
+    return out;
+  };
+  const clearance = (poseAt: (f: number) => Pose, from: number, to: number, skip: Ev, extra: ((f: number) => RingXY[]) | null) => {
+    let m = 90;
+    let out = 0;
+    for (let f = from; f <= to; f += 2) {
+      const p = poseAt(f);
+      const r = layout(p, 2);
+      for (const o of others(f, skip)) m = Math.min(m, ringsMin(r, o));
+      if (extra) m = Math.min(m, ringsMin(r, extra(f)));
+      out = Math.max(out, Math.hypot(p.x - LENS_WC[0], p.y - LENS_WC[1]) - 520);
+    }
+    return m - Math.max(0, out) * 0.5;
+  };
+  for (const ev of DOCKS) {
+    const snip = ev.at + ev.hold;
+    const end = snip + PRODUCT_LIFE + PRODUCT_FADE - 8;
+    const final = ev.n - 2 <= 2;
+    const h0 = headOf(ev);
+    let rem = h0.rem;
+    if (final) {
+      const sc = (head: number) => clearance((f) => remnantRaw(ev, f, head), snip + BACK_T, end + 10, ev, null);
+      let best = sc(rem) + 3;
+      for (const a of [20, 35, 50, 65, 80]) {
+        const v = sc(-ev.side * a);
+        if (v > best) {
+          best = v;
+          rem = -ev.side * a;
+        }
+      }
+    }
+    const extra = final ? (f: number) => layout(remnantRaw(ev, f, rem), 2) : null;
+    const sc = (head: number) => clearance((f) => productRaw(ev, f, head), snip + PROD_WAIT + PROD_OUT_T - 6, end, ev, extra);
+    let prod = h0.prod;
+    let best = sc(prod) + 3;
+    for (const a of [-80, -60, -40, -20, 20, 40, 60, 80]) {
+      const v = sc(ev.side * a);
+      if (v > best) {
+        best = v;
+        prod = ev.side * a;
+      }
+    }
+    HEAD.set(ev.at, { prod, rem });
+  }
+}
 
 /** Flash for every contact: where, how big, how far through (0..1). */
 export const flashes = (abs: number) =>

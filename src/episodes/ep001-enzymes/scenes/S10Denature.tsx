@@ -1,8 +1,10 @@
 /**
  * S10 · Denaturation. Opens on the pause overlay (hard cut from S09).
  *  1. Reveal: a pen draws the true curve past the peak — it crashes to ~0. The right guess gets a ✓, the
- *     wrong one fades, and the sample's dot lands on the floor at 70 °C. Cooled back to 37 °C, the dot
- *     slides along the floor: an arrow back up to the peak is crossed out. It doesn't recover.
+ *     wrong one fades, and the sample's dot lands on the floor at 70 °C. Meanwhile the lens (racked out of
+ *     focus in S09) comes back into focus as its enzymes lose their shape, and starch now bounces off their
+ *     misshapen active sites. Cooled back to 37 °C, the dot slides along the floor: an arrow back up to the
+ *     peak is crossed out. It doesn't recover.
  *  2. Why: one enzyme, close up, tagged "before heating" (so it can't be mistaken for a recovery).
  *     Weak bonds hold its folds together → heat makes it shake violently → the bonds break, slowly at first,
  *     then faster → the chain unravels → the active site loses its shape → a starch chain bumps the
@@ -35,10 +37,11 @@ import { track } from "../../../lib/track";
 import { moveRings } from "../../../lib/world";
 import { useScene } from "../../../lib/timeline";
 import { s10Timing } from "./S10Denature.timing";
-import { enzymePose, jig } from "./S08-S10-arc";
+import { enzymePose, jig, lensSoftAt } from "./S08-S10-arc";
 import {
   AmbientTemp,
   LENS,
+  LENS_BLUR,
   Lens,
   Population,
   THERMO,
@@ -355,6 +358,10 @@ export const S10Denature: React.FC = () => {
   const p1Out = span(f, k.closeA, k.closeA + 14, EASE.in);
   const cam = lensCam(1);
   const lensDen = span(f, k.penA + 6, k.penB + 6, EASE.inOut);
+  // the lens comes back into focus (S09 racked it out) as the reveal starts — while its enzymes lose their shape
+  const soft = lensSoftAt(abs);
+  // the dashed optimum guide makes way for the "can't climb back up" arrow
+  const guideO = 1 - span(f, k.arrowA - 6, k.arrowA + 4);
 
   // ---------------- 2. close-up: one enzyme, before heating
   const heroIn = span(f, k.heroInA, k.heroInB, EASE.out);
@@ -411,28 +418,32 @@ export const S10Denature: React.FC = () => {
     return [hx + dx * Math.cos(b) - dy * Math.sin(b) + hjx, hy + dx * Math.sin(b) + dy * Math.cos(b) + hjy];
   };
 
-  // the starch chain that no longer fits: drifts in, its leading ring hits the collapsed lip, bounces off
+  // the starch chain that no longer fits: drifts in from the lower left (lining up end-on as it comes), its
+  // leading ring hits the collapsed lip, and it bounces back the way it came
   const contactX = -NOFIT_SHORT * hs;
   const sx = track(f, [
-    [k.subIn, contactX - 330],
+    [k.subIn, contactX - 130],
     [k.bounce, contactX, hitEase],
-    [k.bounce + 34, contactX - 250, out],
+    [k.bounce + 34, contactX - 120, out],
   ]);
   const sy = track(f, [
-    [k.subIn, 70],
-    [k.bounce, 0, EASE.inOut],
-    [k.bounce + 34, 46, out],
+    [k.subIn, 210],
+    [k.bounce, 0, EASE.out],
+    [k.bounce + 34, 130, out],
   ]);
   const srot = track(f, [
-    [k.bounce, 0],
-    [k.bounce + 34, -9, out],
+    [k.subIn, 12],
+    [k.bounce - 10, 0, EASE.out],
+    [k.bounce + 34, 10, out],
   ]);
   const sj = jig("NOFIT", abs, 0.9);
   // it meets the enzyme where the enzyme actually is (which is shaking)
   const stick = Math.max(0, 1 - Math.abs(f - k.bounce) / 12);
   const noFitChain = dockedChain(4, hx, hy, hs, { wave: 1.2 * Math.sin(f * 0.09) });
   const noFitRings = moveRings(noFitChain.rings, sx + sj.dx * (1 - stick) + hjx * stick, sy + sj.dy * (1 - stick) + hjy * stick, srot);
-  const noFitO = span(f, k.subIn, k.subIn + 14) * (1 - span(f, k.bounce + 18, k.bounce + 44));
+  // (it only shows once it's clear of the thermometer on the left)
+  const noFitLeft = Math.min(...noFitRings.map((r) => r.x)) - 30 * hs;
+  const noFitO = Math.min(span(f, k.subIn, k.subIn + 14), Math.max(0, Math.min(1, (noFitLeft - 340) / 60))) * (1 - span(f, k.bounce + 18, k.bounce + 44));
   const contactPt = heroPt([-176, 2]);
   const bumpP = clamp01((f - k.bounce) / 16);
   const xP = clamp01((f - k.bounce - 2) / 14);
@@ -477,10 +488,11 @@ export const S10Denature: React.FC = () => {
       {/* 1 · the reveal: lens + graph (same layout as S08/S09) */}
       {p1Out < 1 ? (
         <FocusPull blur={10 * p1Out} opacity={1 - p1Out} dim={0.3}>
-          <Lens cam={cam} frame={1}>
+          <Lens cam={cam} frame={1} blur={LENS_BLUR * soft}>
             <g transform={worldTransform(cam)}>
               <Population abs={abs} denature={lensDen} lod={lensDen > 0 ? "high" : "low"} />
             </g>
+            {soft > 0 ? <circle cx={cam.cx} cy={cam.cy} r={cam.r} fill={C.ink950} opacity={0.32 * soft} /> : null}
           </Lens>
           <TempGraph
             f={abs}
@@ -500,7 +512,7 @@ export const S10Denature: React.FC = () => {
             ghost={{ x: 37, o: ghostO }}
             pen={{ x: fallTo, o: penO }}
             pointer={{ x: T, o: 1 }}
-            guide={1}
+            guide={guideO}
             guesses={{ up: 1, down: 1, o: 1, upO, downO, tick: tickP }}
             floor={{ from: 70, to: dotX, o: floorO }}
           />
@@ -638,7 +650,7 @@ export const S10Denature: React.FC = () => {
           opacity={(1 - span(f, k.chillA - 6, k.chillA + 8)) * (1 - panOut)}
         />
       ) : null}
-      <Keyword x={(PAN.x + HERO_EGG.x) / 2 + 40} y={H - 116} text="cooling won't fix it" size={56} progress={span(f, k.fix - 6, k.fix + 8) * (1 - span(f, k.coldA - 4, k.coldA + 6))} />
+      <Keyword x={(PAN.x + HERO_EGG.x) / 2 + 40} y={H - 136} text="cooling won't fix it" size={56} progress={span(f, k.fix - 6, k.fix + 8) * (1 - span(f, k.coldA - 4, k.coldA + 6))} />
       {showBack ? (
         <>
           <text
@@ -653,9 +665,9 @@ export const S10Denature: React.FC = () => {
           >
             a fresh sample
           </text>
-          <Keyword x={960} y={H - 112} text="less kinetic energy" size={60} progress={span(f, k.lessKE - 2, k.lessKE + 12) * (1 - span(f, k.isnt - 14, k.isnt - 2))} />
+          <Keyword x={960} y={H - 136} text="less kinetic energy" size={60} progress={span(f, k.lessKE - 2, k.lessKE + 12) * (1 - span(f, k.isnt - 14, k.isnt - 2))} />
           <Label anchor={e0s} at={[e0s[0] + 90, 206]} text="not denatured" color={C.tealLight} progress={notDenP} opacity={notDenO} />
-          <HandTick cx={gx(37) + 62} cy={gy(1) - 34} size={64} progress={clamp01((f - k.tick) / 14)} />
+          <HandTick cx={gx(37) + 62} cy={gy(1) - 34} size={64} progress={clamp01((f - k.tick) / 10)} />
         </>
       ) : null}
 
