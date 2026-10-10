@@ -11,8 +11,8 @@ import { dockedChain } from "../../../components/dock";
 import { Label, Keyword } from "../../../components/Label";
 import { Cross, PaperSheet } from "../../../components/Icons";
 import { HandTick, StrikeThrough, textBox } from "../../../components/kit";
-import { DOCK, ENZYME_REST, POCKET_INDICES } from "../../../components/molecule-geometry";
-import { roundedPolygon } from "../../../lib/geometry";
+import { DOCK } from "../../../components/molecule-geometry";
+import { LockKeyModel } from "../../../components/LockKeyModel";
 import { camAt, camTransform } from "../../../lib/camera";
 import { prog, thermalAmplitude, window01 } from "../../../lib/motion";
 import { track, pulse } from "../../../lib/track";
@@ -23,14 +23,6 @@ import { s05Timing } from "./S05ActiveSite.timing";
 
 const E = { x: 1200, y: 560, s: 1.6 } as const;
 const PIVOT = [E.x, E.y] as const;
-
-/** The pocket's inner walls, closed with a straight entry channel: the lock's keyhole. */
-const KEYHOLE_PTS = [
-  [-190, 30] as const,
-  ...POCKET_INDICES.slice(1, -1).map((i) => ENZYME_REST[i]),
-  [-190, -30] as const,
-];
-const POCKET_SHAPE = roundedPolygon(KEYHOLE_PTS, KEYHOLE_PTS.map((_, i) => (i === 0 || i === KEYHOLE_PTS.length - 1 ? 2 : 6)));
 
 export const S05ActiveSite: React.FC = () => {
   const sc = useScene();
@@ -173,30 +165,7 @@ export const S05ActiveSite: React.FC = () => {
       </defs>
       <g transform={camTransform(cam)}>
         {/* lock & key (off to the right of the world; the camera pans to it) */}
-        {lkVis > 0 ? (
-          <g opacity={lkVis} transform={`translate(${L.x} ${L.y}) scale(${L.s})`}>
-            <path d="M -60,-150 V -230 A 110 110 0 0 1 160,-230 V -150" fill="none" stroke={C.ink400} strokeWidth={26} strokeLinecap="round" />
-            <rect x={-230} y={-160} width={460} height={330} rx={46} fill={C.ink700} />
-            <rect x={-230} y={-160} width={460} height={330} rx={46} fill="none" stroke={C.ink400} strokeWidth={5} />
-            <rect x={-224} y={-154} width={448} height={60} rx={30} fill={C.paper} opacity={0.05} />
-            <g transform="translate(150 0)">
-              <path d={POCKET_SHAPE} fill={C.ink950} />
-              <path d={POCKET_SHAPE} fill="none" stroke={C.paper} strokeWidth={3} strokeDasharray="9 8" opacity={0.7} />
-              <g transform={`translate(${keyX} 0)`}>
-                <line x1={DOCK.cut[0] - 210} y1={0} x2={DOCK.cut[0] + 6} y2={0} stroke={C.creamDeep} strokeWidth={16} strokeLinecap="round" />
-                <circle cx={DOCK.cut[0] - 262} cy={0} r={52} fill="none" stroke={C.creamDeep} strokeWidth={20} />
-                <circle cx={DOCK.cut[0] - 262} cy={0} r={52} fill="none" stroke={C.cream} strokeWidth={6} opacity={0.6} />
-                <SugarChain
-                  rings={[
-                    { x: DOCK.outer[0], y: 0 },
-                    { x: DOCK.inner[0], y: 0 },
-                  ]}
-                  links={[{ a: 0, b: 1 }]}
-                />
-              </g>
-            </g>
-          </g>
-        ) : null}
+        {lkVis > 0 ? <LockKeyModel x={L.x} y={L.y} scale={L.s} keyIn={keyX} opacity={lkVis} /> : null}
 
         {showCell ? (
           <g transform={jitTransform(cj3, PIVOT)}>

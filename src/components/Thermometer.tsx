@@ -18,9 +18,9 @@ export type ThermometerProps = {
 
 const c = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
-/** Temperature → liquid colour: cold blue, body-temperature teal-amber, hot coral. */
+/** Temperature → liquid colour: cold blue → neutral → warm amber → hot coral (teal stays amylase's). */
 export const heatColor = (t: number) =>
-  interpolateColors(t, [0, 20, 37, 50, 70], [C.ice, C.teal, C.amber, C.coral, C.coralDeep]);
+  interpolateColors(t, [0, 20, 37, 50, 70], [C.ice, C.paperDim, C.amber, C.coral, C.coralDeep]);
 
 export const Thermometer: React.FC<ThermometerProps> = ({
   x,
@@ -72,7 +72,7 @@ export const Thermometer: React.FC<ThermometerProps> = ({
       ))}
       {showValue ? (
         <text x={x} y={top - 34} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={54} fill={col}>
-          {Math.round(temperature)}°C
+          {Math.round(temperature)} °C
         </text>
       ) : null}
     </g>

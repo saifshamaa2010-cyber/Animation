@@ -33,16 +33,16 @@ export type PHScaleProps = {
 export const PH_COLOURS = {
   acid: C.coral,
   neutral: C.paper,
-  alkali: C.violet,
+  alkali: C.ice,
 };
 
 /** pH colour at a value 0..14 (for markers, graph fills…). */
 export const phColour = (ph: number) => {
   const t = Math.max(0, Math.min(14, ph)) / 7;
-  return t <= 1 ? mix(C.coral, C.paper, t) : mix(C.paper, C.violet, t - 1);
+  return t <= 1 ? mix(C.coral, C.paper, t) : mix(C.paper, C.ice, t - 1);
 };
 
-/** The 0–14 pH bar: acid coral → neutral paper → alkaline violet. */
+/** The 0–14 pH bar: acid coral → neutral paper → alkaline ice-blue. */
 export const PHScale: React.FC<PHScaleProps> = ({
   x,
   y,
@@ -77,8 +77,8 @@ export const PHScale: React.FC<PHScaleProps> = ({
           <stop offset="0" stopColor={C.coral} />
           <stop offset="0.22" stopColor={mix(C.coral, C.paper, 0.45)} />
           <stop offset="0.5" stopColor={C.paper} />
-          <stop offset="0.78" stopColor={mix(C.paper, C.violet, 0.55)} />
-          <stop offset="1" stopColor={C.violet} />
+          <stop offset="0.78" stopColor={mix(C.paper, C.ice, 0.55)} />
+          <stop offset="1" stopColor={C.ice} />
         </linearGradient>
         <linearGradient id={`${id}-shade`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor={C.paper} stopOpacity={0.45} />
@@ -121,7 +121,7 @@ export const PHScale: React.FC<PHScaleProps> = ({
               [
                 [2.5, "acidic", C.coral],
                 [7, "neutral", C.paper],
-                [11.5, "alkaline", C.violetLight],
+                [11.5, "alkaline", C.ice],
               ] as const
             ).map(([ph, t, col]) => (
               <text key={t} x={at(ph)} y={y + r + 36 + numSize * 0.72 + 58} textAnchor="middle" fontFamily={FONT} fontWeight={500} fontSize={40} fill={col} opacity={0.85}>
