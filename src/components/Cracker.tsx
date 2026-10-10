@@ -1,6 +1,6 @@
 import React from "react";
 import { C } from "../brand/tokens";
-import { rng } from "../lib/geometry";
+import { rng, roundedPolygon } from "../lib/geometry";
 import { useSvgId } from "./ids";
 
 export type CrackerProps = {
@@ -93,6 +93,11 @@ export const Cracker: React.FC<CrackerProps> = ({ x, y, size = 460, rotate = 0, 
 };
 
 /** A loose crumb. */
+/**
+ * A crumb of the same cracker: same baked gradient, a rim highlight on the upper edge, a soft
+ * contact shadow and (on bigger pieces) a docking-hole dot — never a flat outlined polygon.
+ * `glow` warms it towards amber as it turns sweet.
+ */
 export const Crumb: React.FC<{ x: number; y: number; r: number; rot?: number; glow?: number; opacity?: number; seed?: number }> = ({
   x,
   y,
@@ -102,16 +107,41 @@ export const Crumb: React.FC<{ x: number; y: number; r: number; rot?: number; gl
   opacity = 1,
   seed = 1,
 }) => {
+  const id = useSvgId("crumb");
   const rand = rng(seed);
-  const pts = Array.from({ length: 7 }, (_, i) => {
-    const a = (i / 7) * Math.PI * 2;
-    const rr = r * (0.7 + rand() * 0.5);
-    return `${Math.cos(a) * rr},${Math.sin(a) * rr}`;
-  }).join(" ");
-  const fill = glow > 0.01 ? mix("#E3B66E", C.amber, glow) : "#E3B66E";
+  const ro = (rot * Math.PI) / 180;
+  // rotate the outline itself so light (top) and shadow (bottom) stay put as the crumb turns
+  const pts: [number, number][] = Array.from({ length: 7 }, (_, i) => {
+    const a = (i / 7) * Math.PI * 2 + rand() * 0.25 + ro;
+    const rr = r * (0.78 + rand() * 0.32);
+    return [Math.cos(a) * rr, Math.sin(a) * rr];
+  });
+  const d = roundedPolygon(pts, r * 0.22);
+  const holeRoll = rand();
+  const hole = r > 22 && holeRoll < 0.45 ? [(rand() - 0.5) * r * 0.6, (rand() - 0.5) * r * 0.5] : null;
+  const top = glow > 0.01 ? mix("#F6D9A0", C.amberLight, glow) : "#F6D9A0";
+  const midC = glow > 0.01 ? mix("#E3B66E", C.amber, glow) : "#E3B66E";
+  const low = glow > 0.01 ? mix("#C38A44", C.amberDeep, glow) : "#C38A44";
   return (
-    <g transform={`translate(${x} ${y}) rotate(${rot})`} opacity={opacity}>
-      <polygon points={pts} fill={fill} stroke="#C38A44" strokeWidth={2} strokeLinejoin="round" />
+    <g transform={`translate(${x} ${y})`} opacity={opacity}>
+      <defs>
+        <linearGradient id={`${id}-f`} x1="0" y1="0" x2="0.7" y2="1">
+          <stop offset="0" stopColor={top} />
+          <stop offset="0.55" stopColor={midC} />
+          <stop offset="1" stopColor={low} />
+        </linearGradient>
+        <linearGradient id={`${id}-rg`} gradientUnits="userSpaceOnUse" x1="0" y1={-r} x2="0" y2={0}>
+          <stop offset="0" stopColor="#fff" stopOpacity={1} />
+          <stop offset="1" stopColor="#fff" stopOpacity={0} />
+        </linearGradient>
+        <mask id={`${id}-rm`} maskUnits="userSpaceOnUse" x={-r * 2} y={-r * 2} width={r * 4} height={r * 4}>
+          <rect x={-r * 2} y={-r * 2} width={r * 4} height={r * 4} fill={`url(#${id}-rg)`} />
+        </mask>
+      </defs>
+      <ellipse cx={r * 0.12} cy={r * 0.72} rx={r * 0.95} ry={r * 0.32} fill={C.ink950} opacity={0.32} />
+      <path d={d} fill={`url(#${id}-f)`} />
+      <path d={d} fill="none" stroke="#FFF1D2" strokeOpacity={0.6} strokeWidth={Math.max(1.5, r * 0.1)} mask={`url(#${id}-rm)`} />
+      {hole ? <circle cx={hole[0]} cy={hole[1]} r={r * 0.11} fill="#8A5524" opacity={0.7} /> : null}
     </g>
   );
 };

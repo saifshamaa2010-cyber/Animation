@@ -25,7 +25,7 @@ export const s13Timing = (t: CueFns) => {
 export const s13Sfx = (t: CueFns): SfxEvent[] => {
   const k = s13Timing(t);
   return [
-    { frame: k.chew + 2, sfx: "whoosh_zoom", gainDb: -4 },
+    { frame: k.back + 8, sfx: "whoosh_zoom", gainDb: -4 },
     { frame: k.dock, sfx: "pop_bind", gainDb: -2 },
     { frame: k.snap, sfx: "snip" },
     ...k.snaps2.map((s) => ({ frame: s, sfx: "snip", gainDb: -7 })),

@@ -42,7 +42,7 @@ export const ScaleBar: React.FC<ScaleBarProps> = ({
   const i = Math.max(0, Math.min(labels.length - 1, Math.floor(step)));
   const f = EASE.inOut(Math.max(0, Math.min(1, step - i)));
   const next = Math.min(labels.length - 1, i + 1);
-  // Odometer-style: labels roll through a soft window and never overlap.
+  // Labels change with a quick crossfade inside a soft window.
   const roll = size * 1.2;
   const base = y - 30;
   const th = 6;
@@ -79,8 +79,10 @@ export const ScaleBar: React.FC<ScaleBarProps> = ({
       </defs>
       <g opacity={txt} transform={`translate(0 ${(1 - txt) * 10})`} mask={`url(#${id}-m)`}>
         {[
-          { t: labels[i], dy: -f * roll, o: 1 - f * 0.5 },
-          ...(next !== i ? [{ t: labels[next], dy: (1 - f) * roll, o: 0.5 + f * 0.5 }] : []),
+          // A short lift-and-crossfade (the old label is gone before the new one is half in), so no
+          // half-rolled fragments ever sit on screen.
+          { t: labels[i], dy: -f * roll * 0.35, o: Math.max(0, 1 - f * 2) },
+          ...(next !== i ? [{ t: labels[next], dy: (1 - f) * roll * 0.35, o: Math.max(0, f * 2 - 1) }] : []),
         ].map((l, k) =>
           l.o > 0.01 ? (
             <text

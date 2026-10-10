@@ -135,16 +135,20 @@ export const S03Starch: React.FC = () => {
   // ---- water jostling the link: it holds
   const lx = MAIN_END - (LINK_I + 0.5) * SPACING;
   const ly = MAIN_Y + 10;
+  // Water molecules (true scale: about half a glucose ring) bump the link from above and below,
+  // never sitting on the rings themselves.
+  const WATER_ANGLES = [-1.15, 1.2, -1.95, 2.0, -1.55];
   const waters = [0, 1, 2, 3, 4].map((i) => {
     const period = 46 + i * 7;
     const local = f - k.aeons - i * 9;
     if (local < 0) return null;
     const u = (local % period) / period;
-    const ang = (i / 5) * Math.PI * 2 + 0.6;
-    const dist = 70 + 150 * Math.abs(Math.cos(u * Math.PI)); // in → touch → out
-    return { x: lx + Math.cos(ang) * dist, y: ly + Math.sin(ang) * dist * 0.8, touch: dist < 80 ? 1 - (dist - 70) / 10 : 0, i, rot: u * 120 };
+    const ang = WATER_ANGLES[i];
+    const dist = 46 + 150 * Math.abs(Math.cos(u * Math.PI)); // in → touch → out
+    return { x: lx + Math.cos(ang) * dist, y: ly + Math.sin(ang) * dist, touch: dist < 54 ? 1 - (dist - 46) / 8 : 0, i, rot: u * 120 };
   });
-  const years = track(f, [[k.aeons + 4, 0], [k.end - 6, 1_000_000, EASE.in]]);
+  // Room temperature: half-life ~10 million years (sources row 4) — lands on "millions" and holds.
+  const years = track(f, [[k.aeons + 4, 0], [sc.word("millions", 1, 0), 10_000_000, EASE.in]]);
   const stakes = prog(f, k.aeons + 4, 16);
 
   return (
@@ -192,8 +196,8 @@ export const S03Starch: React.FC = () => {
               ? waters.map((w) =>
                   w ? (
                     <g key={w.i}>
-                      <Water x={w.x} y={w.y} scale={0.9} rotate={w.rot} still />
-                      {w.touch > 0 ? <circle cx={(w.x + lx) / 2} cy={(w.y + ly) / 2} r={14 + 10 * w.touch} fill="none" stroke={C.paper} strokeOpacity={0.5 * w.touch} strokeWidth={2} /> : null}
+                      <Water x={w.x} y={w.y} scale={0.5} rotate={w.rot} still />
+                      {w.touch > 0 ? <circle cx={(w.x + lx) / 2} cy={(w.y + ly) / 2} r={10 + 8 * w.touch} fill="none" stroke={C.paper} strokeOpacity={0.5 * w.touch} strokeWidth={2} /> : null}
                     </g>
                   ) : null,
                 )
@@ -204,10 +208,10 @@ export const S03Starch: React.FC = () => {
 
         {/* screen-space annotations */}
         <Label anchor={[1120, 470]} at={[1360, 300]} text="starch" progress={prog(f, k.starchLabel, 20)} opacity={1 - prog(f, k.zoom + 4, 8)} />
-        <ScaleBar x={240} y={H - 150} length={200} labels={["1 mm", "1 µm", "1 nm"]} step={2 * zt} progress={window01(f, k.zoom - 6, k.count + 30, 10)} />
+        <ScaleBar x={240} y={H - 150} length={200} labels={["1 cm", "1 µm", "1 nm"]} step={2 * zt} progress={window01(f, k.zoom - 6, k.count + 30, 10)} />
         {f > k.zoomEnd ? (
           <g opacity={window01(f, k.count - 2, k.notSweet - 8, 12)}>
-            <Counter x={W / 2} y={H - 150} value={track(f, [[k.count, 0], [k.count + 70, 1000, EASE.inOut]])} size={80} suffix="+ glucose" speed={0.4} />
+            <Counter x={W / 2} y={H - 150} value={track(f, [[k.count, 0], [k.count + 70, 1000, EASE.inOut]])} size={80} suffix="+ glucose units" speed={0.4} />
           </g>
         ) : null}
         {f > k.zoomEnd ? (
@@ -245,7 +249,7 @@ export const S03Starch: React.FC = () => {
         {stakes > 0 ? (
           <g opacity={stakes}>
             <Hourglass x={W - 370} y={250} size={210} sand={prog(f, k.aeons, 150) * 0.3} progress={stakes} />
-            <Counter x={W - 370} y={450} value={years} size={60} suffix=" years" speed={years > 0 && years < 1_000_000 ? 1 : 0} />
+            <Counter x={W - 370} y={450} value={years} size={60} suffix=" years" speed={years > 0 && years < 10_000_000 ? 1 : 0} />
           </g>
         ) : null}
       </svg>

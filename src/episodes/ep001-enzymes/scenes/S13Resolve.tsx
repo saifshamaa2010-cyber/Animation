@@ -47,12 +47,13 @@ export const S13Resolve: React.FC = () => {
   const amp = thermalAmplitude(37) * 0.8;
 
   // ---- zoom in (chew) and back out (tongue): same "powers of ten" language as S03
-  const zin = interpolate(f, [k.chew, k.zoomEnd], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: EASE.inOut });
-  const zout = interpolate(f, [k.zoomOut, k.zoomOut + 50], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: EASE.inOut });
+  // Starts on "back" and takes ~3 s (the S03 tempo), so the crumb → molecule crossfade is never a whip.
+  const zin = interpolate(f, [k.back + 6, k.zoomEnd], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: EASE.inOut });
+  const zout = interpolate(f, [k.zoomOut, k.zoomOut + 72], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: EASE.inOut });
   const zt = zin * (1 - zout);
   const Z = Math.exp(Math.log(Z_MAX) * zt);
-  const microVis = interpolate(Z, [7, 18], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const macroVis = 1 - interpolate(Z, [5, 13], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const microVis = interpolate(Z, [5, 14], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const macroVis = 1 - interpolate(Z, [3.5, 9], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const microZ = Z / Z_MAX;
   const titleT = f - k.shapeLine;
   const titleVis = prog(f, k.shapeLine - 4, 14);
@@ -110,6 +111,34 @@ export const S13Resolve: React.FC = () => {
             {CRUMBS.map((c, i) => (
               <Crumb key={i} x={c.to[0] + 60} y={c.to[1]} r={c.r} rot={c.rot} seed={c.seed} glow={amberAfter * prog(f, k.zoomOut + 30 + c.glowDelay, 20)} />
             ))}
+          </g>
+        ) : null}
+
+        {/* "That sweet taste": maltose drifting up out of the glowing mouthful (amber = sweet) */}
+        {amberAfter > 0 && macroVis > 0 ? (
+          <g opacity={macroVis * (1 - titleVis)}>
+            {[0, 1, 2, 3, 4, 5].map((j) => {
+              const t0 = k.zoomOut + 40 + j * 9;
+              const u = prog(f, t0, 70, (t) => t);
+              if (u <= 0 || u >= 1) return null;
+              const x0 = P.x + 60 + [-170, -60, 40, 140, -110, 90][j];
+              const y0 = P.y - 80 + [10, -20, 0, 20, 30, -10][j];
+              const rr = 0.6;
+              const pr: Ring[] = moveRings(
+                [
+                  { x: x0 - SPACING * rr * 0.5, y: y0 - u * 220, tone: "sugar", glow: 1, scale: rr },
+                  { x: x0 + SPACING * rr * 0.5, y: y0 - u * 220, tone: "sugar", glow: 1, scale: rr },
+                ],
+                Math.sin(u * 5 + j) * 14,
+                0,
+                -18 + j * 9,
+              );
+              return (
+                <g key={j} opacity={Math.min(1, u * 5) * (1 - prog(f, t0 + 46, 24))}>
+                  <SugarChain rings={pr} links={[{ a: 0, b: 1 }]} />
+                </g>
+              );
+            })}
           </g>
         ) : null}
 

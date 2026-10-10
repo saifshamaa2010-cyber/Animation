@@ -69,7 +69,8 @@ export const Counter: React.FC<CounterProps> = ({
   const wheel = (k: number) => {
     const p = 10 ** k;
     const N = Math.floor(v / p);
-    const f = k === 0 ? v - Math.floor(v) : Math.max(0, Math.min(1, (v % p) - (p - 1)));
+    // The ones column snaps over in the last quarter of each step (a crisp tick, not a constant smear).
+    const f = k === 0 ? Math.max(0, Math.min(1, (v - Math.floor(v) - 0.75) / 0.25)) : Math.max(0, Math.min(1, (v % p) - (p - 1)));
     return { N, f };
   };
   const baseline = size * 0.355;
@@ -98,17 +99,14 @@ export const Counter: React.FC<CounterProps> = ({
   const columns = Array.from({ length: cols }, (_, k) => {
     const { N: d0, f } = wheel(k);
     const rate = Math.abs(speed) / 10 ** k;
-    const filter = rate >= 1 ? `url(#${id}-fast)` : rate >= 0.3 ? `url(#${id}-mid)` : undefined;
+    // Columns spinning faster than the eye can read just show their current digit, crisp — a still
+    // frame never shows half-rolled or blurred glyphs.
+    const filter = undefined;
     const fade = vis(k);
     return (
       <g key={k} filter={filter} opacity={fade}>
-        {rate >= 1 ? (
-          <>
-            {digit(k, d0 - 1, -lineH * (1 + f), 0.2)}
-            {digit(k, d0, -f * lineH, 0.5)}
-            {digit(k, d0 + 1, (1 - f) * lineH, 0.5)}
-            {digit(k, d0 + 2, (2 - f) * lineH, 0.2)}
-          </>
+        {rate >= 0.3 ? (
+          digit(k, d0, 0, 1)
         ) : (
           <>
             {digit(k, d0, -f * lineH, 1)}
@@ -157,7 +155,7 @@ export const Counter: React.FC<CounterProps> = ({
         </text>
       ) : null}
       {suffix ? (
-        <text x={xRight + size * 0.22} y={y + baseline} textAnchor="start" fontFamily={FONT} fontWeight={500} fontSize={subSize} fill={suffixColor}>
+        <text x={xRight + size * (suffix.startsWith("+") ? 0.06 : 0.22)} y={y + baseline} textAnchor="start" fontFamily={FONT} fontWeight={500} fontSize={subSize} fill={suffixColor}>
           {suffix}
         </text>
       ) : null}
