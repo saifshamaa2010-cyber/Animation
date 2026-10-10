@@ -62,6 +62,7 @@ export const S05ActiveSite: React.FC = () => {
     1 + 0.016 * pulse(f, k.dock - 2, 12) + 0.012 * pulse(f, k.fit2 - 2, 12) - 0.01 * pulse(f, k.snap, 8) - 0.006 * pulse(f, k.snap2, 8);
   const siteVis = Math.max(
     window01(f, sc.word("active", 1, -2), k.held + 6, 12),
+    0.45 * window01(f, k.held, k.snap + 4, 10), // the fit stays visible while the bond strains
     window01(f, k.lock + 6, k.specific + 30, 12),
     window01(f, k.diff, k.end + 30, 10),
   );
@@ -71,7 +72,7 @@ export const S05ActiveSite: React.FC = () => {
   const c1 = dockedChain(9, E.x, E.y, E.s, { wave: 1.6 * Math.sin(f * 0.07) * (1 - prog(f, k.dock - 16, 16) * 0.7) });
   const ax = track(f, [[k.sub - 44, -1150], [k.sub + 56, -330, out], [k.dock - 16, -290], [k.dock, 0, out], [k.snap, 0], [k.snap + 10, -64, EASE.snap], [k.next + 30, -420], [k.lock + 10, -1100, EASE.in]]);
   const ay = track(f, [[k.sub - 44, 230], [k.sub + 56, 40, out], [k.dock - 16, 18], [k.dock, 0, out], [k.snap, 0], [k.snap + 10, 24, EASE.snap], [k.next + 30, 280], [k.lock + 10, 560, EASE.in]]);
-  const arot = track(f, [[k.sub - 44, -12], [k.sub + 56, -3, out], [k.dock, 0, out], [k.snap + 10, 4], [k.lock, 10]]);
+  const arot = track(f, [[k.sub - 44, -12], [k.sub + 56, -3, out], [k.dock, 0, out], [k.snap, 0], [k.snap + 10, 4], [k.lock, 10]]); // no tilt while docked
   const mx = track(f, [[k.release - 8, 0], [k.release + 18, -200], [k.next + 40, -300, out], [k.lock + 50, -900, EASE.in]]);
   const my = track(f, [[k.release - 8, 0], [k.release + 4, 0], [k.release + 42, -240, out], [k.lock + 50, -1100, EASE.in]]);
   const mrot = track(f, [[k.release, 0], [k.release + 42, -16, out], [k.lock + 40, -30]]);

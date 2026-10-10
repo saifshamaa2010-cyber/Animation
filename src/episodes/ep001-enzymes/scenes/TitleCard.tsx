@@ -65,8 +65,11 @@ export const TitleCard: React.FC<{
       <g clipPath="url(#title-mask)">
         {WORDS.map((w, i) => {
           const p = prog(t, wordsDelay + 8 + i * 5, 16, EASE.out);
+          // Waiting words sit fully below the mask (cap tops at y + 0.45·SIZE, mask ends at
+          // y + 0.3·SIZE), so no slivers of unrevealed letters ever show.
+          if (p <= 0) return null;
           return (
-            <text key={w} x={xs[i]} y={y + (1 - p) * SIZE * 0.9} fontFamily={FONT} fontWeight={700} fontSize={SIZE} fill={C.paper} letterSpacing={-3}>
+            <text key={w} x={xs[i]} y={y + (1 - p) * SIZE * 1.15} fontFamily={FONT} fontWeight={700} fontSize={SIZE} fill={C.paper} letterSpacing={-3}>
               {w}
             </text>
           );
