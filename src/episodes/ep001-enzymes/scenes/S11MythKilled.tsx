@@ -23,7 +23,7 @@ import { blendJit, jit, jitTransform, moveRings } from "../../../lib/world";
 import { useScene } from "../../../lib/timeline";
 import { useSvgId } from "../../../components/ids";
 import { s11Timing } from "./S11MythKilled.timing";
-import { MythCard2 } from "./S06-S12-shared";
+import { Chip, MythCard2 } from "./S06-S12-shared";
 
 const CELL = { x: 410, y: 600, rx: 262, ry: 212 } as const;
 /** The molecule we zoom into: an amylase just OUTSIDE the cell — secreted into saliva (it works outside cells). */
@@ -81,7 +81,8 @@ export const S11MythKilled: React.FC = () => {
   const amp37 = thermalAmplitude(37) * 0.8;
 
   // ---------------- card
-  const cardEnter = prog(f, k.myth, 20);
+  const cardEnter = prog(f, k.tagIn, 16);
+  const cardOpen = prog(f, k.cardOpen, 18, (t) => t); // MythCard2 eases it itself
   const cardOut = prog(f, k.cardOut, 14, EASE.in);
 
   // ---------------- cell + inset
@@ -130,9 +131,9 @@ export const S11MythKilled: React.FC = () => {
   const rc = dockedChain(4, ER.x, ER.y, ER.s, { wave: 1.2 * Math.sin(f * 0.06 + 2) });
   // The right-hand substrate drops in from above into the gap between the two (never across the healthy
   // enzyme or the labels), tries the misshapen site, and bounces down and away into empty space.
-  const rx = track(f, [[k.sub + 4, -200], [k.bounce - 16, -158, out], [k.bounce, -104, EASE.in], [k.bounce + 20, -228, out]]);
-  const ry = track(f, [[k.sub + 4, -330], [k.bounce - 16, -12, out], [k.bounce, 0], [k.bounce + 20, 160, out]]);
-  const rrot = track(f, [[k.sub + 4, -12], [k.bounce - 16, -2, out], [k.bounce, 0], [k.bounce + 20, -6, out]]);
+  const rx = track(f, [[k.sub + 4, -200], [k.bounce - 16, -158, out], [k.bounce, -104, EASE.in], [k.bounce + 22, -270, out]]);
+  const ry = track(f, [[k.sub + 4, -330], [k.bounce - 16, -12, out], [k.bounce, 0], [k.bounce + 22, 196, out]]);
+  const rrot = track(f, [[k.sub + 4, -12], [k.bounce - 16, -2, out], [k.bounce, 0], [k.bounce + 22, -4, out]]);
   const rightRings = moveRings(rc.rings, rx, ry, rrot);
   const cjR = jit("C11R", f, amp37 * 1.2);
   const chainsVis = prog(f, k.sub, 14);
@@ -225,42 +226,39 @@ export const S11MythKilled: React.FC = () => {
       </g>
 
       {/* ---------------- annotations */}
-      <MythCard2 x={W / 2} y={H / 2 - 20 - cardOut * 700} number={2} before="Heat " word="kills" after=" enzymes" enter={cardEnter} reveal={prog(f, k.said0, k.said1 - k.said0, (t) => t)} strike={prog(f, k.strike, 14, (t) => t)} opacity={1 - cardOut} seed={11} />
+      <MythCard2 x={W / 2} y={H / 2 - 20 - cardOut * 700} number={2} before="Heat " word="kills" after=" enzymes" enter={cardEnter} open={cardOpen} reveal={prog(f, k.said0, k.said1 - k.said0, (t) => t)} strike={prog(f, k.strike, 14, (t) => t)} opacity={1 - cardOut} seed={11} />
 
-      <Label anchor={[CELL.x - 110, CELL.y - CELL.ry + 14]} at={[CELL.x - 190, CELL.y - CELL.ry - 120]} text="living cell" align="end" progress={prog(f, k.cellIn + 10, 22)} opacity={cellOut} />
+      {/* label above the cell, reading to the right of its leader (text starts ≈ x 264: inside the safe area) */}
+      <Label anchor={[CELL.x - 90, CELL.y - CELL.ry + 16]} at={[CELL.x - 160, CELL.y - CELL.ry - 104]} text="living cell" align="start" progress={prog(f, k.cellIn + 10, 22)} opacity={cellOut} />
       <Label anchor={[EI.x + 40, EI.y - 170]} at={[EI.x + 170, EI.y - 330]} text="a molecule" color={C.tealLight} progress={prog(f, k.molWord, 22)} opacity={1 - prog(f, k.die, 14)} />
 
-      {/* the left pair docks: an enzyme–substrate complex forms (soft teal boundary, no word needed) */}
+      {/* the left pair docks: an enzyme–substrate complex forms — its boundary carries S05's term */}
       {f > k.dock ? (
         <g opacity={prog(f, k.dock + 2, 14) * (1 - prog(f, k.marks, 16)) * (1 - 0.5 * focus)}>
-          <ellipse cx={EL.x - 35} cy={EL.y + 4} rx={330 - 14 * (1 - prog(f, k.dock + 2, 16, out))} ry={236} fill="none" stroke={C.tealLight} strokeWidth={3} strokeDasharray="10 12" opacity={0.75} />
+          <ellipse cx={EL.x - 35} cy={EL.y + 4} rx={330 - 14 * (1 - prog(f, k.dock + 2, 16, out))} ry={236} fill="none" stroke={C.tealLight} strokeWidth={4} strokeDasharray="16 12" opacity={0.8} />
+          <Chip x={EL.x - 35} y={EL.y + 4 + 236} text="complex" size={40} color={C.tealLight} fill={C.ink900} progress={prog(f, k.dock + 6, 14)} />
         </g>
       ) : null}
-      {/* "…no enzyme–substrate complex can form": a boundary tries to close round the right pair and breaks */}
+      {/* "…no enzyme–substrate complex can form": the same boundary (mirrored) tries to close round the right
+          enzyme and the place its substrate should be — it can't reach (the substrate bounced off), and on "form"
+          it gives up: both ends spring back like a released band and it fades — no complex */}
       {f > k.complex ? (
         (() => {
-          const tryP = prog(f, k.complex, k.form - k.complex, EASE.inOut) * 0.62;
-          const brk = prog(f, k.form, 18, out);
-          const cx = ER.x - 120;
-          const cy = ER.y + 70;
+          const reach = prog(f, k.complex, k.form - k.complex, EASE.inOut) * 0.8;
+          const give = prog(f, k.form, 12, EASE.snap);
+          const t0 = reach * 0.4 * give;
+          const t1 = reach * (1 - 0.6 * give);
+          const cx = ER.x - 35;
+          const cy = ER.y + 4;
+          const a0 = (200 * Math.PI) / 180;
+          if (t1 - t0 < 0.004) return null;
+          const pts = Array.from({ length: 48 }, (_, i) => {
+            const a = a0 + (t0 + ((t1 - t0) * i) / 47) * Math.PI * 2;
+            return [cx + Math.cos(a) * 330, cy + Math.sin(a) * 236] as Pt;
+          });
           return (
-            <g opacity={(1 - brk) * (1 - 0.5 * focus)} transform={`translate(${cx} ${cy}) scale(${1 + 0.1 * brk}) translate(${-cx} ${-cy})`}>
-              {tryP > 0.005 ? (
-                <path
-                  d={smoothOpenPath(
-                    Array.from({ length: 40 }, (_, i) => {
-                      const a = (2.4 + (i / 39) * tryP * Math.PI * 2) % (Math.PI * 2);
-                      return [cx + Math.cos(a) * 330, cy + Math.sin(a) * 250] as Pt;
-                    }),
-                    0.5,
-                  )}
-                  fill="none"
-                  stroke={C.coral}
-                  strokeWidth={3}
-                  strokeDasharray="10 12"
-                  opacity={0.85}
-                />
-              ) : null}
+            <g opacity={(1 - prog(f, k.form + 6, 12)) * (1 - 0.5 * focus)}>
+              <path d={smoothOpenPath(pts, 0.5)} fill="none" stroke={C.coral} strokeWidth={5} strokeLinecap="round" strokeDasharray="16 12" />
             </g>
           );
         })()

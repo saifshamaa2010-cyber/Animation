@@ -74,7 +74,7 @@ export const S08Temperature: React.FC = () => {
   const irisT = Math.max(0, Math.min(1, (f - k.irisA) / (k.irisB - k.irisA)));
   const cam = lensCam(irisT);
   // focus shift: ease in on the hero enzyme while its substrate lands (relaxed again by the pull-back)
-  const push = 0.16 * span(f, k.heroApproach - 30, k.heroDock + 6, EASE.inOut) * (1 - span(f, k.irisA - 4, k.irisA + 26, EASE.inOut));
+  const push = 0.16 * span(f, k.faster - 6, k.heroDock + 6, EASE.inOut) * (1 - span(f, k.irisA - 4, k.irisA + 26, EASE.inOut));
   const P = [ENZ[0].hx - 60, ENZ[0].hy + 10] as const;
   const pushT = `translate(${P[0]} ${P[1]}) scale(${1 + push}) translate(${-P[0]} ${-P[1]})`;
   const pushPt = (p: readonly [number, number]): [number, number] => [P[0] + (p[0] - P[0]) * (1 + push), P[1] + (p[1] - P[1]) * (1 + push)];

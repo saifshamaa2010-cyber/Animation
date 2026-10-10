@@ -34,7 +34,9 @@ export const s08Timing = (t: CueFns) => {
   const thermoIn = temperature - 4; // thermometer arrives on "temperature"
   const heatA = warm + 4; // 10 °C → 25 °C over "Heat them up, and they gain kinetic energy: they move faster"
   const heatB = Math.max(heatA + 40, moveFaster + 4);
-  const heroApproach = landing - 44; // a substrate drifts towards the active site…
+  // a substrate drifts towards the active site (at about twice the crowd's drift speed, so it takes a
+  // while: it sets off just before "So more collisions are successful")…
+  const heroApproach = faster - 24;
   const heroDock = landing; // …and lands in it on "landing"
   const heroSnip = Math.max(heroDock + 20, complexesEnd + 6); // the complex reacts once "complexes" is said
   const irisA = Math.max(heroSnip + 10, rateWord - 22); // pull back into the lens: "a faster rate of reaction"

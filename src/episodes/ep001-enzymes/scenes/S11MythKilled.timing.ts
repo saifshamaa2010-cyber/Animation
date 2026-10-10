@@ -17,8 +17,12 @@ export const s11Timing = (t: CueFns) => {
   // "Enzymes were never alive": "kills" is scratched out on "never". Nothing is written in its place
   // yet — the correct word, "denatured", appears on the enzyme when it is spoken.
   const strike = w(t, "never", 1, -2);
-  const said0 = w(t, "heat", 1, -2); // "…that heat "kills" enzymes": the card's sentence is written on
+  // "…myth number two": the MYTH #2 tag lands on "myth"; the card opens out of it just before
+  // "…that heat "kills" enzymes", whose words are written on as they are said
+  const tagIn = Math.max(myth, w(t, "myth", 1, -10));
+  const said0 = w(t, "heat", 1, -2);
   const said1 = w(t, "enzymes", 1, 10);
+  const cardOpen = said0 - 16;
   const cardOut = molecule + 2;
   const cellIn = cardOut + 4;
   const molWord = w(t, "molecule", 1, -2);
@@ -36,18 +40,19 @@ export const s11Timing = (t: CueFns) => {
   const form = w(t, "form", 1, -2);
   const answer = w(t, "answer", 1, -10);
   const tick = w(t, "marks", 1, -8);
-  return { myth, notAlive, strike, said0, said1, molecule, cardOut, cellIn, molWord, inset, clever, snip, die, correct, denat, active, sub, dock, bounce, complex, form, marks, answer, tick, end };
+  return { myth, tagIn, cardOpen, notAlive, strike, said0, said1, molecule, cardOut, cellIn, molWord, inset, clever, snip, die, correct, denat, active, sub, dock, bounce, complex, form, marks, answer, tick, end };
 };
 
 export const s11Sfx = (t: CueFns): SfxEvent[] => {
   const k = s11Timing(t);
   return [
-    { frame: k.myth, sfx: "card_in", gainDb: -3 },
+    { frame: k.tagIn, sfx: "card_in", gainDb: -3 },
     { frame: k.strike, sfx: "strike", gainDb: -3 },
     { frame: k.snip, sfx: "snip", gainDb: -6 },
     { frame: k.denat, sfx: "sizzle_heat", gainDb: -14 },
     { frame: k.dock, sfx: "pop_bind", gainDb: -4 },
     { frame: k.bounce, sfx: "bonk_misfit", gainDb: -2 },
+    { frame: k.form, sfx: "bonk_misfit", gainDb: -12 }, // the complex's boundary snaps open
     { frame: k.tick + 4, sfx: "ui_blip", gainDb: -8 },
   ];
 };

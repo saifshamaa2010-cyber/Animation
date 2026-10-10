@@ -36,9 +36,9 @@ const SP = SPACING * A.s;
 const N0 = 12;
 const ENZ_PATH = roundedPolygon(ENZYME_REST, ENZYME_RADII);
 const MALTOSE_TARGETS: readonly (readonly [number, number])[] = [
-  [800, 330],
-  [600, 430],
-  [980, 250],
+  [680, 300],
+  [520, 400],
+  [900, 190], // rises almost straight up: clear of the enzyme's upper lip and of product 1
 ];
 
 const CT = { x: 2580, y: 610, s: 1.3, seed: 23 } as const; // catalase (the old one)
@@ -196,18 +196,22 @@ export const S07MythUsedUp: React.FC = () => {
   const S = (p: readonly [number, number]) => toScreen(cam, p);
 
   // ---------------- myth card
-  const cardEnter = prog(f, k.myth, 20);
+  const cardEnter = prog(f, k.tagIn, 16);
+  const cardOpen = prog(f, k.cardOpen, 18, (t) => t); // MythCard2 eases it itself
   const cardOut = prog(f, k.cardOut, 14, EASE.in);
   const strikeP = prog(f, k.strike, 14, (t) => t);
   const replaceP = prog(f, k.replace, 20, (t) => t);
 
   // ---------------- amylase: snip, unchanged, again, again
   const snaps = [k.s1, k.s2, k.s3];
-  const docks = [k.s1 - 12, k.s2 - 8, k.s3 - 8];
+  const docks = [k.s1 - 12, k.s2 - 6, k.s3 - 6];
   const done = snaps.filter((s) => f >= s + 3).length;
   const n = N0 - 2 * done;
-  // After each snip the chain's free end dips out of the mouth (it pivots far to the left, like a
+  // After each snip the chain's free end dips out of the mouth (it pivots about its far end, like a
   // floppy chain), the product slides out, then the chain swings back and docks two rings further on.
+  // The dip angle scales with the chain's length so its tip always drops 140 px — a short chain
+  // swings further, so the product never slides through it.
+  const dipDeg = (Math.asin(Math.min(0.5, 140 / ((n - 1) * SP))) * 180) / Math.PI;
   let off = 0;
   let dip = 0;
   if (done === 0) {
@@ -216,11 +220,11 @@ export const S07MythUsedUp: React.FC = () => {
     const s = snaps[done - 1];
     const nd = docks[done];
     if (nd !== undefined) {
-      off = track(f, [[nd - 10, -2 * SP], [nd, 0, EASE.inOut]]);
-      dip = track(f, [[s + 2, 0], [s + 7, 6.5, out], [nd - 10, 6.5], [nd - 1, 0, EASE.inOut]]);
+      off = track(f, [[nd - 9, -2 * SP], [nd, 0, EASE.inOut]]);
+      dip = track(f, [[s + 3, 0], [s + 8, dipDeg, out], [nd - 9, dipDeg], [nd - 1, 0, EASE.inOut]]);
     } else {
-      off = track(f, [[s + 10, -2 * SP], [k.cat + 40, -2 * SP - 320, EASE.in]]);
-      dip = track(f, [[s + 1, 0], [s + 7, 6.5, out]]);
+      off = track(f, [[s + 12, -2 * SP], [k.cat + 40, -2 * SP - 320, EASE.in]]);
+      dip = track(f, [[s + 3, 0], [s + 8, dipDeg, out]]);
     }
   }
   const amyIn = prog(f, k.cardOut + 10, 18);
@@ -238,11 +242,12 @@ export const S07MythUsedUp: React.FC = () => {
   const pairs = snaps.slice(0, done).map((s, j) => {
     const [tx, ty] = MALTOSE_TARGETS[j];
     const startX = A.x + (A.s * (DOCK.outer[0] + DOCK.inner[0])) / 2;
-    // out along the pocket first (while the chain has dipped clear), then away up-left
-    const px = track(f, [[s + 3, startX], [s + 14, startX - 190, EASE.inOut], [s + 62, tx, out]]);
-    const py = track(f, [[s + 3, A.y], [s + 14, A.y - 14, EASE.inOut], [s + 62, ty, out]]);
+    // straight out of the mouth first (over the dipped chain), and only once both rings are clear of the
+    // enzyme's lip does it lift away up-left — before the chain swings back in underneath
+    const px = track(f, [[s + 3, startX], [s + 13, startX - 250, EASE.inOut], [s + 57, tx, out]]);
+    const py = track(f, [[s + 3, A.y], [s + 12, A.y - 4, EASE.inOut], [s + 57, ty, out]]);
     const bob = Math.sin((f - s) * 0.05 + j) * 8 * prog(f, s + 40, 20);
-    const rot = track(f, [[s + 12, 0], [s + 62, -18 + j * 12, out]]);
+    const rot = track(f, [[s + 11, 0], [s + 57, -18 + j * 12, out]]);
     const base: Ring[] = [
       { x: px - SP / 2, y: py + bob, tone: "sugar", glow: prog(f, s + 3, 18), scale: A.s },
       { x: px + SP / 2, y: py + bob, tone: "sugar", glow: prog(f, s + 3, 18), scale: A.s },
@@ -430,7 +435,7 @@ export const S07MythUsedUp: React.FC = () => {
       </FocusPull>
 
       {/* ---------------- screen-space annotations */}
-      <MythCard2 x={W / 2} y={540 - 20 - cardOut * 700} number={1} before="Enzymes get " word="used up" replacement="reused" enter={cardEnter} reveal={prog(f, k.said0, k.said1 - k.said0, (t) => t)} strike={strikeP} replace={replaceP} opacity={1 - cardOut} seed={7} />
+      <MythCard2 x={W / 2} y={540 - 20 - cardOut * 700} number={1} before="Enzymes get " word="used up" replacement="reused" enter={cardEnter} open={cardOpen} reveal={prog(f, k.said0, k.said1 - k.said0, (t) => t)} strike={strikeP} replace={replaceP} opacity={1 - cardOut} seed={7} />
 
       {/* amylase reaction counter */}
       <g opacity={prog(f, k.s1 - 6, 14) * (1 - prog(f, k.cat + 10, 20))}>
@@ -440,7 +445,7 @@ export const S07MythUsedUp: React.FC = () => {
         <Counter x={330} y={278} value={reactions} size={110} align="middle" />
       </g>
       {ghostVis > 0 ? (
-        <Label anchor={ghostAnchor} at={[ghostAnchor[0] + 60, ghostAnchor[1] - 110]} text="unchanged" progress={prog(f, k.unch - 2, 20)} opacity={1 - prog(f, k.s3 + 10, 10)} />
+        <Label anchor={ghostAnchor} at={[ghostAnchor[0] + 60, ghostAnchor[1] - 110]} text="unchanged" progress={prog(f, k.unch - 2, 20)} opacity={ghostVis} />
       ) : null}
 
       {/* catalase labels */}

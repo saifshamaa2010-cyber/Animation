@@ -73,6 +73,12 @@ export type MythCardProps = {
   readonly seed?: number;
   /** 0..1 the sentence is written on left → right (drive it from the spoken words). Default 1. */
   readonly reveal?: number;
+  /**
+   * 0..1 the card opens out of its tag: at 0 only the "MYTH #n" tag shows (large, centred — said on
+   * "myth number n"); it then unfolds into the full card just before the sentence is spoken, so the
+   * card is never an empty template waiting for its text. Default 1.
+   */
+  readonly open?: number;
 };
 
 /**
@@ -94,6 +100,7 @@ export const MythCard2: React.FC<MythCardProps> = ({
   opacity = 1,
   seed = 4,
   reveal = 1,
+  open = 1,
 }) => {
   const id = useSvgId("myth");
   if (enter <= 0 || opacity <= 0) return null;
@@ -114,22 +121,41 @@ export const MythCard2: React.FC<MythCardProps> = ({
   const e = EASE.out(clamp01(enter));
   const struck = strike > 0.6;
   const repFs = 72;
+  // the tag: big and centred while it is said, then it moves to its corner as the card opens out of it
+  const o = EASE.inOut(clamp01(open));
+  const T0 = 1.5;
+  const tagS = T0 + (1 - T0) * o;
+  const tagX = -(tagW * T0) / 2 + (-w / 2 + 60 + (tagW * T0) / 2) * o;
+  const tagY = -30 * T0 + (-h / 2 + 42 + 30 * T0) * o;
+  const pad = 22;
+  const rx0 = tagX - pad;
+  const ry0 = tagY - pad;
+  const rw0 = tagW * tagS + pad * 2;
+  const rh0 = 60 * tagS + pad * 2;
+  const cardX = rx0 + (-w / 2 - rx0) * o;
+  const cardY = ry0 + (-h / 2 - ry0) * o;
+  const cardW = rw0 + (w - rw0) * o;
+  const cardH = rh0 + (h - rh0) * o;
   return (
     <g opacity={opacity * clamp01(enter * 1.4)} transform={`translate(${x} ${y + (1 - e) * 36}) scale(${scale * (0.97 + 0.03 * e)})`}>
-      <LitShape
-        d={roundRectPath(-w / 2, -h / 2, w, h, 44)}
-        top={C.ink700}
-        bottom={C.ink800}
-        rim={C.paper}
-        rimOpacity={0.22}
-        rimWidth={5}
-        slant={0.2}
-        shadow={0.55}
-        shadowDy={18}
-        shadowBlur={26}
-      />
+      {open > 0 ? (
+        <g opacity={clamp01(open * 3)}>
+          <LitShape
+            d={roundRectPath(cardX, cardY, cardW, cardH, Math.min(44, cardH / 2))}
+            top={C.ink700}
+            bottom={C.ink800}
+            rim={C.paper}
+            rimOpacity={0.22}
+            rimWidth={5}
+            slant={0.2}
+            shadow={0.55}
+            shadowDy={18}
+            shadowBlur={26}
+          />
+        </g>
+      ) : null}
       {/* tag */}
-      <g transform={`translate(${-w / 2 + 60} ${-h / 2 + 42})`}>
+      <g transform={`translate(${tagX} ${tagY}) scale(${tagS})`}>
         <rect x={0} y={0} width={tagW} height={60} rx={30} fill={C.coral} />
         <rect x={18} y={4} width={tagW - 36} height={18} rx={9} fill={C.paper} opacity={0.16} />
         <text x={tagW / 2} y={44} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={tagFs} fill={C.ink900} letterSpacing={3}>
