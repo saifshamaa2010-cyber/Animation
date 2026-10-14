@@ -72,6 +72,35 @@ export const GlucoseRing: React.FC<Ring & { readonly gid: string }> = ({
   );
 };
 
+/** Gradients, clip and glow filter that GlucoseRing refers to (by `gid`). */
+export const RingDefs: React.FC<{ readonly gid: string }> = ({ gid }) => (
+  <defs>
+    {(Object.keys(TONES) as RingTone[]).map((k) => (
+      <linearGradient key={k} id={`${gid}-${k}`} x1="0" y1="0" x2="0.3" y2="1">
+        <stop offset="0" stopColor={TONES[k].top} />
+        <stop offset="1" stopColor={TONES[k].bottom} />
+      </linearGradient>
+    ))}
+    <clipPath id={`${gid}-upper`}>
+      <rect x={-HEX_R - 4} y={-HEX_H - 4} width={HEX_R * 2 + 8} height={HEX_H} />
+    </clipPath>
+    <filter id={`${gid}-glow`} x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="12" />
+    </filter>
+  </defs>
+);
+
+/** One free glucose molecule (brings its own gradients). */
+export const Glucose: React.FC<Ring> = (r) => {
+  const gid = useSvgId("glc");
+  return (
+    <g>
+      <RingDefs gid={gid} />
+      <GlucoseRing {...r} gid={gid} />
+    </g>
+  );
+};
+
 export type SugarChainProps = {
   readonly rings: readonly Ring[];
   readonly links: readonly Link[];
@@ -83,20 +112,7 @@ export const SugarChain: React.FC<SugarChainProps> = ({ rings, links, opacity = 
   const gid = useSvgId("sugar");
   return (
     <g opacity={opacity}>
-      <defs>
-        {(Object.keys(TONES) as RingTone[]).map((k) => (
-          <linearGradient key={k} id={`${gid}-${k}`} x1="0" y1="0" x2="0.3" y2="1">
-            <stop offset="0" stopColor={TONES[k].top} />
-            <stop offset="1" stopColor={TONES[k].bottom} />
-          </linearGradient>
-        ))}
-        <clipPath id={`${gid}-upper`}>
-          <rect x={-HEX_R - 4} y={-HEX_H - 4} width={HEX_R * 2 + 8} height={HEX_H} />
-        </clipPath>
-        <filter id={`${gid}-glow`} x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="12" />
-        </filter>
-      </defs>
+      <RingDefs gid={gid} />
       {links.map((l, i) => (
         <Bond key={i} from={rings[l.a]} to={rings[l.b]} link={l} />
       ))}

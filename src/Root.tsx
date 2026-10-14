@@ -7,6 +7,7 @@ import { TL } from "./episodes/ep001-enzymes/timeline";
 import { Episode as Episode2, ScenePreview as ScenePreview2 } from "./episodes/ep002-plant-nutrition/Episode";
 import { TL as TL2 } from "./episodes/ep002-plant-nutrition/timeline";
 import { PhotosynthesisPreview } from "./previews/PhotosynthesisPreview";
+import { BioKitDemo } from "./components/bio/BioKitDemo";
 
 const sceneLen = (id: string, tl = TL) => {
   const s = tl.scenes.find((x) => x.id === id);
@@ -77,6 +78,7 @@ export const RemotionRoot: React.FC = () => {
         </Folder>
       </Folder>
       <Composition id="preview-photosynthesis" component={PhotosynthesisPreview} durationInFrames={300} fps={30} width={1920} height={1080} />
+      <Composition id="bio-kit-demo" component={BioKitDemo} durationInFrames={150} fps={30} width={1920} height={1080} />
     </>
   );
 };
