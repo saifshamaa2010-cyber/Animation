@@ -55,6 +55,11 @@ def after_word(w: str) -> float:
 
 
 def recording_script(ep: str, scenes) -> str:
+    # the "pause and predict" silence = the longest pause in a scene that also has speech
+    longest = [(float(it.value), sc.id) for sc in scenes if any(i.kind == "word" for i in sc.items) for it in sc.items if it.kind == "pause"]
+    best = max(longest, default=(0.0, ""))
+    predict = best[1] if best[0] >= 3 else ""
+    predict_len = {3: "three", 4: "four", 5: "five", 6: "six"}.get(round(best[0]), f"{best[0]:g}")
     lines = [
         f"# Read-aloud script — {ep}",
         "",
@@ -62,12 +67,17 @@ def recording_script(ep: str, scenes) -> str:
         "unhurried, and curious. **Don't rush.** If you stumble, stop, take a breath and read the whole",
         "sentence again from its start. Mistakes are edited out afterwards, so never start the take over.",
         "",
-        "**(pause N)** means stay silent for about N seconds. The long silence in Scene 14 is the",
-        "\"pause and predict\" moment: count to four in your head.",
+        "**(pause N)** means stay silent for about N seconds."
+        + (f" The long silence in Scene {predict[1:]} is the \"pause and predict\" moment: count to"
+           f" {predict_len} in your head." if predict else ""),
         "",
         "Recording tips: a quiet room with soft furnishings (a wardrobe full of clothes is perfect), phone",
         "about a hand-span from your mouth, slightly to one side, Voice Memos / Recorder app, best quality.",
         "Do a 10-second test first and listen back with headphones.",
+        "",
+        "**When you're done:** send the file(s) in the chat with Claude, or upload them on GitHub into",
+        f"`episodes/{ep}/recordings/` (Add file → Upload files). Several files are fine; name them in order.",
+        "Everything else (cutting mistakes, timing the animation to your voice, mixing, rendering) is automatic.",
         "",
     ]
     for sc in scenes:

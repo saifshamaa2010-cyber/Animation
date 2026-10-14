@@ -4,12 +4,15 @@ Read this out loud, in one take or several. Talk the way you'd explain it to a f
 unhurried, and curious. **Don't rush.** If you stumble, stop, take a breath and read the whole
 sentence again from its start. Mistakes are edited out afterwards, so never start the take over.
 
-**(pause N)** means stay silent for about N seconds. The long silence in Scene 14 is the
-"pause and predict" moment: count to four in your head.
+**(pause N)** means stay silent for about N seconds. The long silence in Scene 16 is the "pause and predict" moment: count to four in your head.
 
 Recording tips: a quiet room with soft furnishings (a wardrobe full of clothes is perfect), phone
 about a hand-span from your mouth, slightly to one side, Voice Memos / Recorder app, best quality.
 Do a 10-second test first and listen back with headphones.
+
+**When you're done:** send the file(s) in the chat with Claude, or upload them on GitHub into
+`episodes/ep002-plant-nutrition/recordings/` (Add file → Upload files). Several files are fine; name them in order.
+Everything else (cutting mistakes, timing the animation to your voice, mixing, rendering) is automatic.
 
 ## Scene 01 — hook
 
