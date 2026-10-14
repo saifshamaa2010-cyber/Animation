@@ -31,7 +31,9 @@ run("npx", [
 ]);
 
 // Deliverables next to the video.
-copyFileSync(path.join(root, "public", "episodes", ep, "narration.wav"), path.join(out, `${ep}-narration.wav`));
+// The mastered voice stem (48 kHz, levelled, peak-safe) — the raw TTS stays in public/ as an archive.
+const stem = path.join(root, "public", "episodes", ep, "stems", "narration.wav");
+copyFileSync(existsSync(stem) ? stem : path.join(root, "public", "episodes", ep, "narration.wav"), path.join(out, `${ep}-narration.wav`));
 copyFileSync(path.join(root, "episodes", ep, "build", `${ep}.srt`), path.join(out, `${ep}.srt`));
 run("npx", ["remotion", "still", `${comp}-thumbnail`, path.join(out, `${ep}-thumbnail.png`)]);
 console.log(`\nDone → ${path.relative(root, out)}/`);

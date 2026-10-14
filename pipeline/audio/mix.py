@@ -185,6 +185,16 @@ def build_sfx(tl: tlmod.Timeline, entries: list[dict], n: int, v_lufs: float, s:
     out = np.zeros((n, 2))
     placed, problems = [], []
     cache: dict[str, tuple[np.ndarray, float]] = {}
+    # Repeats never sound bit-identical: alternate takes where we have them, and give every
+    # instance a tiny seeded pitch/level variation (like re-recording the same foley each time).
+    alt = {"crunch": "crunch_b", "tick": "tock"}
+    counts: dict[str, int] = {}
+
+    def vary(x: np.ndarray, rate: float) -> np.ndarray:
+        idx = np.arange(0, len(x) - 1, rate)
+        base = np.arange(len(x))
+        return np.stack([np.interp(idx, base, x[:, c]) for c in range(x.shape[1])], axis=1)
+
     for e in entries:
         if not isinstance(e, dict) or "sfx" not in e or ("cue" not in e and "sec" not in e):
             problems.append(f"Ignored malformed sfx entry: {e}")
@@ -200,6 +210,10 @@ def build_sfx(tl: tlmod.Timeline, entries: list[dict], n: int, v_lufs: float, s:
             problems.append(f"Cue '{e['cue']}' not found in the timeline — '{e['sfx']}' skipped." + (f" ({w[0].message})" if w else ""))
             continue
         name = e["sfx"]
+        c_n = counts.get(name, 0)
+        counts[name] = c_n + 1
+        if name in alt and c_n % 2 == 1:
+            name = alt[name]
         if name not in cache:
             try:
                 x = sfxlib.load(name, sfx_dir)
@@ -208,6 +222,11 @@ def build_sfx(tl: tlmod.Timeline, entries: list[dict], n: int, v_lufs: float, s:
                 continue
             cache[name] = (x, _ref_loudness(x))
         x, ref = cache[name]
+        rnd = np.random.default_rng(int(round(t * 1000)) * 31 + len(name))
+        rate = 1.0 + float(rnd.uniform(-0.035, 0.035))
+        var_db = float(rnd.uniform(-1.5, 1.5))
+        if not e.get("untilCue") and not e.get("durationSec"):
+            x = vary(x, rate)
         t += float(e.get("offsetSec", 0.0))
         # optional looping (e.g. a sizzle bed under a passage)
         until = tl.time(e["untilCue"], warn=False) if e.get("untilCue") else None
@@ -221,7 +240,7 @@ def build_sfx(tl: tlmod.Timeline, entries: list[dict], n: int, v_lufs: float, s:
             reps = int(np.ceil(nsamp(float(length)) / len(x))) + 1
             x = np.tile(x, (reps, 1))[: nsamp(float(length))]
             x = fade(x, float(e.get("fadeInSec", 0.3)), float(e.get("fadeOutSec", 0.5)))
-        gain_db = (v_lufs + s["sfxRelLU"] + float(e.get("gainDb", 0.0))) - ref
+        gain_db = (v_lufs + s["sfxRelLU"] + float(e.get("gainDb", 0.0)) + var_db) - ref
         y = x * undb(gain_db)
         if "pan" in e:  # simple balance
             p = float(np.clip(e["pan"], -1, 1))
