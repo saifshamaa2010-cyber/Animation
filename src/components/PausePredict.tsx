@@ -19,7 +19,7 @@ export const PausePredict: React.FC<PausePredictProps> = ({ visible, countdown, 
   const circ = 2 * Math.PI * r;
   return (
     <g opacity={visible}>
-      <rect x={0} y={0} width={W} height={H} fill={C.ink950} opacity={0.78} />
+      <rect x={0} y={0} width={W} height={H} fill={C.ink950} opacity={0.88} />
       <circle cx={cx} cy={cy} r={r} fill="none" stroke={C.ink600} strokeWidth={12} />
       <circle
         cx={cx}

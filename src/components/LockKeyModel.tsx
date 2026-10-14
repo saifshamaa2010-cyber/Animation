@@ -27,7 +27,8 @@ export const LockKeyModel: React.FC<{
   readonly keyIn?: number;
   readonly opacity?: number;
   readonly showKey?: boolean;
-}> = ({ x, y, scale = 1, keyIn = 0, opacity = 1, showKey = true }) => (
+  readonly keyOpacity?: number;
+}> = ({ x, y, scale = 1, keyIn = 0, opacity = 1, showKey = true, keyOpacity = 1 }) => (
   <g opacity={opacity} transform={`translate(${x} ${y}) scale(${scale})`}>
     <path d="M -60,-150 V -230 A 110 110 0 0 1 160,-230 V -150" fill="none" stroke={C.ink400} strokeWidth={26} strokeLinecap="round" />
     <rect x={-230} y={-160} width={460} height={330} rx={46} fill={C.ink700} />
@@ -37,7 +38,7 @@ export const LockKeyModel: React.FC<{
       <path d={POCKET_SHAPE} fill={C.ink950} />
       <path d={POCKET_SHAPE} fill="none" stroke={C.paper} strokeWidth={3} strokeDasharray="9 8" opacity={0.7} />
       {showKey ? (
-        <g transform={`translate(${keyIn} 0)`}>
+        <g transform={`translate(${keyIn} 0)`} opacity={keyOpacity}>
           <line x1={DOCK.cut[0] - 210} y1={0} x2={DOCK.cut[0] + 6} y2={0} stroke={C.creamDeep} strokeWidth={16} strokeLinecap="round" />
           <circle cx={DOCK.cut[0] - 262} cy={0} r={52} fill="none" stroke={C.creamDeep} strokeWidth={20} />
           <circle cx={DOCK.cut[0] - 262} cy={0} r={52} fill="none" stroke={C.cream} strokeWidth={6} opacity={0.6} />

@@ -643,14 +643,14 @@ export const S10Denature: React.FC = () => {
           anchor={eggEdge}
           at={[eggEdge[0] - 40, 250]}
           text="egg white"
-          sub="a protein"
+          sub="proteins"
           size={60}
           align="end"
           progress={span(f, k.white - 4, k.white + 18)}
           opacity={(1 - span(f, k.chillA - 6, k.chillA + 8)) * (1 - panOut)}
         />
       ) : null}
-      <Keyword x={(PAN.x + HERO_EGG.x) / 2 + 40} y={H - 136} text="cooling won't fix it" size={56} progress={span(f, k.fix - 6, k.fix + 8) * (1 - span(f, k.coldA - 4, k.coldA + 6))} />
+      <Keyword x={(PAN.x + HERO_EGG.x) / 2 + 40} y={H - 136} text="cooling usually won't fix it" size={56} progress={span(f, k.fix - 6, k.fix + 8) * (1 - span(f, k.coldA - 4, k.coldA + 6))} />
       {showBack ? (
         <>
           <text

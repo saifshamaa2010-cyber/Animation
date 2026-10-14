@@ -72,12 +72,14 @@ export const S12Ph: React.FC = () => {
   // warped as the enzyme crosses neutral; the alkaline end warps it further; then the bonds go.
   const acidDmg = riding ? smooth(1.2, 3.8, Math.max(0, 7 - Math.min(ride, f >= k.either + 4 ? 2.6 : ride))) : 0;
   const alkDmg = riding ? smooth(1.2, 3.8, Math.max(0, ride - 7)) : 0;
-  const denature = Math.min(1, 0.3 * acidDmg + 0.18 * alkDmg + 0.55 * prog(f, k.disrupted, 26, EASE.inOut));
+  // clearly visible damage while the enzyme is still on the pH bar (acid, then alkali), finished as the bonds go
+  const denature = Math.min(1, 0.45 * acidDmg + 0.3 * alkDmg + 0.25 * prog(f, k.disrupted, 26, EASE.inOut));
   const bondsVis = window01(f, k.bonds - 4, k.zoomBack, 12);
   const bondsBroken = 0.12 * prog(f, k.bonds + 20, 30) + 0.88 * prog(f, k.disrupted, 26);
   const ej = jit("E12", f, thermalAmplitude(37) * 0.8);
-  // the enzyme is there from the start (sitting above pH 7) so the definition has its subject on screen
-  const enzIn = prog(f, k.ph + 10, 20);
+  // the pin explains the scale on its own; the enzyme arrives at pH 7 on "denature", so it is never
+  // seen sitting unharmed above an extreme pH
+  const enzIn = prog(f, k.denature - 8, 18);
   const enzVis = enzIn * (1 - prog(f, k.phOptimum, 18));
   const enzDrop = (1 - EASE.out(enzIn)) * -40;
   const siteVis = window01(f, k.denature + 10, k.phOptimum + 10, 14);

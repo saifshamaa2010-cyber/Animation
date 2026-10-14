@@ -9,12 +9,13 @@
  */
 import React from "react";
 import { C, EASE } from "../../../brand/tokens";
+import { FONT } from "../../../brand/fonts";
 import { Stage } from "../../../components/Stage";
 import { Thermometer } from "../../../components/Thermometer";
 import { PausePredict } from "../../../components/PausePredict";
 import { useScene } from "../../../lib/timeline";
 import { s09Timing } from "./S09Predict.timing";
-import { AmbientTemp, LENS_BLUR, Lens, Population, THERMO, TempGraph, lensCam, recentSnips, span, tempAt, worldTransform } from "./S08-S10-shared";
+import { AmbientTemp, Lens, Population, THERMO, TempGraph, lensCam, recentSnips, span, tempAt, worldTransform } from "./S08-S10-shared";
 import { lensSoftAt } from "./S08-S10-arc";
 import { OptimumNote } from "./S08Temperature";
 
@@ -43,11 +44,20 @@ export const S09Predict: React.FC = () => {
   return (
     <Stage bg={{ lightX: 0.5, temperature: T }}>
       <AmbientTemp T={T} />
-      <Lens cam={cam} frame={1} blur={LENS_BLUR * soft}>
+      <Lens cam={cam} frame={1}>
         <g transform={worldTransform(cam)}>
           <Population abs={abs} lod="low" />
         </g>
-        {soft > 0 ? <circle cx={cam.cx} cy={cam.cy} r={cam.r} fill={C.ink950} opacity={0.32 * soft} /> : null}
+        {/* The answer is hidden on purpose: a frosted cover with a "?" (molecules still visibly
+            shaking harder underneath), never a defocus that could read as a render fault. */}
+        {soft > 0 ? (
+          <g opacity={soft}>
+            <circle cx={cam.cx} cy={cam.cy} r={cam.r} fill={C.ink800} opacity={0.62} />
+            <text x={cam.cx} y={cam.cy + 62} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={180} fill={C.paper} opacity={0.9}>
+              ?
+            </text>
+          </g>
+        ) : null}
       </Lens>
 
       <Thermometer x={THERMO.x} y={THERMO.y} height={THERMO.h} temperature={T} />

@@ -14,7 +14,8 @@ import { Enzyme } from "../../../components/Enzyme";
 import { SugarChain } from "../../../components/SugarChain";
 import { dockedChain } from "../../../components/dock";
 import { Label } from "../../../components/Label";
-import { FocusPull, HandArrow, HandTick, KeyIcon, LitShape, LockIcon, POCKET_LEN, textWidth } from "../../../components/kit";
+import { FocusPull, HandArrow, HandTick, LitShape, textWidth } from "../../../components/kit";
+import { LockKeyModel } from "../../../components/LockKeyModel";
 import { roundRectPath } from "../../../components/kit/shared";
 import { camAt, camTransform } from "../../../lib/camera";
 import { prog, thermalAmplitude, window01 } from "../../../lib/motion";
@@ -29,6 +30,8 @@ const PIVOT = [E.x, E.y] as const;
 
 // Lock & key (kit icons) — the keyhole IS the pocket outline, the key's bit IS the substrate end.
 const LK = { x: 410, y: 395, size: 268 } as const;
+/** Scale of the shared LockKeyModel so it occupies the same footprint as before. */
+const LKM_S = 0.62;
 /**
  * Where the model sits for the exam beat. It is fully hidden between the two beats, so it can come
  * back further left: model (left) and the real enzyme (right) must read as two separate things.
@@ -40,15 +43,6 @@ const EXAM_CAM = { x: 760, y: 545, z: 0.86 } as const;
 const CARD = { x0: -196, y0: -226, x1: 372, y1: 352 } as const;
 /** Substrate length in this scene: 4 rings keeps the chain's free end well clear of the model. */
 const RINGS = 4;
-const LOCK_K = (LK.size * 0.8 * 0.56) / POCKET_LEN;
-const KEY_UNITS = POCKET_LEN + 262;
-const KEY_SIZE = LOCK_K * KEY_UNITS;
-const LOCK_TOP = -(LK.size * 0.8) / 2 + LK.size * 0.14;
-const HOLE_MOUTH_DY = LOCK_TOP + LK.size * 0.8 * 0.5 + (POCKET_LEN * LOCK_K) / 2;
-const KEY_OFFX = LOCK_K * (262 - KEY_UNITS / 2);
-/** Top of the shackle's right leg (the tag's string hangs here), relative to the lock centre. */
-const TAG_DX = LK.size * 0.3 + 4;
-const TAG_DY = LOCK_TOP - LK.size * 0.36 + LK.size * 0.3 - 10;
 
 /** Exam chips: fixed screen positions taken from the final exam framing (they never slide). */
 const CHIP_Y = 232;
@@ -68,11 +62,9 @@ const Model: React.FC<{
   readonly tagGlow: number;
 }> = ({ x, y, keyIn, keySlide, tagP, tagAngle, tagGlow }) => (
   <>
-    <LockIcon x={x} y={y} size={LK.size} progress={1} />
-    <g opacity={keyIn}>
-      <KeyIcon x={x - KEY_OFFX} y={y + HOLE_MOUTH_DY + keySlide} size={KEY_SIZE} rotate={-90} />
-    </g>
-    <HangingTag anchor={[x + TAG_DX, y + TAG_DY]} text="model" angle={tagAngle} progress={tagP} glow={tagGlow} size={50} />
+    {/* the same lock-and-key model as S05 (keyhole = the active site, key bit = two glucose rings) */}
+    <LockKeyModel x={x} y={y + LKM_S * 40} scale={LKM_S} keyIn={-Math.abs(keySlide) * 2} keyOpacity={keyIn} />
+    <HangingTag anchor={[x + LKM_S * 160, y + LKM_S * 40 - LKM_S * 215]} text="model" angle={tagAngle} progress={tagP} glow={tagGlow} size={50} />
   </>
 );
 

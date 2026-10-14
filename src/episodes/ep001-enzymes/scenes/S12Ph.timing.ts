@@ -54,7 +54,7 @@ export const s12Sfx = (t: CueFns): SfxEvent[] => {
   return [
     { frame: k.far, sfx: "whoosh_soft", gainDb: -12 },
     { frame: k.zoomIn + 2, sfx: "whoosh_zoom", gainDb: -12 },
-    { frame: k.disrupted + 4, sfx: "snip", gainDb: -12 },
+    { frame: k.disrupted + 4, sfx: "strike", gainDb: -14 }, // weak bonds breaking (as in S10), not a substrate cut
     { frame: k.pepsin + 2, sfx: "ui_blip", gainDb: -10 },
   ];
 };
