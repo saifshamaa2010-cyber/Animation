@@ -27,9 +27,9 @@ import soundfile as sf
 from .common import FPS, build_dir, episode_dir, parse_script, public_dir
 from .align import make_srt
 
-# Calibrated to ~150 spoken words per minute for typical narration text.
-WORD_BASE = 0.12
-PER_LETTER = 0.047
+# Calibrated to an unhurried teaching pace: ~140 spoken words per minute including breaths.
+WORD_BASE = 0.14
+PER_LETTER = 0.05
 PAUSE_COMMA = 0.24
 PAUSE_STOP = 0.5
 PAUSE_COLON = 0.32
