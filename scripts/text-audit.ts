@@ -51,10 +51,11 @@ const main = async () => {
   frames = frames.filter((f) => f >= 0 && f < n);
 
   // Scene lookup for the whole-episode composition (absolute frames → scene id).
-  const tlPath = path.join(root, "episodes/ep001-enzymes/build/timeline.json");
+  const EPISODES: Record<string, string> = { ep001: "ep001-enzymes", ep002: "ep002-plant-nutrition" };
+  const tlPath = path.join(root, `episodes/${EPISODES[id] ?? "none"}/build/timeline.json`);
   const tl = existsSync(tlPath) ? JSON.parse(readFileSync(tlPath, "utf8")) : null;
   const sceneOf = (f: number) =>
-    id === "ep001" && tl ? (tl.scenes.find((s: { startFrame: number; endFrame: number }) => f >= s.startFrame && f < s.endFrame)?.id ?? "?") : id;
+    EPISODES[id] && tl ? (tl.scenes.find((s: { startFrame: number; endFrame: number }) => f >= s.startFrame && f < s.endFrame)?.id ?? "?") : id;
 
   const hits = new Map<string, Hit>();
   const add = (scene: string, text: string, problem: string, detail: string, frame: number) => {

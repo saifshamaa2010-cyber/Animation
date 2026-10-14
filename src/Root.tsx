@@ -4,11 +4,15 @@ import { StoryboardSheet, StyleFrame } from "./episodes/ep001-enzymes/StyleFrame
 import { Thumbnail } from "./episodes/ep001-enzymes/Thumbnail";
 import { Episode, ScenePreview } from "./episodes/ep001-enzymes/Episode";
 import { TL } from "./episodes/ep001-enzymes/timeline";
+import { Episode as Episode2, ScenePreview as ScenePreview2 } from "./episodes/ep002-plant-nutrition/Episode";
+import { TL as TL2 } from "./episodes/ep002-plant-nutrition/timeline";
+import { PhotosynthesisPreview } from "./previews/PhotosynthesisPreview";
 
-const sceneLen = (id: string) => {
-  const s = TL.scenes.find((x) => x.id === id);
+const sceneLen = (id: string, tl = TL) => {
+  const s = tl.scenes.find((x) => x.id === id);
   return s ? Math.max(1, s.endFrame - s.startFrame) : 1;
 };
+const EP2_AUDIO = "episodes/ep002-plant-nutrition/narration.wav";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -54,6 +58,25 @@ export const RemotionRoot: React.FC = () => {
         <Still id="ep001-storyboard" component={StoryboardSheet} width={1960} height={1990} />
         <Still id="ep001-thumbnail" component={Thumbnail} width={1280} height={720} />
       </Folder>
+      <Folder name="ep002-plant-nutrition">
+        <Composition id="ep002" component={Episode2} durationInFrames={TL2.durationFrames} fps={30} width={1920} height={1080} defaultProps={{ audio: EP2_AUDIO, captions: false }} />
+        <Composition id="ep002-preview" component={Episode2} durationInFrames={TL2.durationFrames} fps={30} width={1920} height={1080} defaultProps={{ audio: EP2_AUDIO, captions: true }} />
+        <Folder name="ep002-scenes">
+          {TL2.scenes.map((s) => (
+            <Composition
+              key={s.id}
+              id={`ep002-${s.id}`}
+              component={ScenePreview2}
+              durationInFrames={sceneLen(s.id, TL2)}
+              fps={30}
+              width={1920}
+              height={1080}
+              defaultProps={{ sceneId: s.id, audio: EP2_AUDIO, captions: true }}
+            />
+          ))}
+        </Folder>
+      </Folder>
+      <Composition id="preview-photosynthesis" component={PhotosynthesisPreview} durationInFrames={300} fps={30} width={1920} height={1080} />
     </>
   );
 };

@@ -12,7 +12,9 @@ import { copyFileSync, existsSync, mkdirSync } from "node:fs";
 import path from "node:path";
 
 const ep = process.argv[2] ?? "ep001-enzymes";
-const comp = { "ep001-enzymes": "ep001" }[ep] ?? ep;
+const comp = { "ep001-enzymes": "ep001", "ep002-plant-nutrition": "ep002" }[ep] ?? ep;
+// CAPTIONS=1 burns read-along captions in (preview cut before the narrator has recorded).
+const captions = process.env.CAPTIONS === "1";
 const root = path.resolve(__dirname, "..");
 const out = path.join(root, "out", ep);
 mkdirSync(out, { recursive: true });
@@ -24,8 +26,8 @@ if (!audio.endsWith("mix.wav")) console.warn("⚠ No mix.wav yet (run npm run au
 const run = (cmd: string, args: string[]) => execFileSync(cmd, args, { stdio: "inherit", cwd: root });
 
 run("npx", [
-  "remotion", "render", comp, path.join(out, `${ep}.mp4`),
-  `--props=${JSON.stringify({ audio })}`,
+  "remotion", "render", comp, path.join(out, captions ? `${ep}-preview-captions.mp4` : `${ep}.mp4`),
+  `--props=${JSON.stringify({ audio, captions })}`,
   "--codec=h264", "--crf=16", "--x264-preset=slow", "--audio-codec=aac", "--audio-bitrate=320k",
   "--pixel-format=yuv420p", "--concurrency=4",
 ]);

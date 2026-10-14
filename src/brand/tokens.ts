@@ -41,8 +41,40 @@ export const C = {
   violetDeep: "#6450DA",
   violetLight: "#D3CBFF",
 
-  // Cold
+  // Cold. Also water and carbon dioxide in EP002 (blue = air/water).
   ice: "#7FC4FF",
+  iceDeep: "#3E86C8",
+
+  // Plants (EP002+). Yellow-green, so a leaf is never mistaken for a teal enzyme.
+  leaf: "#7DC36B",
+  leafDeep: "#3F8F4F",
+  leafDark: "#25583A",
+  leafLight: "#C6EBAA",
+  chloro: "#4FAF5A",
+  /** Deficiency yellowing (chlorosis). */
+  leafYellow: "#E2CF68",
+  stem: "#8FB45A",
+  bark: "#8D6B52",
+  barkDeep: "#5C4535",
+  soil: "#6E4D38",
+  soilLight: "#9A7457",
+  terracotta: "#CF7A55",
+  terracottaDeep: "#9C5038",
+  /** Sunlight (energy from light). */
+  sun: "#FFD36E",
+
+  // Practical colours: these must match what students really see in the lab.
+  /** Iodine solution, and a leaf with no starch: orange-brown. */
+  iodine: "#C8742A",
+  /** Iodine + starch. Always shown on a white tile so it reads on the dark background. */
+  blueBlack: "#1B1D3A",
+  /** Hydrogencarbonate indicator: red (air), yellow (more CO2), purple (less CO2). */
+  indRed: "#E0475E",
+  indYellow: "#F1C743",
+  indPurple: "#8E4FC4",
+  glass: "#BFD8E6",
+  foil: "#B9C0C8",
+  flame: "#6FA8FF",
 } as const;
 
 export const FONT_SIZES = {

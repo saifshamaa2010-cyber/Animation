@@ -16,6 +16,8 @@ import { mix } from "./shared";
 export const ATOM = {
   O: { r: 26, top: mix(C.coral, C.paper, 0.22), bottom: C.coralDeep },
   H: { r: 16, top: C.paper, bottom: mix(C.paperDim, C.ink300, 0.45) },
+  // Carbon is black in school models; on our dark backgrounds it is a lit charcoal grey.
+  C: { r: 28, top: mix(C.ink300, C.paper, 0.15), bottom: C.ink600 },
 } as const;
 
 type AtomKind = keyof typeof ATOM;
@@ -26,7 +28,7 @@ const deg = (d: number) => (d * Math.PI) / 180;
 const OH = 54;
 const OO = 64;
 
-export const MOLECULES: Record<"H2O2" | "H2O" | "O2", { atoms: Atom[]; bonds: Bond[]; formula: string }> = {
+export const MOLECULES: Record<"H2O2" | "H2O" | "O2" | "CO2", { atoms: Atom[]; bonds: Bond[]; formula: string }> = {
   // H–O–O–H drawn as a skewed "Z": each H–O–O angle ≈ 100°.
   H2O2: {
     atoms: [
@@ -63,6 +65,19 @@ export const MOLECULES: Record<"H2O2" | "H2O" | "O2", { atoms: Atom[]; bonds: Bo
     ],
     bonds: [{ a: 0, b: 1, order: 2 }],
     formula: "O2",
+  },
+  // O=C=O: linear, two double bonds.
+  CO2: {
+    atoms: [
+      { k: "O", p: [-66, 0] },
+      { k: "C", p: [0, 0] },
+      { k: "O", p: [66, 0] },
+    ],
+    bonds: [
+      { a: 0, b: 1, order: 2 },
+      { a: 1, b: 2, order: 2 },
+    ],
+    formula: "CO2",
   },
 };
 
@@ -219,6 +234,7 @@ export const Molecule: React.FC<MoleculeProps> = ({
 export const H2O2: React.FC<Omit<MoleculeProps, "kind">> = (p) => <Molecule kind="H2O2" {...p} />;
 export const Water: React.FC<Omit<MoleculeProps, "kind">> = (p) => <Molecule kind="H2O" {...p} />;
 export const Oxygen: React.FC<Omit<MoleculeProps, "kind">> = (p) => <Molecule kind="O2" {...p} />;
+export const CarbonDioxide: React.FC<Omit<MoleculeProps, "kind">> = (p) => <Molecule kind="CO2" {...p} />;
 
 // ---------------------------------------------------------------------------
 

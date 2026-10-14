@@ -38,6 +38,8 @@
     "lint": "eslint src && tsc",
     "setup": "bash pipeline/setup.sh",
     "narrate": ".venv/bin/python -m pipeline.narrate",
+    "estimate": ".venv/bin/python -m pipeline.estimate",
+    "human": ".venv/bin/python -m pipeline.human",
     "align": ".venv/bin/python -m pipeline.align",
     "sfx": "tsx scripts/sfx-events.ts",
     "audio": "bash scripts/audio.sh",
