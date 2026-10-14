@@ -1,0 +1,119 @@
+{
+  "about": "Music plan for EP002 (Plant nutrition). Read by pipeline/audio/music.py: per scene (and optionally from a cue onwards) the chords, intensity, brightness and which layers play. Calm and spacious under a slow, detailed narration; warmer and brighter where light and growth are the subject.",
+  "key": "G major, with E minor for questions and a C-minor-coloured detour for denaturation",
+  "tempoBpm": 76,
+  "crossfadeSec": 2.4,
+  "bedLufs": -21,
+  "fadeInSec": 1.5,
+  "endFadeSec": 3.5,
+  "reverb": { "rt60": 4.4, "rt60Hf": 1.8, "return": 0.55 },
+  "scenes": {
+    "S01": {
+      "mood": "a mystery that grows: sparse, then the tree grows and the harmony opens",
+      "parts": [
+        { "from": "start", "intensity": 0.3, "brightness": 0.32, "progression": ["Em9", "Cmaj7"], "motif": "question", "motifAtBeat": 2 },
+        { "from": "water", "intensity": [0.34, 0.52], "brightness": [0.34, 0.56], "progression": ["Cmaj7", "D", "Em9", "Gmaj7/B"], "arp": "sparse", "arpLevel": 0.45, "sub": 0.45 },
+        { "from": "question", "intensity": 0.38, "brightness": 0.36, "progression": ["Am9", "D7sus4"], "chordBeats": 4 },
+        { "from": "air", "intensity": [0.44, 0.66], "brightness": [0.45, 0.66], "progression": ["Cmaj7", "D7sus4"], "chordBeats": 4, "bell": 0.5, "sub": [0.4, 0.75] }
+      ]
+    },
+    "S02": { "mood": "title: warm arrival on the home chord", "intensity": 0.7, "brightness": 0.66, "progression": ["Gmaj9"], "sub": 0.8, "padAttack": 0.7 },
+    "S03": {
+      "mood": "clear, steady explanation",
+      "parts": [
+        { "from": "start", "intensity": 0.42, "progression": ["Gmaj9", "Em9", "Cmaj7", "D7sus4"], "arp": "sparse", "arpLevel": 0.4, "sub": 0.5 },
+        { "from": "defLine", "intensity": 0.38, "brightness": 0.4, "progression": ["Cmaj7", "Gmaj7/B"], "chordBeats": 4, "sub": 0.45 },
+        { "from": "synthesise", "intensity": 0.44, "progression": ["Gmaj9", "Cmaj7", "Am9", "D7sus4"], "arp": "flow", "arpLevel": 0.4, "sub": 0.5 }
+      ]
+    },
+    "S04": {
+      "mood": "building the equation, term by term",
+      "parts": [
+        { "from": "start", "intensity": 0.44, "progression": ["Cmaj7", "D", "Bm7", "Em9"], "arp": "pulse", "arpLevel": 0.42, "sub": 0.55 },
+        { "from": "inputs", "intensity": 0.46, "progression": ["Gmaj9", "Cmaj7", "Em9", "D7sus4"], "arp": "flow", "sub": 0.55, "bell": 0.3 }
+      ]
+    },
+    "S05": { "mood": "careful counting", "intensity": 0.4, "brightness": 0.42, "progression": ["Em9", "Cmaj7", "Am9", "D7sus4"], "arp": "pulse", "arpLevel": 0.35, "sub": 0.5 },
+    "S06": {
+      "mood": "light arriving: bright, shimmering",
+      "parts": [
+        { "from": "start", "intensity": 0.42, "brightness": 0.5, "progression": ["Cmaj7", "D", "Gmaj9"], "chordBeats": 4, "sub": 0.5 },
+        { "from": "absorb", "intensity": [0.48, 0.6], "brightness": [0.55, 0.72], "progression": ["Cmaj7", "D", "Em9", "Gmaj7/B"], "arp": "flow", "arpLevel": 0.5, "bell": 0.55, "sub": 0.55 },
+        { "from": "careful", "intensity": 0.44, "brightness": 0.45, "progression": ["Am9", "D7sus4"], "chordBeats": 4, "sub": 0.5 }
+      ]
+    },
+    "S07": { "mood": "a list, one step at a time", "intensity": 0.46, "progression": ["Gmaj9", "D/F#", "Em9", "Cmaj7"], "arp": "broken", "arpLevel": 0.42, "sub": 0.55, "bell": 0.3 },
+    "S08": {
+      "mood": "from the soil: earthy, lower register; a darker turn for deficiency",
+      "parts": [
+        { "from": "start", "intensity": 0.44, "brightness": 0.4, "progression": ["Em9", "Cmaj7", "Gmaj7/B", "D"], "arp": "sparse", "sub": 0.6 },
+        { "from": "nitrateLack", "intensity": 0.4, "brightness": 0.3, "progression": ["Am9", "Em9"], "chordBeats": 4, "sub": 0.55 },
+        { "from": "magnesium", "intensity": 0.44, "brightness": 0.42, "progression": ["Cmaj7", "D", "Em9"], "arp": "sparse", "sub": 0.55 },
+        { "from": "magLack", "intensity": 0.4, "brightness": 0.3, "progression": ["Am9", "D7sus4"], "chordBeats": 4, "sub": 0.5 },
+        { "from": "examLine", "intensity": 0.46, "progression": ["Gmaj9", "Cmaj7"], "chordBeats": 4, "sub": 0.55 }
+      ]
+    },
+    "S09": {
+      "mood": "looking closer: the zoom into the leaf",
+      "parts": [
+        { "from": "start", "intensity": 0.44, "progression": ["Gmaj9", "Cmaj7", "Em9", "D"], "arp": "flow", "arpLevel": 0.4, "sub": 0.55 },
+        { "from": "slice", "intensity": [0.46, 0.56], "brightness": [0.45, 0.6], "progression": ["Cmaj7", "D7sus4"], "chordBeats": 4, "bell": 0.5, "sub": 0.6 },
+        { "from": "cuticle", "intensity": 0.42, "progression": ["Gmaj9", "Em9", "Cmaj7", "D"], "arp": "sparse", "arpLevel": 0.38, "sub": 0.5 }
+      ]
+    },
+    "S10": { "mood": "touring the inside of the leaf", "intensity": 0.42, "progression": ["Em9", "Cmaj7", "Gmaj7/B", "D7sus4"], "arp": "sparse", "arpLevel": 0.38, "sub": 0.5, "bell": 0.3 },
+    "S11": {
+      "mood": "a practical: methodical pulse",
+      "parts": [
+        { "from": "start", "intensity": 0.42, "progression": ["Am9", "D7sus4", "Gmaj9", "Em9"], "arp": "pulse", "arpLevel": 0.38, "sub": 0.5 },
+        { "from": "boil", "intensity": 0.46, "progression": ["Cmaj7", "D", "Em9", "Gmaj7/B"], "arp": "pulse", "arpLevel": 0.4, "sub": 0.55 },
+        { "from": "blueBlack", "intensity": 0.5, "brightness": 0.55, "progression": ["Gmaj9"], "bell": 0.5, "sub": 0.55 }
+      ]
+    },
+    "S12": { "mood": "three experiments, each landing on its answer", "intensity": 0.46, "progression": ["Gmaj9", "Em9", "Cmaj7", "D7sus4"], "arp": "broken", "arpLevel": 0.4, "sub": 0.55, "bell": 0.35 },
+    "S13": { "mood": "measuring: a ticking, curious pulse", "intensity": 0.44, "progression": ["Em9", "Cmaj7", "Am9", "D"], "arp": "pulse", "arpLevel": 0.42, "sub": 0.5 },
+    "S14": {
+      "mood": "results; a darker colour when the enzymes denature",
+      "parts": [
+        { "from": "start", "intensity": 0.46, "progression": ["Gmaj9", "Cmaj7", "D", "Em9"], "arp": "flow", "arpLevel": 0.42, "sub": 0.55 },
+        { "from": "above", "intensity": 0.44, "brightness": 0.3, "progression": ["Cm6", "D7sus4"], "chordBeats": 4, "sub": 0.6 },
+        { "from": "describe", "intensity": 0.44, "progression": ["Gmaj9", "Cmaj7"], "chordBeats": 4, "sub": 0.5 }
+      ]
+    },
+    "S15": { "mood": "reasoning it out: steady and confident", "intensity": 0.46, "progression": ["Cmaj7", "D", "Bm7", "Em9"], "arp": "broken", "arpLevel": 0.4, "sub": 0.55, "bell": 0.3 },
+    "S16": {
+      "mood": "suspense before the prediction, then near-silence for the pause",
+      "parts": [
+        { "from": "start", "intensity": 0.44, "progression": ["Em9", "Cmaj7", "Am9", "D7sus4"], "arp": "sparse", "sub": 0.5 },
+        { "from": "question", "intensity": 0.42, "brightness": 0.45, "pedal": "D", "progression": ["D7sus4"], "chordBeats": 8, "tremolo": 0.4, "sub": 0.55 }
+      ]
+    },
+    "S17": {
+      "mood": "the answer: release, then confident myth-busting",
+      "parts": [
+        { "from": "start", "intensity": 0.5, "brightness": 0.55, "progression": ["Gmaj9", "Cmaj7", "D", "Em9"], "arp": "flow", "arpLevel": 0.45, "sub": 0.6, "bell": 0.35 },
+        { "from": "myth", "intensity": 0.5, "progression": ["Cmaj7", "D", "Gmaj9"], "arp": "pulse", "arpLevel": 0.42, "sub": 0.6 }
+      ]
+    },
+    "S18": {
+      "mood": "the hook resolved: the question motif returns and lands home",
+      "parts": [
+        { "from": "start", "intensity": 0.48, "progression": ["Em9", "Cmaj7"], "motif": "question", "motifAtBeat": 2, "sub": 0.55 },
+        { "from": "co2In", "intensity": [0.52, 0.68], "brightness": [0.5, 0.66], "progression": ["Cmaj7", "D", "Em9", "Gmaj7/B"], "arp": "flow", "arpLevel": 0.5, "sub": 0.7, "bell": 0.4 },
+        { "from": "thinAir", "intensity": 0.72, "brightness": 0.66, "progression": ["Cmaj7", "D7sus4", "Gmaj9"], "chordBeats": 4, "motif": "answer", "sub": 0.8 }
+      ]
+    },
+    "S19": {
+      "mood": "recap: warm and bright",
+      "parts": [
+        { "from": "start", "intensity": 0.56, "progression": ["Gmaj9", "D/F#", "Em9", "Cmaj7"], "arp": "broken", "arpLevel": 0.45, "sub": 0.65, "bell": 0.35 },
+        { "from": "title", "intensity": 0.7, "brightness": 0.64, "progression": ["Gmaj9"], "sub": 0.8 }
+      ]
+    },
+    "S20": { "mood": "gentle ending tail", "intensity": [0.7, 0.4], "brightness": [0.62, 0.42], "progression": ["Gmaj9"], "motif": "home", "sub": [0.7, 0.3] }
+  },
+  "events": [
+    { "type": "dropout", "from": "S16.end-4.5", "to": "S16.end", "levelDb": -30, "fadeOutSec": 0.9, "fadeInSec": 0.1, "airNotes": [74, 81], "airDb": -26,
+      "about": "Near-silence under the 4-second pause-and-predict countdown; a faint open fifth (D5 + A5) keeps the question hanging." }
+  ]
+}
