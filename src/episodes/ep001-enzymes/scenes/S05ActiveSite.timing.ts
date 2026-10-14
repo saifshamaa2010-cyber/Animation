@@ -17,13 +17,13 @@ export const s05Timing = (t: CueFns) => {
   const cell = t.cue("cellulose");
   const diff = t.cue("differentLink");
   const bounce = t.word("fit", 2, -4);
-  return { site, sub, dock, complex, held, snap, release, next, lock, fit2, specific, snap2, cell, diff, bounce, end: t.dur };
+  return { site, active: t.word("active", 1, -2), sub, dock, complex, held, snap, release, next, lock, fit2, specific, snap2, cell, diff, bounce, end: t.dur };
 };
 
 export const s05Sfx = (t: CueFns): SfxEvent[] => {
   const k = s05Timing(t);
   return [
-    { frame: k.site + 18, sfx: "ui_blip", gainDb: -10 },
+    { frame: k.active + 2, sfx: "ui_blip", gainDb: -10 }, // the site outline + label draw on "active"
     { frame: k.dock, sfx: "pop_bind" },
     { frame: k.snap, sfx: "snip" },
     { frame: k.release + 2, sfx: "shimmer_sweet", gainDb: -9 },

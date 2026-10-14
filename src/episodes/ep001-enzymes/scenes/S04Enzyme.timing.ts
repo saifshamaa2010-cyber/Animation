@@ -3,8 +3,9 @@ import type { CueFns, SfxEvent } from "../../../lib/cues";
 /** S04 key moments from the narration (shared by animation + SFX). */
 export const s04Timing = (t: CueFns) => {
   const enter = t.cue("amylase");
-  const dock = t.word("snips", 1, -2);
-  const snap = Math.max(dock + 16, t.word("starch", 1, 4));
+  // docked during "It's a carbohydrase", so the cut lands on "snips" itself
+  const dock = Math.min(t.word("snips", 1, -12), t.cue("snip") - 10);
+  const snap = Math.max(dock + 10, t.word("snips", 1, 3));
   const maltose = t.cue("maltose");
   const sweet = t.cue("sweetTaste");
   const catalyst = t.cue("catalyst");

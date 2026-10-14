@@ -62,11 +62,11 @@ export const S05ActiveSite: React.FC = () => {
   // ---- chain 1: arrives, docks on "fits", bond strains on "held", snaps on "Snap"
   const dock1 = prog(f, k.dock - 16, 16) * (1 - prog(f, k.snap, 12));
   const c1 = dockedChain(9, E.x, E.y, E.s, { wave: 1.6 * Math.sin(f * 0.07) * (1 - prog(f, k.dock - 16, 16) * 0.7) });
-  const ax = track(f, [[k.sub - 44, -1150], [k.sub + 56, -330, out], [k.dock - 16, -290], [k.dock, 0, out], [k.snap, 0], [k.snap + 10, -64, EASE.snap], [k.next + 30, -420], [k.lock + 10, -1100, EASE.in]]);
-  const ay = track(f, [[k.sub - 44, 230], [k.sub + 56, 40, out], [k.dock - 16, 18], [k.dock, 0, out], [k.snap, 0], [k.snap + 10, 24, EASE.snap], [k.next + 30, 280], [k.lock + 10, 560, EASE.in]]);
+  const ax = track(f, [[k.sub - 44, -1150], [k.sub + 56, -330, out], [k.dock - 16, -290], [k.dock, 0, out], [k.snap, 0], [k.snap + 10, -64, EASE.snap], [k.next + 10, -300], [k.lock + 10, -1100, EASE.in]]); // drops clear before chain 2 arrives
+  const ay = track(f, [[k.sub - 44, 230], [k.sub + 56, 40, out], [k.dock - 16, 18], [k.dock, 0, out], [k.snap, 0], [k.snap + 10, 24, EASE.snap], [k.next + 10, 420], [k.lock + 10, 700, EASE.in]]);
   const arot = track(f, [[k.sub - 44, -12], [k.sub + 56, -3, out], [k.dock, 0, out], [k.snap, 0], [k.snap + 10, 4], [k.lock, 10]]); // no tilt while docked
-  const mx = track(f, [[k.release - 8, 0], [k.release + 18, -200], [k.next + 40, -300, out], [k.lock + 50, -900, EASE.in]]);
-  const my = track(f, [[k.release - 8, 0], [k.release + 4, 0], [k.release + 42, -240, out], [k.lock + 50, -1100, EASE.in]]);
+  const mx = track(f, [[k.release - 8, 0], [k.release + 16, -260, out], [k.next + 40, -340, out], [k.lock + 50, -900, EASE.in]]); // out through the mouth…
+  const my = track(f, [[k.release - 8, 0], [k.release + 12, 0], [k.release + 48, -240, out], [k.lock + 50, -1100, EASE.in]]); // …then up
   const mrot = track(f, [[k.release, 0], [k.release + 42, -16, out], [k.lock + 40, -30]]);
   const freed = f >= k.snap + 3;
   const maltoseGlow = prog(f, k.snap + 3, 18);
@@ -90,8 +90,8 @@ export const S05ActiveSite: React.FC = () => {
   // ---- chain 2: "free for the next one", docks in parallel with the key, then is snipped again
   const dock2 = prog(f, k.fit2 - 16, 16) * (1 - prog(f, k.snap2, 12));
   const c2 = dockedChain(8, E.x, E.y, E.s, { wave: 1.4 * Math.sin(f * 0.06 + 1) * (1 - prog(f, k.fit2 - 16, 16) * 0.7) });
-  const bx = track(f, [[k.next - 6, -1250], [k.next + 74, -300, out], [k.fit2 - 16, -280], [k.fit2, 0, out], [k.snap2, 0], [k.snap2 + 10, -60, EASE.snap], [k.cell + 20, -1000, EASE.in]]);
-  const by = track(f, [[k.next - 6, 330], [k.next + 74, 30, out], [k.fit2 - 16, 14], [k.fit2, 0, out], [k.snap2, 0], [k.snap2 + 10, 22, EASE.snap], [k.cell + 20, 520, EASE.in]]);
+  const bx = track(f, [[k.next + 6, -1250], [k.next + 74, -300, out], [k.fit2 - 16, -280], [k.fit2, 0, out], [k.snap2, 0], [k.snap2 + 10, -60, EASE.snap], [k.cell + 20, -1000, EASE.in]]);
+  const by = track(f, [[k.next + 6, 40], [k.next + 74, 30, out], [k.fit2 - 16, 14], [k.fit2, 0, out], [k.snap2, 0], [k.snap2 + 10, 22, EASE.snap], [k.cell + 20, 520, EASE.in]]);
   const freed2 = f >= k.snap2 + 3;
   const m2x = track(f, [[k.snap2 + 10, 0], [k.snap2 + 34, -200], [k.cell + 40, -900, EASE.in]]);
   const m2y = track(f, [[k.snap2 + 10, 0], [k.snap2 + 50, -260, out], [k.cell + 40, -1100, EASE.in]]);
