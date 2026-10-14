@@ -20,8 +20,10 @@ export const Thumbnail: React.FC = () => {
   const ex = L.x + 70;
   const ey = L.y + 20;
   const chain = dockedChain(5, ex, ey, s);
-  const freed: Ring[] = moveRings(chain.rings.slice(3), -150, -120, -16).map((r) => ({ ...r, tone: "sugar" as const, glow: 1 }));
-  const rings = [...chain.rings.slice(0, 3).map((r) => moveRings([r], -30, 30)[0]), ...freed];
+  // the moment of the cut: the chain is docked in the active site and its last two glucose units —
+  // maltose — light up as the bond at the mouth snaps
+  const freed: Ring[] = moveRings(chain.rings.slice(3), 6, -4, -4).map((r) => ({ ...r, tone: "sugar" as const, glow: 1 }));
+  const rings = [...chain.rings.slice(0, 3), ...freed];
   return (
     <AbsoluteFill style={{ fontFamily: FONT }}>
       <div style={{ position: "absolute", width: 1920, height: 1080, transform: "scale(0.6667)", transformOrigin: "0 0" }}>
@@ -44,13 +46,13 @@ export const Thumbnail: React.FC = () => {
         <circle cx={L.x} cy={L.y + 12} r={L.r + 16} fill={C.ink950} opacity={0.45} />
         <g clipPath="url(#th-lens)">
           <circle cx={L.x} cy={L.y} r={L.r} fill="url(#th-lens-bg)" />
-          <circle cx={L.x - 110} cy={L.y - 100} r={110} fill={C.amber} opacity={0.5} filter="url(#th-glow)" />
+          <circle cx={ex + s * DOCK.inner[0] - 20} cy={ey} r={90} fill={C.amber} opacity={0.55} filter="url(#th-glow)" />
           <SugarChain rings={rings} links={[{ a: 0, b: 1 }, { a: 1, b: 2 }, { a: 3, b: 4 }]} />
           <Enzyme x={ex} y={ey} scale={s} still seed={7} />
           {Array.from({ length: 7 }, (_, i) => {
             const a = (i / 7) * Math.PI * 2 + 0.4;
-            const cx = ex + s * DOCK.cut[0] - 18;
-            const cy = ey + 12;
+            const cx = ex + s * DOCK.cut[0];
+            const cy = ey;
             return <line key={i} x1={cx + Math.cos(a) * 18} y1={cy + Math.sin(a) * 18} x2={cx + Math.cos(a) * 34} y2={cy + Math.sin(a) * 34} stroke={C.amberLight} strokeWidth={4} strokeLinecap="round" />;
           })}
         </g>
