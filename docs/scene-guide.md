@@ -57,3 +57,48 @@ npx tsx scripts/frames.ts ep001-SXX 120,240 out/qa/SXX-b     # specific frames
 ```
 Open `out/qa/SXX/contact-sheet.jpg` (and individual frames) with the Read tool and judge them like a
 picky motion designer. Iterate until it looks crafted, not generated.
+
+---
+
+# EP002 and later: what's new
+
+Same look as EP001 (approved by the owner), with these changes:
+
+- **No decorative background.** `Stage` with no `particles`; no `DepthMolecules`. Only things that explain.
+- **Long, structured episodes.** Each section opens with a `SectionTag` (top-left, e.g. "4 · Leaf structure";
+  `extended` adds the EXTENDED badge). The table of sections is in the episode's `storyboard.md`.
+- **Human narrator.** Until the recording exists, `timeline.json` is an estimate (`npm run estimate`). When the
+  real voice arrives the cue frames move. So: put every beat on a cue (`sc.cue`), never on a fixed number of
+  frames after the scene start, and guard short gaps (e.g. `Math.min(30, k.next - k.now)`), so the scene still
+  works if the narrator is faster or slower. `sc.word(text, n)` is fine for a key term inside a sentence, but
+  only for words that certainly appear in that scene's text.
+- **Preview captions.** `ep002-Sxx` compositions burn read-along captions in at the bottom (y > 990). Keep the
+  bottom 100 px clear anyway (safe area).
+
+## Reusable components (EP002)
+- `components/Light.tsx`: `SunBeams`, `Photon`, `PhotonStream`, `SunIcon` — light as energy, travelling in straight lines.
+- `components/Lens.tsx`: `Lens` — magnified inset with cone lines; children in screen coordinates, clipped.
+- `components/Equation.tsx`: `Equation` (terms + arrow with over/under conditions, per-term `p`, `emphasis`, `dim`),
+  `ChemText` ("6CO2", "C6H12O6", "NO3^-", "Mg^2+" get real sub/superscripts), `chemWidth`, `equationWidth`.
+- `components/ExamTip.tsx`: `ExamTip` — the creditworthy wording, optional wrong wording struck through.
+- `components/SectionTag.tsx`: `SectionTag`.
+- `components/bio`: `Leaf` + `leafGeometry` (tones: green, white, yellow, decolourised, orange, blueBlack, dullGreen;
+  `margin` = variegation, `band`, `cover` = black paper, `interveinal`, `sunlit`), `LeafSection` +
+  `leafSectionAnchors` + `leafSectionPaths` (layers, `focus`, `stomataOpen`, `chloroGlow`), `Plant`, `Pot`,
+  `SoilBlock`, `Roots`, `Willow`, `Pondweed` + `pondweedTip`, `Flower`, `Bee`, `Ion`, `Sucrose`, `AminoChain`.
+- `components/lab/Lab.tsx`: `Tube` (+ `bung`, children), `Rack` + `rackSlots`, `Beaker`, `ConicalFlask`, `SodaLime`,
+  `Bunsen` (`flame` 0..1), `WaterBath`, `Tile`, `Dropper`, `Bottle` (+ `flammable`), `HazardFlammable`, `Lamp`,
+  `Ruler`, `GasSyringe`, `FoilWrap`, `Scale`.
+- From EP001, still useful: `Glucose` (standalone amber ring), `SugarChain`/`straightChain` (starch, cellulose),
+  `Enzyme` (teal, `denature`), `Graph`, `Thermometer`, `MythCard`, `PausePredict`, `Label`, `Keyword`, the kit
+  (`CarbonDioxide`, `Water`, `Oxygen`, `Bubble`, `Counter`, `HandTick`, `HandCross`, `HandArrow`, `HandUnderline`,
+  `StrikeThrough`, `Stopwatch`), `camAt`/`camTransform`/`toScreen`.
+- The component demo sheet: `npx tsx scripts/frames.ts bio-kit-demo 10,40,70,100,130 out/qa/kit`.
+
+## Working on a scene in parallel with others
+- Edit only your own `SxxName.tsx` / `SxxName.timing.ts`. Helpers for your scene go in `scenes/parts/Sxx-*.tsx`.
+- Shared positions for continuing scenes are in `scenes/layout.ts` — use them so cuts are seamless.
+- Do **not** edit shared components, `index.ts`, `sfx.ts` or `Root.tsx`. If a shared component has a bug or lacks a
+  prop, work around it locally and say so in your report.
+- Check with `npx tsc --noEmit`, `npx tsx scripts/frames.ts ep002-Sxx count:12 out/qa/Sxx` (Read the contact sheet
+  AND full-size key frames), and `npx tsx scripts/text-audit.ts ep002-Sxx every:10 out/qa/Sxx/text-audit.md`.
