@@ -145,6 +145,16 @@ def make_srt(words: list[dict], max_chars: int = 74, max_dur: float = 6.0) -> st
         cur.append(w)
     if cur:
         cues.append(cur)
+    # Merge flash cues (< 1 s on screen) into a neighbour in the same scene when they fit.
+    merged: list[list[dict]] = []
+    for c in cues:
+        dur = c[-1]["endSec"] - c[0]["startSec"]
+        if merged and dur < 1.0 and merged[-1][-1]["scene"] == c[0]["scene"] \
+                and len(" ".join(x["text"] for x in merged[-1] + c)) <= max_chars:
+            merged[-1] = merged[-1] + c
+        else:
+            merged.append(c)
+    cues = merged
     out = []
     for n, c in enumerate(cues, 1):
         text = " ".join(x["text"] for x in c)
@@ -154,10 +164,14 @@ def make_srt(words: list[dict], max_chars: int = 74, max_dur: float = 6.0) -> st
             cut = min(spaces, key=lambda i: abs(i - mid)) if spaces else mid
             text = text[:cut] + "\n" + text[cut + 1:]
         start = c[0]["startSec"]
-        end = c[-1]["endSec"] + 0.25
+        end = c[-1]["endSec"] + 0.6  # hold a little after the last word
         if n < len(cues):
-            end = min(end, cues[n][0]["startSec"] - 0.02)
-        end = max(end, start + 0.8)
+            nxt = cues[n][0]["startSec"]
+            # chain into the next cue when the gap is short, so subtitles don't flicker off and on
+            end = nxt if end > nxt - 0.3 else end
+        end = max(end, start + 1.0)
+        if n < len(cues):
+            end = min(end, cues[n][0]["startSec"])
         out.append(f"{n}\n{srt_time(start)} --> {srt_time(end)}\n{text}\n")
     return "\n".join(out)
 
