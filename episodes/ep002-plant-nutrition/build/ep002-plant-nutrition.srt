@@ -1357,152 +1357,151 @@ so the indicator stays red.
 Which busts a classic myth:
 
 313
-00:14:59,980 --> 00:15:03,470
-that plants photosynthesise
-instead of respiring.
+00:14:59,980 --> 00:15:02,720
+that plants only respire at night.
 
 314
-00:15:03,470 --> 00:15:05,560
+00:15:02,720 --> 00:15:04,810
 Plants respire all the time,
 
 315
-00:15:05,560 --> 00:15:08,240
+00:15:04,810 --> 00:15:07,490
 day and night, just like you.
 
 316
-00:15:08,240 --> 00:15:11,650
+00:15:07,490 --> 00:15:10,900
 In bright light,
 photosynthesis is just faster,
 
 317
-00:15:11,650 --> 00:15:14,920
+00:15:10,900 --> 00:15:14,170
 so there's a net uptake
 of carbon dioxide.
 
 318
-00:15:14,920 --> 00:15:17,900
+00:15:14,170 --> 00:15:17,150
 Net is the word examiners look for.
 
 319
-00:15:19,050 --> 00:15:21,880
+00:15:18,300 --> 00:15:21,130
 So, back to van Helmont's willow.
 
 320
-00:15:21,880 --> 00:15:25,510
+00:15:21,130 --> 00:15:24,760
 Where did those seventy-four
 kilograms come from?
 
 321
-00:15:25,910 --> 00:15:28,240
+00:15:25,160 --> 00:15:27,490
 Carbon dioxide, from the air,
 
 322
-00:15:28,240 --> 00:15:30,630
+00:15:27,490 --> 00:15:29,880
 and water, from the soil.
 
 323
-00:15:30,630 --> 00:15:32,140
+00:15:29,880 --> 00:15:31,390
 Joined into glucose,
 
 324
-00:15:32,140 --> 00:15:33,940
+00:15:31,390 --> 00:15:33,190
 using energy from light,
 
 325
-00:15:33,940 --> 00:15:35,840
+00:15:33,190 --> 00:15:35,090
 then built into cellulose,
 
 326
-00:15:35,840 --> 00:15:37,710
+00:15:35,090 --> 00:15:36,960
 starch and proteins.
 
 327
-00:15:38,010 --> 00:15:41,850
+00:15:37,260 --> 00:15:41,100
 The little that the soil lost
 was mostly mineral ions,
 
 328
-00:15:41,850 --> 00:15:44,160
+00:15:41,100 --> 00:15:43,410
 like nitrate and magnesium.
 
 329
-00:15:44,560 --> 00:15:48,220
+00:15:43,810 --> 00:15:47,470
 Van Helmont thought his
 tree was made of water.
 
 330
-00:15:48,220 --> 00:15:50,420
+00:15:47,470 --> 00:15:49,670
 He was only partly right.
 
 331
-00:15:50,420 --> 00:15:53,100
+00:15:49,670 --> 00:15:52,350
 A living tree is full of water.
 
 332
-00:15:53,100 --> 00:15:57,230
+00:15:52,350 --> 00:15:56,480
 But most of the wood itself
 was built from carbon dioxide,
 
 333
-00:15:57,230 --> 00:15:59,380
+00:15:56,480 --> 00:15:58,630
 taken out of thin air.
 
 334
-00:16:00,530 --> 00:16:02,060
+00:15:59,780 --> 00:16:01,310
 Let's recap.
 
 335
-00:16:02,060 --> 00:16:06,780
+00:16:01,310 --> 00:16:06,030
 Photosynthesis: carbon dioxide plus
 water gives glucose plus oxygen,
 
 336
-00:16:06,780 --> 00:16:09,960
+00:16:06,030 --> 00:16:09,210
 in the presence of
 light and chlorophyll.
 
 337
-00:16:09,960 --> 00:16:14,520
+00:16:09,210 --> 00:16:13,770
 Chlorophyll transfers energy from
 light into energy in chemicals.
 
 338
-00:16:14,520 --> 00:16:16,810
+00:16:13,770 --> 00:16:16,060
 Glucose is used for respiration,
 
 339
-00:16:16,810 --> 00:16:18,320
+00:16:16,060 --> 00:16:17,570
 starch, cellulose,
 
 340
-00:16:18,320 --> 00:16:20,040
+00:16:17,570 --> 00:16:19,290
 sucrose and nectar.
 
 341
-00:16:20,040 --> 00:16:22,490
+00:16:19,290 --> 00:16:21,740
 Nitrate ions make amino acids.
 
 342
-00:16:22,490 --> 00:16:24,950
+00:16:21,740 --> 00:16:24,200
 Magnesium ions make chlorophyll.
 
 343
-00:16:24,950 --> 00:16:26,890
+00:16:24,200 --> 00:16:26,140
 Leaves are broad, thin,
 
 344
-00:16:26,890 --> 00:16:28,490
+00:16:26,140 --> 00:16:27,740
 and built in layers,
 
 345
-00:16:28,490 --> 00:16:30,950
+00:16:27,740 --> 00:16:30,200
 each adapted for photosynthesis.
 
 346
-00:16:30,950 --> 00:16:35,940
+00:16:30,200 --> 00:16:35,190
 Light, carbon dioxide and temperature
 can all be limiting factors.
 
 347
-00:16:36,440 --> 00:16:38,700
+00:16:35,690 --> 00:16:37,950
 And that's plant nutrition.

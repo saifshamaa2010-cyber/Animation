@@ -33,7 +33,7 @@ from scipy import signal
 from . import sfx as sfxlib
 from . import timeline as tlmod
 from .dsp import fade, highpass, nsamp, stereo, undb
-from .loudness import integrated, limit, loudness_profile, normalise_and_limit
+from .loudness import integrated, limit, loudness_profile, normalise_and_limit, sample_peak_db, true_peak_db
 from .paths import SFX_DIR, SR, episode_dir, public_episode_dir
 
 SETTINGS = {
@@ -94,12 +94,25 @@ def speech_activity(voice: np.ndarray, s: dict) -> tuple[np.ndarray, float]:
     for a, b in zip(starts, ends):
         if (b - a) / CTRL < 0.05:
             act[a:b] = False
-    # hold across short gaps, then extend backwards by the look-ahead
+    return hold_and_lookahead(act, s), float(thr)
+
+
+def hold_and_lookahead(act: np.ndarray, s: dict) -> np.ndarray:
+    """Hold a speech mask across short gaps, then extend it backwards by the look-ahead."""
     hold = int(s["duckHoldSec"] * CTRL)
     la = int(s["duckLookaheadSec"] * CTRL)
     act = np.convolve(act.astype(float), np.ones(hold + 1), mode="full")[: len(act)] > 0  # forward hold
     act = np.convolve(act.astype(float)[::-1], np.ones(la + 1), mode="full")[: len(act)][::-1] > 0  # look-ahead
-    return act, float(thr)
+    return act
+
+
+def word_activity(tl: tlmod.Timeline, n_ctrl: int) -> np.ndarray:
+    """Speech mask on the control grid from the timeline's word timings (for a silent placeholder narration)."""
+    act = np.zeros(n_ctrl, dtype=bool)
+    for w in tl.words:
+        a, b = int(w["startSec"] * CTRL), int(np.ceil(w["endSec"] * CTRL))
+        act[max(0, a): min(n_ctrl, b)] = True
+    return act
 
 
 def compress_voice(v: np.ndarray, s: dict) -> tuple[np.ndarray, float]:
@@ -347,17 +360,29 @@ def mix(tl: tlmod.Timeline, music_path: Path, sfx_entries: list[dict], out_dir: 
     n = max(n, len(voice))
     voice = np.pad(voice, (0, n - len(voice)))
 
-    voice = highpass(voice, s["voiceHighpassHz"], 2)
-    voice, max_gr = compress_voice(voice, s)
-    # catch the TTS's sharp, sparse transients here (fast release = inaudible) so the master limiter
-    # hardly has to work
-    v_peak_ceiling = integrated(stereo(voice)) + s["voicePeakAboveLufs"]
-    v_lim, v_lim_stats = limit(stereo(voice), ceiling_db=v_peak_ceiling, lookahead=0.002, release=0.04)
-    voice = v_lim[:, 0]
-    raw_act, thr = speech_activity(voice, {**s, "duckHoldSec": 0.0, "duckLookaheadSec": 0.0})
-    act, _ = speech_activity(voice, s)
-    voice_st = stereo(voice)  # dead centre
-    v_lufs = integrated(voice_st)
+    # No recording yet (estimated timeline, silent narration.wav): mix the music and SFX exactly as they
+    # will sit under a voice at a typical level, ducked where the words will be spoken, so the preview
+    # sounds like the finished mix minus the voice. Not loudness-normalised (there is no voice to anchor it).
+    placeholder = not np.any(np.abs(voice) > 1e-7)
+    if placeholder:
+        max_gr, thr = 0.0, float("nan")
+        v_lim_stats = {"maxGainReductionDb": 0.0, "percentTimeLimiting": 0.0}
+        raw_act = word_activity(tl, len(frame_db(voice)))
+        act = hold_and_lookahead(raw_act, s)
+        voice_st = stereo(voice)
+        v_lufs = s["targetLufs"] - 0.5
+    else:
+        voice = highpass(voice, s["voiceHighpassHz"], 2)
+        voice, max_gr = compress_voice(voice, s)
+        # catch the TTS's sharp, sparse transients here (fast release = inaudible) so the master limiter
+        # hardly has to work
+        v_peak_ceiling = integrated(stereo(voice)) + s["voicePeakAboveLufs"]
+        v_lim, v_lim_stats = limit(stereo(voice), ceiling_db=v_peak_ceiling, lookahead=0.002, release=0.04)
+        voice = v_lim[:, 0]
+        raw_act, thr = speech_activity(voice, {**s, "duckHoldSec": 0.0, "duckLookaheadSec": 0.0})
+        act, _ = speech_activity(voice, s)
+        voice_st = stereo(voice)  # dead centre
+        v_lufs = integrated(voice_st)
 
     music, sr = sf.read(music_path, dtype="float64", always_2d=True)
     if sr != SR:
@@ -369,8 +394,10 @@ def mix(tl: tlmod.Timeline, music_path: Path, sfx_entries: list[dict], out_dir: 
     # duck, then verify the 15 dB rule and tighten if any passage is too close
     extra = 0.0
     for _ in range(4):
-        g, static, duck_db = duck_gain(music, act, v_lufs, s, extra, voice_st)
+        g, static, duck_db = duck_gain(music, act, v_lufs, s, extra, None if placeholder else voice_st)
         music_d = music * g[:, None]
+        if placeholder:
+            break
         stats = ducking_stats(voice_st, music_d, raw_act)
         p5 = stats["voiceMinusMusicWhileSpeaking"]["p5"]
         if p5 is None or p5 >= 16.0:
@@ -383,7 +410,12 @@ def mix(tl: tlmod.Timeline, music_path: Path, sfx_entries: list[dict], out_dir: 
         print(f"  WARNING: {p}")
 
     full = voice_st + music_d + sfx_track
-    out, gain_db, lim = normalise_and_limit(full, s["targetLufs"], s["truePeakMax"])
+    if placeholder:
+        out, lim = limit(full, ceiling_db=s["truePeakMax"] - 0.5)
+        lim.update({"integratedLufs": integrated(out), "truePeakDbtp": true_peak_db(out), "samplePeakDbfs": sample_peak_db(out)})
+        gain_db = 0.0
+    else:
+        out, gain_db, lim = normalise_and_limit(full, s["targetLufs"], s["truePeakMax"])
     gain = undb(gain_db)
 
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -392,7 +424,8 @@ def mix(tl: tlmod.Timeline, music_path: Path, sfx_entries: list[dict], out_dir: 
     for name, stem in (("narration", voice_st), ("music", music_d), ("sfx", sfx_track)):
         sf.write(out_dir / "stems" / f"{name}.wav", (stem * gain).astype(np.float32), SR, subtype="PCM_24")
 
-    final_stats = ducking_stats(voice_st * gain, music_d * gain, raw_act)
+    final_stats = (ducking_stats(voice_st * gain, music_d * gain, raw_act) if not placeholder else
+                   {"speechWindows": 0, "voiceMinusMusicWhileSpeaking": {"median": None, "p5": None, "min": None}})
     # how much the ducker itself pulls the music down: speech vs clear pauses (>= 0.8 s, not in the
     # music's own dropout), read straight from the gain curve so the music's dynamics don't blur it
     gap = np.convolve((~raw_act).astype(float), np.ones(int(0.8 * CTRL)), mode="same") >= int(0.8 * CTRL) - 1
@@ -401,6 +434,7 @@ def mix(tl: tlmod.Timeline, music_path: Path, sfx_entries: list[dict], out_dir: 
     final_stats["duckGainInPausesDb"] = round(float(np.median(duck_db[:n_c][gap[:n_c]])), 1) if np.any(gap[:n_c]) else None
     report = {
         "episode": tl.episode,
+        "placeholderVoice": placeholder,
         "durationSec": round(n / SR, 3),
         "loudness": {
             "integratedLufs": round(lim["integratedLufs"], 2),
@@ -411,7 +445,7 @@ def mix(tl: tlmod.Timeline, music_path: Path, sfx_entries: list[dict], out_dir: 
             "limiterMaxReductionDb": round(lim["maxGainReductionDb"], 2),
             "limiterPercentTime": round(lim["percentTimeLimiting"], 2),
         },
-        "voice": {"integratedLufsInMix": round(integrated(voice_st * gain), 2),
+        "voice": {"integratedLufsInMix": None if placeholder else round(integrated(voice_st * gain), 2),
                   "compressorMaxReductionDb": round(max_gr, 1),
                   "peakControlMaxReductionDb": round(v_lim_stats["maxGainReductionDb"], 1),
                   "peakControlPercentTime": round(v_lim_stats["percentTimeLimiting"], 2),
@@ -434,6 +468,9 @@ def print_report(r: dict, out_dir: Path) -> None:
     d = M["voiceMinusMusicWhileSpeaking"]
     ok = lambda c: "OK " if c else "FAIL"
     print("\n  Loudness report")
+    if r.get("placeholderVoice"):
+        print("  (no recording yet: music + SFX only, at the levels they will sit under the voice; loudness is")
+        print("   normalised to -14 LUFS once the narrator's recording is mixed in, so ignore the FAIL below)")
     print(f"  {ok(abs(L['integratedLufs'] + 14) <= 0.5)} integrated loudness  {L['integratedLufs']:6.2f} LUFS   (target -14)")
     print(f"  {ok(L['truePeakDbtp'] <= -1.0)} true peak            {L['truePeakDbtp']:6.2f} dBTP   (max -1.0, 4x oversampled)")
     print(f"       sample peak          {L['samplePeakDbfs']:6.2f} dBFS")
