@@ -185,8 +185,9 @@ export const S06Chlorophyll: React.FC = () => {
   const strike = prog(f, k.makes - 2, 18, (v) => v);
   const tipGeo = (() => {
     const p = EASE.out(Math.min(1, tipP));
-    const w = Math.max(textWidth(TIP_TEXT, 50, 700), textWidth(TIP_NOT, 42, 500), textWidth(" ", 30, 700) + 60) + 90;
-    const h = 210;
+    // mirrors ExamTip's own layout (components/ExamTip.tsx)
+    const w = Math.max(textWidth(TIP_TEXT, 50, 700), textWidth(TIP_NOT, 42, 500), textWidth("EXAM TIP", 40, 700) + 60) + 90;
+    const h = 226;
     return { l: TIP[0] - w / 2, t: TIP[1] - h / 2 + (1 - p) * 40, op: Math.min(1, tipP * 2) };
   })();
   const transfersW = textWidth("transfers", 50, 700, -0.5);
@@ -301,21 +302,15 @@ export const S06Chlorophyll: React.FC = () => {
       {energyOut > 0 ? <SubLine x={energyAt[0] + 14} y={energyAt[1] + 61} text="stored in glucose" color={C.ink300} p={prog(f, k.storedWord - 2, 16)} opacity={energyOut} /> : null}
 
       {/* ============ exam tip ============ */}
-      <ExamTip x={TIP[0]} y={TIP[1]} text={TIP_TEXT} not={TIP_NOT} label=" " progress={tipP} strike={strike} />
+      <ExamTip x={TIP[0]} y={TIP[1]} text={TIP_TEXT} not={TIP_NOT} progress={tipP} strike={strike} />
       {tipP > 0 ? (
         <g opacity={tipGeo.op}>
-          {/* the card's own heading is 30 px; redrawn at the channel's 40 px minimum */}
-          <text x={tipGeo.l + 44} y={tipGeo.t + 52} fontFamily={FONT} fontWeight={700} fontSize={40} fill={C.amber} letterSpacing={2}>
-            EXAM TIP
-          </text>
           {wordPulse > 0 ? (
-            <text x={tipGeo.l + 44} y={tipGeo.t + 108} fontFamily={FONT} fontWeight={700} fontSize={50} fill={C.amberLight} letterSpacing={-0.5} opacity={wordPulse}>
+            <text x={tipGeo.l + 44} y={tipGeo.t + 122} fontFamily={FONT} fontWeight={700} fontSize={50} fill={C.amberLight} letterSpacing={-0.5} opacity={wordPulse}>
               transfers
             </text>
           ) : null}
-          {/* ExamTip draws its strike line even at strike = 0 (a coral dot before the word): hide it until the strike starts */}
-          {strike <= 0 ? <circle cx={tipGeo.l + 38} cy={tipGeo.t + 157} r={6} fill={mix(C.ink700, C.ink800, 0.69)} /> : null}
-          <HandUnderline x1={tipGeo.l + 40} x2={tipGeo.l + 48 + transfersW} y={tipGeo.t + 124} progress={underline} color={C.amber} width={6} seed={6} />
+          <HandUnderline x1={tipGeo.l + 40} x2={tipGeo.l + 48 + transfersW} y={tipGeo.t + 138} progress={underline} color={C.amber} width={6} seed={6} />
         </g>
       ) : null}
 

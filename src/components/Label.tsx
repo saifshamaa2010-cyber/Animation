@@ -17,6 +17,8 @@ export type LabelProps = {
   readonly size?: number;
   /** Fade the whole label out (1 = fully visible). */
   readonly opacity?: number;
+  /** 0..1 arrival of the `sub` line on its own cue (default: arrives with the label). */
+  readonly subProgress?: number;
 };
 
 const c = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
@@ -32,6 +34,7 @@ export const Label: React.FC<LabelProps> = ({
   color = C.paper,
   size = FONT_SIZES.label,
   opacity = 1,
+  subProgress,
 }) => {
   if (progress <= 0 || opacity <= 0) return null;
   const line = interpolate(progress, [0, 0.55], [0, 1], c);
@@ -70,8 +73,9 @@ export const Label: React.FC<LabelProps> = ({
         >
           {text}
         </text>
-        {sub ? (
+        {sub && (subProgress ?? 1) > 0 ? (
           <text
+            opacity={subProgress ?? 1}
             x={textX}
             y={ty + size * 0.34 + Math.max(size * 0.95, 46)}
             textAnchor={align}
