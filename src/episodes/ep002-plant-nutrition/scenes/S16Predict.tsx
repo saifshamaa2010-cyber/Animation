@@ -113,8 +113,8 @@ export const S16Predict: React.FC = () => {
   // ---------------------------------------------------------------- part 3: the question + pause
   const overlay = prog(f, k.pauseNow, 14);
   const qMarks = [0, 1, 2].map((i) => prog(f, k.colour - 2 + i * 5, 14));
-  const q1 = prog(f, k.question, 16) * (1 - overlay);
-  const q2 = prog(f, k.after - 2, 16) * (1 - overlay);
+  const q1 = prog(f, k.question, 16); // stays up during the pause: it is the question being predicted
+  const q2 = prog(f, k.after - 2, 16);
   const countdown = prog(f, k.silence, Math.max(1, k.end - k.silence), (v) => v);
 
   return (
@@ -185,7 +185,8 @@ export const S16Predict: React.FC = () => {
       <SectionTag n={9} title="Gas exchange" t={f} extended />
 
       {/* ============ part 3: pause & predict ============ */}
-      <PausePredict visible={overlay} countdown={countdown} question="Each tube: yellow, red or purple?" />
+      {/* compact badge: the tubes and the colour key stay visible while the viewer predicts */}
+      <PausePredict visible={overlay} countdown={countdown} question="" badge={{ x: 1010, y: 850 }} />
     </Stage>
   );
 };

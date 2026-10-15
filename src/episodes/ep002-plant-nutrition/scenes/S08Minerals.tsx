@@ -56,7 +56,7 @@ const EX = { cols: [400, 960, 1520], headY: 270, row1: 500, row2: 760 } as const
 const NITRATES: readonly { at: Pt; root: number }[] = [
   { at: [212, 858], root: 2 },
   { at: [480, 790], root: 5 },
-  { at: [668, 792], root: -1 },
+  { at: [640, 838], root: -1 },
 ];
 const MAGS: readonly { at: Pt; root: number }[] = [
   { at: [220, 800], root: 2 },

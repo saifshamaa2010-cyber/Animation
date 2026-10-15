@@ -84,13 +84,13 @@ export const S12Needs: React.FC = () => {
   const k = s12Timing(sc);
 
   // ================================================================ part 1: three things a plant might need
-  const askIn = (i: number) => prog(f, k.what - 4 + i * 8, 18);
+  const askIn = (i: number) => prog(f, k.what - 14 + i * 8, 18);
   const askQ = prog(f, k.needs - 2, 16);
   const askOut = 1 - prog(f, k.control - 6, 16);
 
   // ================================================================ part 2: test vs control
   const p2Out = 1 - prog(f, k.chlorophyllTest - 4, 16);
-  const rowIn = (r: number) => prog(f, k.aControl - 6 + r * 8, 20);
+  const rowIn = (r: number) => prog(f, k.control + 4 + r * 10, 20); // "Each experiment needs a control"
   const card1 = prog(f, k.identical - 4, 18) * (1 - prog(f, k.shows - 6, 10));
   const card2 = prog(f, k.shows - 2, 16);
   const same = pulse(f, k.identical, 26);

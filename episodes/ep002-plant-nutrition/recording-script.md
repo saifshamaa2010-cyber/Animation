@@ -80,7 +80,7 @@ One more practical. Hydrogencarbonate indicator shows how much carbon dioxide is
 
 ## Scene 17 — reveal
 
-Here's what happens. In the light, the indicator turns purple. Photosynthesis is faster than respiration, so the leaf takes in more carbon dioxide than it gives out. In the dark, it turns yellow. There's no photosynthesis, but respiration carries on, so the leaf gives out carbon dioxide. The tube with no leaf stays red. That's the control. It shows that the leaf caused the colour changes. And in dim light, the two rates can be equal, so the indicator stays red. Which busts a classic myth: that plants photosynthesise instead of respiring. Plants respire all the time, day and night, just like you. In bright light, photosynthesis is just faster, so there's a net uptake of carbon dioxide. Net is the word examiners look for.
+Here's what happens. In the light, the indicator turns purple. Photosynthesis is faster than respiration, so the leaf takes in more carbon dioxide than it gives out. In the dark, it turns yellow. There's no photosynthesis, but respiration carries on, so the leaf gives out carbon dioxide. The tube with no leaf stays red. That's the control. It shows that the leaf caused the colour changes. And in dim light, the two rates can be equal, so the indicator stays red. Which busts a classic myth: that plants only respire at night. Plants respire all the time, day and night, just like you. In bright light, photosynthesis is just faster, so there's a net uptake of carbon dioxide. Net is the word examiners look for.
 
 ## Scene 18 — resolve
 

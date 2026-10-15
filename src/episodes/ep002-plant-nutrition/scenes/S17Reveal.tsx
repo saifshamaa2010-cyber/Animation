@@ -196,8 +196,8 @@ export const S17Reveal: React.FC = () => {
   );
   const psIn = prog(f, k.ps1 - 4, 16);
   const rIn = prog(f, k.r1 - 4, 16);
-  const rGlow = Math.max(pulse(f, k.r2 - 2, 40), pulse(f, k.respiring - 2, 36), window01(f, k.all - 2, k.night + 34, 12));
-  const psGlow = Math.max(pulse(f, k.photosynthesise - 2, 36), pulse(f, k.faster2 - 2, 36));
+  const rGlow = Math.max(pulse(f, k.r2 - 2, 40), pulse(f, k.mythRespire - 2, 36), window01(f, k.all - 2, k.night + 34, 12));
+  const psGlow = pulse(f, k.faster2 - 2, 36);
   const equal = window01(f, k.equal - 2, k.myth, 12);
   const net = prog(f, k.netW - 2, 18);
   const netPulse = pulse(f, k.netWord - 2, 36);

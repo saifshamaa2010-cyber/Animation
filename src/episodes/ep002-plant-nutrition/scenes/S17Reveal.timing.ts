@@ -31,13 +31,12 @@ export const s17Timing = (t: CueFns) => {
   const staysRed2 = t.word("red", 2);
   // ---- the myth and the exam word
   const myth = t.cue("myth");
-  const photosynthesise = t.word("photosynthesise", 1); // the myth: "…photosynthesise instead of respiring"
-  const respiring = t.word("respiring", 1);
+  const mythRespire = t.word("respire", 1); // the myth: "…that plants only respire at night"
   const bust = t.cue("bust");
-  const respire = t.word("respire", 1); // "Plants respire all the time"
+  const respire = t.word("respire", 2); // "Plants respire all the time"
   const all = t.word("all", 1);
   const day = t.word("day", 1);
-  const night = t.word("night", 1);
+  const night = t.word("night", 2); // "…day and night"
   const net = t.cue("net");
   const bright = t.word("bright", 1);
   const faster2 = t.word("faster", 2); // "…photosynthesis is just faster"
@@ -68,8 +67,7 @@ export const s17Timing = (t: CueFns) => {
     equal,
     staysRed2,
     myth,
-    photosynthesise,
-    respiring,
+    mythRespire,
     bust,
     respire,
     all,

@@ -832,9 +832,9 @@
    "id": "S17",
    "slug": "reveal",
    "startSec": 859.94,
-   "endSec": 919.05,
+   "endSec": 918.3,
    "startFrame": 25798,
-   "endFrame": 27572,
+   "endFrame": 27549,
    "cues": {
     "reveal": {
      "sec": 859.94,
@@ -861,118 +861,118 @@
      "frame": 26936
     },
     "bust": {
-     "sec": 903.47,
-     "frame": 27104
+     "sec": 902.72,
+     "frame": 27082
     },
     "net": {
-     "sec": 908.24,
-     "frame": 27247
+     "sec": 907.49,
+     "frame": 27225
     },
     "netWord": {
-     "sec": 914.92,
-     "frame": 27448
+     "sec": 914.17,
+     "frame": 27425
     }
    }
   },
   {
    "id": "S18",
    "slug": "resolve",
-   "startSec": 919.05,
-   "endSec": 960.53,
-   "startFrame": 27572,
-   "endFrame": 28816,
+   "startSec": 918.3,
+   "endSec": 959.78,
+   "startFrame": 27549,
+   "endFrame": 28793,
    "cues": {
     "back": {
-     "sec": 919.05,
-     "frame": 27572
+     "sec": 918.3,
+     "frame": 27549
     },
     "where": {
-     "sec": 921.88,
-     "frame": 27656
+     "sec": 921.13,
+     "frame": 27634
     },
     "co2In": {
-     "sec": 925.91,
-     "frame": 27777
+     "sec": 925.16,
+     "frame": 27755
     },
     "waterIn": {
-     "sec": 928.24,
-     "frame": 27847
+     "sec": 927.49,
+     "frame": 27825
     },
     "built": {
-     "sec": 930.63,
-     "frame": 27919
+     "sec": 929.88,
+     "frame": 27896
     },
     "minerals": {
-     "sec": 938.01,
-     "frame": 28140
+     "sec": 937.26,
+     "frame": 28118
     },
     "thought": {
-     "sec": 944.56,
-     "frame": 28337
+     "sec": 943.81,
+     "frame": 28314
     },
     "partly": {
-     "sec": 948.22,
-     "frame": 28447
+     "sec": 947.47,
+     "frame": 28424
     },
     "wood": {
-     "sec": 953.1,
-     "frame": 28593
+     "sec": 952.35,
+     "frame": 28571
     },
     "thinAir": {
-     "sec": 957.23,
-     "frame": 28717
+     "sec": 956.48,
+     "frame": 28694
     }
    }
   },
   {
    "id": "S19",
    "slug": "recap",
-   "startSec": 960.53,
-   "endSec": 999.05,
-   "startFrame": 28816,
-   "endFrame": 29972,
+   "startSec": 959.78,
+   "endSec": 998.3,
+   "startFrame": 28793,
+   "endFrame": 29949,
    "cues": {
     "recap": {
-     "sec": 960.53,
-     "frame": 28816
+     "sec": 959.78,
+     "frame": 28793
     },
     "r1": {
-     "sec": 962.06,
-     "frame": 28862
+     "sec": 961.31,
+     "frame": 28839
     },
     "r2": {
-     "sec": 969.96,
-     "frame": 29099
+     "sec": 969.21,
+     "frame": 29076
     },
     "r3": {
-     "sec": 974.52,
-     "frame": 29236
+     "sec": 973.77,
+     "frame": 29213
     },
     "r4": {
-     "sec": 980.04,
-     "frame": 29401
+     "sec": 979.29,
+     "frame": 29379
     },
     "r5": {
-     "sec": 984.95,
-     "frame": 29549
+     "sec": 984.2,
+     "frame": 29526
     },
     "r6": {
-     "sec": 990.95,
-     "frame": 29729
+     "sec": 990.2,
+     "frame": 29706
     },
     "title": {
-     "sec": 996.44,
-     "frame": 29893
+     "sec": 995.69,
+     "frame": 29871
     }
    }
   },
   {
    "id": "S20",
    "slug": "end",
-   "startSec": 999.05,
-   "endSec": 1006.05,
-   "startFrame": 29972,
-   "endFrame": 30182,
+   "startSec": 998.3,
+   "endSec": 1005.3,
+   "startFrame": 29949,
+   "endFrame": 30159,
    "cues": {}
   }
  ],
@@ -12372,1188 +12372,1188 @@
    "scene": "S17"
   },
   {
-   "text": "photosynthesise",
+   "text": "only",
    "startSec": 900.76,
-   "endSec": 901.65,
-   "scene": "S17"
-  },
-  {
-   "text": "instead",
-   "startSec": 901.65,
-   "endSec": 902.14,
-   "scene": "S17"
-  },
-  {
-   "text": "of",
-   "startSec": 902.14,
-   "endSec": 902.38,
-   "scene": "S17"
-  },
-  {
-   "text": "respiring.",
-   "startSec": 902.38,
-   "endSec": 902.97,
-   "scene": "S17"
-  },
-  {
-   "text": "Plants",
-   "startSec": 903.47,
-   "endSec": 903.91,
+   "endSec": 901.1,
    "scene": "S17"
   },
   {
    "text": "respire",
-   "startSec": 903.91,
-   "endSec": 904.4,
+   "startSec": 901.1,
+   "endSec": 901.59,
+   "scene": "S17"
+  },
+  {
+   "text": "at",
+   "startSec": 901.59,
+   "endSec": 901.83,
+   "scene": "S17"
+  },
+  {
+   "text": "night.",
+   "startSec": 901.83,
+   "endSec": 902.22,
+   "scene": "S17"
+  },
+  {
+   "text": "Plants",
+   "startSec": 902.72,
+   "endSec": 903.16,
+   "scene": "S17"
+  },
+  {
+   "text": "respire",
+   "startSec": 903.16,
+   "endSec": 903.65,
    "scene": "S17"
   },
   {
    "text": "all",
-   "startSec": 904.4,
-   "endSec": 904.69,
+   "startSec": 903.65,
+   "endSec": 903.94,
    "scene": "S17"
   },
   {
    "text": "the",
-   "startSec": 904.69,
-   "endSec": 904.98,
+   "startSec": 903.94,
+   "endSec": 904.23,
    "scene": "S17"
   },
   {
    "text": "time,",
-   "startSec": 904.98,
-   "endSec": 905.32,
+   "startSec": 904.23,
+   "endSec": 904.57,
    "scene": "S17"
   },
   {
    "text": "day",
-   "startSec": 905.56,
-   "endSec": 905.85,
+   "startSec": 904.81,
+   "endSec": 905.1,
    "scene": "S17"
   },
   {
    "text": "and",
-   "startSec": 905.85,
-   "endSec": 906.14,
+   "startSec": 905.1,
+   "endSec": 905.39,
    "scene": "S17"
   },
   {
    "text": "night,",
-   "startSec": 906.14,
-   "endSec": 906.53,
+   "startSec": 905.39,
+   "endSec": 905.78,
    "scene": "S17"
   },
   {
    "text": "just",
-   "startSec": 906.77,
-   "endSec": 907.11,
+   "startSec": 906.02,
+   "endSec": 906.36,
    "scene": "S17"
   },
   {
    "text": "like",
-   "startSec": 907.11,
-   "endSec": 907.45,
+   "startSec": 906.36,
+   "endSec": 906.7,
    "scene": "S17"
   },
   {
    "text": "you.",
-   "startSec": 907.45,
-   "endSec": 907.74,
+   "startSec": 906.7,
+   "endSec": 906.99,
    "scene": "S17"
   },
   {
    "text": "In",
-   "startSec": 908.24,
-   "endSec": 908.48,
+   "startSec": 907.49,
+   "endSec": 907.73,
    "scene": "S17"
   },
   {
    "text": "bright",
-   "startSec": 908.48,
-   "endSec": 908.92,
+   "startSec": 907.73,
+   "endSec": 908.17,
    "scene": "S17"
   },
   {
    "text": "light,",
-   "startSec": 908.92,
-   "endSec": 909.31,
+   "startSec": 908.17,
+   "endSec": 908.56,
    "scene": "S17"
   },
   {
    "text": "photosynthesis",
-   "startSec": 909.55,
-   "endSec": 910.39,
+   "startSec": 908.8,
+   "endSec": 909.64,
    "scene": "S17"
   },
   {
    "text": "is",
-   "startSec": 910.39,
-   "endSec": 910.63,
+   "startSec": 909.64,
+   "endSec": 909.88,
    "scene": "S17"
   },
   {
    "text": "just",
-   "startSec": 910.63,
-   "endSec": 910.97,
+   "startSec": 909.88,
+   "endSec": 910.22,
    "scene": "S17"
   },
   {
    "text": "faster,",
-   "startSec": 910.97,
-   "endSec": 911.41,
+   "startSec": 910.22,
+   "endSec": 910.66,
    "scene": "S17"
   },
   {
    "text": "so",
-   "startSec": 911.65,
-   "endSec": 911.89,
+   "startSec": 910.9,
+   "endSec": 911.14,
    "scene": "S17"
   },
   {
    "text": "there's",
-   "startSec": 911.89,
-   "endSec": 912.33,
+   "startSec": 911.14,
+   "endSec": 911.58,
    "scene": "S17"
   },
   {
    "text": "a",
-   "startSec": 912.33,
-   "endSec": 912.52,
+   "startSec": 911.58,
+   "endSec": 911.77,
    "scene": "S17"
   },
   {
    "text": "net",
-   "startSec": 912.52,
-   "endSec": 912.81,
+   "startSec": 911.77,
+   "endSec": 912.06,
    "scene": "S17"
   },
   {
    "text": "uptake",
-   "startSec": 912.81,
-   "endSec": 913.25,
+   "startSec": 912.06,
+   "endSec": 912.5,
    "scene": "S17"
   },
   {
    "text": "of",
-   "startSec": 913.25,
-   "endSec": 913.49,
+   "startSec": 912.5,
+   "endSec": 912.74,
    "scene": "S17"
   },
   {
    "text": "carbon",
-   "startSec": 913.49,
-   "endSec": 913.93,
+   "startSec": 912.74,
+   "endSec": 913.18,
    "scene": "S17"
   },
   {
    "text": "dioxide.",
-   "startSec": 913.93,
-   "endSec": 914.42,
+   "startSec": 913.18,
+   "endSec": 913.67,
    "scene": "S17"
   },
   {
    "text": "Net",
-   "startSec": 914.92,
-   "endSec": 915.21,
+   "startSec": 914.17,
+   "endSec": 914.46,
    "scene": "S17"
   },
   {
    "text": "is",
-   "startSec": 915.21,
-   "endSec": 915.45,
+   "startSec": 914.46,
+   "endSec": 914.7,
    "scene": "S17"
   },
   {
    "text": "the",
-   "startSec": 915.45,
-   "endSec": 915.74,
+   "startSec": 914.7,
+   "endSec": 914.99,
    "scene": "S17"
   },
   {
    "text": "word",
-   "startSec": 915.74,
-   "endSec": 916.08,
+   "startSec": 914.99,
+   "endSec": 915.33,
    "scene": "S17"
   },
   {
    "text": "examiners",
-   "startSec": 916.08,
-   "endSec": 916.67,
+   "startSec": 915.33,
+   "endSec": 915.92,
    "scene": "S17"
   },
   {
    "text": "look",
-   "startSec": 916.67,
-   "endSec": 917.01,
+   "startSec": 915.92,
+   "endSec": 916.26,
    "scene": "S17"
   },
   {
    "text": "for.",
-   "startSec": 917.01,
-   "endSec": 917.3,
+   "startSec": 916.26,
+   "endSec": 916.55,
    "scene": "S17"
   },
   {
    "text": "So,",
-   "startSec": 919.05,
-   "endSec": 919.29,
+   "startSec": 918.3,
+   "endSec": 918.54,
    "scene": "S18"
   },
   {
    "text": "back",
-   "startSec": 919.53,
-   "endSec": 919.87,
+   "startSec": 918.78,
+   "endSec": 919.12,
    "scene": "S18"
   },
   {
    "text": "to",
-   "startSec": 919.87,
-   "endSec": 920.11,
+   "startSec": 919.12,
+   "endSec": 919.36,
    "scene": "S18"
   },
   {
    "text": "van",
-   "startSec": 920.11,
-   "endSec": 920.4,
+   "startSec": 919.36,
+   "endSec": 919.65,
    "scene": "S18"
   },
   {
    "text": "Helmont's",
-   "startSec": 920.4,
-   "endSec": 920.94,
+   "startSec": 919.65,
+   "endSec": 920.19,
    "scene": "S18"
   },
   {
    "text": "willow.",
-   "startSec": 920.94,
-   "endSec": 921.38,
+   "startSec": 920.19,
+   "endSec": 920.63,
    "scene": "S18"
   },
   {
    "text": "Where",
-   "startSec": 921.88,
-   "endSec": 922.27,
+   "startSec": 921.13,
+   "endSec": 921.52,
    "scene": "S18"
   },
   {
    "text": "did",
-   "startSec": 922.27,
-   "endSec": 922.56,
+   "startSec": 921.52,
+   "endSec": 921.81,
    "scene": "S18"
   },
   {
    "text": "those",
-   "startSec": 922.56,
-   "endSec": 922.95,
+   "startSec": 921.81,
+   "endSec": 922.2,
    "scene": "S18"
   },
   {
    "text": "seventy-four",
-   "startSec": 922.95,
-   "endSec": 923.64,
+   "startSec": 922.2,
+   "endSec": 922.89,
    "scene": "S18"
   },
   {
    "text": "kilograms",
-   "startSec": 923.64,
-   "endSec": 924.23,
+   "startSec": 922.89,
+   "endSec": 923.48,
    "scene": "S18"
   },
   {
    "text": "come",
-   "startSec": 924.23,
-   "endSec": 924.57,
+   "startSec": 923.48,
+   "endSec": 923.82,
    "scene": "S18"
   },
   {
    "text": "from?",
-   "startSec": 924.57,
-   "endSec": 924.91,
+   "startSec": 923.82,
+   "endSec": 924.16,
    "scene": "S18"
   },
   {
    "text": "Carbon",
-   "startSec": 925.91,
-   "endSec": 926.35,
+   "startSec": 925.16,
+   "endSec": 925.6,
    "scene": "S18"
   },
   {
    "text": "dioxide,",
-   "startSec": 926.35,
-   "endSec": 926.84,
+   "startSec": 925.6,
+   "endSec": 926.09,
    "scene": "S18"
   },
   {
    "text": "from",
-   "startSec": 927.08,
-   "endSec": 927.42,
+   "startSec": 926.33,
+   "endSec": 926.67,
    "scene": "S18"
   },
   {
    "text": "the",
-   "startSec": 927.42,
-   "endSec": 927.71,
+   "startSec": 926.67,
+   "endSec": 926.96,
    "scene": "S18"
   },
   {
    "text": "air,",
-   "startSec": 927.71,
-   "endSec": 928.0,
+   "startSec": 926.96,
+   "endSec": 927.25,
    "scene": "S18"
   },
   {
    "text": "and",
-   "startSec": 928.24,
-   "endSec": 928.53,
+   "startSec": 927.49,
+   "endSec": 927.78,
    "scene": "S18"
   },
   {
    "text": "water,",
-   "startSec": 928.53,
-   "endSec": 928.92,
+   "startSec": 927.78,
+   "endSec": 928.17,
    "scene": "S18"
   },
   {
    "text": "from",
-   "startSec": 929.16,
-   "endSec": 929.5,
+   "startSec": 928.41,
+   "endSec": 928.75,
    "scene": "S18"
   },
   {
    "text": "the",
-   "startSec": 929.5,
-   "endSec": 929.79,
+   "startSec": 928.75,
+   "endSec": 929.04,
    "scene": "S18"
   },
   {
    "text": "soil.",
-   "startSec": 929.79,
-   "endSec": 930.13,
+   "startSec": 929.04,
+   "endSec": 929.38,
    "scene": "S18"
   },
   {
    "text": "Joined",
-   "startSec": 930.63,
-   "endSec": 931.07,
+   "startSec": 929.88,
+   "endSec": 930.32,
    "scene": "S18"
   },
   {
    "text": "into",
-   "startSec": 931.07,
-   "endSec": 931.41,
+   "startSec": 930.32,
+   "endSec": 930.66,
    "scene": "S18"
   },
   {
    "text": "glucose,",
-   "startSec": 931.41,
-   "endSec": 931.9,
+   "startSec": 930.66,
+   "endSec": 931.15,
    "scene": "S18"
   },
   {
    "text": "using",
-   "startSec": 932.14,
-   "endSec": 932.53,
+   "startSec": 931.39,
+   "endSec": 931.78,
    "scene": "S18"
   },
   {
    "text": "energy",
-   "startSec": 932.53,
-   "endSec": 932.97,
+   "startSec": 931.78,
+   "endSec": 932.22,
    "scene": "S18"
   },
   {
    "text": "from",
-   "startSec": 932.97,
-   "endSec": 933.31,
+   "startSec": 932.22,
+   "endSec": 932.56,
    "scene": "S18"
   },
   {
    "text": "light,",
-   "startSec": 933.31,
-   "endSec": 933.7,
+   "startSec": 932.56,
+   "endSec": 932.95,
    "scene": "S18"
   },
   {
    "text": "then",
-   "startSec": 933.94,
-   "endSec": 934.28,
+   "startSec": 933.19,
+   "endSec": 933.53,
    "scene": "S18"
   },
   {
    "text": "built",
-   "startSec": 934.28,
-   "endSec": 934.67,
+   "startSec": 933.53,
+   "endSec": 933.92,
    "scene": "S18"
   },
   {
    "text": "into",
-   "startSec": 934.67,
-   "endSec": 935.01,
+   "startSec": 933.92,
+   "endSec": 934.26,
    "scene": "S18"
   },
   {
    "text": "cellulose,",
-   "startSec": 935.01,
-   "endSec": 935.6,
+   "startSec": 934.26,
+   "endSec": 934.85,
    "scene": "S18"
   },
   {
    "text": "starch",
-   "startSec": 935.84,
-   "endSec": 936.28,
+   "startSec": 935.09,
+   "endSec": 935.53,
    "scene": "S18"
   },
   {
    "text": "and",
-   "startSec": 936.28,
-   "endSec": 936.57,
+   "startSec": 935.53,
+   "endSec": 935.82,
    "scene": "S18"
   },
   {
    "text": "proteins.",
-   "startSec": 936.57,
-   "endSec": 937.11,
+   "startSec": 935.82,
+   "endSec": 936.36,
    "scene": "S18"
   },
   {
    "text": "The",
-   "startSec": 938.01,
-   "endSec": 938.3,
+   "startSec": 937.26,
+   "endSec": 937.55,
    "scene": "S18"
   },
   {
    "text": "little",
-   "startSec": 938.3,
-   "endSec": 938.74,
+   "startSec": 937.55,
+   "endSec": 937.99,
    "scene": "S18"
   },
   {
    "text": "that",
-   "startSec": 938.74,
-   "endSec": 939.08,
+   "startSec": 937.99,
+   "endSec": 938.33,
    "scene": "S18"
   },
   {
    "text": "the",
-   "startSec": 939.08,
-   "endSec": 939.37,
+   "startSec": 938.33,
+   "endSec": 938.62,
    "scene": "S18"
   },
   {
    "text": "soil",
-   "startSec": 939.37,
-   "endSec": 939.71,
+   "startSec": 938.62,
+   "endSec": 938.96,
    "scene": "S18"
   },
   {
    "text": "lost",
-   "startSec": 939.71,
-   "endSec": 940.05,
+   "startSec": 938.96,
+   "endSec": 939.3,
    "scene": "S18"
   },
   {
    "text": "was",
-   "startSec": 940.05,
-   "endSec": 940.34,
+   "startSec": 939.3,
+   "endSec": 939.59,
    "scene": "S18"
   },
   {
    "text": "mostly",
-   "startSec": 940.34,
-   "endSec": 940.78,
+   "startSec": 939.59,
+   "endSec": 940.03,
    "scene": "S18"
   },
   {
    "text": "mineral",
-   "startSec": 940.78,
-   "endSec": 941.27,
+   "startSec": 940.03,
+   "endSec": 940.52,
    "scene": "S18"
   },
   {
    "text": "ions,",
-   "startSec": 941.27,
-   "endSec": 941.61,
+   "startSec": 940.52,
+   "endSec": 940.86,
    "scene": "S18"
   },
   {
    "text": "like",
-   "startSec": 941.85,
-   "endSec": 942.19,
+   "startSec": 941.1,
+   "endSec": 941.44,
    "scene": "S18"
   },
   {
    "text": "nitrate",
-   "startSec": 942.19,
-   "endSec": 942.68,
+   "startSec": 941.44,
+   "endSec": 941.93,
    "scene": "S18"
   },
   {
    "text": "and",
-   "startSec": 942.68,
-   "endSec": 942.97,
+   "startSec": 941.93,
+   "endSec": 942.22,
    "scene": "S18"
   },
   {
    "text": "magnesium.",
-   "startSec": 942.97,
-   "endSec": 943.56,
+   "startSec": 942.22,
+   "endSec": 942.81,
    "scene": "S18"
   },
   {
    "text": "Van",
-   "startSec": 944.56,
-   "endSec": 944.85,
+   "startSec": 943.81,
+   "endSec": 944.1,
    "scene": "S18"
   },
   {
    "text": "Helmont",
-   "startSec": 944.85,
-   "endSec": 945.34,
+   "startSec": 944.1,
+   "endSec": 944.59,
    "scene": "S18"
   },
   {
    "text": "thought",
-   "startSec": 945.34,
-   "endSec": 945.83,
+   "startSec": 944.59,
+   "endSec": 945.08,
    "scene": "S18"
   },
   {
    "text": "his",
-   "startSec": 945.83,
-   "endSec": 946.12,
+   "startSec": 945.08,
+   "endSec": 945.37,
    "scene": "S18"
   },
   {
    "text": "tree",
-   "startSec": 946.12,
-   "endSec": 946.46,
+   "startSec": 945.37,
+   "endSec": 945.71,
    "scene": "S18"
   },
   {
    "text": "was",
-   "startSec": 946.46,
-   "endSec": 946.75,
+   "startSec": 945.71,
+   "endSec": 946.0,
    "scene": "S18"
   },
   {
    "text": "made",
-   "startSec": 946.75,
-   "endSec": 947.09,
+   "startSec": 946.0,
+   "endSec": 946.34,
    "scene": "S18"
   },
   {
    "text": "of",
-   "startSec": 947.09,
-   "endSec": 947.33,
+   "startSec": 946.34,
+   "endSec": 946.58,
    "scene": "S18"
   },
   {
    "text": "water.",
-   "startSec": 947.33,
-   "endSec": 947.72,
+   "startSec": 946.58,
+   "endSec": 946.97,
    "scene": "S18"
   },
   {
    "text": "He",
-   "startSec": 948.22,
-   "endSec": 948.46,
+   "startSec": 947.47,
+   "endSec": 947.71,
    "scene": "S18"
   },
   {
    "text": "was",
-   "startSec": 948.46,
-   "endSec": 948.75,
+   "startSec": 947.71,
+   "endSec": 948.0,
    "scene": "S18"
   },
   {
    "text": "only",
-   "startSec": 948.75,
-   "endSec": 949.09,
+   "startSec": 948.0,
+   "endSec": 948.34,
    "scene": "S18"
   },
   {
    "text": "partly",
-   "startSec": 949.09,
-   "endSec": 949.53,
+   "startSec": 948.34,
+   "endSec": 948.78,
    "scene": "S18"
   },
   {
    "text": "right.",
-   "startSec": 949.53,
-   "endSec": 949.92,
+   "startSec": 948.78,
+   "endSec": 949.17,
    "scene": "S18"
   },
   {
    "text": "A",
-   "startSec": 950.42,
-   "endSec": 950.61,
+   "startSec": 949.67,
+   "endSec": 949.86,
    "scene": "S18"
   },
   {
    "text": "living",
-   "startSec": 950.61,
-   "endSec": 951.05,
+   "startSec": 949.86,
+   "endSec": 950.3,
    "scene": "S18"
   },
   {
    "text": "tree",
-   "startSec": 951.05,
-   "endSec": 951.39,
+   "startSec": 950.3,
+   "endSec": 950.64,
    "scene": "S18"
   },
   {
    "text": "is",
-   "startSec": 951.39,
-   "endSec": 951.63,
+   "startSec": 950.64,
+   "endSec": 950.88,
    "scene": "S18"
   },
   {
    "text": "full",
-   "startSec": 951.63,
-   "endSec": 951.97,
+   "startSec": 950.88,
+   "endSec": 951.22,
    "scene": "S18"
   },
   {
    "text": "of",
-   "startSec": 951.97,
-   "endSec": 952.21,
+   "startSec": 951.22,
+   "endSec": 951.46,
    "scene": "S18"
   },
   {
    "text": "water.",
-   "startSec": 952.21,
-   "endSec": 952.6,
+   "startSec": 951.46,
+   "endSec": 951.85,
    "scene": "S18"
   },
   {
    "text": "But",
-   "startSec": 953.1,
-   "endSec": 953.39,
+   "startSec": 952.35,
+   "endSec": 952.64,
    "scene": "S18"
   },
   {
    "text": "most",
-   "startSec": 953.39,
-   "endSec": 953.73,
+   "startSec": 952.64,
+   "endSec": 952.98,
    "scene": "S18"
   },
   {
    "text": "of",
-   "startSec": 953.73,
-   "endSec": 953.97,
+   "startSec": 952.98,
+   "endSec": 953.22,
    "scene": "S18"
   },
   {
    "text": "the",
-   "startSec": 953.97,
-   "endSec": 954.26,
+   "startSec": 953.22,
+   "endSec": 953.51,
    "scene": "S18"
   },
   {
    "text": "wood",
-   "startSec": 954.26,
-   "endSec": 954.6,
+   "startSec": 953.51,
+   "endSec": 953.85,
    "scene": "S18"
   },
   {
    "text": "itself",
-   "startSec": 954.6,
-   "endSec": 955.04,
+   "startSec": 953.85,
+   "endSec": 954.29,
    "scene": "S18"
   },
   {
    "text": "was",
-   "startSec": 955.04,
-   "endSec": 955.33,
+   "startSec": 954.29,
+   "endSec": 954.58,
    "scene": "S18"
   },
   {
    "text": "built",
-   "startSec": 955.33,
-   "endSec": 955.72,
+   "startSec": 954.58,
+   "endSec": 954.97,
    "scene": "S18"
   },
   {
    "text": "from",
-   "startSec": 955.72,
-   "endSec": 956.06,
+   "startSec": 954.97,
+   "endSec": 955.31,
    "scene": "S18"
   },
   {
    "text": "carbon",
-   "startSec": 956.06,
-   "endSec": 956.5,
+   "startSec": 955.31,
+   "endSec": 955.75,
    "scene": "S18"
   },
   {
    "text": "dioxide,",
-   "startSec": 956.5,
-   "endSec": 956.99,
+   "startSec": 955.75,
+   "endSec": 956.24,
    "scene": "S18"
   },
   {
    "text": "taken",
-   "startSec": 957.23,
-   "endSec": 957.62,
+   "startSec": 956.48,
+   "endSec": 956.87,
    "scene": "S18"
   },
   {
    "text": "out",
-   "startSec": 957.62,
-   "endSec": 957.91,
+   "startSec": 956.87,
+   "endSec": 957.16,
    "scene": "S18"
   },
   {
    "text": "of",
-   "startSec": 957.91,
-   "endSec": 958.15,
+   "startSec": 957.16,
+   "endSec": 957.4,
    "scene": "S18"
   },
   {
    "text": "thin",
-   "startSec": 958.15,
-   "endSec": 958.49,
+   "startSec": 957.4,
+   "endSec": 957.74,
    "scene": "S18"
   },
   {
    "text": "air.",
-   "startSec": 958.49,
-   "endSec": 958.78,
+   "startSec": 957.74,
+   "endSec": 958.03,
    "scene": "S18"
   },
   {
    "text": "Let's",
-   "startSec": 960.53,
-   "endSec": 960.87,
+   "startSec": 959.78,
+   "endSec": 960.12,
    "scene": "S19"
   },
   {
    "text": "recap.",
-   "startSec": 960.87,
-   "endSec": 961.26,
+   "startSec": 960.12,
+   "endSec": 960.51,
    "scene": "S19"
   },
   {
    "text": "Photosynthesis:",
-   "startSec": 962.06,
-   "endSec": 962.9,
+   "startSec": 961.31,
+   "endSec": 962.15,
    "scene": "S19"
   },
   {
    "text": "carbon",
-   "startSec": 963.22,
-   "endSec": 963.66,
+   "startSec": 962.47,
+   "endSec": 962.91,
    "scene": "S19"
   },
   {
    "text": "dioxide",
-   "startSec": 963.66,
-   "endSec": 964.15,
+   "startSec": 962.91,
+   "endSec": 963.4,
    "scene": "S19"
   },
   {
    "text": "plus",
-   "startSec": 964.15,
-   "endSec": 964.49,
+   "startSec": 963.4,
+   "endSec": 963.74,
    "scene": "S19"
   },
   {
    "text": "water",
-   "startSec": 964.49,
-   "endSec": 964.88,
+   "startSec": 963.74,
+   "endSec": 964.13,
    "scene": "S19"
   },
   {
    "text": "gives",
-   "startSec": 964.88,
-   "endSec": 965.27,
+   "startSec": 964.13,
+   "endSec": 964.52,
    "scene": "S19"
   },
   {
    "text": "glucose",
-   "startSec": 965.27,
-   "endSec": 965.76,
+   "startSec": 964.52,
+   "endSec": 965.01,
    "scene": "S19"
   },
   {
    "text": "plus",
-   "startSec": 965.76,
-   "endSec": 966.1,
+   "startSec": 965.01,
+   "endSec": 965.35,
    "scene": "S19"
   },
   {
    "text": "oxygen,",
-   "startSec": 966.1,
-   "endSec": 966.54,
+   "startSec": 965.35,
+   "endSec": 965.79,
    "scene": "S19"
   },
   {
    "text": "in",
-   "startSec": 966.78,
-   "endSec": 967.02,
+   "startSec": 966.03,
+   "endSec": 966.27,
    "scene": "S19"
   },
   {
    "text": "the",
-   "startSec": 967.02,
-   "endSec": 967.31,
+   "startSec": 966.27,
+   "endSec": 966.56,
    "scene": "S19"
   },
   {
    "text": "presence",
-   "startSec": 967.31,
-   "endSec": 967.85,
+   "startSec": 966.56,
+   "endSec": 967.1,
    "scene": "S19"
   },
   {
    "text": "of",
-   "startSec": 967.85,
-   "endSec": 968.09,
+   "startSec": 967.1,
+   "endSec": 967.34,
    "scene": "S19"
   },
   {
    "text": "light",
-   "startSec": 968.09,
-   "endSec": 968.48,
+   "startSec": 967.34,
+   "endSec": 967.73,
    "scene": "S19"
   },
   {
    "text": "and",
-   "startSec": 968.48,
-   "endSec": 968.77,
+   "startSec": 967.73,
+   "endSec": 968.02,
    "scene": "S19"
   },
   {
    "text": "chlorophyll.",
-   "startSec": 968.77,
-   "endSec": 969.46,
+   "startSec": 968.02,
+   "endSec": 968.71,
    "scene": "S19"
   },
   {
    "text": "Chlorophyll",
-   "startSec": 969.96,
-   "endSec": 970.65,
+   "startSec": 969.21,
+   "endSec": 969.9,
    "scene": "S19"
   },
   {
    "text": "transfers",
-   "startSec": 970.65,
-   "endSec": 971.24,
+   "startSec": 969.9,
+   "endSec": 970.49,
    "scene": "S19"
   },
   {
    "text": "energy",
-   "startSec": 971.24,
-   "endSec": 971.68,
+   "startSec": 970.49,
+   "endSec": 970.93,
    "scene": "S19"
   },
   {
    "text": "from",
-   "startSec": 971.68,
-   "endSec": 972.02,
+   "startSec": 970.93,
+   "endSec": 971.27,
    "scene": "S19"
   },
   {
    "text": "light",
-   "startSec": 972.02,
-   "endSec": 972.41,
+   "startSec": 971.27,
+   "endSec": 971.66,
    "scene": "S19"
   },
   {
    "text": "into",
-   "startSec": 972.41,
-   "endSec": 972.75,
+   "startSec": 971.66,
+   "endSec": 972.0,
    "scene": "S19"
   },
   {
    "text": "energy",
-   "startSec": 972.75,
-   "endSec": 973.19,
+   "startSec": 972.0,
+   "endSec": 972.44,
    "scene": "S19"
   },
   {
    "text": "in",
-   "startSec": 973.19,
-   "endSec": 973.43,
+   "startSec": 972.44,
+   "endSec": 972.68,
    "scene": "S19"
   },
   {
    "text": "chemicals.",
-   "startSec": 973.43,
-   "endSec": 974.02,
+   "startSec": 972.68,
+   "endSec": 973.27,
    "scene": "S19"
   },
   {
    "text": "Glucose",
-   "startSec": 974.52,
-   "endSec": 975.01,
+   "startSec": 973.77,
+   "endSec": 974.26,
    "scene": "S19"
   },
   {
    "text": "is",
-   "startSec": 975.01,
-   "endSec": 975.25,
+   "startSec": 974.26,
+   "endSec": 974.5,
    "scene": "S19"
   },
   {
    "text": "used",
-   "startSec": 975.25,
-   "endSec": 975.59,
+   "startSec": 974.5,
+   "endSec": 974.84,
    "scene": "S19"
   },
   {
    "text": "for",
-   "startSec": 975.59,
-   "endSec": 975.88,
+   "startSec": 974.84,
+   "endSec": 975.13,
    "scene": "S19"
   },
   {
    "text": "respiration,",
-   "startSec": 975.88,
-   "endSec": 976.57,
+   "startSec": 975.13,
+   "endSec": 975.82,
    "scene": "S19"
   },
   {
    "text": "starch,",
-   "startSec": 976.81,
-   "endSec": 977.25,
+   "startSec": 976.06,
+   "endSec": 976.5,
    "scene": "S19"
   },
   {
    "text": "cellulose,",
-   "startSec": 977.49,
-   "endSec": 978.08,
+   "startSec": 976.74,
+   "endSec": 977.33,
    "scene": "S19"
   },
   {
    "text": "sucrose",
-   "startSec": 978.32,
-   "endSec": 978.81,
+   "startSec": 977.57,
+   "endSec": 978.06,
    "scene": "S19"
   },
   {
    "text": "and",
-   "startSec": 978.81,
-   "endSec": 979.1,
+   "startSec": 978.06,
+   "endSec": 978.35,
    "scene": "S19"
   },
   {
    "text": "nectar.",
-   "startSec": 979.1,
-   "endSec": 979.54,
+   "startSec": 978.35,
+   "endSec": 978.79,
    "scene": "S19"
   },
   {
    "text": "Nitrate",
-   "startSec": 980.04,
-   "endSec": 980.53,
+   "startSec": 979.29,
+   "endSec": 979.78,
    "scene": "S19"
   },
   {
    "text": "ions",
-   "startSec": 980.53,
-   "endSec": 980.87,
+   "startSec": 979.78,
+   "endSec": 980.12,
    "scene": "S19"
   },
   {
    "text": "make",
-   "startSec": 980.87,
-   "endSec": 981.21,
+   "startSec": 980.12,
+   "endSec": 980.46,
    "scene": "S19"
   },
   {
    "text": "amino",
-   "startSec": 981.21,
-   "endSec": 981.6,
+   "startSec": 980.46,
+   "endSec": 980.85,
    "scene": "S19"
   },
   {
    "text": "acids.",
-   "startSec": 981.6,
-   "endSec": 981.99,
+   "startSec": 980.85,
+   "endSec": 981.24,
    "scene": "S19"
   },
   {
    "text": "Magnesium",
-   "startSec": 982.49,
-   "endSec": 983.08,
+   "startSec": 981.74,
+   "endSec": 982.33,
    "scene": "S19"
   },
   {
    "text": "ions",
-   "startSec": 983.08,
-   "endSec": 983.42,
+   "startSec": 982.33,
+   "endSec": 982.67,
    "scene": "S19"
   },
   {
    "text": "make",
-   "startSec": 983.42,
-   "endSec": 983.76,
+   "startSec": 982.67,
+   "endSec": 983.01,
    "scene": "S19"
   },
   {
    "text": "chlorophyll.",
-   "startSec": 983.76,
-   "endSec": 984.45,
+   "startSec": 983.01,
+   "endSec": 983.7,
    "scene": "S19"
   },
   {
    "text": "Leaves",
-   "startSec": 984.95,
-   "endSec": 985.39,
+   "startSec": 984.2,
+   "endSec": 984.64,
    "scene": "S19"
   },
   {
    "text": "are",
-   "startSec": 985.39,
-   "endSec": 985.68,
+   "startSec": 984.64,
+   "endSec": 984.93,
    "scene": "S19"
   },
   {
    "text": "broad,",
-   "startSec": 985.68,
-   "endSec": 986.07,
+   "startSec": 984.93,
+   "endSec": 985.32,
    "scene": "S19"
   },
   {
    "text": "thin,",
-   "startSec": 986.31,
-   "endSec": 986.65,
+   "startSec": 985.56,
+   "endSec": 985.9,
    "scene": "S19"
   },
   {
    "text": "and",
-   "startSec": 986.89,
-   "endSec": 987.18,
+   "startSec": 986.14,
+   "endSec": 986.43,
    "scene": "S19"
   },
   {
    "text": "built",
-   "startSec": 987.18,
-   "endSec": 987.57,
+   "startSec": 986.43,
+   "endSec": 986.82,
    "scene": "S19"
   },
   {
    "text": "in",
-   "startSec": 987.57,
-   "endSec": 987.81,
+   "startSec": 986.82,
+   "endSec": 987.06,
    "scene": "S19"
   },
   {
    "text": "layers,",
-   "startSec": 987.81,
-   "endSec": 988.25,
+   "startSec": 987.06,
+   "endSec": 987.5,
    "scene": "S19"
   },
   {
    "text": "each",
-   "startSec": 988.49,
-   "endSec": 988.83,
+   "startSec": 987.74,
+   "endSec": 988.08,
    "scene": "S19"
   },
   {
    "text": "adapted",
-   "startSec": 988.83,
-   "endSec": 989.32,
+   "startSec": 988.08,
+   "endSec": 988.57,
    "scene": "S19"
   },
   {
    "text": "for",
-   "startSec": 989.32,
-   "endSec": 989.61,
+   "startSec": 988.57,
+   "endSec": 988.86,
    "scene": "S19"
   },
   {
    "text": "photosynthesis.",
-   "startSec": 989.61,
-   "endSec": 990.45,
+   "startSec": 988.86,
+   "endSec": 989.7,
    "scene": "S19"
   },
   {
    "text": "Light,",
-   "startSec": 990.95,
-   "endSec": 991.34,
+   "startSec": 990.2,
+   "endSec": 990.59,
    "scene": "S19"
   },
   {
    "text": "carbon",
-   "startSec": 991.58,
-   "endSec": 992.02,
+   "startSec": 990.83,
+   "endSec": 991.27,
    "scene": "S19"
   },
   {
    "text": "dioxide",
-   "startSec": 992.02,
-   "endSec": 992.51,
+   "startSec": 991.27,
+   "endSec": 991.76,
    "scene": "S19"
   },
   {
    "text": "and",
-   "startSec": 992.51,
-   "endSec": 992.8,
+   "startSec": 991.76,
+   "endSec": 992.05,
    "scene": "S19"
   },
   {
    "text": "temperature",
-   "startSec": 992.8,
-   "endSec": 993.49,
+   "startSec": 992.05,
+   "endSec": 992.74,
    "scene": "S19"
   },
   {
    "text": "can",
-   "startSec": 993.49,
-   "endSec": 993.78,
+   "startSec": 992.74,
+   "endSec": 993.03,
    "scene": "S19"
   },
   {
    "text": "all",
-   "startSec": 993.78,
-   "endSec": 994.07,
+   "startSec": 993.03,
+   "endSec": 993.32,
    "scene": "S19"
   },
   {
    "text": "be",
-   "startSec": 994.07,
-   "endSec": 994.31,
+   "startSec": 993.32,
+   "endSec": 993.56,
    "scene": "S19"
   },
   {
    "text": "limiting",
-   "startSec": 994.31,
-   "endSec": 994.85,
+   "startSec": 993.56,
+   "endSec": 994.1,
    "scene": "S19"
   },
   {
    "text": "factors.",
-   "startSec": 994.85,
-   "endSec": 995.34,
+   "startSec": 994.1,
+   "endSec": 994.59,
    "scene": "S19"
   },
   {
    "text": "And",
-   "startSec": 996.44,
-   "endSec": 996.73,
+   "startSec": 995.69,
+   "endSec": 995.98,
    "scene": "S19"
   },
   {
    "text": "that's",
-   "startSec": 996.73,
-   "endSec": 997.12,
+   "startSec": 995.98,
+   "endSec": 996.37,
    "scene": "S19"
   },
   {
    "text": "plant",
-   "startSec": 997.12,
-   "endSec": 997.51,
+   "startSec": 996.37,
+   "endSec": 996.76,
    "scene": "S19"
   },
   {
    "text": "nutrition.",
-   "startSec": 997.51,
-   "endSec": 998.1,
+   "startSec": 996.76,
+   "endSec": 997.35,
    "scene": "S19"
   }
  ],
- "durationSec": 1006.05,
- "durationFrames": 30182
+ "durationSec": 1005.3,
+ "durationFrames": 30159
 }
