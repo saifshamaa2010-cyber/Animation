@@ -13,6 +13,7 @@ import { Leaf, leafGeometry, type LeafGeo } from "../../../../components/bio";
 import { Photon } from "../../../../components/Light";
 import { HandArrow, LitShape, mix, textWidth } from "../../../../components/kit";
 import { roundRectPath } from "../../../../components/kit/shared";
+import { chemSmall } from "../../../../components/Equation";
 import { Pt, rng } from "../../../../lib/geometry";
 import { prog } from "../../../../lib/motion";
 import { useSvgId } from "../../../../components/ids";
@@ -173,7 +174,7 @@ export const ChemLabel: React.FC<{
     >
       {parts.map((p, i) =>
         /\d/.test(p) ? (
-          <tspan key={i} fontSize={size * 0.64} dy={size * 0.24}>
+          <tspan key={i} fontSize={chemSmall(size)} dy={size * 0.24}>
             {p}
           </tspan>
         ) : (
@@ -189,7 +190,7 @@ export const chemLabelWidth = (text: string, size = 44, weight: 400 | 500 | 600 
   text
     .split(/(\d)/)
     .filter(Boolean)
-    .reduce((w, p) => w + textWidth(p, /\d/.test(p) ? size * 0.64 : size, weight), 0);
+    .reduce((w, p) => w + textWidth(p, /\d/.test(p) ? chemSmall(size) : size, weight), 0);
 
 /** A leader-line label (same look as `Label`) whose text may contain a subscript. */
 export const ChemLeader: React.FC<{ readonly anchor: Pt; readonly at: Pt; readonly text: string; readonly progress: number; readonly color?: string; readonly opacity?: number }> = ({

@@ -49,9 +49,11 @@ export const parseChem = (s: string): Run[] => {
 };
 
 const SMALL = 0.64;
+/** Sub/superscript size: 0.64 of the text, but never under 32 px so a "2" stays readable on a phone. */
+export const chemSmall = (size: number) => Math.max(size * SMALL, Math.min(32, size * 0.8));
 
 export const chemWidth = (s: string, size: number, weight: 400 | 500 | 600 | 700 = 600) =>
-  parseChem(s).reduce((w, r) => w + textWidth(r.t, r.kind === "n" ? size : size * SMALL, weight), 0);
+  parseChem(s).reduce((w, r) => w + textWidth(r.t, r.kind === "n" ? size : chemSmall(size), weight), 0);
 
 /** Text with chemistry sub/superscripts. `x` is the left edge (or centre with anchor="middle"). */
 export const ChemText: React.FC<{
@@ -70,7 +72,7 @@ export const ChemText: React.FC<{
   return (
     <g opacity={opacity}>
       {parseChem(text).map((r, i) => {
-        const s = r.kind === "n" ? size : size * SMALL;
+        const s = r.kind === "n" ? size : chemSmall(size);
         const dy = r.kind === "sub" ? size * 0.24 : r.kind === "sup" ? -size * 0.42 : 0;
         const el = (
           <text key={i} x={cx} y={y + dy} fontFamily={FONT} fontWeight={weight} fontSize={s} fill={color} letterSpacing={0}>

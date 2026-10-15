@@ -6,13 +6,12 @@
 import React from "react";
 import { C, EASE } from "../../../../brand/tokens";
 import { FONT } from "../../../../brand/fonts";
-import { parseChem } from "../../../../components/Equation";
+import { chemSmall, parseChem } from "../../../../components/Equation";
 import { ATOM, textWidth } from "../../../../components/kit";
 import { roundRectPath } from "../../../../components/kit/shared";
 import { useSvgId } from "../../../../components/ids";
 
 /** Same as Equation.tsx: subscripts/superscripts are drawn at 64 % size. */
-const SMALL = 0.64;
 
 export type CharBox = { readonly ch: string; readonly x0: number; readonly x1: number; readonly sub: boolean };
 
@@ -21,7 +20,7 @@ export const chemChars = (text: string, left: number, size: number): CharBox[] =
   const out: CharBox[] = [];
   let x = left;
   parseChem(text).forEach((r) => {
-    const s = r.kind === "n" ? size : size * SMALL;
+    const s = r.kind === "n" ? size : chemSmall(size);
     for (const ch of r.t) {
       const w = textWidth(ch, s, 600);
       out.push({ ch, x0: x, x1: x + w, sub: r.kind !== "n" });

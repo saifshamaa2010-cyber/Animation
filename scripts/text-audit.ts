@@ -16,6 +16,8 @@ import path from "node:path";
 
 const PREINSTALLED = "/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell";
 const MIN_PX = 40;
+const MIN_SCRIPT_PX = 30; // a chemical sub/superscript on its own ("2" in CO₂, "2+" in Mg²⁺)
+const SCRIPT = /^[0-9+\u2212-]{1,3}$/;
 const SAFE = 100;
 const TOL = 12; // text boxes include the full line height, so allow a little slack
 const W = 1920;
@@ -81,8 +83,8 @@ const main = async () => {
     for (const it of got.items) {
       if (it.opacity < 0.35 || it.blur) continue;
       const [l, t, r, b] = it.box;
-      if (it.px < MIN_PX - 0.5) add(scene, it.text, "small", String(it.px), frame);
       if (r <= 0 || b <= 0 || l >= W || t >= H) continue; // fully off-screen: not visible
+      if (it.px < (SCRIPT.test(it.text) ? MIN_SCRIPT_PX : MIN_PX) - 0.5) add(scene, it.text, "small", String(it.px), frame);
       if (l < 0 || t < 0 || r > W || b > H) add(scene, it.text, "cut by frame edge", `box ${it.box.join(",")}`, frame);
       else if (l < SAFE - TOL || t < SAFE - TOL || r > W - SAFE + TOL || b > H - SAFE + TOL) add(scene, it.text, "outside safe area", `box ${it.box.join(",")}`, frame);
     }
