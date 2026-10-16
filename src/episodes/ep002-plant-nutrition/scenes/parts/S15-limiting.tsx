@@ -7,6 +7,8 @@ import { roundRectPath } from "../../../../components/kit/shared";
 import { SunIcon } from "../../../../components/Light";
 import { Thermometer } from "../../../../components/Thermometer";
 import { prog } from "../../../../lib/motion";
+import { pulse } from "../../../../lib/track";
+import { ChemText } from "../../../../components/Equation";
 import { useSvgId } from "../../../../components/ids";
 
 /** A lit pill with one short phrase. (x, y) = centre. */
@@ -37,7 +39,7 @@ export const Pill: React.FC<{ readonly x: number; readonly y: number; readonly t
 export const pillWidth = (text: string) => textWidth(text, 50, 600) + 70;
 
 // ------------------------------------------------------------------ condition cards
-export const CARD = { w: 500, h: 580, top: 250, xs: [400, 960, 1520] } as const;
+export const CARD = { w: 500, h: 650, top: 240, xs: [400, 960, 1520] } as const;
 
 /** Empty slot (dashed) shown when "different conditions" is said, before each card fills it. */
 export const CardSlot: React.FC<{ readonly cx: number; readonly progress: number; readonly opacity?: number }> = ({ cx, progress, opacity = 1 }) => {
@@ -60,7 +62,10 @@ export const CardSlot: React.FC<{ readonly cx: number; readonly progress: number
   );
 };
 
-/** A condition card: picture on top, the condition, then (on its own cue) the usual limiting factor. */
+/**
+ * A condition card: picture on top, the condition, then (on its own cue) the usual limiting factor and, under it,
+ * the short reason (`reason` may contain chemistry, e.g. "CO2"). `focus` < 1 dims a card the narration has left.
+ */
 export const ConditionCard: React.FC<{
   readonly cx: number;
   readonly title: string;
@@ -68,14 +73,17 @@ export const ConditionCard: React.FC<{
   readonly factorColor: string;
   readonly progress: number;
   readonly factorP: number;
+  readonly reason?: string;
+  readonly reasonP?: number;
+  readonly focus?: number;
   readonly children?: React.ReactNode;
-}> = ({ cx, title, factor, factorColor, progress, factorP, children }) => {
+}> = ({ cx, title, factor, factorColor, progress, factorP, reason, reasonP = 0, focus = 1, children }) => {
   if (progress <= 0) return null;
   const p = EASE.out(Math.min(1, progress));
   const l = cx - CARD.w / 2;
   const t = CARD.top + (1 - p) * 34;
   return (
-    <g opacity={Math.min(1, progress * 1.6)}>
+    <g opacity={Math.min(1, progress * 1.6) * focus}>
       <LitShape d={roundRectPath(l, t, CARD.w, CARD.h, 30)} top={C.ink700} bottom={C.ink800} rimOpacity={0.5} shadow={0.6} shadowDy={16} shadowBlur={18} />
       <g transform={`translate(0 ${t - CARD.top})`}>{children}</g>
       <text x={cx} y={t + 412} textAnchor="middle" fontFamily={FONT} fontWeight={600} fontSize={44} fill={C.paper} letterSpacing={-0.5}>
@@ -94,6 +102,11 @@ export const ConditionCard: React.FC<{
           <text x={cx} y={t + 536} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={52} fill={factorColor} letterSpacing={-0.5}>
             {factor}
           </text>
+        </g>
+      ) : null}
+      {reason && reasonP > 0 ? (
+        <g opacity={Math.min(1, reasonP * 1.5)} transform={`translate(0 ${(1 - EASE.out(Math.min(1, reasonP))) * 12})`}>
+          <ChemText text={reason} x={cx} y={t + 604} size={42} weight={500} color={C.paperDim} anchor="middle" />
         </g>
       ) : null}
     </g>
@@ -174,9 +187,20 @@ export const WinterPicture: React.FC<{ readonly cx: number; readonly f: number; 
   );
 };
 
-/** Bright, warm summer's day: a high bright sun; only a little carbon dioxide in the air. */
-export const SummerPicture: React.FC<{ readonly cx: number; readonly f: number; readonly start: number; readonly co2: number }> = ({ cx, f, start, co2 }) => {
-  const glow = 0.6 + 0.35 * prog(f, start, 30);
+/**
+ * Bright, warm summer's day: a high bright sun (brightest on "plenty of light", `bright`); only a little carbon
+ * dioxide in the air (two molecules on `co2`, which swell briefly on "tiny amount", `tiny`).
+ */
+export const SummerPicture: React.FC<{
+  readonly cx: number;
+  readonly f: number;
+  readonly start: number;
+  readonly co2: number;
+  readonly bright?: number;
+  readonly tiny?: number;
+}> = ({ cx, f, start, co2, bright = start, tiny }) => {
+  const glow = 0.6 + 0.35 * prog(f, bright - 4, 30);
+  const few = tiny === undefined ? 0 : pulse(f, tiny - 4, 30);
   return (
     <g>
       <SunIcon x={cx - 70} y={PIC_TOP + 110} r={62} progress={prog(f, start - 4, 20)} glow={glow} />
@@ -184,7 +208,7 @@ export const SummerPicture: React.FC<{ readonly cx: number; readonly f: number; 
         [cx + 110, PIC_TOP + 90, 15],
         [cx + 80, PIC_TOP + 230, -20],
       ].map(([x, y, rot], i) => (
-        <CarbonDioxide key={i} x={x} y={y} scale={0.52} rotate={rot} progress={prog(f, co2 - 6 + i * 6, 16)} seed={150 + i} />
+        <CarbonDioxide key={i} x={x} y={y} scale={0.52 * (1 + 0.18 * few)} rotate={rot} progress={prog(f, co2 - 6 + i * 6, 16)} seed={150 + i} />
       ))}
     </g>
   );

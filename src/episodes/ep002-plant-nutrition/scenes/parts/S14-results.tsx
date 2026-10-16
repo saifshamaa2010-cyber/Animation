@@ -11,6 +11,7 @@ import { roundRectPath } from "../../../../components/kit/shared";
 import { DOCK, HEX_R } from "../../../../components/molecule-geometry";
 import { Pt, hexPoints, roundedPolygon } from "../../../../lib/geometry";
 import { prog } from "../../../../lib/motion";
+import { useSvgId } from "../../../../components/ids";
 import { track } from "../../../../lib/track";
 import type { s14Timing } from "../S14RateResults.timing";
 
@@ -20,8 +21,31 @@ const softMin = (a: number, b: number, e = 0.003) => (a + b - Math.sqrt((a - b) 
 export const LIGHT_SLOPE = 0.165;
 export const LIGHT_PLATEAU = 0.62;
 export const lightCurve = (x: number) => softMin(LIGHT_SLOPE * x, LIGHT_PLATEAU);
-/** the same experiment at a higher carbon dioxide concentration (S15): same start, higher plateau */
-export const lightCurveHighCo2 = (x: number) => softMin(LIGHT_SLOPE * x, 0.9);
+/** S15's higher-CO2 curve levels off here (y) */
+export const HIGH_PLATEAU = 0.9;
+/** where the higher-CO2 curve stops rising (x): light intensity is limiting for longer */
+export const HIGH_KNEE = HIGH_PLATEAU / LIGHT_SLOPE;
+/** the two light curves are identical up to here (x); beyond it the higher-CO2 curve eases away */
+const SPLIT_FROM = 3.0;
+/** fully on its own (higher-plateau) curve from here (x) */
+const SPLIT_TO = 4.2;
+/** where the split first becomes visible (≈1 px apart on S15's big graph), just as the lower curve bends over */
+export const CO2_SPLIT = 3.4;
+const smooth01 = (u: number) => {
+  const c = Math.max(0, Math.min(1, u));
+  return c * c * (3 - 2 * c);
+};
+/**
+ * The same experiment at a higher carbon dioxide concentration (S15). While light intensity is the limiting
+ * factor the rate cannot depend on CO2, so this is EXACTLY `lightCurve` up to x = SPLIT_FROM. It then eases
+ * (smoothstep, so no kink) onto a curve with the same slope and a higher plateau: it keeps rising for longer
+ * and levels off higher. Monotonic, because the higher curve is never below or flatter than the lower one.
+ */
+export const lightCurveHighCo2 = (x: number) => {
+  const lo = lightCurve(x);
+  if (x <= SPLIT_FROM) return lo;
+  return lo + smooth01((x - SPLIT_FROM) / (SPLIT_TO - SPLIT_FROM)) * (softMin(LIGHT_SLOPE * x, HIGH_PLATEAU) - lo);
+};
 export const co2Curve = (x: number) => softMin(0.15 * x, 0.6);
 export const TEMP_OPT = 30;
 export const tempCurve = (t: number) => 0.86 * Math.exp(-(((t - TEMP_OPT) / (t < TEMP_OPT ? 15 : 6.5)) ** 2));
@@ -64,7 +88,11 @@ export const Substrate: React.FC<{ readonly x: number; readonly y: number; reado
 };
 
 // ------------------------------------------------------------------ exam-command chip
-/** "describe → what happens + numbers": the command word in amber, its meaning in paper. (x, y) = centre. */
+/**
+ * "describe → what happens + numbers + units": the command word in amber, its meaning in paper. (x, y) = centre.
+ * The chip is sized for the whole meaning; `partsP` reveals its " + "-separated parts one by one (as they are
+ * said). Without it the whole meaning follows `meaningP`.
+ */
 export const CommandChip: React.FC<{
   readonly x: number;
   readonly y: number;
@@ -72,26 +100,40 @@ export const CommandChip: React.FC<{
   readonly meaning: string;
   readonly progress: number;
   readonly meaningP?: number;
+  readonly partsP?: readonly number[];
   readonly opacity?: number;
-}> = ({ x, y, word, meaning, progress, meaningP = 1, opacity = 1 }) => {
+}> = ({ x, y, word, meaning, progress, meaningP = 1, partsP, opacity = 1 }) => {
+  const clipId = useSvgId("chip");
   if (progress <= 0 || opacity <= 0) return null;
   const size = 46;
   const ww = textWidth(word, size, 700);
   const arrow = 64;
   const mw = textWidth(meaning, size, 600);
-  const w = ww + arrow + mw + 72;
+  const wFull = ww + arrow + mw + 72;
+  // with partsP the chip grows to the right as each part is said (its left edge stays put)
+  const parts = meaning.split(" + ");
+  const partW = parts.map((part, i) => textWidth(i === 0 ? part : ` + ${part}`, size, 600));
+  const shown = partsP ? partW.reduce((a, pw, i) => a + pw * EASE.out(Math.max(0, Math.min(1, partsP[i] ?? 1))), 0) / partW.reduce((a, b) => a + b, 0) : 1;
+  const w = partsP ? ww + 72 + arrow * EASE.out(Math.max(0, Math.min(1, partsP[0] ?? 1))) + mw * shown : wFull;
   const h = 84;
   const p = EASE.out(Math.min(1, progress));
-  const l = x - w / 2;
+  const l = x - wFull / 2;
   const t = y - h / 2 + (1 - p) * 26;
   return (
     <g opacity={Math.min(1, progress * 2) * opacity}>
+      {partsP ? (
+        <defs>
+          <clipPath id={clipId}>
+            <rect x={l} y={t - 10} width={w} height={h + 20} />
+          </clipPath>
+        </defs>
+      ) : null}
       <LitShape d={roundRectPath(l, t, w, h, 22)} top={C.ink700} bottom={C.ink800} rimOpacity={0.5} shadow={0.55} shadowDy={12} shadowBlur={14} />
       <rect x={l + 1.5} y={t + 1.5} width={w - 3} height={h - 3} rx={20.5} fill="none" stroke={C.amber} strokeOpacity={0.55} strokeWidth={3} />
       <text x={l + 36} y={t + 58} fontFamily={FONT} fontWeight={700} fontSize={size} fill={C.amber} letterSpacing={-0.5}>
         {word}
       </text>
-      <g opacity={meaningP}>
+      <g opacity={partsP ? Math.min(1, partsP[0] ?? 0) : meaningP} clipPath={partsP ? `url(#${clipId})` : undefined}>
         <path
           d={`M${l + 36 + ww + 16},${t + h / 2} L${l + 36 + ww + arrow - 18},${t + h / 2} M${l + 36 + ww + arrow - 30},${t + h / 2 - 12} L${l + 36 + ww + arrow - 18},${t + h / 2} L${l + 36 + ww + arrow - 30},${t + h / 2 + 12}`}
           fill="none"
@@ -100,8 +142,14 @@ export const CommandChip: React.FC<{
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        <text x={l + 36 + ww + arrow} y={t + 58} fontFamily={FONT} fontWeight={600} fontSize={size} fill={C.paper} letterSpacing={-0.5}>
-          {meaning}
+        <text x={l + 36 + ww + arrow} y={t + 58} fontFamily={FONT} fontWeight={600} fontSize={size} fill={C.paper} letterSpacing={-0.5} style={{ whiteSpace: "pre" }}>
+          {partsP
+            ? meaning.split(" + ").map((part, i) => (
+                <tspan key={i} fillOpacity={Math.max(0, Math.min(1, (partsP[i] ?? 1) / (partsP[0] || 1)))}>
+                  {i === 0 ? part : ` + ${part}`}
+                </tspan>
+              ))
+            : meaning}
         </text>
       </g>
     </g>

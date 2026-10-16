@@ -5,12 +5,15 @@
  * 2. Carbon dioxide: the light curve's shape is laid over the new axes ("the same shape"), then the
  *    real curve draws along it.
  * 3. Temperature: rises to an optimum, then falls quickly.
- * 4. Why: the light and CO2 graphs step aside for the EP001 teal enzyme and its substrates. A
+ * 4. Why: the light and CO2 graphs step aside for the EP001 teal enzyme and its substrates. On
+ *    "This next part is for the Extended paper" the EXTENDED badge joins the section tag (which brightens
+ *    while it arrives) and stays until the exam technique. A
  *    thermometer and the marker on the temperature graph show the temperature. Below the optimum the
  *    molecules move faster (wander speed and trails ∝ temperature) and dock more often (each docking =
  *    an effective collision; the substrate turns into amber product). Above it the weak bonds snap,
  *    the enzyme denatures, the active site changes shape and a substrate bounces off.
- * 5. Exam technique: describe (what happens + numbers from the axes) vs explain (why).
+ * 5. Exam technique: describe (what happens + numbers from the axes + their units, each part of the chip
+ *    appearing as it is said) vs explain (why).
  */
 import React from "react";
 import { useCurrentFrame } from "remotion";
@@ -57,9 +60,11 @@ const sx1 = sxOf(G1, 0, 10);
 const sx2 = sxOf(G2, 0, 10);
 const sy = syOf(G1);
 
+/** what "describe" asks for (S15 opens on the same chip) */
+export const S14_DESCRIBE = "what happens + numbers + units";
 /** describe / explain chips (S15 opens on them and clears them) */
 export const S14_CHIPS = (() => {
-  const w1 = commandChipWidth("describe", "what happens + numbers");
+  const w1 = commandChipWidth("describe", S14_DESCRIBE);
   const w2 = commandChipWidth("explain", "why");
   const gap = 60;
   const left = 960 - (w1 + gap + w2) / 2;
@@ -214,7 +219,7 @@ export const S14RateResults: React.FC = () => {
 
   // ---------------------------------------------------------------- exam technique
   const chip1 = prog(f, k.describeWord - 4, 18);
-  const chip1Meaning = prog(f, k.happens - 14, 16);
+  const chip1Parts = [prog(f, k.happens - 14, 16), prog(f, k.numbers - 4, 16), prog(f, k.units - 4, 16)];
   const chip2 = prog(f, k.explainWord - 4, 18);
   const ticksP = prog(f, k.numbers - 6, 16);
   const circleP = prog(f, k.numbers + 6, 22, (v) => v);
@@ -223,6 +228,10 @@ export const S14RateResults: React.FC = () => {
     [k.happens + 40, 10, EASE.inOut],
   ]);
   const whyLine = prog(f, k.why - 2, 18, (v) => v);
+
+  // ---------------------------------------------------------------- Extended part: {extendedTemp} → {describe}
+  const extendedBadge = prog(f, k.extendedTemp, 18) * (1 - prog(f, k.describe - 4, 16));
+  const tagBright = prog(f, k.extendedTemp - 4, 14) * (1 - prog(f, Math.max(k.extendedTemp + 60, k.below + 30), 30, EASE.inOut));
 
   const subs = HOMES.map((_, i) => {
     let s = subState(i, f);
@@ -382,11 +391,12 @@ export const S14RateResults: React.FC = () => {
       <Label anchor={[MOUTH[0] + 110, MOUTH[1] + 40]} at={[MOUTH[0] + 30, 902]} text="active site changed shape" color={C.coral} progress={prog(f, k.shape - 6, 22)} opacity={panel} />
 
       {/* ============ exam technique ============ */}
-      <CommandChip x={S14_CHIPS.x1} y={S14_CHIPS.y} word="describe" meaning="what happens + numbers" progress={chip1} meaningP={chip1Meaning} />
+      <CommandChip x={S14_CHIPS.x1} y={S14_CHIPS.y} word="describe" meaning={S14_DESCRIBE} progress={chip1} partsP={chip1Parts} />
       <CommandChip x={S14_CHIPS.x2} y={S14_CHIPS.y} word="explain" meaning="why" progress={chip2} meaningP={prog(f, k.why - 10, 14)} />
       {whyLine > 0 ? <HandUnderline x1={S14_CHIPS.x2 + S14_CHIPS.w2 / 2 - 140} x2={S14_CHIPS.x2 + S14_CHIPS.w2 / 2 - 38} y={S14_CHIPS.y + 26} progress={whyLine} color={C.amber} seed={8} /> : null}
 
-      <SectionTag n={7} title="Rate of photosynthesis" t={200} />
+      {/* the tag brightens while the EXTENDED badge arrives, then settles back like a new section */}
+      <SectionTag n={7} title="Rate of photosynthesis" t={120 - 30 * tagBright} extended={extendedBadge} />
     </Stage>
   );
 };

@@ -19,14 +19,23 @@ export const s15Timing = (t: CueFns) => {
   const plateau = t.cue("plateau");
   const flat = t.word("flat", 1);
   const noDifference = t.word("difference", 1);
-  const longer = t.word("longer", 1); // "Light is no longer limiting."
+  const longer = t.word("longer", 1); // "Light intensity is no longer the limiting factor."
   const other = t.cue("other");
   const co2Other = t.word("carbon", 1); // "like carbon dioxide concentration,"
   const tempOther = t.word("temperature", 1); // "or temperature."
   const raise = t.cue("raise");
   const higherCo2 = t.word("higher", 1); // "at a higher carbon dioxide concentration"
-  const curve = t.word("curve", 1); // "The curve rises higher,"
-  const levelsHigher = t.word("higher", 3); // "and levels off higher."
+  // "At low light intensity, the two curves are the same, because light intensity is still the limiting factor."
+  const same = t.cue("same");
+  const low = t.word("low", 1);
+  const sameWord = t.word("same", 1);
+  const still = t.word("still", 1);
+  // "But the new curve keeps rising for longer, and levels off higher."
+  const higher = t.cue("higher");
+  const newCurve = t.word("curve", 1); // "the new curve" ("curves" is a different word)
+  const keepsRising = t.word("rising", 2);
+  const forLonger = t.word("longer", 2);
+  const levelsHigher = t.word("higher", 2); // "and levels off higher."
   const proves = t.cue("proves");
   const co2Was = t.word("carbon", 3); // "That shows carbon dioxide was the limiting factor"
   // ---- exam wording
@@ -39,11 +48,19 @@ export const s15Timing = (t: CueFns) => {
   const conditions = t.cue("conditions");
   const dawn = t.cue("dawn");
   const dull = t.word("dull", 1);
-  const dawnFactor = t.word("light", 6); // "light intensity is usually the limiting factor"
+  const dawnFactor = t.word("light", 8); // "light intensity is usually the limiting factor"
+  const dawnWhy = t.word("because", 2); // "because there's not much light"
   const winter = t.cue("winter");
   const winterFactor = t.word("temperature", 2); // "it's often temperature"
+  const winterWhy = t.cue("winterWhy"); // "The molecules have less kinetic energy,"
+  const less = t.word("less", 1); // "less kinetic energy"
+  const kinetic = t.word("kinetic", 1);
+  const fewer = t.word("fewer", 1); // "so there are fewer effective collisions"
   const summer = t.cue("summer");
+  const plenty = t.word("plenty", 1); // "there's plenty of light and warmth"
   const summerFactor = t.word("carbon", 4); // "it's often carbon dioxide concentration"
+  const summerWhy = t.cue("summerWhy"); // "There's only a tiny amount of carbon dioxide in the air."
+  const tiny = t.word("tiny", 1);
   return {
     extended,
     extendedWord,
@@ -66,7 +83,14 @@ export const s15Timing = (t: CueFns) => {
     tempOther,
     raise,
     higherCo2,
-    curve,
+    same,
+    low,
+    sameWord,
+    still,
+    higher,
+    newCurve,
+    keepsRising,
+    forLonger,
     levelsHigher,
     proves,
     co2Was,
@@ -79,10 +103,18 @@ export const s15Timing = (t: CueFns) => {
     dawn,
     dull,
     dawnFactor,
+    dawnWhy,
     winter,
     winterFactor,
+    winterWhy,
+    less,
+    kinetic,
+    fewer,
     summer,
+    plenty,
     summerFactor,
+    summerWhy,
+    tiny,
     end: t.dur,
   };
 };
@@ -97,14 +129,18 @@ export const s15Sfx = (t: CueFns): SfxEvent[] => {
     { frame: k.lightLimiting, sfx: "ui_blip", gainDb: -10 }, // light intensity is limiting
     { frame: k.longer, sfx: "ui_blip", gainDb: -11 }, // no longer limiting
     { frame: k.co2Other, sfx: "ui_blip", gainDb: -12 }, // candidates: carbon dioxide…
-    { frame: k.curve, sfx: "whoosh_soft", gainDb: -13 }, // the higher-CO2 curve draws
+    { frame: k.sameWord, sfx: "ui_blip", gainDb: -12 }, // the two curves are the same at low light
+    { frame: k.newCurve, sfx: "whoosh_soft", gainDb: -13 }, // the higher-CO2 curve peels away
     { frame: k.levelsHigher, sfx: "ui_blip", gainDb: -10 }, // levels off higher
     { frame: k.co2Was, sfx: "shimmer_sweet", gainDb: -14 }, // carbon dioxide was limiting
     { frame: k.name, sfx: "ui_blip", gainDb: -11 }, // name the factor
     { frame: k.reason, sfx: "card_in", gainDb: -9 }, // exam tip
     { frame: k.conditions, sfx: "whoosh_soft", gainDb: -13 }, // three conditions
     { frame: k.dawn, sfx: "card_in", gainDb: -12 }, // dawn / dull day
+    { frame: k.dawnWhy, sfx: "ui_blip", gainDb: -14 }, // reason: not much light
     { frame: k.winter, sfx: "card_in", gainDb: -12 }, // cold winter's day
+    { frame: k.less, sfx: "ui_blip", gainDb: -14 }, // reason: less kinetic energy
     { frame: k.summer, sfx: "card_in", gainDb: -12 }, // bright summer's day
+    { frame: k.summerWhy, sfx: "ui_blip", gainDb: -14 }, // reason: very little CO2 in the air
   ];
 };

@@ -1,15 +1,19 @@
 /**
  * S16 · Predict — hydrogencarbonate indicator, three sealed tubes, and the one "pause and predict".
  *
+ * 0. "…this one's for the Extended paper": the EXTENDED badge joins the section tag on "Extended".
  * 1. One demo tube of indicator fills; CO2 shows as small dots in the liquid. The colour key builds as
  *    each colour is named: red at air level → more CO2 dissolves in (dots stream in) → yellow → CO2
  *    leaves (dots stream out) → purple. Key: yellow ← red → purple, "more CO₂ / air / less CO₂".
- * 2. The key moves aside; the rack of three red tubes arrives (bungs in on "sealed"): A gets a leaf and
- *    the lamp (photons reach the leaf), B a leaf and foil, C nothing.
+ * 2. The key moves aside; the rack of three red tubes arrives. Bungs in on "sealed", ringed on "bungs",
+ *    label "bung: no CO₂ in or out"; CO2 from the air drifts down onto the bungs and bounces off.
+ *    A: a sprig of pondweed (under the indicator) and the lamp (photons reach it); B: pondweed and foil;
+ *    C: no pondweed.
  * 3. "What colour after a few hours?" — a question mark over each tube; then the PausePredict overlay,
  *    whose countdown fills exactly the silence after "…make your prediction."
  */
 import React from "react";
+import { noise2D } from "@remotion/noise";
 import { C, EASE } from "../../../brand/tokens";
 import { FONT } from "../../../brand/fonts";
 import { Stage } from "../../../components/Stage";
@@ -18,13 +22,16 @@ import { SectionTag } from "../../../components/SectionTag";
 import { PausePredict } from "../../../components/PausePredict";
 import { Pt, rng } from "../../../lib/geometry";
 import { prog, window01 } from "../../../lib/motion";
+import { pulse } from "../../../lib/track";
 import { useScene } from "../../../lib/timeline";
-import { s16Timing } from "./S16Predict.timing";
+import { s16Bounces, s16Timing } from "./S16Predict.timing";
 import {
   ChemLeader,
+  Co2Dot,
   ColourKey,
   COND_Y,
   DEMO,
+  DotDraw,
   DotPlan,
   IndicatorTube,
   KEY_CX,
@@ -33,6 +40,7 @@ import {
   RackBase,
   SLOTS,
   TOP_Y,
+  TUBE_TOP,
   TubeText,
   dotAt,
   indColour,
@@ -51,6 +59,17 @@ const AIR_HOMES: Pt[] = [
   [958, 140],
   [1062, 222],
 ];
+
+// ------------------------------------------------------------------ CO2 in the air, bouncing off the bungs
+/** Where each dot starts (above the rack), touches the top of a bung, and bounces back to. */
+const BOUNCE: readonly { readonly from: Pt; readonly hit: Pt; readonly to: Pt }[] = [
+  { from: [1000, 150], hit: [948, TUBE_TOP - 38 - 9], to: [1012, 178] },
+  { from: [1132, 138], hit: [1172, TUBE_TOP - 38 - 9], to: [1236, 168] },
+  { from: [1470, 156], hit: [1426, TUBE_TOP - 38 - 9], to: [1360, 182] },
+];
+/** the bung label: leader from tube A's bung up and left, text to the left of it */
+const BUNG_ANCHOR: Pt = [906, TUBE_TOP - 16];
+const BUNG_AT: Pt = [846, 214];
 
 export const S16Predict: React.FC = () => {
   const sc = useScene();
@@ -102,13 +121,38 @@ export const S16Predict: React.FC = () => {
   const rackIn = prog(f, k.tubes + 4, 20);
   const tubeIn = [0, 1, 2].map((i) => prog(f, k.three - 6 + i * 6, 18));
   const bung = [0, 1, 2].map((i) => prog(f, k.sealed - 4 + i * 5, 14));
-  const rackDots = SLOTS.map((slot, i) => tubeHomes(slot[0], 9, RACK_SEEDS[i], { leaf: i < 2 }).map((home, n) => dotAt(f, { home, seed: 200 + i * 20 + n })));
-  const leafA = prog(f, k.leafA - 4, 18);
+  const rackDots = SLOTS.map((slot, i) => tubeHomes(slot[0], 9, RACK_SEEDS[i], { weed: i < 2 }).map((home, n) => dotAt(f, { home, seed: 200 + i * 20 + n })));
+  // the bungs: ringed while they are explained, with a label; CO2 from the air cannot get past them
+  const bungHi = window01(f, k.bungsW - 4, k.tubeA + 8, 10);
+  const bungLabelIn = prog(f, k.bungsW + 2, 22);
+  const bungLabelOut = 1 - prog(f, k.tubeA + 4, 14, EASE.in);
+  const hits = s16Bounces(k);
+  const airGone = 1 - prog(f, k.tubeA + 2, 16, EASE.in);
+  const bounceDots: (DotDraw | null)[] = BOUNCE.map((b, i) => {
+    const t0 = k.noCo2 - 2 + i * 6;
+    const hit = Math.max(t0 + 12, hits[i]);
+    if (f < t0 || airGone <= 0) return null;
+    const jx = noise2D(`bung-air${i}x`, f * 0.035, 0) * 3;
+    const jy = noise2D(`bung-air${i}y`, f * 0.035, 7) * 3;
+    // falls onto the bung (speeding up), then bounces back up (slowing down)
+    const down = prog(f, t0, hit - t0, EASE.in);
+    const up = prog(f, hit, 26, EASE.out);
+    const x = f < hit ? b.from[0] + (b.hit[0] - b.from[0]) * down : b.hit[0] + (b.to[0] - b.hit[0]) * up;
+    const y = f < hit ? b.from[1] + (b.hit[1] - b.from[1]) * down : b.hit[1] + (b.to[1] - b.hit[1]) * up;
+    // no jiggle at the moment of contact, so the dot never sinks into the bung
+    const calm = f < hit ? 1 - down : up;
+    return { x: x + jx * calm, y: y + jy * calm, op: prog(f, t0, 10) * airGone, s: 1 };
+  });
+  /** a small ring where each dot meets the bung */
+  const contact = hits.map((h) => (f >= h ? 1 - prog(f, h, 14, (v) => v) : 0));
+  const weedA = prog(f, k.weedA - 4, 18);
   const lampIn = prog(f, k.tubeA, 18);
   const lampOn = prog(f, k.bright - 2, 10);
-  const leafB = prog(f, k.leafB - 4, 18);
+  const weedB = prog(f, k.weedB - 4, 18);
+  // the pondweed glows softly as it is named, so the eye finds it inside the tube
+  const weedGlow = [pulse(f, k.weedA - 2, 40), pulse(f, k.weedB - 2, 40)];
   const foil = prog(f, k.wrapped - 2, Math.min(24, Math.max(12, k.dark - k.wrapped)));
-  const condP = [prog(f, k.light - 2, 16), prog(f, k.dark - 2, 16), prog(f, k.noLeaf - 2, 16)];
+  const condP = [prog(f, k.light - 2, 16), prog(f, k.dark - 2, 16), prog(f, k.noWeed - 2, 16)];
 
   // ---------------------------------------------------------------- part 3: the question + pause
   const overlay = prog(f, k.pauseNow, 14);
@@ -153,16 +197,28 @@ export const S16Predict: React.FC = () => {
           x={slot[0]}
           colour={indColour(0)}
           dots={rackDots[i]}
-          leaf={i === 0 ? leafA : i === 1 ? leafB : 0}
+          weed={i === 0 ? weedA : i === 1 ? weedB : 0}
+          weedGlow={i < 2 ? weedGlow[i] : 0}
           sunlit={i === 0 ? 0.8 * lampOn : 0}
           bung={bung[i]}
+          bungHi={bungHi}
           foil={i === 1 ? foil : 0}
           progress={tubeIn[i]}
         />
       ))}
+      {/* CO2 from the air can't get past the bungs */}
+      {BOUNCE.map((b, i) =>
+        contact[i] > 0 && airGone > 0 ? (
+          <circle key={i} cx={b.hit[0]} cy={b.hit[1] + 6} r={10 + 16 * (1 - contact[i])} fill="none" stroke={C.ice} strokeWidth={3} opacity={0.7 * contact[i] * airGone} />
+        ) : null,
+      )}
+      {bounceDots.map((d, i) => (
+        <Co2Dot key={i} d={d} r={7} />
+      ))}
+      <ChemLeader anchor={BUNG_ANCHOR} at={BUNG_AT} align="end" text="bung: no CO2 in or out" progress={bungLabelIn} opacity={bungLabelOut} />
       <TubeText x={SLOTS[0][0]} y={COND_Y} text="light" p={condP[0]} color={C.sun} />
       <TubeText x={SLOTS[1][0]} y={COND_Y} text="dark" p={condP[1]} />
-      <TubeText x={SLOTS[2][0]} y={COND_Y} text="no leaf" p={condP[2]} />
+      <TubeText x={SLOTS[2][0]} y={COND_Y} text="no pondweed" p={condP[2]} />
       {SLOTS.map((slot, i) => (
         <TubeText key={i} x={slot[0]} y={TOP_Y} text="?" p={qMarks[i]} size={64} weight={700} />
       ))}
@@ -182,7 +238,8 @@ export const S16Predict: React.FC = () => {
         </g>
       ) : null}
 
-      <SectionTag n={9} title="Gas exchange" t={f} extended />
+      {/* the whole indicator practical is Extended: the badge arrives as the narrator says so */}
+      <SectionTag n={9} title="Gas exchange" t={f} extended={prog(f, k.extendedW - 2, 16)} />
 
       {/* ============ part 3: pause & predict ============ */}
       {/* compact badge: the tubes and the colour key stay visible while the viewer predicts */}

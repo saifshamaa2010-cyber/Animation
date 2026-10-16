@@ -1,15 +1,16 @@
 /**
  * The hydrogencarbonate-indicator practical (S16 predict, S17 reveal): tubes of indicator whose colour
  * shows how much carbon dioxide is dissolved, CO2 drawn as small ice-blue dots inside the liquid
- * (fewer dots = less CO2 = purple, more = yellow), a leaf standing in the liquid, the lamp with its
- * photons, the foil, and the colour key. Both scenes draw the rack from here, so the cut is seamless.
+ * (fewer dots = less CO2 = purple, more = yellow), a sprig of pondweed under the liquid, the bungs that
+ * seal each tube, the lamp with its photons, the foil, and the colour key. Both scenes draw the rack from
+ * here, so the cut is seamless.
  */
 import React from "react";
 import { noise2D } from "@remotion/noise";
 import { C, EASE } from "../../../../brand/tokens";
 import { FONT } from "../../../../brand/fonts";
 import { FoilWrap, Lamp, Rack, Tube, rackSlots } from "../../../../components/lab/Lab";
-import { Leaf, leafGeometry, type LeafGeo } from "../../../../components/bio";
+import { Pondweed } from "../../../../components/bio";
 import { Photon } from "../../../../components/Light";
 import { HandArrow, LitShape, mix, textWidth } from "../../../../components/kit";
 import { roundRectPath } from "../../../../components/kit/shared";
@@ -20,7 +21,7 @@ import { useSvgId } from "../../../../components/ids";
 import { TUBES } from "../layout";
 
 // ------------------------------------------------------------------ layout
-/** Mouth centres of tubes A (leaf + lamp), B (leaf + foil), C (no leaf). */
+/** Mouth centres of tubes A (pondweed + lamp), B (pondweed + foil), C (no pondweed). */
 export const SLOTS = rackSlots(TUBES.rackX, TUBES.rackY, 3, TUBES.gap);
 export const TUBE_TOP = TUBES.rackY;
 export const TUBE_BOTTOM = TUBES.rackY + TUBES.tubeH;
@@ -28,7 +29,10 @@ export const LEVEL = 0.86;
 export const SURFACE = TUBE_BOTTOM - TUBES.tubeH * LEVEL;
 /** Lamp left of tube A, standing on the same bench as the rack. */
 export const LAMP = { x: 700, y: 392, beam: 290 } as const;
-export const LEAF = { cy: 410, len: 100, wid: 36 } as const;
+/** The sprig of pondweed standing in tubes A and B, completely under the indicator (cut end at the top). */
+export const WEED = { base: 606, len: 196, scale: 0.6 } as const;
+export const WEED_TIP = WEED.base - WEED.len;
+export const WEED_CY = WEED.base - WEED.len / 2;
 /** Condition labels under the tubes, result labels / question marks above the bungs. */
 export const COND_Y = 704;
 export const TOP_Y = 236;
@@ -38,7 +42,27 @@ export const DEMO = { x: 960, y: 260, w: 130, h: 400, level: 0.78 } as const;
 /** Seeds for the nine CO2 dots in each rack tube (S16 and S17 use the same, so the cut is seamless). */
 export const RACK_SEEDS = [31, 32, 33] as const;
 
-export const leafIn = (x: number): LeafGeo => leafGeometry({ cx: x, cy: LEAF.cy, len: LEAF.len, wid: LEAF.wid, ang: -90, stalk: 0.28 });
+/** The stem's control points, as the Pondweed component draws them (base → cut end). */
+const stemPts = (x: number): Pt[] => {
+  const L = WEED.len;
+  const b = WEED.base;
+  return [
+    [x, b],
+    [x + L * 0.05, b - L * 0.35],
+    [x - L * 0.03, b - L * 0.7],
+    [x + L * 0.04, b - L],
+  ];
+};
+/** A point on the stem, 0 = base … 1 = cut end. */
+export const stemAt = (x: number, t: number): Pt => {
+  const pts = stemPts(x);
+  const u = Math.max(0, Math.min(1, t)) * (pts.length - 1);
+  const k = Math.min(pts.length - 2, Math.floor(u));
+  const v = u - k;
+  return [pts[k][0] + (pts[k + 1][0] - pts[k][0]) * v, pts[k][1] + (pts[k + 1][1] - pts[k][1]) * v];
+};
+/** x of the stem at height y. */
+const stemXAt = (x: number, y: number) => stemAt(x, (WEED.base - y) / WEED.len)[0];
 
 /** Indicator colour: −1 yellow (more CO2) · 0 red (air) · +1 purple (less CO2). */
 export const indColour = (s: number) => (s < 0 ? mix(C.indRed, C.indYellow, -s) : mix(C.indRed, C.indPurple, s));
@@ -51,10 +75,10 @@ export type DotPlan = {
   readonly seed: number;
   /** fades in at home */
   readonly appearAt?: number;
-  /** arrives from `from` (e.g. given out by the leaf) */
+  /** arrives from `from` (e.g. given out by the pondweed) */
   readonly enterAt?: number;
   readonly from?: Pt;
-  /** leaves to `to` and disappears there (e.g. taken in by the leaf) */
+  /** leaves to `to` and disappears there (e.g. taken in by the pondweed) */
   readonly exitAt?: number;
   readonly to?: Pt;
   readonly travel?: number;
@@ -94,12 +118,15 @@ export const dotAt = (f: number, d: DotPlan): DotDraw | null => {
   return { x, y, op, s };
 };
 
-/** Non-overlapping homes for `n` dots inside a tube's liquid, keeping clear of the leaf (if any). */
+/**
+ * Non-overlapping homes for `n` dots inside a tube's liquid. With `weed`, they keep off the pondweed's stem
+ * (the tube is narrow, so dots may sit in front of its little leaves: they are dissolved in the liquid round it).
+ */
 export const tubeHomes = (
   x: number,
   n: number,
   seed: number,
-  o: { leaf?: boolean; w?: number; top?: number; bottom?: number; minD?: number } = {},
+  o: { weed?: boolean; w?: number; top?: number; bottom?: number; minD?: number } = {},
 ): Pt[] => {
   const w = o.w ?? TUBES.tubeW;
   const top = o.top ?? SURFACE + 15;
@@ -107,29 +134,25 @@ export const tubeHomes = (
   const minD = o.minD ?? 16;
   const R = w / 2;
   const cyB = bottom + 13 - R;
-  const geo = o.leaf ? leafIn(x) : null;
   const r = rng(seed);
   const pts: Pt[] = [];
   for (let guard = 0; pts.length < n && guard < 6000; guard++) {
     const px = x + (r() - 0.5) * (w - 26);
     const py = top + r() * (bottom - top);
     if (py > cyB && Math.hypot(px - x, py - cyB) > R - 13) continue;
-    if (geo) {
-      const t = (LEAF.cy + LEAF.len / 2 - py) / LEAF.len; // 0 base … 1 tip
-      if (t >= -0.02 && t <= 1.02 && Math.abs(px - x) < geo.half(Math.max(0, Math.min(1, t))) + 9) continue;
-      if (py > LEAF.cy + LEAF.len / 2 - 4 && py < LEAF.cy + LEAF.len / 2 + 38 && Math.abs(px - (x + 8)) < 15) continue; // stalk
-    }
+    if (o.weed && py > WEED_TIP - 10 && py < WEED.base + 8 && Math.abs(px - stemXAt(x, py)) < 12) continue;
     if (pts.some((q) => Math.hypot(q[0] - px, q[1] - py) < minD)) continue;
     pts.push([px, py]);
   }
   return pts;
 };
 
-/** A point on the leaf surface (where a dot goes in or comes out). */
-export const leafPoint = (x: number, i: number): Pt => {
-  const g = leafIn(x);
+/** A point on the pondweed (stem or one of its little leaves): where a dot is taken in or given out. */
+export const weedPoint = (x: number, i: number): Pt => {
   const r = rng(900 + i * 17);
-  return g.P((r() - 0.5) * LEAF.len * 0.62, (r() - 0.5) * LEAF.wid * 0.45);
+  const [sx, sy] = stemAt(x, 0.12 + r() * 0.78);
+  const side = r() < 0.5 ? -1 : 1;
+  return [sx + side * (3 + r() * 10), sy + (r() - 0.5) * 8];
 };
 
 export const Co2Dot: React.FC<{ readonly d: DotDraw | null; readonly r?: number }> = ({ d, r = 6 }) => {
@@ -193,14 +216,16 @@ export const chemLabelWidth = (text: string, size = 44, weight: 400 | 500 | 600 
     .reduce((w, p) => w + textWidth(p, /\d/.test(p) ? chemSmall(size) : size, weight), 0);
 
 /** A leader-line label (same look as `Label`) whose text may contain a subscript. */
-export const ChemLeader: React.FC<{ readonly anchor: Pt; readonly at: Pt; readonly text: string; readonly progress: number; readonly color?: string; readonly opacity?: number }> = ({
-  anchor,
-  at,
-  text,
-  progress,
-  color = C.paper,
-  opacity = 1,
-}) => {
+export const ChemLeader: React.FC<{
+  readonly anchor: Pt;
+  readonly at: Pt;
+  readonly text: string;
+  readonly progress: number;
+  readonly color?: string;
+  readonly opacity?: number;
+  /** "end": the text sits to the LEFT of `at` (for a leader that runs leftwards) */
+  readonly align?: "start" | "end";
+}> = ({ anchor, at, text, progress, color = C.paper, opacity = 1, align = "start" }) => {
   if (progress <= 0 || opacity <= 0) return null;
   const line = Math.min(1, progress / 0.55);
   const dot = Math.min(1, progress / 0.2);
@@ -211,8 +236,8 @@ export const ChemLeader: React.FC<{ readonly anchor: Pt; readonly at: Pt; readon
     <g opacity={opacity}>
       <circle cx={anchor[0]} cy={anchor[1]} r={14 * dot} fill="none" stroke={color} strokeOpacity={0.45} strokeWidth={2} />
       <line x1={anchor[0]} y1={anchor[1]} x2={lx} y2={ly} stroke={color} strokeWidth={3} strokeLinecap="round" />
-      <g opacity={txt} transform={`translate(${(1 - txt) * -12} 0)`}>
-        <ChemLabel text={text} x={at[0] + 14} y={at[1] + 15} anchor="start" color={color} />
+      <g opacity={txt} transform={`translate(${(1 - txt) * (align === "end" ? 12 : -12)} 0)`}>
+        <ChemLabel text={text} x={at[0] + (align === "end" ? -14 : 14)} y={at[1] + 15} anchor={align} color={color} />
       </g>
     </g>
   );
@@ -227,16 +252,20 @@ export type IndicatorTubeProps = {
   /** 0..1 fill level */
   readonly level?: number;
   readonly colour: string;
-  /** a new colour spreading out from a point (the leaf), 0..1 */
+  /** a new colour spreading out from a point (the pondweed), 0..1 */
   readonly spread?: { readonly colour: string; readonly p: number; readonly at: Pt; readonly reach?: number };
-  readonly leaf?: number;
+  /** 0..1 the sprig of pondweed is there */
+  readonly weed?: number;
+  /** 0..1 the lamp's light falls on the pondweed (warm tint) */
   readonly sunlit?: number;
-  /** soft glow round the leaf (it caused the change) */
-  readonly leafGlow?: number;
+  /** soft glow round the pondweed (it caused the change / it is being named) */
+  readonly weedGlow?: number;
   readonly dots?: readonly (DotDraw | null)[];
   readonly dotR?: number;
   /** 0..1 the bung is pushed in (sealed) */
   readonly bung?: number;
+  /** 0..1 a ring round the bung (it is being explained) */
+  readonly bungHi?: number;
   readonly foil?: number;
   /** 0..1 the foil is lifted off */
   readonly foilLift?: number;
@@ -254,12 +283,13 @@ export const IndicatorTube: React.FC<IndicatorTubeProps> = ({
   level = LEVEL,
   colour,
   spread,
-  leaf = 0,
+  weed = 0,
   sunlit = 0,
-  leafGlow = 0,
+  weedGlow = 0,
   dots = [],
   dotR = 6,
   bung = 0,
+  bungHi = 0,
   foil = 0,
   foilLift = 0,
   progress = 1,
@@ -275,7 +305,6 @@ export const IndicatorTube: React.FC<IndicatorTubeProps> = ({
   const sp = spread && spread.p > 0 ? spread : null;
   const reach = sp ? (sp.reach ?? 300) * EASE.out(Math.min(1, sp.p)) : 0;
   const tint = sp ? mix(colour, sp.colour, Math.min(1, sp.p * 1.3)) : colour;
-  const geo = leafIn(x);
   return (
     <g opacity={opacity} transform={dy ? `translate(0 ${dy})` : undefined}>
       <Tube x={x} y={y} w={w} h={h} liquid={0} progress={progress}>
@@ -295,6 +324,11 @@ export const IndicatorTube: React.FC<IndicatorTubeProps> = ({
                   <stop offset="1" stopColor={sp.colour} stopOpacity={0} />
                 </radialGradient>
               ) : null}
+              {/* the lamp's light on the pondweed: the sprig recoloured warm, laid over it */}
+              <filter id={`${id}-sun`} x="-20%" y="-10%" width="140%" height="120%">
+                <feFlood floodColor={C.sun} floodOpacity={1} />
+                <feComposite in2="SourceGraphic" operator="in" />
+              </filter>
             </defs>
             <g clipPath={`url(#${id}-c)`}>
               <g clipPath={`url(#${id}-l)`}>
@@ -305,13 +339,18 @@ export const IndicatorTube: React.FC<IndicatorTubeProps> = ({
               </g>
               <rect x={x - r - 4} y={surf} width={w + 8} height={Math.min(24, bottom - surf)} fill={C.paper} opacity={0.12} />
               <line x1={x - r - 4} y1={surf} x2={x + r + 4} y2={surf} stroke={mix(tint, C.paper, 0.5)} strokeWidth={3} opacity={0.9} />
-              {leafGlow > 0 && leaf > 0 ? <ellipse cx={x} cy={LEAF.cy} rx={34} ry={78} fill={C.leafLight} opacity={0.35 * leafGlow} /> : null}
-              {leaf > 0 ? (
+              {weedGlow > 0 && weed > 0 ? <ellipse cx={x + 2} cy={WEED_CY} rx={36} ry={WEED.len / 2 + 14} fill={C.leafLight} opacity={0.35 * weedGlow} /> : null}
+              {weed > 0 ? (
                 <g>
-                  <Leaf geo={geo} progress={leaf} sunlit={sunlit} shadow={0} veins={0.8} />
-                  {/* the leaf is under the liquid: a little of the indicator's colour over it */}
+                  <Pondweed x={x} y={WEED.base} len={WEED.len} scale={WEED.scale} progress={weed} />
+                  {sunlit > 0 ? (
+                    <g filter={`url(#${id}-sun)`} opacity={0.3 * sunlit}>
+                      <Pondweed x={x} y={WEED.base} len={WEED.len} scale={WEED.scale} progress={weed} />
+                    </g>
+                  ) : null}
+                  {/* the pondweed is under the liquid: a little of the indicator's colour over it */}
                   <g clipPath={`url(#${id}-l)`}>
-                    <rect x={x - r - 4} y={surf} width={w + 8} height={bottom - surf + 10} fill={tint} opacity={0.16 * Math.min(1, leaf)} />
+                    <rect x={x - r - 4} y={surf} width={w + 8} height={bottom - surf + 10} fill={tint} opacity={0.16 * Math.min(1, weed)} />
                   </g>
                 </g>
               ) : null}
@@ -330,6 +369,7 @@ export const IndicatorTube: React.FC<IndicatorTubeProps> = ({
       {bung > 0 ? (
         <g opacity={Math.min(1, bung * 2)} transform={`translate(0 ${-34 * (1 - EASE.out(bung))})`}>
           <LitShape d={roundRectPath(x - r + 2, y - 38, w - 4, 44, 8)} top={C.terracotta} bottom={C.terracottaDeep} rimOpacity={0.4} shadow={0} />
+          {bungHi > 0 ? <rect x={x - r - 10} y={y - 50} width={w + 20} height={68} rx={18} fill="none" stroke={C.paper} strokeWidth={4} opacity={bungHi} /> : null}
         </g>
       ) : null}
     </g>
@@ -344,7 +384,7 @@ export const RackBase: React.FC<{ readonly progress: number; readonly opacity?: 
     </g>
   ) : null;
 
-/** The lamp beside tube A, with photons streaming to the leaf (`every` frames apart: fewer = dimmer). */
+/** The lamp beside tube A, with photons streaming to the pondweed (`every` frames apart: fewer = dimmer). */
 export const LampWithLight: React.FC<{
   readonly f: number;
   readonly progress: number;
@@ -373,7 +413,7 @@ export const LampWithLight: React.FC<{
       if (p <= 0 || p >= 1) return;
       const r = rng(500 + k * 13);
       const from: Pt = [LAMP.x + 48, LAMP.y + (r() - 0.5) * 40];
-      const to: Pt = [tx + (r() - 0.5) * 20, LEAF.cy + (r() - 0.5) * 70];
+      const to: Pt = [tx + (r() - 0.5) * 20, WEED_CY + (r() - 0.5) * WEED.len * 0.75];
       photons.push(<Photon key={k} from={from} to={to} p={p} size={0.42} />);
     });
   }

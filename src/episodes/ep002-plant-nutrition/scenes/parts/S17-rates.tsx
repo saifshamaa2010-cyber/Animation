@@ -1,6 +1,7 @@
 /**
  * S17 helpers: the two-rate comparison (photosynthesis takes CO2 in, respiration gives it out — the
- * difference is the NET exchange that the indicator shows), a "few hours later" clock, and the myth
+ * difference is the NET exchange that the indicator shows; `cancel` slides the respiration bar onto the
+ * photosynthesis bar to show the subtraction), a "few hours later" clock, and the myth
  * sentence drawn with real Lexend metrics (see the workaround note on MythLine).
  */
 import React from "react";
@@ -35,17 +36,47 @@ export const RateBars: React.FC<{
   readonly psGlow?: number;
   /** the two ends line up: dashed line + "rates equal" */
   readonly equal?: number;
-  /** the part of photosynthesis not cancelled by respiration = net uptake */
+  /** "no net change" under "rates equal" */
+  readonly noNet?: number;
+  /**
+   * uptake minus release: a copy of the respiration bar (CO2 given out) slides up onto the photosynthesis
+   * bar (CO2 taken in) and cancels that much of it. `p` 0..1 = the slide (the covered part darkens as it
+   * lands), `op` fades the whole thing out again.
+   */
+  readonly cancel?: { readonly p: number; readonly op: number };
+  /** the part of photosynthesis left over (not cancelled by respiration) = the net uptake: outlined + "net" */
   readonly net?: number;
   readonly netPulse?: number;
+  /** "net = overall" under the bars */
+  readonly overall?: number;
   readonly opacity?: number;
-}> = ({ ps, r, psIn, rIn, rGlow = 0, psGlow = 0, equal = 0, net = 0, netPulse = 0, opacity = 1 }) => {
+}> = ({ ps, r, psIn, rIn, rGlow = 0, psGlow = 0, equal = 0, noNet = 0, cancel, net = 0, netPulse = 0, overall = 0, opacity = 1 }) => {
   const id = useSvgId("rates");
   if (opacity <= 0 || (psIn <= 0 && rIn <= 0)) return null;
   const { x, w, h, psY, rY } = BARS;
   const xr = x + r * w;
   const xp = x + ps * w;
   const guide = Math.max(equal, net);
+  const cOp = cancel && cancel.p > 0 && r > 0.02 ? cancel.op : 0;
+  const cMove = cOp > 0 ? EASE.inOut(Math.min(1, cancel!.p / 0.7)) : 0;
+  const landed = cOp > 0 ? Math.max(0, Math.min(1, (cancel!.p - 0.7) / 0.3)) : 0;
+  const ghostY = rY + (psY - rY) * cMove;
+  const covered = Math.min(r, ps) * w;
+  const caption = (text: string, y: number, p: number) =>
+    p > 0 ? (
+      <text
+        x={x - 2}
+        y={y + (1 - EASE.out(Math.min(1, p))) * 10}
+        fontFamily={FONT}
+        fontWeight={700}
+        fontSize={44}
+        fill={C.paper}
+        opacity={Math.min(1, p)}
+        letterSpacing={-0.5}
+      >
+        {text}
+      </text>
+    ) : null;
   const rows = [
     { y: psY, p: psIn, label: "photosynthesis", col: C.leaf, ty: psY - 18 },
     { y: rY, p: rIn, label: "respiration", col: C.coral, ty: rY + h + 50 },
@@ -84,10 +115,27 @@ export const RateBars: React.FC<{
       {psGlow > 0 && ps > 0.02 ? <rect x={x - 6} y={psY - 6} width={ps * w + 12} height={h + 12} rx={h / 2 + 6} fill={C.leaf} opacity={0.55 * psGlow} filter={`url(#${id}-b)`} /> : null}
       <Bar x={x} y={psY} len={ps * w} top={mix(C.leaf, C.paper, 0.18)} bottom={C.leafDeep} />
       <Bar x={x} y={rY} len={r * w} top={mix(C.coral, C.paper, 0.15)} bottom={C.coralDeep} />
-      {/* net: the share of photosynthesis that respiration cancels steps back; the rest is the net uptake */}
-      {net > 0 && ps > r ? (
+      {/* uptake minus release: the CO2 given out cancels the same amount of the CO2 taken in */}
+      {cOp > 0 ? (
+        <g opacity={cOp}>
+          {covered > 2 ? <rect x={x} y={psY} width={covered} height={h} rx={Math.min(h / 2, covered / 2)} fill={C.ink900} opacity={0.55 * landed} /> : null}
+          <rect
+            x={x}
+            y={ghostY}
+            width={r * w}
+            height={h}
+            rx={Math.min(h / 2, (r * w) / 2)}
+            fill={C.coral}
+            fillOpacity={0.55 * (1 - landed)}
+            stroke={C.coral}
+            strokeWidth={4}
+            strokeDasharray={landed > 0.5 ? "10 8" : undefined}
+          />
+        </g>
+      ) : null}
+      {/* net: what is left of photosynthesis once respiration is taken away */}
+      {net > 0 && xp - xr > 30 ? (
         <g>
-          <rect x={x} y={psY} width={xr - x} height={h} rx={Math.min(h / 2, (xr - x) / 2)} fill={C.ink900} opacity={0.5 * net} />
           <rect
             x={xr + 2}
             y={psY - 4}
@@ -107,20 +155,9 @@ export const RateBars: React.FC<{
       {guide > 0 && r > 0.02 ? (
         <line x1={xr} y1={rY - 6} x2={xr} y2={psY + h + 6} stroke={C.paper} strokeWidth={3} strokeDasharray="8 8" strokeLinecap="round" opacity={0.85 * guide} />
       ) : null}
-      {equal > 0 ? (
-        <text
-          x={x - 2}
-          y={rY + h + 124 + (1 - EASE.out(Math.min(1, equal))) * 10}
-          fontFamily={FONT}
-          fontWeight={700}
-          fontSize={44}
-          fill={C.paper}
-          opacity={equal}
-          letterSpacing={-0.5}
-        >
-          rates equal
-        </text>
-      ) : null}
+      {caption("rates equal", rY + h + 124, equal)}
+      {caption("no net change", rY + h + 186, noNet)}
+      {caption("net = overall", rY + h + 124, overall)}
     </g>
   );
 };

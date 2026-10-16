@@ -29,11 +29,13 @@ export const s12Timing = (t: CueFns) => {
   const greenOnly = t.cue("greenOnly");
   const blueBlack1 = t.word("blue-black", 1);
   const orangeBrown = t.word("orange-brown", 1);
+  const chlorophyllControl = t.cue("chlorophyllControl"); // "The green parts are the control."
+  const greenControl = t.word("control", 3);
   const chlorophyllNeeded = t.cue("chlorophyllNeeded");
   const needed1 = t.word("needed", 1);
   // ---- experiment 2: light (black paper)
   const cover = t.cue("cover");
-  const coverW = t.word("cover", 1);
+  const take2 = t.word("take", 2); // "Take a destarched plant, and cover part of one leaf"
   const black = t.word("black", 1);
   const sunlit = t.cue("sunlit");
   const light3 = t.word("light", 3);
@@ -43,16 +45,18 @@ export const s12Timing = (t: CueFns) => {
   const uncoveredW = t.word("uncovered", 1);
   const blueBlack2 = t.word("blue-black", 2);
   const lightControl = t.cue("lightControl");
-  const isControl = t.word("control", 3); // "…is the control."
+  const isControl = t.word("control", 4); // "The uncovered part is the control."
   const needed2 = t.word("needed", 2);
   // ---- experiment 3: carbon dioxide (soda lime)
   const flask = t.cue("flask");
+  const take3 = t.word("take", 3); // "Take a destarched plant, and seal one leaf, still attached…"
   const seal = t.word("seal", 1);
+  const attached = t.word("attached", 1);
   const sodaLime = t.word("soda", 1);
   const absorbs = t.cue("absorbs");
   const absorbsW = t.word("absorbs", 1);
   const co2Control = t.cue("co2Control");
-  const theControl = t.word("control", 4);
+  const theControl = t.word("control", 5); // "The control is an identical flask"
   const co2Result = t.cue("co2Result");
   const hours3 = t.word("hours", 3);
   const only3 = t.word("only", 3);
@@ -84,10 +88,12 @@ export const s12Timing = (t: CueFns) => {
     greenOnly,
     blueBlack1,
     orangeBrown,
+    chlorophyllControl,
+    greenControl,
     chlorophyllNeeded,
     needed1,
     cover,
-    coverW,
+    take2,
     black,
     sunlit,
     light3,
@@ -100,7 +106,9 @@ export const s12Timing = (t: CueFns) => {
     isControl,
     needed2,
     flask,
+    take3,
     seal,
+    attached,
     sodaLime,
     absorbs,
     absorbsW,
@@ -131,6 +139,7 @@ export const s12Sfx = (t: CueFns): SfxEvent[] => {
     { frame: k.blueBlack2, sfx: "pop_bind", gainDb: -10 }, // uncovered part blue-black
     { frame: k.needed2, sfx: "ui_blip", gainDb: -8 }, // ✓ needed
     { frame: k.flask, sfx: "whoosh_soft", gainDb: -12 }, // experiment 3
+    { frame: k.seal, sfx: "card_in", gainDb: -13 }, // the flask closes round the attached leaf
     { frame: k.theControl, sfx: "ui_blip", gainDb: -11 }, // the control flask
     { frame: k.blueBlack3, sfx: "pop_bind", gainDb: -10 }, // only the control leaf turns blue-black
     { frame: k.needed3, sfx: "ui_blip", gainDb: -8 }, // ✓ needed — all three conclusions together

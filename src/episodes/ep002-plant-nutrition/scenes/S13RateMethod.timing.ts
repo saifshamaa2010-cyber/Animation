@@ -36,13 +36,21 @@ export const s13Timing = (t: CueFns) => {
   const variables = t.cue("variables");
   const lightIV = t.word("light", 4); // "So, light intensity is the independent variable"
   const independent = t.word("independent", 1);
+  const youChange = t.word("change", 2); // "…the one you change"
+  const dependentCue = t.cue("dependent");
   const rate2 = t.word("rate", 2); // "The rate is the dependent variable"
   const dependent = t.word("dependent", 1);
+  const youMeasure = t.word("measure", 3); // "…the one you measure"
   const constant = t.cue("constant");
   const kept = t.word("kept", 1);
   const samePlant = t.word("plant", 2);
   const sameCo2 = t.word("carbon", 2);
   const sameTemp = t.word("temperature", 1);
+  const noLights = t.word("no", 1); // "…and no other lights on"
+  // ---- water bath: keeps the temperature steady
+  const waterBath = t.cue("waterBath"); // "To keep the temperature steady"
+  const stand = t.word("stand", 1); // "stand the beaker in a water bath"
+  const bathWord = t.word("bath", 1);
   const led = t.cue("led");
   const lessHeat = t.word("less", 1);
   // ---- method: wait at each new distance, repeat → mean
@@ -53,6 +61,16 @@ export const s13Timing = (t: CueFns) => {
   const repeat = t.cue("repeat");
   const repeatWord = t.word("repeat", 1);
   const mean = t.word("mean", 1);
+  // ---- the other two factors, one at a time
+  const otherFactors = t.cue("otherFactors");
+  const twoFactors = t.word("factors", 1); // "test the other two factors"
+  const oneThing = t.word("just", 1); // "Just change one thing at a time"
+  const co2Method = t.cue("co2Method"); // "To vary carbon dioxide…"
+  const concentrations = t.word("concentrations", 1);
+  const sodium2 = t.word("sodium", 2); // "…of sodium hydrogencarbonate"
+  const tempMethod = t.cue("tempMethod"); // "To vary temperature…"
+  const setBath = t.word("set", 1); // "set the water bath"
+  const temps = t.word("different", 3); // "to different temperatures"
   return {
     rate,
     howFast,
@@ -82,13 +100,20 @@ export const s13Timing = (t: CueFns) => {
     variables,
     lightIV,
     independent,
+    youChange,
+    dependentCue,
     rate2,
     dependent,
+    youMeasure,
     constant,
     kept,
     samePlant,
     sameCo2,
     sameTemp,
+    noLights,
+    waterBath,
+    stand,
+    bathWord,
     led,
     lessHeat,
     acclimatise,
@@ -98,6 +123,15 @@ export const s13Timing = (t: CueFns) => {
     repeat,
     repeatWord,
     mean,
+    otherFactors,
+    twoFactors,
+    oneThing,
+    co2Method,
+    concentrations,
+    sodium2,
+    tempMethod,
+    setBath,
+    temps,
     end: t.dur,
   };
 };
@@ -118,10 +152,18 @@ export const s13Sfx = (t: CueFns): SfxEvent[] => {
     { frame: k.dependent, sfx: "ui_blip", gainDb: -10 }, // dependent variable
     { frame: k.kept, sfx: "card_in", gainDb: -13 }, // kept constant
     { frame: k.sameTemp, sfx: "ui_blip", gainDb: -12 }, // thermometer goes in
+    { frame: k.noLights, sfx: "whoosh_soft", gainDb: -17 }, // the room lights go down
+    { frame: k.stand, sfx: "whoosh_soft", gainDb: -14 }, // the water bath goes round the beaker
+    { frame: k.bathWord, sfx: "ui_blip", gainDb: -12 }, // "water bath: steady temperature"
     { frame: k.led, sfx: "ui_blip", gainDb: -11 }, // LED
     { frame: k.newDistance, sfx: "whoosh_soft", gainDb: -15 }, // new distance
     { frame: k.wait, sfx: "tick", gainDb: -11 }, // wait a few minutes
     { frame: k.repeatWord, sfx: "card_in", gainDb: -13 }, // repeats
     { frame: k.mean, sfx: "ui_blip", gainDb: -9 }, // → mean
+    { frame: k.oneThing, sfx: "card_in", gainDb: -12 }, // "change one thing at a time"
+    { frame: k.co2Method + 4, sfx: "whoosh_soft", gainDb: -13 }, // three set-ups slide in
+    { frame: k.concentrations, sfx: "pop_bind", gainDb: -14 }, // more dissolved carbon dioxide, beaker by beaker
+    { frame: k.tempMethod + 4, sfx: "whoosh_soft", gainDb: -15 }, // carbon dioxide evens out
+    { frame: k.temps, sfx: "tick", gainDb: -11 }, // the baths go to three temperatures
   ];
 };

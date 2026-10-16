@@ -24,6 +24,8 @@ export const s14Timing = (t: CueFns) => {
   const enzymes = t.cue("enzymes");
   const catalysed = t.word("catalysed", 1);
   const enzymesWord = t.word("enzymes", 1);
+  // "This next part is for the Extended paper." (the EXTENDED badge joins the section tag until {describe})
+  const extendedTemp = t.cue("extendedTemp");
   const below = t.cue("below");
   const raising = t.word("raising", 1);
   const kinetic = t.word("kinetic", 1);
@@ -40,7 +42,8 @@ export const s14Timing = (t: CueFns) => {
   const describe = t.cue("describe");
   const describeWord = t.word("describe", 1);
   const happens = t.word("happens", 1);
-  const numbers = t.word("numbers", 1);
+  const numbers = t.word("numbers", 1); // "and quote numbers from the axes,"
+  const units = t.word("units", 1); // "with their units."
   const explain = t.cue("explain");
   const explainWord = t.word("explain", 1);
   const why = t.word("why", 1);
@@ -63,6 +66,7 @@ export const s14Timing = (t: CueFns) => {
     enzymes,
     catalysed,
     enzymesWord,
+    extendedTemp,
     below,
     raising,
     kinetic,
@@ -79,6 +83,7 @@ export const s14Timing = (t: CueFns) => {
     describeWord,
     happens,
     numbers,
+    units,
     explain,
     explainWord,
     why,
@@ -97,11 +102,13 @@ export const s14Sfx = (t: CueFns): SfxEvent[] => {
     { frame: k.optimum, sfx: "ui_blip", gainDb: -10 }, // optimum
     { frame: k.enzymes, sfx: "whoosh_soft", gainDb: -12 }, // zoom in to the enzymes
     { frame: k.catalysed, sfx: "pop_bind", gainDb: -9 }, // substrate binds the active site
+    { frame: k.extendedTemp + 2, sfx: "ui_blip", gainDb: -11 }, // EXTENDED badge joins the section tag
     { frame: k.effective, sfx: "pop_bind", gainDb: -10 }, // effective collisions
     { frame: k.denaturedWord, sfx: "snip", gainDb: -8 }, // bonds holding the shape break
     { frame: k.fit, sfx: "bonk_misfit", gainDb: -8 }, // the substrate no longer fits
     { frame: k.describeWord, sfx: "card_in", gainDb: -11 }, // describe
     { frame: k.numbers, sfx: "ui_blip", gainDb: -10 }, // numbers from the axes
+    { frame: k.units, sfx: "ui_blip", gainDb: -12 }, // … with their units
     { frame: k.explainWord, sfx: "card_in", gainDb: -11 }, // explain
   ];
 };

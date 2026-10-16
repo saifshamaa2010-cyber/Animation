@@ -4,10 +4,14 @@
  * lamp's distance (light intensity ∝ 1 / distance²), so the animation itself shows the relationship.
  */
 import React from "react";
+import { noise2D } from "@remotion/noise";
 import { C, EASE } from "../../../../brand/tokens";
 import { FONT } from "../../../../brand/fonts";
-import { LitShape, mix } from "../../../../components/kit";
+import { CarbonDioxide, LitShape, mix } from "../../../../components/kit";
 import { roundRectPath } from "../../../../components/kit/shared";
+import { Beaker, Lamp } from "../../../../components/lab/Lab";
+import { Pondweed } from "../../../../components/bio";
+import { Thermometer, heatColor } from "../../../../components/Thermometer";
 import { Pt, rng } from "../../../../lib/geometry";
 import { prog } from "../../../../lib/motion";
 import { track } from "../../../../lib/track";
@@ -32,6 +36,24 @@ export const THERMO = { x: 1118, top: 462, bulbY: 598 } as const;
 /** right-hand column for counters, labels and the method steps */
 export const COL_X = 1250;
 export const WATER = mix(C.iceDeep, C.ink700, 0.45);
+/** glass water bath the beaker stands in (bottom centre; its floor is the bench, just above the ruler) */
+export const BATH = { x: BEAKER.x, y: BENCH_Y + 6, w: 410, h: 296, level: 0.78 } as const;
+export const BATH_WATER_Y = BATH.y - BATH.h * BATH.level; // ≈ 625
+
+/**
+ * "other factors": three small set-ups side by side, lamps all at the same distance. Each is drawn about its own
+ * bath centre `xs[i]` on a bench at y = `bench`, then scaled by `scale` about (`cs[i]`, `bench`) and placed with
+ * that point at (`cs[i]`, `screenBench`) — see `rigTransform` / `rigX`.
+ */
+export const RIG = { bench: 830, cs: [415, 960, 1505], xs: [499, 1044, 1589], scale: 1.15, screenBench: 800, bathW: 260, bathH: 190, level: 0.72, beakerDx: -24, thermoDx: 92 } as const;
+export const rigTransform = (i: number) => `translate(${RIG.cs[i]} ${RIG.screenBench}) scale(${RIG.scale}) translate(${-RIG.cs[i]} ${-RIG.bench})`;
+/** screen x of a rig-space x for set-up i */
+export const rigX = (i: number, x: number) => RIG.cs[i] + RIG.scale * (x - RIG.cs[i]);
+/** carbon dioxide counts: low / medium / high sodium hydrogencarbonate, then all the same (medium) */
+export const RIG_CO2 = [2, 4, 8] as const;
+/** example water-bath settings (°C) for the temperature comparison, and the one used while CO₂ is varied */
+export const RIG_TEMPS = [15, 25, 35] as const;
+export const RIG_T0 = 25;
 
 // ------------------------------------------------------------------ lamp position and light
 export const lampX = (f: number, k: K) => {
@@ -245,3 +267,155 @@ export const RepeatBars: React.FC<{ readonly x: number; readonly y: number; read
   );
 };
 export const REPEAT_MEAN_LEN = (318 + 372 + 342) / 3;
+
+// ------------------------------------------------------------------ water bath
+/**
+ * A glass water bath (tank) round a beaker. Draw `layer="back"` before the beaker (the water behind it) and
+ * `layer="front"` after it (the glass, and a faint waterline across the beaker so it reads as standing IN the
+ * water). (x, y) = bottom centre; `fill` 0..1 = how far the water has risen to `level`.
+ */
+export const GlassBath: React.FC<{
+  readonly x: number;
+  readonly y: number;
+  readonly w: number;
+  readonly h: number;
+  readonly level: number;
+  readonly fill?: number;
+  readonly color?: string;
+  readonly layer: "back" | "front";
+  readonly progress: number;
+}> = ({ x, y, w, h, level, fill = 1, color = WATER, layer, progress }) => {
+  if (progress <= 0) return null;
+  const l = x - w / 2;
+  const r = x + w / 2;
+  const t = y - h;
+  const wy = y - 6 - (h * level - 6) * Math.max(0, Math.min(1, fill));
+  const hasWater = fill > 0.01;
+  if (layer === "back") {
+    return (
+      <g opacity={Math.min(1, progress * 1.5)}>
+        <path d={`M${l},${t} L${l},${y - 16} Q${l},${y} ${l + 16},${y} L${r - 16},${y} Q${r},${y} ${r},${y - 16} L${r},${t} Z`} fill={C.glass} fillOpacity={0.05} />
+        {hasWater ? <rect x={l + 3} y={wy} width={w - 6} height={y - 3 - wy} rx={12} fill={color} opacity={0.62} /> : null}
+      </g>
+    );
+  }
+  return (
+    <g opacity={Math.min(1, progress * 1.5)}>
+      {hasWater ? (
+        <g>
+          <rect x={l + 3} y={wy} width={w - 6} height={y - 3 - wy} rx={12} fill={color} opacity={0.16} />
+          <line x1={l + 4} x2={r - 4} y1={wy} y2={wy} stroke={C.paper} strokeOpacity={0.34} strokeWidth={3} />
+        </g>
+      ) : null}
+      <path d={`M${l - 10},${t - 6} Q${l},${t - 4} ${l},${t + 8} L${l},${y - 16} Q${l},${y} ${l + 16},${y} L${r - 16},${y} Q${r},${y} ${r},${y - 16} L${r},${t - 4}`} fill="none" stroke={C.paper} strokeOpacity={0.62} strokeWidth={4} strokeLinejoin="round" />
+      <line x1={l + 12} y1={t + 26} x2={l + 12} y2={y - 26} stroke={C.paper} strokeOpacity={0.2} strokeWidth={5} strokeLinecap="round" />
+    </g>
+  );
+};
+
+/** Bath water tinted by its temperature: cooler → icier, warmer → towards coral (heat). */
+export const bathColor = (temp: number) =>
+  temp < RIG_T0 ? mix(WATER, C.ice, Math.min(1, (RIG_T0 - temp) / 10) * 0.28) : mix(WATER, C.coral, Math.min(1, (temp - RIG_T0) / 10) * 0.22);
+
+// ------------------------------------------------------------------ label helper
+/** A third line under a `Label` (same position rules as its text and sub line), e.g. "you change". */
+export const LabelLine: React.FC<{ readonly at: Pt; readonly align: "start" | "end"; readonly text: string; readonly p: number; readonly opacity?: number; readonly color?: string }> = ({
+  at,
+  align,
+  text,
+  p,
+  opacity = 1,
+  color = C.paper,
+}) => {
+  if (p <= 0 || opacity <= 0) return null;
+  const x = at[0] + (align === "start" ? 14 : -14);
+  const y = at[1] + 44 * 0.34 + 92;
+  return (
+    <text
+      x={x + (1 - EASE.out(Math.min(1, p))) * (align === "end" ? 12 : -12)}
+      y={y}
+      textAnchor={align}
+      fontFamily={FONT}
+      fontWeight={600}
+      fontSize={44}
+      fill={color}
+      opacity={Math.min(1, p) * opacity}
+      stroke={C.ink900}
+      strokeWidth={8}
+      strokeOpacity={0.6}
+      paintOrder="stroke"
+      letterSpacing={-0.5}
+    >
+      {text}
+    </text>
+  );
+};
+
+// ------------------------------------------------------------------ "the other two factors": small set-ups
+/** dissolved CO₂ slots in a small beaker: x relative to the beaker centre, absolute y */
+const RIG_SLOTS: readonly Pt[] = [
+  [-46, 694],
+  [44, 774],
+  [44, 700],
+  [-46, 782],
+  [-4, 672],
+  [-48, 738],
+  [46, 738],
+  [18, 806],
+];
+
+/**
+ * One small pondweed set-up: lamp at a fixed distance → beaker (pondweed + dissolved CO₂) standing in a glass
+ * water bath with a thermometer. `co2` = how many CO₂ molecules (fractional: they arrive one by one);
+ * `temp` = the bath's setting (°C); `showTemp` 0..1 shows the reading.
+ */
+export const MiniRig: React.FC<{
+  readonly cx: number;
+  readonly f: number;
+  readonly p: number;
+  readonly co2: number;
+  readonly temp: number;
+  readonly showTemp: number;
+  readonly seed: number;
+  readonly softId: string;
+}> = ({ cx, f, p, co2, temp, showTemp, seed, softId }) => {
+  if (p <= 0) return null;
+  const B = RIG.bench;
+  const bx = cx + RIG.beakerDx;
+  const s = 0.55;
+  const lampX = cx - 210;
+  const lampY = B - 248 * s;
+  const tx = cx + RIG.thermoDx;
+  const tTop = 623;
+  const tH = 320;
+  const tc = heatColor(temp);
+  return (
+    <g opacity={Math.min(1, p * 1.4)} transform={`translate(0 ${(1 - EASE.out(p)) * 30})`}>
+      <ellipse cx={cx - 30} cy={B + 6} rx={200} ry={10} fill={C.ink950} opacity={0.4} filter={`url(#${softId})`} />
+      <g transform={`translate(${lampX} ${lampY}) scale(${s})`}>
+        <Lamp x={0} y={0} on={Math.min(1, p * 1.2)} angle={12} beam={350} progress={1} />
+      </g>
+      <GlassBath x={cx} y={B} w={RIG.bathW} h={RIG.bathH} level={RIG.level} color={bathColor(temp)} layer="back" progress={1} />
+      <Beaker x={bx} y={B - 6} w={150} h={210} liquid={0.8} liquidColor={WATER} progress={1}>
+        <ellipse cx={bx - 6} cy={B - 84} rx={40} ry={60} fill={C.leafLight} opacity={0.28 * p} filter={`url(#${softId})`} />
+        <Pondweed x={bx - 6} y={B - 14} len={120} scale={0.7} progress={1} />
+        {RIG_SLOTS.map(([dx, y], i) => {
+          const m = Math.max(0, Math.min(1, co2 - i));
+          if (m <= 0) return null;
+          const nx = noise2D(`s13r${seed}x${i}`, f * 0.014, 0) * 6;
+          const ny = noise2D(`s13r${seed}y${i}`, f * 0.014, 3) * 6;
+          return <CarbonDioxide key={i} x={bx + dx + nx} y={y + ny} scale={0.2} rotate={(i * 47 + seed * 13) % 180} progress={m} seed={500 + seed * 10 + i} />;
+        })}
+      </Beaker>
+      <g transform={`translate(${tx} ${tTop}) scale(0.5)`}>
+        <Thermometer x={0} y={0} height={tH} temperature={temp} min={0} max={50} ticks={[]} showValue={false} />
+      </g>
+      <GlassBath x={cx} y={B} w={RIG.bathW} h={RIG.bathH} level={RIG.level} color={bathColor(temp)} layer="front" progress={1} />
+      {showTemp > 0 ? (
+        <text x={tx} y={tTop - 22} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={46} fill={tc} opacity={showTemp} stroke={C.ink900} strokeWidth={8} strokeOpacity={0.6} paintOrder="stroke">
+          {Math.round(temp)} °C
+        </text>
+      ) : null}
+    </g>
+  );
+};

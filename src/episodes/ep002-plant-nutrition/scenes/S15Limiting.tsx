@@ -6,11 +6,15 @@
  * 2. The light graph returns big. Rising part shaded (sun): a marker climbs it — light intensity is
  *    limiting. Flat part shaded: the marker moves right but not up — light is no longer limiting;
  *    candidates appear (carbon dioxide, temperature).
- * 3. Repeat at a higher CO2 concentration: a second curve follows the first, rises higher and levels
- *    off higher (arrow) → carbon dioxide was the limiting factor on the flat part.
+ * 3. Repeat at a higher CO2 concentration (extra CO2 molecules across the whole graph). {same} At low light
+ *    intensity the new curve traces EXACTLY over the old one (ice dashes on the sun line; the rising band
+ *    brightens: "light intensity / still limiting"). {higher} Where the old curve bends over, the new one peels
+ *    away, keeps rising for longer (dashed guide at its own knee, arrow from the old knee) and levels off
+ *    higher (arrow) → carbon dioxide was the limiting factor on the flat part.
  * 4. Exam: name the factor (circled), then the reason (ExamTip: "increasing it increases the rate").
  * 5. Conditions: three slots fill with dawn/dull (light intensity), cold winter (temperature),
- *    bright warm summer (carbon dioxide).
+ *    bright warm summer (carbon dioxide); each card then gives its reason in a short line ("not much light",
+ *    "less kinetic energy", "very little CO2 in air"). The card the narration has left dims.
  */
 import React from "react";
 import { noise2D } from "@remotion/noise";
@@ -27,8 +31,9 @@ import { pulse, track } from "../../../lib/track";
 import { useScene } from "../../../lib/timeline";
 import { GRAPHS } from "./layout";
 import { s15Timing } from "./S15Limiting.timing";
-import { S14_CHIPS } from "./S14RateResults";
-import { CommandChip, LIGHT_PLATEAU, LIGHT_SLOPE, TEMP_OPT, co2Curve, lightCurve, lightCurveHighCo2, tempCurve } from "./parts/S14-results";
+import { S14_CHIPS, S14_DESCRIBE } from "./S14RateResults";
+import { CO2_SPLIT, CommandChip, HIGH_KNEE, HIGH_PLATEAU, LIGHT_PLATEAU, LIGHT_SLOPE, TEMP_OPT, co2Curve, lightCurve, lightCurveHighCo2, tempCurve } from "./parts/S14-results";
+import type { Curve } from "../../../components/Graph";
 import { CARD, CardSlot, ConditionCard, DawnPicture, Pill, SummerPicture, WinterPicture, pillWidth } from "./parts/S15-limiting";
 
 const [G1, G2, G3] = GRAPHS.small;
@@ -82,16 +87,28 @@ export const S15Limiting: React.FC = () => {
   const co2ChipP = prog(f, k.co2Other - 4, 18);
   const tempChipP = prog(f, k.tempOther - 4, 18) * (1 - prog(f, k.raise - 8, 14));
   const co2ChipOut = 1 - prog(f, k.raise - 8, 14);
-  // the second experiment
-  const curve2 = track(f, [
-    [k.curve - 12, 0],
-    [Math.max(k.curve + 50, k.levelsHigher + 16), 10, EASE.inOut],
+  // the second experiment, at a higher carbon dioxide concentration
+  // {same}: at low light intensity the new curve traces exactly over the old one (light is still limiting)
+  const shared = track(f, [
+    [k.low - 4, 0],
+    [Math.max(k.low + 40, k.sameWord + 8), CO2_SPLIT, EASE.inOut],
   ]);
-  const curve2Op = prog(f, k.curve - 12, 8);
+  // {higher}: where the old curve bends over, the new one peels away, keeps rising for longer, then levels off higher
+  const peel = track(f, [
+    [k.newCurve - 6, CO2_SPLIT],
+    [Math.max(k.newCurve + 30, k.forLonger + 12), HIGH_KNEE + 0.15, EASE.inOut],
+    [Math.max(k.forLonger + 42, k.levelsHigher + 20), 10, EASE.inOut],
+  ]);
+  const iceMarker = f < k.newCurve - 6 ? shared : peel;
+  const iceMarkerOp = window01(f, k.low - 4, k.proves + 10, 10);
+  const sameBand = window01(f, k.low - 6, k.newCurve + 10, 16); // the light-limited part lights up again
+  const stillP = prog(f, k.still - 4, 18) * (1 - prog(f, k.newCurve + 6, 14));
+  const longerP = prog(f, k.forLonger - 8, 18) * (1 - prog(f, k.co2Was - 4, 14)); // its own knee, further right
+  const longerArrow = prog(f, k.forLonger - 2, 22, (v) => v);
   const endLabels = prog(f, k.levelsHigher - 2, 18);
   const lowLabel = prog(f, k.higherCo2 - 4, 18);
-  // "at a higher carbon dioxide concentration": more CO2 molecules arrive in the flat part
-  const moreCo2 = (i: number) => prog(f, k.higherCo2 + 8 + i * 7, 22) * (1 - prog(f, k.co2Was - 16, 14));
+  // "at a higher carbon dioxide concentration": more CO2 molecules, at every light intensity
+  const moreCo2 = (i: number) => prog(f, k.higherCo2 + 8 + i * 6, 22) * (1 - prog(f, k.co2Was - 16, 14));
   const upArrow = prog(f, k.levelsHigher, 22, (v) => v);
   const provesP = prog(f, k.co2Was - 4, 20);
   const nameCircle = prog(f, k.name - 2, 24, (v) => v);
@@ -111,6 +128,9 @@ export const S15Limiting: React.FC = () => {
   const card1 = prog(f, k.dawn - 2, 20);
   const card2 = prog(f, k.winter - 2, 20);
   const card3 = prog(f, k.summer - 2, 20);
+  // the card the narration has moved on from steps back
+  const focus1 = 1 - 0.45 * prog(f, k.winter - 2, 20);
+  const focus2 = 1 - 0.45 * prog(f, k.summer - 2, 20);
 
   const capText = (text: string, x: number, p: number, color: string, y = CAP_Y) =>
     p > 0 ? (
@@ -133,6 +153,12 @@ export const S15Limiting: React.FC = () => {
       </text>
     ) : null;
   const co2CapW = textWidth("carbon dioxide", 44, 600);
+
+  // big graph: the original curve, then the higher-CO2 one in two parts: dashed over the shared light-limited
+  // part (the same points), solid where it peels away. (Zero-length parts are left out: a round cap would dot.)
+  const bigCurves: Curve[] = [{ f: lightCurve, color: C.sun, revealTo: 10 * curve1 }];
+  if (shared > 0.02) bigCurves.push({ f: lightCurveHighCo2, color: C.ice, revealTo: shared, dashed: true });
+  if (peel > CO2_SPLIT + 0.02) bigCurves.push({ f: lightCurveHighCo2, color: C.ice, revealFrom: CO2_SPLIT, revealTo: peel });
 
   return (
     <Stage bg={{ tone: "warm", lightX: 0.5, lightY: 0.4 }}>
@@ -169,7 +195,7 @@ export const S15Limiting: React.FC = () => {
               ))}
               <line x1={s1x(4)} x2={s1x(4)} y1={s1y(lightCurve(4)) + 14} y2={G1.y + G1.height - 4} stroke={C.paper} strokeWidth={3} strokeDasharray="7 10" />
               <HandCircle cx={s1x(4)} cy={G1.y + G1.height + 36} rx={32} ry={26} progress={1} color={C.amber} width={5} seed={14} />
-              <CommandChip x={S14_CHIPS.x1} y={S14_CHIPS.y} word="describe" meaning="what happens + numbers" progress={1} />
+              <CommandChip x={S14_CHIPS.x1} y={S14_CHIPS.y} word="describe" meaning={S14_DESCRIBE} progress={1} />
               <CommandChip x={S14_CHIPS.x2} y={S14_CHIPS.y} word="explain" meaning="why" progress={1} />
             </g>
           ) : null}
@@ -205,7 +231,7 @@ export const S15Limiting: React.FC = () => {
       {graphIn > 0 && graphOut > 0 ? (
         <g opacity={graphOut}>
           {/* shaded parts of the curve */}
-          {risingBand > 0 ? <rect x={bx(0)} y={B.y} width={(bx(KNEE) - bx(0)) * risingBand} height={B.height} fill={C.sun} opacity={0.08} /> : null}
+          {risingBand > 0 ? <rect x={bx(0)} y={B.y} width={(bx(KNEE) - bx(0)) * risingBand} height={B.height} fill={C.sun} opacity={0.08 + 0.08 * sameBand} /> : null}
           {flatBand > 0 ? <rect x={bx(KNEE)} y={B.y} width={(bx(10) - bx(KNEE)) * flatBand} height={B.height} fill={co2Band > 0 ? C.ice : C.paper} opacity={0.05 + 0.05 * co2Band} /> : null}
           {flatBand > 0 ? <line x1={bx(KNEE)} x2={bx(KNEE)} y1={B.y} y2={B.y + B.height} stroke={C.paper} strokeOpacity={0.35 * flatBand} strokeWidth={3} strokeDasharray="8 10" /> : null}
           <Graph
@@ -214,14 +240,17 @@ export const S15Limiting: React.FC = () => {
             xLabel="light intensity"
             yLabel="rate of photosynthesis"
             axes={graphIn}
-            curves={[
-              // the higher-CO2 curve goes underneath: below the knee both experiments give the same line
-              { f: lightCurveHighCo2, color: C.ice, revealTo: curve2, opacity: curve2Op },
-              { f: lightCurve, color: C.sun, revealTo: 10 * curve1 },
-            ]}
-            marker={{ x: marker, curve: 1, opacity: markerOp }}
+            curves={bigCurves}
+            marker={f < k.low - 4 ? { x: marker, curve: 0, opacity: markerOp } : { x: iceMarker, curve: bigCurves.length - 1, opacity: iceMarkerOp }}
           />
-          {upArrow > 0 ? <HandArrow from={[bx(8.2), by(LIGHT_PLATEAU) - 18]} to={[bx(8.2), by(0.9) + 26]} progress={upArrow} color={C.ice} width={5} bend={0} seed={5} /> : null}
+          {/* "keeps rising for longer": the new curve's own knee, further along the light-intensity axis */}
+          {longerP > 0 ? (
+            <g opacity={longerP}>
+              <line x1={bx(HIGH_KNEE)} x2={bx(HIGH_KNEE)} y1={B.y} y2={B.y + B.height} stroke={C.ice} strokeOpacity={0.5} strokeWidth={3} strokeDasharray="8 10" />
+              <HandArrow from={[bx(KNEE) + 12, by(LIGHT_PLATEAU) + 54]} to={[bx(HIGH_KNEE) - 12, by(LIGHT_PLATEAU) + 54]} progress={longerArrow} color={C.ice} width={5} bend={0} seed={9} />
+            </g>
+          ) : null}
+          {upArrow > 0 ? <HandArrow from={[bx(8.2), by(LIGHT_PLATEAU) - 18]} to={[bx(8.2), by(HIGH_PLATEAU) + 26]} progress={upArrow} color={C.ice} width={5} bend={0} seed={5} /> : null}
           {/* curve labels at the right-hand end */}
           {lowLabel > 0 ? (
             <text x={bx(10) + 26} y={by(LIGHT_PLATEAU) + 15} fontFamily={FONT} fontWeight={600} fontSize={44} fill={C.sun} opacity={lowLabel}>
@@ -229,29 +258,21 @@ export const S15Limiting: React.FC = () => {
             </text>
           ) : null}
           {endLabels > 0 ? (
-            <text x={bx(10) + 26} y={by(0.9) + 15} fontFamily={FONT} fontWeight={600} fontSize={44} fill={C.ice} opacity={endLabels}>
+            <text x={bx(10) + 26} y={by(HIGH_PLATEAU) + 15} fontFamily={FONT} fontWeight={600} fontSize={44} fill={C.ice} opacity={endLabels}>
               higher carbon dioxide
             </text>
           ) : null}
-          {/* band captions */}
+          {/* band captions: light intensity is (still) the limiting factor on the rising part */}
           {lightCapP > 0 ? (
             <g opacity={lightCapP}>
               {capText("light intensity", (bx(0) + bx(KNEE)) / 2, 1, C.sun)}
-              <text
-                x={(bx(0) + bx(KNEE)) / 2}
-                y={CAP_Y + 52}
-                textAnchor="middle"
-                fontFamily={FONT}
-                fontWeight={600}
-                fontSize={44}
-                fill={C.sun}
-                stroke={C.ink900}
-                strokeWidth={8}
-                strokeOpacity={0.6}
-                paintOrder="stroke"
-              >
-                is limiting
-              </text>
+              {capText("is limiting", (bx(0) + bx(KNEE)) / 2, 1, C.sun, CAP_Y + 52)}
+            </g>
+          ) : null}
+          {stillP > 0 ? (
+            <g opacity={stillP}>
+              {capText("light intensity", (bx(0) + bx(KNEE)) / 2, 1, C.sun)}
+              {capText("still limiting", (bx(0) + bx(KNEE)) / 2, 1, C.sun, CAP_Y + 52)}
             </g>
           ) : null}
           {capText("light no longer limiting", PLATEAU_MID, noLongerP, C.paper, FLAT_CAP_Y)}
@@ -260,12 +281,14 @@ export const S15Limiting: React.FC = () => {
           {capText("was limiting", PLATEAU_MID, provesP, C.ice, FLAT_CAP_Y + 54)}
           {nameCircle > 0 && named <= 0 ? <HandCircle cx={PLATEAU_MID} cy={FLAT_CAP_Y - 15} rx={co2CapW / 2 + 26} ry={40} progress={nameCircle} color={C.amber} width={5} seed={6} /> : null}
           {/* candidates for the flat part */}
+          {/* more carbon dioxide at every light intensity, under both curves */}
           {[
-            [PLATEAU_MID - 150, 600, -20],
-            [PLATEAU_MID - 40, 680, 25],
-            [PLATEAU_MID + 70, 590, 60],
-            [PLATEAU_MID + 170, 690, -10],
-            [PLATEAU_MID + 20, 760, 10],
+            [bx(1.6), 750, -20],
+            [bx(3.0), 720, 25],
+            [bx(4.6), 690, 60],
+            [bx(6.2), 760, -10],
+            [bx(7.6), 680, 10],
+            [bx(9.0), 750, 40],
           ].map(([x, y, rot], i) =>
             moreCo2(i) > 0 ? (
               <CarbonDioxide
@@ -319,14 +342,43 @@ export const S15Limiting: React.FC = () => {
       {CARD.xs.map((cx, i) => (
         <CardSlot key={i} cx={cx} progress={slots} opacity={1 - [card1, card2, card3][i]} />
       ))}
-      <ConditionCard cx={CARD.xs[0]} title="dawn or dull day" factor="light intensity" factorColor={C.sun} progress={card1} factorP={prog(f, k.dawnFactor - 4, 18)}>
+      <ConditionCard
+        cx={CARD.xs[0]}
+        title="dawn or dull day"
+        factor="light intensity"
+        factorColor={C.sun}
+        progress={card1}
+        factorP={prog(f, k.dawnFactor - 4, 18)}
+        reason="not much light"
+        reasonP={prog(f, k.dawnWhy, 18)}
+        focus={focus1}
+      >
         <DawnPicture cx={CARD.xs[0]} f={f} start={k.dawn} dull={k.dull} />
       </ConditionCard>
-      <ConditionCard cx={CARD.xs[1]} title="cold winter day" factor="temperature" factorColor={C.coral} progress={card2} factorP={prog(f, k.winterFactor - 4, 18)}>
+      <ConditionCard
+        cx={CARD.xs[1]}
+        title="cold winter day"
+        factor="temperature"
+        factorColor={C.coral}
+        progress={card2}
+        factorP={prog(f, k.winterFactor - 4, 18)}
+        reason="less kinetic energy"
+        reasonP={prog(f, k.less - 4, 18)}
+        focus={focus2}
+      >
         <WinterPicture cx={CARD.xs[1]} f={f} start={k.winter} />
       </ConditionCard>
-      <ConditionCard cx={CARD.xs[2]} title="bright, warm summer" factor="carbon dioxide" factorColor={C.ice} progress={card3} factorP={prog(f, k.summerFactor - 4, 18)}>
-        <SummerPicture cx={CARD.xs[2]} f={f} start={k.summer} co2={k.summerFactor} />
+      <ConditionCard
+        cx={CARD.xs[2]}
+        title="bright, warm summer"
+        factor="carbon dioxide"
+        factorColor={C.ice}
+        progress={card3}
+        factorP={prog(f, k.summerFactor - 4, 18)}
+        reason="very little CO2 in air"
+        reasonP={prog(f, k.summerWhy, 18)}
+      >
+        <SummerPicture cx={CARD.xs[2]} f={f} start={k.summer} co2={k.summerFactor} bright={k.plenty} tiny={k.tiny} />
       </ConditionCard>
 
       <SectionTag n={8} title="Limiting factors" t={f} extended />

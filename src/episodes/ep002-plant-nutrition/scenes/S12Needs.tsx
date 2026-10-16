@@ -7,11 +7,12 @@
  *    factor caused the result.
  * 3. Three columns, built one after another, each: setup → after the test (on a white tile) → "✓ needed":
  *    1 chlorophyll: a variegated leaf; only the green parts turn blue-black, the white parts stay
- *      orange-brown.
+ *      orange-brown ("green parts = the control").
  *    2 light: black paper over part of a leaf, light on the rest; only the uncovered part turns
  *      blue-black ("uncovered part = the control").
- *    3 carbon dioxide: a sealed flask with soda lime (CO2 molecules vanish into it) beside an identical
- *      control flask; only the control leaf turns blue-black.
+ *    3 carbon dioxide: one pot plant between two flasks; a leaf of it, still attached, hangs into each
+ *      flask through the bung. One flask has soda lime (CO2 molecules vanish into it), the other is
+ *      the identical control; only the control leaf turns blue-black.
  *    Earlier columns step back while the next is built, then all three conclusions light up together.
  */
 import React from "react";
@@ -24,13 +25,12 @@ import { Thermometer } from "../../../components/Thermometer";
 import { leafGeometry } from "../../../components/bio";
 import { ConicalFlask, SodaLime, Tile } from "../../../components/lab/Lab";
 import { CarbonDioxide, HandArrow, HandCross, HandTick, mix, textWidth } from "../../../components/kit";
-import { Pt } from "../../../lib/geometry";
 import { prog } from "../../../lib/motion";
 import { pulse } from "../../../lib/track";
 import { useScene } from "../../../lib/timeline";
 import { s12Timing } from "./S12Needs.timing";
 import { CapLabel, PhotonRain, StainLeaf, StepChip, stepChipWidth } from "./parts/S11-lab";
-import { EqualSign } from "./parts/S12-needs";
+import { EqualSign, HangingShoot, StalkGeo, stalkAt, stemAt, stemPoints } from "./parts/S12-needs";
 
 const lin = (v: number) => v;
 
@@ -60,16 +60,30 @@ const COL_LEAF = (x: number) => leafGeometry({ cx: x, cy: STAGE_Y, len: 370, wid
 const LEAF1 = COL_LEAF(COL_X[0]);
 const LEAF2 = COL_LEAF(COL_X[1]);
 const BAND = { u0: 0.4, u1: 0.63 };
-// column 3: two flasks above a tile
-const FLASK = { x: [1400, 1660] as const, y: 560, w: 230, h: 240 };
-const FLASK_LEAF = (x: number) => leafGeometry({ cx: x, cy: 455, len: 120, wid: 62, ang: 92, stalk: 0.9, stalkBend: 0.08, veinPairs: 3 });
-const TILE3 = { x: COL_X[2], y: 752, w: 500, h: 124 };
-const TILE3_LEAF = (x: number) => leafGeometry({ cx: x, cy: TILE3.y, len: 168, wid: 82, ang: -8, stalk: 0.18, veinPairs: 4 });
-const CO2_IN: readonly Pt[] = [
-  [-62, -40],
-  [58, -10],
-  [-48, 60],
-  [52, 72],
+// column 3: one pot plant between two flasks; a leaf of it, still attached, hangs into each flask
+// through the bung (its stalk runs up through the bung, over, and joins the stem). Results on a tile below.
+const FLASK = { x: [1380, 1680] as const, y: 650, w: 214, h: 240 };
+const FLASK_TOP = FLASK.y - FLASK.h; // the bung sits on 376…426
+const LEAF3_BASE = FLASK_TOP + 36; // a little stalk shows below the bung; the blade's widest part is in the flask's body, clear of the neck
+const FLASK_LEAF = (x: number) => leafGeometry({ cx: x, cy: LEAF3_BASE + 55, len: 110, wid: 46, ang: 90, stalk: 0.02, veinPairs: 3 });
+const SHOOT = { x: COL_X[2], soil: 574, top: 340 };
+const SHOOT_PTS = stemPoints(SHOOT.x, SHOOT.soil, SHOOT.top);
+const STALK3: readonly StalkGeo[] = [0, 1].map((fi) => {
+  const j = stemAt(SHOOT_PTS, fi === 0 ? 410 : 386); // alternate leaves
+  const side = fi === 0 ? -1 : 1;
+  return { from: j, c1: [j[0] + side * 30, j[1] - 60], c2: [FLASK.x[fi], LEAF3_BASE - 110], to: [FLASK.x[fi], LEAF3_BASE] };
+});
+const ATTACHED = { at: stalkAt(STALK3[0], 0.4), x: 1225, y: 306 };
+const LABEL3_Y = 696;
+const DISH_Y = FLASK.y - 14; // middle of the soda-lime dish
+const TILE3 = { x: COL_X[2], y: 782, w: 500, h: 110 };
+const TILE3_LEAF = (x: number) => leafGeometry({ cx: x, cy: TILE3.y, len: 160, wid: 78, ang: -8, stalk: 0.18, veinPairs: 4 });
+// CO2 in each flask's air: [dx from the flask's centre, y, rotation] — tilted to follow the sloping glass
+const CO2_IN: readonly (readonly [number, number, number])[] = [
+  [-42, 556, -55],
+  [48, 548, 55],
+  [-60, 600, -30],
+  [58, 604, 25],
 ];
 
 const HEADS = [
@@ -117,7 +131,7 @@ export const S12Needs: React.FC = () => {
   const res1 = prog(f, k.blueBlack1 - 8, 22, EASE.inOut);
 
   // ---- column 2: black paper
-  const c2In = prog(f, k.coverW - 4, 22);
+  const c2In = prog(f, k.take2 - 4, 22); // "Take a destarched plant…"
   const paper = prog(f, k.black - 4, 22) * (1 - prog(f, k.test2 - 6, 16));
   const t2 = k.test2;
   const tile2 = prog(f, t2 - 4, 16);
@@ -126,6 +140,13 @@ export const S12Needs: React.FC = () => {
   const res2 = prog(f, k.blueBlack2 - 8, 22, EASE.inOut);
 
   // ---- column 3: soda lime
+  // the plant grows in on "Take a destarched plant", its two leaves hanging on long stalks (scaled to fit before "seal")
+  const gs = Math.max(0.5, Math.min(1, (k.seal - k.take3 - 6) / 50));
+  const grow = prog(f, k.take3 - 4, 34 * gs, lin);
+  const stalkP = [prog(f, k.take3 + 12 * gs, 20 * gs), prog(f, k.take3 + 18 * gs, 20 * gs)];
+  const leaf3In = [prog(f, k.take3 + 26 * gs, 16), prog(f, k.take3 + 32 * gs, 16)];
+  const attachGlow = prog(f, k.attached - 4, 14) * (1 - prog(f, k.sodaLime - 4, 16));
+  const shootDim = 1 - 0.3 * prog(f, k.only3 - 6, 16);
   const flaskA = prog(f, k.seal - 4, 22);
   const lime = prog(f, k.sodaLime - 4, 18);
   const flaskB = prog(f, k.theControl - 6, 22);
@@ -137,16 +158,15 @@ export const S12Needs: React.FC = () => {
 
   // the CO2 molecules in each flask: in A they are absorbed by the soda lime
   const co2 = (fi: number) =>
-    CO2_IN.map(([dx, dy], i) => {
+    CO2_IN.map(([dx, y0, rot], i) => {
       const x0 = FLASK.x[fi] + dx;
-      const y0 = 455 + dy;
       const appear = prog(f, (fi === 0 ? k.seal : k.theControl) + i * 4, 16);
-      if (fi === 1) return { x: x0, y: y0, op: appear, s: 1, i };
+      if (fi === 1) return { x: x0, y: y0, rot, op: appear, s: 1, i };
       const q = prog(f, k.absorbsW - 2 + i * 7, 30, EASE.inOut);
       const tx = FLASK.x[0] + (i - 1.5) * 18;
-      const ty = FLASK.y - 18;
+      const ty = DISH_Y - 4;
       const gone = Math.max(0, (q - 0.75) / 0.25);
-      return { x: x0 + (tx - x0) * q, y: y0 + (ty - y0) * q, op: appear * (1 - gone), s: 1 - 0.5 * gone, i };
+      return { x: x0 + (tx - x0) * q, y: y0 + (ty - y0) * q, rot: rot * (1 - q), op: appear * (1 - gone), s: 1 - 0.5 * gone, i };
     });
 
   const chip = (i: number, at: number, opacity: number) => {
@@ -267,6 +287,17 @@ export const S12Needs: React.FC = () => {
             text="orange-brown"
             textColor={mix(C.iodine, C.amberLight, 0.45)}
             progress={prog(f, k.orangeBrown - 2, 22)}
+            opacity={1 - prog(f, Math.min(k.chlorophyllControl, k.needed1 - 10) - 6, 12)}
+          />
+          {/* the green parts (now blue-black) are the control for the white parts */}
+          <CapLabel
+            anchor={LEAF1.P(85, 22)}
+            x={COL_X[0]}
+            y={BELOW_Y}
+            text="green parts"
+            sub="= the control"
+            subProgress={prog(f, k.greenControl - 4, 16)}
+            progress={prog(f, k.chlorophyllControl + 2, 22)}
             opacity={1 - prog(f, k.needed1 - 10, 12)}
           />
         </g>
@@ -318,36 +349,50 @@ export const S12Needs: React.FC = () => {
       {f >= k.flask - 6 ? (
         <g opacity={colOp[2]}>
           {chip(2, k.flask, 1)}
+          {/* one destarched plant; each leaf, still attached, hangs into a flask */}
+          <HangingShoot x={SHOOT.x} soilY={SHOOT.soil} topY={SHOOT.top} grow={grow} opacity={shootDim} stalks={STALK3.map((s, i) => ({ ...s, p: stalkP[i], glow: i === 0 ? attachGlow : 0 }))} />
+          {[0, 1].map((fi) => (
+            <g key={fi} opacity={flaskLeafDim}>
+              <StainLeaf geo={FLASK_LEAF(FLASK.x[fi])} tone="green" shadow={0.25} progress={leaf3In[fi]} sunlit={0.6 * prog(f, k.hours3 - 10, 20) * (1 - prog(f, k.only3, 14))} />
+            </g>
+          ))}
+          {/* the flasks close round the leaves: the bung is drawn over the stalk, so the stalk passes through it */}
           {[0, 1].map((fi) => {
             const p = fi === 0 ? flaskA : flaskB;
             if (p <= 0) return null;
             return (
               <g key={fi} transform={`translate(0 ${(1 - EASE.out(p)) * 18})`}>
                 <ConicalFlask x={FLASK.x[fi]} y={FLASK.y} w={FLASK.w} h={FLASK.h} progress={p}>
-                  <g opacity={flaskLeafDim}>
-                    <StainLeaf geo={FLASK_LEAF(FLASK.x[fi])} tone="green" shadow={0.25} sunlit={0.6 * prog(f, k.hours3 - 10, 20) * (1 - prog(f, k.only3, 14))} />
-                  </g>
                   {fi === 0 ? <SodaLime x={FLASK.x[0]} y={FLASK.y - 4} w={124} progress={lime} /> : null}
                   {co2(fi).map((m) =>
-                    m.op > 0 ? <CarbonDioxide key={m.i} x={m.x} y={m.y} scale={0.4 * m.s} progress={1} opacity={m.op} seed={70 + fi * 10 + m.i} /> : null,
+                    m.op > 0 ? <CarbonDioxide key={m.i} x={m.x} y={m.y} rotate={m.rot} scale={0.36 * m.s} progress={1} opacity={m.op} seed={70 + fi * 10 + m.i} /> : null,
                   )}
                 </ConicalFlask>
               </g>
             );
           })}
-          <PhotonRain f={f} start={k.hours3 - 14} stop={k.only3 - 4} every={7} travel={16} dist={240} targets={[[FLASK.x[0] - 10, 440], [FLASK.x[1] + 10, 470], [FLASK.x[0] + 14, 480], [FLASK.x[1] - 14, 430]]} />
+          <PhotonRain
+            f={f}
+            start={k.hours3 - 14}
+            stop={k.only3 - 4}
+            every={7}
+            travel={16}
+            dist={240}
+            targets={[[FLASK.x[0] - 8, 470], [FLASK.x[1] + 8, 500], [FLASK.x[0] + 10, 520], [FLASK.x[1] - 10, 460], [SHOOT.x - 6, SHOOT.top + 20]]}
+          />
+          <CapLabel anchor={ATTACHED.at} x={ATTACHED.x} y={ATTACHED.y} text="still attached" progress={prog(f, k.attached - 4, 22)} opacity={1 - prog(f, k.sodaLime - 4, 12)} />
           <CapLabel
-            anchor={[FLASK.x[0], FLASK.y - 14]}
+            anchor={[FLASK.x[0], DISH_Y]}
             x={FLASK.x[0]}
-            y={606}
+            y={LABEL3_Y}
             text="soda lime"
             sub="absorbs CO2"
             subChem
-            subProgress={prog(f, k.absorbsW - 2, 16)}
+            subProgress={prog(f, k.absorbsW - 2, 16) * (1 - prog(f, k.co2Result - 4, 12))}
             progress={prog(f, k.sodaLime, 22)}
             opacity={labels3Out}
           />
-          <CapLabel anchor={[FLASK.x[1], FLASK.y - 30]} x={FLASK.x[1]} y={606} text="control" progress={prog(f, k.theControl, 22)} opacity={labels3Out} />
+          <CapLabel anchor={[FLASK.x[1], FLASK.y - 18]} x={FLASK.x[1]} y={LABEL3_Y} text="control" progress={prog(f, k.theControl, 22)} opacity={labels3Out} />
           <Tile x={TILE3.x} y={TILE3.y} w={TILE3.w} h={TILE3.h} progress={tile3} />
           {[0, 1].map((fi) => (
             <StainLeaf
