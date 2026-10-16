@@ -9,8 +9,7 @@
  * 3. "Cut a leaf open": a window is cut into the slab, showing the layers; the camera pushes into it until
  *    the cross-section fills the right of the frame (layout.ts SECTION, where S10 continues).
  *    "cross-section · dicot leaf"; a small seedling rises and opens its two seed leaves ("two seed leaves" =
- *    what dicot means), then "simplified". "name: everyone / explain: EXTENDED": the EXTENDED badge then glides
- *    up into the section tag, where it stays (explaining the adaptations is Extended; naming the parts is Core).
+ *    what dicot means), then "simplified". "its name / how it helps": what to learn for each part.
  *    A band of light sweeps down "layer by layer, from the top".
  * 4. Layer by layer, each in focus while it is explained, labelled in the left column:
  *    waxy cuticle (water held in, light passes straight through), upper epidermis (transparent, no
@@ -85,12 +84,8 @@ const HEAD_X = SECTION.labelX + 4;
 const BROAD_AT: Pt = [1120, 846];
 /** The dicot seedling (soil surface) under the heading, and its "2 seed leaves" label above it. */
 const SEEDLING = { x: 360, y: 878, s: 1.15, labelY: 680 } as const;
-/** "name: everyone / explain: EXTENDED" rows (right-aligned at HEAD_X), and the badge's flight to the tag. */
-const ROWS = { name: 450, who: 500, explain: 590, badgeY: 616 } as const;
-const BADGE_W = textWidth("EXTENDED", 40, 700) + 36;
-/** Where SectionTag draws its EXTENDED badge (same maths as the component), and the tag's settled opacity. */
-const TAG_BADGE: Pt = [100 + 64 + 44 + textWidth("Leaf structure", 44, 600), 104];
-const TAG_SETTLED = 0.55;
+/** "name / how it helps" rows (right-aligned at HEAD_X): what to learn for each part. */
+const ROWS = { name: 470, helps: 560 } as const;
 
 /** Camera push: anchor `w` (world) glides to screen point `to` while the zoom grows (log space). */
 const push = (e: number, z1: number, w: Pt, to: Pt) => {
@@ -193,7 +188,7 @@ export const S09Leaf: React.FC = () => {
   const cutOut = 1 - prog(f, k.sectionPush[0], 12);
 
   // heading in the left column while the whole section is shown
-  const headOut = 1 - prog(f, k.extendedLeaf - 4, 14);
+  const headOut = 1 - prog(f, k.nameExplain - 4, 14);
   const headP = prog(f, k.crossSection - 2, 18);
   const dicotP = prog(f, k.dicot - 2, 16);
   const simpP = prog(f, k.simpWord - 2, 16);
@@ -206,17 +201,10 @@ export const S09Leaf: React.FC = () => {
   const seedGlow = pulse(f, k.two - 4, 36);
   const seedLabel = prog(f, k.two - 2, 22);
   const seedOut = 1 - prog(f, Math.max(k.simpWord + 4, k.two + 44), 14);
-  // "Everyone needs to name each part. Explaining how … is for the Extended paper."
-  const rowsAt = Math.max(k.extendedLeaf + 2, k.name - 12);
-  const nameP = prog(f, rowsAt, 16);
-  const whoP = prog(f, rowsAt + 8, 16);
-  const explainP = prog(f, k.explaining - 2, 16);
-  const badgeP = prog(f, k.extWord - 2, 16);
-  const rowsOut = 1 - prog(f, k.badgeFly[0], 14);
-  const fly = prog(f, k.badgeFly[0], k.badgeFly[1] - k.badgeFly[0], EASE.inOut);
-  const badgeFrom: Pt = [HEAD_X - BADGE_W, ROWS.badgeY];
-  const badgeAt: Pt = [lerp(badgeFrom[0], TAG_BADGE[0], fly), lerp(badgeFrom[1], TAG_BADGE[1], fly)];
-  const tagBadge = f >= k.badgeFly[1] ? 1 : 0;
+  // "For each part, you need to know its name, and how it helps photosynthesis."
+  const nameP = prog(f, Math.max(k.nameExplain + 2, k.name - 6), 16);
+  const helpsP = prog(f, k.helps - 4, 16);
+  const rowsOut = 1 - prog(f, k.layers - 4, 14);
   // "layer by layer, from the top": a band of light sweeps down
   const sweepLen = Math.max(40, k.top + 22 - k.layer);
   const sweepY = lerp(-50, SEC_Y.cutBot + 50, prog(f, k.layer - 4, sweepLen, EASE.inOut));
@@ -472,16 +460,12 @@ export const S09Leaf: React.FC = () => {
         </g>
       ) : null}
 
-      {/* who needs what: name the parts (everyone) / explain them (Extended) */}
+      {/* what to learn for each part: its name, and how it helps photosynthesis */}
       {nameP > 0 && rowsOut > 0 ? (
         <g opacity={rowsOut}>
-          <SubLine x={HEAD_X} y={ROWS.name} text="name" p={nameP} anchor="end" color={C.paper} weight={700} size={52} />
-          <SubLine x={HEAD_X} y={ROWS.who} text="everyone" p={whoP} anchor="end" color={C.ink300} weight={600} size={42} />
-          <SubLine x={HEAD_X} y={ROWS.explain} text="explain" p={explainP} anchor="end" color={C.paper} weight={700} size={52} />
+          <SubLine x={HEAD_X} y={ROWS.name} text="its name" p={nameP} anchor="end" color={C.paper} weight={700} size={52} />
+          <SubLine x={HEAD_X} y={ROWS.helps} text="how it helps" p={helpsP} anchor="end" color={C.sun} weight={700} size={52} />
         </g>
-      ) : null}
-      {badgeP > 0 && f < k.badgeFly[1] ? (
-        <ExtBadge x={badgeAt[0] + (1 - EASE.out(badgeP)) * 12} y={badgeAt[1]} opacity={Math.min(1, badgeP * 1.5) * lerp(1, TAG_SETTLED, fly)} />
       ) : null}
 
       {/* ============ labels: the left column ============ */}
@@ -496,7 +480,7 @@ export const S09Leaf: React.FC = () => {
       <SubLine x={SECTION.labelX + 4} y={colSubY("palisade", 2)} text="full of chloroplasts" p={palSub2} anchor="end" color={C.leafLight} />
       <SubLine x={SECTION.labelX + 4} y={colSubY("palisade", 1)} text="most photosynthesis" p={mostP} anchor="end" color={C.sun} />
 
-      <SectionTag n={4} title="Leaf structure" t={f} extended={tagBadge} />
+      <SectionTag n={4} title="Leaf structure" t={f} />
     </Stage>
   );
 };
@@ -530,16 +514,6 @@ const WidthArrow: React.FC<{ a: Pt; b: Pt; p: number }> = ({ a, b, p }) => {
     </g>
   );
 };
-
-/** The EXTENDED badge, drawn exactly as SectionTag draws it (top-left corner at x, y), so it can travel into the tag. */
-const ExtBadge: React.FC<{ x: number; y: number; opacity: number }> = ({ x, y, opacity }) => (
-  <g opacity={opacity}>
-    <rect x={x} y={y} width={BADGE_W} height={56} rx={14} fill="none" stroke={C.violetLight} strokeWidth={3} />
-    <text x={x + BADGE_W / 2} y={y + 42} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={40} fill={C.violetLight} letterSpacing={1}>
-      EXTENDED
-    </text>
-  </g>
-);
 
 /** Small outlined tag ("simplified"), right-aligned at x. */
 const Chip: React.FC<{ x: number; y: number; text: string; p: number }> = ({ x, y, text, p }) => {

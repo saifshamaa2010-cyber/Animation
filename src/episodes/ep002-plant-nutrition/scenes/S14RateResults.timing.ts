@@ -1,12 +1,5 @@
 import type { CueFns, SfxEvent } from "../../../lib/cues";
 
-/**
- * Show the EXTENDED badge on the section tag (S14 from {extendedTemp} to {describe}; S15 throughout)?
- * Off: CLAUDE.md (updated 2026-10-16) says never label content Core / Extended — no badges. The badge animation
- * is kept behind this one switch in case that rule changes; S15 reads it too.
- */
-export const MARK_EXTENDED = false;
-
 /** S14 key moments, derived from the narration (shared by the animation and the sound effects). */
 export const s14Timing = (t: CueFns) => {
   // ---- light graph
@@ -31,9 +24,6 @@ export const s14Timing = (t: CueFns) => {
   const enzymes = t.cue("enzymes");
   const catalysed = t.word("catalysed", 1);
   const enzymesWord = t.word("enzymes", 1);
-  // "This next part is for the Extended paper." (brings in the EXTENDED badge when MARK_EXTENDED is on).
-  // Optional: the cue disappears when that sentence is cut from the script.
-  const extendedTemp = t.scene.cues.extendedTemp ? t.cue("extendedTemp") : t.cue("below");
   const below = t.cue("below");
   const raising = t.word("raising", 1);
   const kinetic = t.word("kinetic", 1);
@@ -74,7 +64,6 @@ export const s14Timing = (t: CueFns) => {
     enzymes,
     catalysed,
     enzymesWord,
-    extendedTemp,
     below,
     raising,
     kinetic,
@@ -110,7 +99,6 @@ export const s14Sfx = (t: CueFns): SfxEvent[] => {
     { frame: k.optimum, sfx: "ui_blip", gainDb: -10 }, // optimum
     { frame: k.enzymes, sfx: "whoosh_soft", gainDb: -12 }, // zoom in to the enzymes
     { frame: k.catalysed, sfx: "pop_bind", gainDb: -9 }, // substrate binds the active site
-    ...(MARK_EXTENDED ? [{ frame: k.extendedTemp + 2, sfx: "ui_blip", gainDb: -11 }] : []), // EXTENDED badge joins the section tag
     { frame: k.effective, sfx: "pop_bind", gainDb: -10 }, // effective collisions
     { frame: k.denaturedWord, sfx: "snip", gainDb: -8 }, // bonds holding the shape break
     { frame: k.fit, sfx: "bonk_misfit", gainDb: -8 }, // the substrate no longer fits

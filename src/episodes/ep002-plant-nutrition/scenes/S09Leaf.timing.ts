@@ -30,11 +30,10 @@ export const s09Timing = (t: CueFns) => {
   const two = t.word("two", 1);
   const simplified = t.cue("simplified");
   const simpWord = t.word("simplified", 1);
-  // "Everyone needs to name each part. Explaining how each part helps photosynthesis is for the Extended paper."
-  const extendedLeaf = t.cue("extendedLeaf");
+  // "For each part, you need to know its name, and how it helps photosynthesis."
+  const nameExplain = t.cue("nameExplain");
   const name = t.word("name", 1);
-  const explaining = t.word("explaining", 1);
-  const extWord = t.word("extended", 1);
+  const helps = t.word("helps", 1);
   const layers = t.cue("layers"); // "Let's go through it layer by layer, from the top."
   const layer = t.word("layer", 1); // "…layer by layer,"
   const top = t.word("top", 1); // "…from the top."
@@ -90,10 +89,9 @@ export const s09Timing = (t: CueFns) => {
     two,
     simplified,
     simpWord,
-    extendedLeaf,
+    nameExplain,
     name,
-    explaining,
-    extWord,
+    helps,
     layers,
     layer,
     top,
@@ -125,8 +123,6 @@ export const s09Timing = (t: CueFns) => {
     plantPush: [adapted - 8, Math.max(adapted + 30, broadThin - 4)] as const,
     cutDraw: cut - 4,
     sectionPush: [cut + 22, Math.max(cut + 64, Math.min(crossSection + 2, cut + 80))] as const,
-    // the EXTENDED badge glides from the left column up into the section tag (it stays there for S09 and S10)
-    badgeFly: [Math.max(layers - 4, extWord + 26), Math.max(layers - 4, extWord + 26) + 28] as const,
     end: t.dur,
   };
 };
@@ -142,9 +138,8 @@ export const s09Sfx = (t: CueFns): SfxEvent[] => {
     { frame: k.sectionPush[0], sfx: "whoosh_zoom", gainDb: -7 }, // push into the cut: the cross-section
     { frame: k.crossSection, sfx: "ui_blip", gainDb: -12 }, // "cross-section"
     { frame: k.two, sfx: "ui_blip", gainDb: -13 }, // the seedling's two seed leaves unfold
-    { frame: k.name, sfx: "ui_blip", gainDb: -14 }, // "name: everyone"
-    { frame: k.extWord, sfx: "ui_blip", gainDb: -11 }, // EXTENDED badge
-    { frame: k.badgeFly[0], sfx: "whoosh_soft", gainDb: -15 }, // the badge moves up to the section tag
+    { frame: k.name, sfx: "ui_blip", gainDb: -14 }, // "name"
+    { frame: k.helps, sfx: "ui_blip", gainDb: -14 }, // "how it helps"
     { frame: k.waxy, sfx: "ui_blip", gainDb: -11 }, // label: waxy cuticle
     { frame: k.upperWord, sfx: "ui_blip", gainDb: -11 }, // label: upper epidermis
     { frame: k.palWord, sfx: "ui_blip", gainDb: -11 }, // label: palisade mesophyll

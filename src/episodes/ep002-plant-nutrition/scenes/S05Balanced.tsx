@@ -1,5 +1,5 @@
 /**
- * S05 · Balanced (EXTENDED) — the balanced symbol equation, then an atom tally that proves it.
+ * S05 · Balanced — the balanced symbol equation, then an atom tally that proves it.
  *
  * Opens on S04's word equation (same place). On "symbol equation" a guide drops from each word to
  * where its formula will sit; each formula lands as it is read, in the word equation's colours.
@@ -20,7 +20,7 @@ import { pulse } from "../../../lib/track";
 import { useScene } from "../../../lib/timeline";
 import { s05Timing } from "./S05Balanced.timing";
 import { HideArrowDot, WORD_EQ_TOP, termBoxes, wordEqTerms } from "./parts/S04-equation";
-import { AtomBall, ExtendedBadge, Marker, chemChars, spans } from "./parts/S05-chem";
+import { AtomBall, Marker, chemChars, spans } from "./parts/S05-chem";
 
 const TITLE = "What is photosynthesis?";
 const SYM = { x: 960, size: 88, gap: 32, arrow: 230, y0: 520, y1: 396 } as const;
@@ -114,8 +114,6 @@ export const S05Balanced: React.FC = () => {
   ];
   const tallyIn = prog(f, k.check + 6, 20);
   const tickP = prog(f, k.balances, 22, (v) => v);
-  const badgeP = prog(f, k.extWord - 2, 16);
-  const badgeSettle = prog(f, k.extWord + 50, 30, EASE.inOut);
 
   const tokens = (toks: Tok[], cx: number, y: number) => {
     const gap = TALLY_SIZE * 0.3;
@@ -232,7 +230,6 @@ export const S05Balanced: React.FC = () => {
       ) : null}
 
       <SectionTag n={1} title={TITLE} t={200} />
-      <ExtendedBadge title={TITLE} p={badgeP} settle={badgeSettle} />
     </Stage>
   );
 };

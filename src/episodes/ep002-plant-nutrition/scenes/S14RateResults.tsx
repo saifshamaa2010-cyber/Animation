@@ -5,10 +5,7 @@
  * 2. Carbon dioxide: the light curve's shape is laid over the new axes ("the same shape"), then the
  *    real curve draws along it.
  * 3. Temperature: rises to an optimum, then falls quickly.
- * 4. Why: the light and CO2 graphs step aside for the EP001 teal enzyme and its substrates. On
- *    "This next part is for the Extended paper" the EXTENDED badge can join the section tag (which brightens
- *    while it arrives) until the exam technique — off by default, see MARK_EXTENDED. A
- *    thermometer and the marker on the temperature graph show the temperature. Below the optimum the
+ * 4. Why: the light and CO2 graphs step aside for the EP001 teal enzyme and its substrates.  A thermometer and the marker on the temperature graph show the temperature. Below the optimum the
  *    molecules move faster (wander speed and trails ∝ temperature) and dock more often (each docking =
  *    an effective collision; the substrate turns into amber product). Above it the weak bonds snap,
  *    the enzyme denatures, the active site changes shape and a substrate bounces off.
@@ -31,7 +28,7 @@ import { jitter, prog, thermalAmplitude, window01 } from "../../../lib/motion";
 import { track } from "../../../lib/track";
 import { useScene } from "../../../lib/timeline";
 import { GRAPHS } from "./layout";
-import { MARK_EXTENDED, s14Timing } from "./S14RateResults.timing";
+import { s14Timing } from "./S14RateResults.timing";
 import {
   BOUND,
   CommandChip,
@@ -229,9 +226,6 @@ export const S14RateResults: React.FC = () => {
   ]);
   const whyLine = prog(f, k.why - 2, 18, (v) => v);
 
-  // ---------------------------------------------------------------- Extended part: {extendedTemp} → {describe}
-  const extendedBadge = MARK_EXTENDED ? prog(f, k.extendedTemp, 18) * (1 - prog(f, k.describe - 4, 16)) : 0;
-  const tagBright = MARK_EXTENDED ? prog(f, k.extendedTemp - 4, 14) * (1 - prog(f, Math.max(k.extendedTemp + 60, k.below + 30), 30, EASE.inOut)) : 0;
 
   const subs = HOMES.map((_, i) => {
     let s = subState(i, f);
@@ -395,8 +389,7 @@ export const S14RateResults: React.FC = () => {
       <CommandChip x={S14_CHIPS.x2} y={S14_CHIPS.y} word="explain" meaning="why" progress={chip2} meaningP={prog(f, k.why - 10, 14)} />
       {whyLine > 0 ? <HandUnderline x1={S14_CHIPS.x2 + S14_CHIPS.w2 / 2 - 140} x2={S14_CHIPS.x2 + S14_CHIPS.w2 / 2 - 38} y={S14_CHIPS.y + 26} progress={whyLine} color={C.amber} seed={8} /> : null}
 
-      {/* the tag brightens while the EXTENDED badge arrives, then settles back like a new section */}
-      <SectionTag n={7} title="Rate of photosynthesis" t={120 - 30 * tagBright} extended={extendedBadge} />
+      <SectionTag n={7} title="Rate of photosynthesis" t={200} />
     </Stage>
   );
 };

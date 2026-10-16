@@ -11,7 +11,7 @@
  *    scale): carbon dioxide diffuses in through it to a palisade cell, oxygen diffuses out. Closer still:
  *    the guard cells open and close the pore — "guard cells". "In the light": light washes down onto the
  *    (closed) stoma, photons land on the guard cells, and they open the pore again; carbon dioxide from the air
- *    below diffuses in through it to a spongy cell. (The section tag carries the EXTENDED badge throughout.)
+ *    below diffuses in through it to a spongy cell.
  * 4. Recap: back out to the whole section; each label returns, and its layer lights, as it is named,
  *    top to bottom. Ends on the fully labelled diagram.
  */
@@ -412,7 +412,7 @@ export const S10Layers: React.FC = () => {
         />
       ) : null}
 
-      <SectionTag n={4} title="Leaf structure" t={200} extended opacity={1 - window01(f, k.zoomIn[0], k.zoomOut[1] - 6, 14)} />
+      <SectionTag n={4} title="Leaf structure" t={200} opacity={1 - window01(f, k.zoomIn[0], k.zoomOut[1] - 6, 14)} />
     </Stage>
   );
 };

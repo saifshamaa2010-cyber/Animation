@@ -2,9 +2,8 @@ import type { CueFns, SfxEvent } from "../../../lib/cues";
 
 /** S16 key moments, derived from the narration (shared by the animation and the sound effects). */
 export const s16Timing = (t: CueFns) => {
-  // ---- "One more practical, and this one's for the Extended paper."
+  // ---- "One more practical."
   const indicator = t.cue("indicator");
-  const extendedW = t.word("Extended", 1);
   // ---- the indicator: one demo tube, the colour key builds as each colour is named
   const hydro = t.cue("indicatorDef"); // "Hydrogencarbonate indicator shows…"
   const co2 = t.word("carbon", 1); // "…how much carbon dioxide is in a solution"
@@ -50,7 +49,6 @@ export const s16Timing = (t: CueFns) => {
   const end = t.dur;
   return {
     indicator,
-    extendedW,
     hydro,
     co2,
     red,
@@ -96,7 +94,6 @@ export const s16Sfx = (t: CueFns): SfxEvent[] => {
   const k = s16Timing(t);
   const ticks = Math.max(0, Math.floor((k.end - k.silence) / t.fps));
   return [
-    { frame: k.extendedW, sfx: "ui_blip", gainDb: -13 }, // EXTENDED badge
     { frame: k.hydro, sfx: "ui_blip", gainDb: -11 }, // the indicator is named
     { frame: k.redWord, sfx: "ui_blip", gainDb: -10 }, // red swatch
     { frame: k.more + 4, sfx: "whoosh_soft", gainDb: -15 }, // more CO2 dissolves in

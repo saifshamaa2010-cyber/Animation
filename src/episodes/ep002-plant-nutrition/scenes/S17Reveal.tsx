@@ -314,7 +314,7 @@ export const S17Reveal: React.FC = () => {
         <HandUnderline x1={tipL + 42} x2={tipL + 46 + textWidth("net", 50, 700)} y={tipBase + 16} progress={prog(f, k.wordW - 2, 16)} color={C.amber} width={6} seed={17} />
       ) : null}
 
-      <SectionTag n={9} title="Gas exchange" t={200} extended />
+      <SectionTag n={9} title="Gas exchange" t={200} />
     </Stage>
   );
 };

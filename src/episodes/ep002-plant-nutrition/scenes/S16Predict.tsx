@@ -1,7 +1,6 @@
 /**
  * S16 · Predict — hydrogencarbonate indicator, three sealed tubes, and the one "pause and predict".
  *
- * 0. "…this one's for the Extended paper": the EXTENDED badge joins the section tag on "Extended".
  * 1. One demo tube of indicator fills; CO2 shows as small dots in the liquid. The colour key builds as
  *    each colour is named: red at air level → more CO2 dissolves in (dots stream in) → yellow → CO2
  *    leaves (dots stream out) → purple. Key: yellow ← red → purple, "more CO₂ / air / less CO₂".
@@ -239,8 +238,7 @@ export const S16Predict: React.FC = () => {
         </g>
       ) : null}
 
-      {/* the whole indicator practical is Extended: the badge arrives as the narrator says so */}
-      <SectionTag n={9} title="Gas exchange" t={f} extended={prog(f, k.extendedW - 2, 16)} />
+      <SectionTag n={9} title="Gas exchange" t={f} />
 
       {/* ============ part 3: pause & predict ============ */}
       {/* compact badge: the tubes and the colour key stay visible while the viewer predicts */}

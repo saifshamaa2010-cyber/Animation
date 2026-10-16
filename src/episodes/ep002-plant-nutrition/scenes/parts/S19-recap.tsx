@@ -6,7 +6,7 @@
 import React from "react";
 import { C, EASE } from "../../../../brand/tokens";
 import { FONT } from "../../../../brand/fonts";
-import { LitShape, mix, textWidth } from "../../../../components/kit";
+import { LitShape, mix } from "../../../../components/kit";
 import { roundRectPath } from "../../../../components/kit/shared";
 import { useSvgId } from "../../../../components/ids";
 import { Pt } from "../../../../lib/geometry";
@@ -51,10 +51,9 @@ export const RecapCard: React.FC<{
   readonly p: number;
   readonly active: number;
   readonly past: number;
-  readonly extended?: boolean;
   readonly exit?: number;
   readonly children?: React.ReactNode;
-}> = ({ i, title, color, p, active, past, extended = false, exit = 0, children }) => {
+}> = ({ i, title, color, p, active, past, exit = 0, children }) => {
   const id = useSvgId("rcard");
   if (p <= 0 || exit >= 1) return null;
   const { x, y } = cardPos(i);
@@ -64,7 +63,6 @@ export const RecapCard: React.FC<{
   const s = (0.94 + 0.06 * e) * (1 - 0.06 * exit);
   const dy = (1 - e) * 22 + exit * 46;
   const quiet = 1 - 0.28 * past;
-  const badgeW = textWidth("EXTENDED", 40, 700) + 32;
   return (
     <g opacity={Math.min(1, p * 1.5) * (1 - exit)} transform={`translate(${cx} ${cy + dy}) scale(${s}) translate(${-cx} ${-cy})`}>
       <defs>
@@ -79,14 +77,6 @@ export const RecapCard: React.FC<{
       <text x={x + 46} y={y + 60} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={40} fill={C.ink900}>
         {i + 1}
       </text>
-      {extended ? (
-        <g opacity={0.75 + 0.25 * active}>
-          <rect x={x + CARD.w - 26 - badgeW} y={y + 20} width={badgeW} height={54} rx={14} fill="none" stroke={C.violetLight} strokeWidth={3} />
-          <text x={x + CARD.w - 26 - badgeW / 2} y={y + 61} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={40} fill={C.violetLight} letterSpacing={1}>
-            EXTENDED
-          </text>
-        </g>
-      ) : null}
       <g opacity={quiet}>{children}</g>
       <text x={cx} y={y + CARD.h - 38} textAnchor="middle" fontFamily={FONT} fontWeight={600} fontSize={46} fill={mix(C.paper, color, 0.25 * active)} opacity={1 - 0.22 * past} letterSpacing={-0.5}>
         {title}

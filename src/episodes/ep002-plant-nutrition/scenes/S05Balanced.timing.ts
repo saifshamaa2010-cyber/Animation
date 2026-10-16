@@ -23,8 +23,7 @@ const after = (t: CueFns, text: string, from: number, k = 1): number => {
 
 /** S05 key moments, derived from the narration (shared by the animation and the sound effects). */
 export const s05Timing = (t: CueFns) => {
-  const extended = t.cue("extended");
-  const extWord = t.word("extended", 1);
+  const intro = t.cue("symbol"); // "You also need to know the balanced symbol equation."
   const symbol = t.word("symbol", 1);
   // "Six C O two, plus six H two O, gives C six H twelve O six, plus six O two."
   const balanced = t.cue("balanced");
@@ -54,8 +53,7 @@ export const s05Timing = (t: CueFns) => {
   const oEq = after(t, "right", oxygen);
   const balances = t.cue("balances");
   return {
-    extended,
-    extWord,
+    intro,
     symbol,
     balanced,
     tCO2,
@@ -89,7 +87,6 @@ export const s05Timing = (t: CueFns) => {
 export const s05Sfx = (t: CueFns): SfxEvent[] => {
   const k = s05Timing(t);
   return [
-    { frame: k.extWord, sfx: "ui_blip", gainDb: -8 }, // EXTENDED badge
     { frame: k.gives, sfx: "ui_blip", gainDb: -12 }, // the symbol equation's arrow
     { frame: k.check, sfx: "whoosh_soft", gainDb: -11 }, // equation lifts, tally opens
     // counting: one soft tick per side total (the mixer alternates tick / tock)

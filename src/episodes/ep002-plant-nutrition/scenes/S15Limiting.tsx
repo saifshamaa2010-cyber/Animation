@@ -1,5 +1,5 @@
 /**
- * S15 · Limiting factors — explaining the graph shapes (Extended content; the EXTENDED badge follows MARK_EXTENDED).
+ * S15 · Limiting factors — explaining the graph shapes.
  *
  * 1. Opens on S14's three graphs (its exam chips clear); the curves pulse on "shapes";
  *    "limiting factor" is defined with two pills: in short supply → limits the rate.
@@ -31,7 +31,6 @@ import { pulse, track } from "../../../lib/track";
 import { useScene } from "../../../lib/timeline";
 import { GRAPHS } from "./layout";
 import { s15Timing } from "./S15Limiting.timing";
-import { MARK_EXTENDED } from "./S14RateResults.timing";
 import { S14_CHIPS, S14_DESCRIBE } from "./S14RateResults";
 import { CO2_SPLIT, CommandChip, HIGH_KNEE, HIGH_PLATEAU, LIGHT_PLATEAU, LIGHT_SLOPE, TEMP_OPT, co2Curve, lightCurve, lightCurveHighCo2, tempCurve } from "./parts/S14-results";
 import type { Curve } from "../../../components/Graph";
@@ -383,7 +382,7 @@ export const S15Limiting: React.FC = () => {
         <SummerPicture cx={CARD.xs[2]} f={f} start={k.summer} co2={k.summerFactor} bright={k.plenty} tiny={k.tiny} />
       </ConditionCard>
 
-      <SectionTag n={8} title="Limiting factors" t={f} extended={MARK_EXTENDED} />
+      <SectionTag n={8} title="Limiting factors" t={f} />
     </Stage>
   );
 };

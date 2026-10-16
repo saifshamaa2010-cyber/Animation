@@ -1,7 +1,6 @@
 /**
  * S05 helpers: character positions inside a chemical formula (so single atoms can be highlighted),
- * the highlight "marker" behind them, the atom ball that heads each tally row, and the EXTENDED badge
- * (drawn exactly where SectionTag draws it, so it can arrive on the spoken word).
+ * the highlight "marker" behind them, and the atom ball that heads each tally row.
  */
 import React from "react";
 import { C, EASE } from "../../../../brand/tokens";
@@ -91,32 +90,6 @@ export const AtomBall: React.FC<{ readonly kind: "C" | "H" | "O"; readonly x: nu
       <circle r={r - 2} fill="none" stroke={`url(#${id}-rim)`} strokeWidth={4} />
       <text y={r * 0.42} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={44} fill={C.ink900}>
         {kind}
-      </text>
-    </g>
-  );
-};
-
-/**
- * The EXTENDED badge, at exactly the place SectionTag puts it for this title (SectionTag can only
- * show it from the start of a scene; here it arrives on the word "Extended").
- */
-export const ExtendedBadge: React.FC<{ readonly title: string; readonly p: number; readonly settle: number }> = ({ title, p, settle }) => {
-  if (p <= 0) return null;
-  const x = 100;
-  const y = 100;
-  const numW = 64;
-  const tw = textWidth(title, 44, 600);
-  const badgeW = textWidth("EXTENDED", 40, 700) + 36;
-  const bx = x + numW + 44 + tw;
-  const e = EASE.out(Math.min(1, p));
-  const s = 0.88 + 0.12 * e;
-  const cx = bx + badgeW / 2;
-  const cy = y + 32;
-  return (
-    <g opacity={Math.min(1, p * 1.5) * (1 - 0.45 * settle)} transform={`translate(${cx} ${cy}) scale(${s}) translate(${-cx} ${-cy})`}>
-      <rect x={bx} y={y + 4} width={badgeW} height={56} rx={14} fill="none" stroke={C.violetLight} strokeWidth={3} />
-      <text x={bx + badgeW / 2} y={y + 46} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={40} fill={C.violetLight} letterSpacing={1}>
-        EXTENDED
       </text>
     </g>
   );

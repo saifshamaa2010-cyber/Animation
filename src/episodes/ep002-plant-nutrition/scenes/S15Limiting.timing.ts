@@ -2,9 +2,9 @@ import type { CueFns, SfxEvent } from "../../../lib/cues";
 
 /** S15 key moments, derived from the narration (shared by the animation and the sound effects). */
 export const s15Timing = (t: CueFns) => {
-  // ---- Extended: explain the shapes with limiting factors
-  const extended = t.cue("extended");
-  const extendedWord = t.word("extended", 1);
+  // ---- "Now let's explain those shapes, using limiting factors."
+  const explainShapes = t.cue("explainShapes");
+  const explainW = t.word("explain", 1);
   const shapes = t.word("shapes", 1);
   const limitingFactors = t.word("limiting", 1); // "using limiting factors"
   const defn = t.cue("defn");
@@ -62,8 +62,8 @@ export const s15Timing = (t: CueFns) => {
   const summerWhy = t.cue("summerWhy"); // "There's only a tiny amount of carbon dioxide in the air."
   const tiny = t.word("tiny", 1);
   return {
-    extended,
-    extendedWord,
+    explainShapes,
+    explainW,
     shapes,
     limitingFactors,
     defn,
@@ -122,7 +122,7 @@ export const s15Timing = (t: CueFns) => {
 export const s15Sfx = (t: CueFns): SfxEvent[] => {
   const k = s15Timing(t);
   return [
-    { frame: k.extendedWord, sfx: "ui_blip", gainDb: -10 }, // section 8 tag settles in
+    { frame: k.explainW, sfx: "ui_blip", gainDb: -10 }, // section 8 tag settles in
     { frame: k.limitingFactors, sfx: "ui_blip", gainDb: -12 }, // "limiting factors"
     { frame: k.limits, sfx: "ui_blip", gainDb: -11 }, // definition completes
     { frame: k.graph, sfx: "whoosh_soft", gainDb: -12 }, // back to the light graph

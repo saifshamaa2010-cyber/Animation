@@ -42,7 +42,7 @@ export const S19Recap: React.FC = () => {
     { title: "Uses of glucose", color: C.amber },
     { title: "Mineral ions", color: C.ice },
     { title: "Leaf structure", color: C.leafLight },
-    { title: "Limiting factors", color: C.paper, extended: true },
+    { title: "Limiting factors", color: C.paper },
   ];
   const cardP = (i: number) => prog(f, starts[i] - 6, 18);
   const active = (i: number) => prog(f, starts[i] - 6, 12) * (1 - prog(f, ends[i] - 6, 14));
@@ -76,7 +76,7 @@ export const S19Recap: React.FC = () => {
   const c3 = iconCentre(2);
   const ring3: Pt = [c3[0], c3[1] + 52];
   const USE_ANG = [-168, -129, -90, -51, -12];
-  const useAt = (j: number): Pt => {
+  const spotAt = (j: number): Pt => {
     const a = (USE_ANG[j] * Math.PI) / 180;
     return [ring3[0] + Math.cos(a) * 128, ring3[1] + Math.sin(a) * 128];
   };
@@ -161,20 +161,20 @@ export const S19Recap: React.FC = () => {
               if (sp <= 0) return null;
               const a = (USE_ANG[j] * Math.PI) / 180;
               const from: Pt = [ring3[0] + Math.cos(a) * 42, ring3[1] + Math.sin(a) * 42];
-              const end = useAt(j);
+              const end = spotAt(j);
               const to: Pt = [end[0] - Math.cos(a) * 36, end[1] - Math.sin(a) * 36];
               return <line key={j} x1={from[0]} y1={from[1]} x2={from[0] + (to[0] - from[0]) * sp} y2={from[1] + (to[1] - from[1]) * sp} stroke={mix(C.amber, C.ink500, 0.35)} strokeWidth={4} strokeLinecap="round" />;
             })}
             {prog(f, k.r3 - 2, 16) > 0 ? <Glucose x={ring3[0]} y={ring3[1]} tone="sugar" glow={ring3Glow} scale={0.95 * (0.7 + 0.3 * EASE.out(prog(f, k.r3 - 2, 16)))} opacity={Math.min(1, prog(f, k.r3 - 2, 16) * 1.5)} /> : null}
-            <EnergyBolt x={useAt(0)[0]} y={useAt(0)[1]} p={prog(f, k.c3[0] - 2, 14)} glow={pulse(f, k.c3[0], 26)} />
+            <EnergyBolt x={spotAt(0)[0]} y={spotAt(0)[1]} p={prog(f, k.c3[0] - 2, 14)} glow={pulse(f, k.c3[0], 26)} />
             {prog(f, k.c3[1] - 2, 14) > 0
               ? ([[-13, -9], [13, -9], [0, 12]] as const).map(([dx, dy], n) => (
-                  <Glucose key={n} x={useAt(1)[0] + dx * 1.25} y={useAt(1)[1] + dy * 1.25} tone="starch" scale={0.44} opacity={Math.min(1, prog(f, k.c3[1] - 2 + n * 3, 12) * 1.5)} />
+                  <Glucose key={n} x={spotAt(1)[0] + dx * 1.25} y={spotAt(1)[1] + dy * 1.25} tone="starch" scale={0.44} opacity={Math.min(1, prog(f, k.c3[1] - 2 + n * 3, 12) * 1.5)} />
                 ))
               : null}
-            <WallBricks x={useAt(2)[0]} y={useAt(2)[1]} p={prog(f, k.c3[2] - 2, 14)} />
-            {prog(f, k.c3[3] - 2, 14) > 0 ? <Sucrose x={useAt(3)[0] + 4} y={useAt(3)[1]} scale={0.5} opacity={Math.min(1, prog(f, k.c3[3] - 2, 14) * 1.5)} /> : null}
-            <Flower x={useAt(4)[0]} y={useAt(4)[1]} size={60} nectar={1} progress={prog(f, k.c3[4] - 2, 16)} />
+            <WallBricks x={spotAt(2)[0]} y={spotAt(2)[1]} p={prog(f, k.c3[2] - 2, 14)} />
+            {prog(f, k.c3[3] - 2, 14) > 0 ? <Sucrose x={spotAt(3)[0] + 4} y={spotAt(3)[1]} scale={0.5} opacity={Math.min(1, prog(f, k.c3[3] - 2, 14) * 1.5)} /> : null}
+            <Flower x={spotAt(4)[0]} y={spotAt(4)[1]} size={60} nectar={1} progress={prog(f, k.c3[4] - 2, 16)} />
           </RecapCard>
 
           {/* 4 · nitrate → amino acids; magnesium → chlorophyll */}
@@ -207,7 +207,7 @@ export const S19Recap: React.FC = () => {
           </RecapCard>
 
           {/* 6 · light intensity, carbon dioxide concentration and temperature can all be limiting factors */}
-          <RecapCard i={5} title={cards[5].title} color={cards[5].color} p={cardP(5)} active={active(5)} past={past(5)} exit={exit(5)} extended>
+          <RecapCard i={5} title={cards[5].title} color={cards[5].color} p={cardP(5)} active={active(5)} past={past(5)} exit={exit(5)}>
             {[0, 1, 2].map((j) => {
               const p = rowIn(j);
               if (p <= 0) return null;
