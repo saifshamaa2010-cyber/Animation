@@ -1,7 +1,7 @@
 /**
  * S19 helpers: the recap card (an empty numbered place that turns into a lit card), and the small
  * hand-made icons that don't exist as shared components (energy bolt, cell-wall bricks, thermometer,
- * a plus sign, a mini rate graph).
+ * a plus sign).
  */
 import React from "react";
 import { C, EASE } from "../../../../brand/tokens";
@@ -158,44 +158,6 @@ export const MiniThermometer: React.FC<{ readonly x: number; readonly y: number;
       <rect x={-3.5} y={-h / 2 - 8 + h * (1 - level)} width={7} height={h * level} rx={3.5} fill={C.coral} />
       <circle cy={h / 2 + 2} r={13} fill={C.coral} stroke={C.paper} strokeOpacity={0.6} strokeWidth={2.5} />
       <circle cx={-4} cy={h / 2 - 2} r={4} fill={C.paper} opacity={0.5} />
-    </g>
-  );
-};
-
-/** A mini rate graph: axes and a curve that rises then levels off (draws on with p). */
-export const MiniRateGraph: React.FC<{ readonly x: number; readonly y: number; readonly w: number; readonly h: number; readonly p: number; readonly axes: number; readonly plateauGlow?: number }> = ({
-  x,
-  y,
-  w,
-  h,
-  p,
-  axes,
-  plateauGlow = 0,
-}) => {
-  const id = useSvgId("mgraph");
-  if (axes <= 0) return null;
-  // origin at (x, y + h); the curve rises then plateaus
-  const N = 40;
-  const pts: Pt[] = Array.from({ length: N + 1 }, (_, i) => {
-    const t = i / N;
-    const v = 1 - Math.exp(-t * 5.2);
-    return [x + 10 + t * (w - 20), y + h - 8 - v * (h - 26)];
-  });
-  const shown = Math.max(2, Math.round(EASE.inOut(Math.min(1, p)) * N) + 1);
-  const d = pts.slice(0, shown).map((q, i) => `${i ? "L" : "M"}${q[0].toFixed(1)},${q[1].toFixed(1)}`).join(" ");
-  const plateauY = pts[N][1];
-  return (
-    <g opacity={Math.min(1, axes * 1.5)}>
-      <defs>
-        <filter id={`${id}-b`} x="-20%" y="-200%" width="140%" height="500%">
-          <feGaussianBlur stdDeviation={6} />
-        </filter>
-      </defs>
-      <path d={`M${x},${y} L${x},${y + h} L${x + w},${y + h}`} fill="none" stroke={C.paper} strokeOpacity={0.7} strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" />
-      {p > 0 ? <path d={d} fill="none" stroke={C.leafLight} strokeWidth={6} strokeLinecap="round" strokeLinejoin="round" /> : null}
-      {plateauGlow > 0.01 ? (
-        <line x1={x + w * 0.55} y1={plateauY} x2={x + w - 10} y2={plateauY} stroke={C.leafLight} strokeWidth={14} strokeLinecap="round" opacity={0.5 * plateauGlow} filter={`url(#${id}-b)`} />
-      ) : null}
     </g>
   );
 };

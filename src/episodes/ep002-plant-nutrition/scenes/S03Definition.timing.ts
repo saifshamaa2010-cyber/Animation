@@ -25,7 +25,7 @@ export const s03Timing = (t: CueFns) => {
   const synWord = t.word("synthesise", 2); // "Synthesise means make."
   const means = t.word("means", 1);
   const carbs = t.cue("carbs");
-  const makes = t.word("makes", 1); // "…a plant makes first…"
+  const makes = t.word("makes", 1); // "The carbohydrate it makes is glucose…"
   const glucose = t.word("glucose", 1);
   const simple = t.word("simple", 1);
   const raw = t.cue("raw");

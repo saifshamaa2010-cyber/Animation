@@ -75,7 +75,7 @@ export const ChemText: React.FC<{
         const s = r.kind === "n" ? size : chemSmall(size);
         const dy = r.kind === "sub" ? size * 0.24 : r.kind === "sup" ? -size * 0.42 : 0;
         const el = (
-          <text key={i} x={cx} y={y + dy} fontFamily={FONT} fontWeight={weight} fontSize={s} fill={color} letterSpacing={0}>
+          <text key={i} x={cx} y={y + dy} fontFamily={FONT} fontWeight={weight} fontSize={s} fill={color} letterSpacing={0} style={{ whiteSpace: "pre" }}>
             {r.t}
           </text>
         );

@@ -130,7 +130,7 @@ export const S03Definition: React.FC = () => {
   const op = (focus: number) => DIM + (1 - DIM) * focus;
   const flip = prog(f, k.means, Math.min(16, Math.max(8, k.carbs - k.means - 4)), EASE.inOut);
   const synPulse = pulse(f, k.synWord - 2, 18);
-  // glucose: the first carbohydrate a plant makes
+  // glucose: the carbohydrate it makes ("…is glucose, a simple sugar.")
   const glcIn = prog(f, k.glucose - 6, 20);
   const makesFlow = prog(f, k.makes - 4, 22, EASE.inOut);
   // raw materials

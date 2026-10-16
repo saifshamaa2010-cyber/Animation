@@ -8,7 +8,8 @@
  *  2 starch — rings join and the chain coils up compactly ("energy store"); "insoluble": water
  *    molecules drift past it, unaffected;
  *  3 cellulose — rings are laid one by one around a cell: its wall;
- *  4 sucrose — glucose + fructose, carried along the phloem to other parts of the plant;
+ *  4 sucrose — glucose + fructose; "another sugar" (it glows amber, the sugar colour), then it is carried
+ *    along the phloem to other parts of the plant;
  *  5 nectar — fills a flower; a bee arrives (pollination).
  * Finished uses step back while the next is explained; their second line fades so that only the five
  * names remain for the closing list, where each one pulses as it is said.
@@ -96,7 +97,10 @@ export const S07Uses: React.FC = () => {
   // 4 · sucrose
   const tubeP = prog(f, k.four + 2, 26);
   const toSucrose = prog(f, k.sucroseWord - 4, 14);
-  const slide0 = k.transport - 4;
+  // "…another sugar": the new molecule glows amber (sugar) while its sub-line says so
+  const sugarGlow = pulse(f, k.another - 2, 40);
+  const anotherSub = prog(f, k.another - 2, 16) * (1 - prog(f, k.transported - 10, 8));
+  const slide0 = k.transported - 4;
   const arrowP = prog(f, k.parts - 14, 16);
   const sucStream: number[] = [];
   for (let s = k.phloem + 20; s < k.end; s += 64) sucStream.push(s);
@@ -195,7 +199,7 @@ export const S07Uses: React.FC = () => {
           ? (() => {
               const x0 = STATIONS[3].arrive[0] + 44 * SUC_SCALE;
               const x = x0 + Math.max(0, f - slide0) * SUC_SPEED * prog(f, slide0, 20, (v) => v);
-              return <Sucrose x={x} y={TUBE.y} scale={SUC_SCALE} glow={0.25} opacity={toSucrose} />;
+              return <Sucrose x={x} y={TUBE.y} scale={SUC_SCALE} glow={0.25 + 0.6 * sugarGlow} opacity={toSucrose} />;
             })()
           : null}
         {sucStream.map((s, i) => {
@@ -238,10 +242,12 @@ export const S07Uses: React.FC = () => {
       ))}
       {STATIONS.map((st, i) => {
         const titleAt = [k.respWord, k.starchWord, k.celluloseWord, k.sucroseWord, k.nectarWord][i];
-        const subAt = [k.release, k.store - 10, k.walls - 6, k.transport, k.attract][i];
+        const subAt = [k.release, k.store - 10, k.walls - 6, k.transported, k.attract][i];
         return (
           <g key={`l${i}`} opacity={0.6 + 0.4 * dimOf(i)}>
             <StationLabel s={st} title={prog(f, titleAt - 2, 16)} sub={prog(f, subAt - 2, 16) * subOut(i)} glow={recapPulse(i)} />
+            {/* sucrose: "another sugar" first (amber = sugar), until it is "transported in phloem" */}
+            {i === 3 && anotherSub > 0 ? <StationLabel s={st} title={0} sub={anotherSub} subText="another sugar" subColor={C.amber} /> : null}
           </g>
         );
       })}

@@ -24,10 +24,11 @@ export const s07Timing = (t: CueFns) => {
   const three = t.cue("cellulose");
   const celluloseWord = t.word("cellulose", 1);
   const walls = t.word("walls", 1);
-  // "Four. Glucose is changed into sucrose, for transport in the phloem, to other parts of the plant."
+  // "Four. Glucose is changed into sucrose, another sugar. Sucrose is transported in the phloem, to other parts of the plant."
   const four = t.cue("sucrose");
   const sucroseWord = t.word("sucrose", 1);
-  const transport = t.word("transport", 1);
+  const another = t.word("another", 1); // "…another sugar." → the sub-line says so, the sucrose glows amber
+  const transported = t.word("transported", 1); // (sucrose #2 is "Sucrose is transported…")
   const phloem = t.word("phloem", 1);
   const parts = t.word("parts", 1);
   // "And five. Sugars are used to make nectar, in flowers, to attract insects for pollination."
@@ -36,12 +37,12 @@ export const s07Timing = (t: CueFns) => {
   const flowers = t.word("flowers", 1);
   const attract = t.word("attract", 1);
   const pollination = t.word("pollination", 1);
-  // "Respiration. Starch. Cellulose. Sucrose. Nectar."
+  // "Respiration. Starch. Cellulose. Sucrose. Nectar." (sucrose is said twice in use four, so this is #3)
   const recap = t.cue("five");
   const r1 = t.word("respiration", 2);
   const r2 = t.word("starch", 3);
   const r3 = t.word("cellulose", 2);
-  const r4 = t.word("sucrose", 2);
+  const r4 = t.word("sucrose", 3);
   const r5 = t.word("nectar", 2);
   return {
     uses,
@@ -63,7 +64,8 @@ export const s07Timing = (t: CueFns) => {
     walls,
     four,
     sucroseWord,
-    transport,
+    another,
+    transported,
     phloem,
     parts,
     fifth,

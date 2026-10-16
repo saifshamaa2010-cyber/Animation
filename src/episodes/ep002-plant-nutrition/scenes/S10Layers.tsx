@@ -9,7 +9,9 @@
  *    and shrink away along the vein, into the page — "to the rest of the plant").
  * 3. Lower epidermis with stomata (the three pores ring). The camera pushes in to one stoma (change of
  *    scale): carbon dioxide diffuses in through it to a palisade cell, oxygen diffuses out. Closer still:
- *    the guard cells open and close the pore — "guard cells".
+ *    the guard cells open and close the pore — "guard cells". "In the light": light washes down onto the
+ *    (closed) stoma, photons land on the guard cells, and they open the pore again; carbon dioxide from the air
+ *    below diffuses in through it to a spongy cell. (The section tag carries the EXTENDED badge throughout.)
  * 4. Recap: back out to the whole section; each label returns, and its layer lights, as it is named,
  *    top to bottom. Ends on the fully labelled diagram.
  */
@@ -20,6 +22,7 @@ import { Stage } from "../../../components/Stage";
 import { Label } from "../../../components/Label";
 import { SectionTag } from "../../../components/SectionTag";
 import { LeafLayer, LeafSection, Sucrose } from "../../../components/bio";
+import { Photon } from "../../../components/Light";
 import { CarbonDioxide, Oxygen, mix } from "../../../components/kit";
 import { Pt } from "../../../lib/geometry";
 import { prog, window01 } from "../../../lib/motion";
@@ -92,6 +95,8 @@ const WATER_ROUTES: Pt[][] = [
   [secP(766, 312), secP(820, 250), secP(910, 180), secP(970, 120)],
   [secP(760, 300), secP(764, 250), secP(770, 186)],
 ];
+// "so carbon dioxide can diffuse in": from the air below the leaf, in through the re-opened stoma, to a spongy cell
+const GUARD_CO2: Pt[] = [secP(414, 596), secP(362, 528), secP(338, 500), secP(SEC_STOMATA[0], 478), secP(334, 450), secP(356, 418), secP(392, 380), secP(424, 346)];
 // sucrose + amino acids: from the mesophyll cells into the phloem
 const SUC_ROUTES: Pt[][] = [[...PATHS.sucrose], [secP(560, 320), secP(630, 370), secP(735, 402)]];
 
@@ -169,8 +174,8 @@ export const S10Layers: React.FC = () => {
   if (focus === "stomata") focusAmount *= 1 - 0.6 * window01(f, k.zoomIn[0], k.zoomGuard[0] + 6, 16);
   const chloroGlow = END_GLOW * (1 - prog(f, k.spongyWord - 6, 30));
 
-  // stoma: opens, closes, opens again (guard cells)
-  const stomataOpen = 0.7 + 0.3 * prog(f, k.opened - 4, 16) - 0.94 * prog(f, k.closed - 4, 18, EASE.inOut) + 0.64 * prog(f, k.guardWord + 8, 26, EASE.inOut);
+  // stoma: opens, closes, then stays closed until "In the light, they open the stomata"
+  const stomataOpen = 0.7 + 0.3 * prog(f, k.opened - 4, 16) - 0.94 * prog(f, k.closed - 4, 18, EASE.inOut) + 0.94 * prog(f, k.reopen, 26, EASE.inOut);
 
   // ---------------------------------------------------------------- spongy + air spaces
   const rounderGlow = pulse(f, k.rounder - 4, 54);
@@ -200,12 +205,16 @@ export const S10Layers: React.FC = () => {
   const gasLabelsOut = 1 - prog(f, k.zoomGuard[0] - 4, 12);
   const co2Label = prog(f, k.zoomIn[0] + 18, 16) * gasLabelsOut;
   const o2Label = prog(f, k.oxygen - 2, 16) * gasLabelsOut;
-  const openWord = window01(f, k.opened - 2, k.closed - 2, 8);
-  const closedWord = window01(f, k.closed - 2, k.guardWord + 6, 8);
+  const openWord = Math.max(window01(f, k.opened - 2, k.closed - 2, 8), window01(f, k.reopen + 4, k.zoomOut[0] - 2, 8));
+  const closedWord = window01(f, k.closed - 2, k.reopen + 4, 8);
   const gcOut = 1 - prog(f, k.zoomOut[0] - 4, 10);
   const gap = 4 + 16 * stomataOpen;
   const gcLeft = cam.toScreen(secP(SEC_STOMATA[0] - (gap / 2 + 17), 486));
   const gcRight = cam.toScreen(secP(SEC_STOMATA[0] + (gap / 2 + 17), 486));
+  // "In the light": light falls on the guard cells, they open the stoma, carbon dioxide diffuses in
+  const lightP = prog(f, k.inLight - 8, 20) * (1 - prog(f, k.zoomOut[0] - 4, 16));
+  const co2InStart = Math.max(k.reopen + 16, k.co2Again - 14);
+  const co2InLabel = prog(f, k.co2Again - 2, 16) * (1 - prog(f, k.zoomOut[0] - 4, 10));
 
   // recap: each named layer lights as the label returns
   const rg = (w: number) => (inRecap ? pulse(f, w - 4, 40) : 0);
@@ -303,7 +312,40 @@ export const S10Layers: React.FC = () => {
           const s = k.oxygen - 10 + i * 16;
           return <Gas key={`oo${i}`} f={f} start={s} travel={80} route={PATHS.o2Out} kind="o2" i={i} gid={gid} />;
         })}
+
+        {/* in the light, the open stoma lets carbon dioxide diffuse in */}
+        {[0, 1, 2].map((i) => (
+          <Gas key={`cg${i}`} f={f} start={co2InStart + i * 14} travel={58} route={GUARD_CO2} kind="co2" i={i + 3} gid={gid} size={0.125} rot={84 + i * 8} />
+        ))}
       </g>
+
+      {/* "In the light": light falls on the leaf; packets of light land on the guard cells */}
+      {lightP > 0 ? (
+        <g style={{ mixBlendMode: "screen" }}>
+          <defs>
+            <linearGradient id={`${gid}-wash`} x1="0" y1="0" x2="0.25" y2="1">
+              <stop offset="0" stopColor={C.sun} stopOpacity={0.3} />
+              <stop offset="0.7" stopColor={C.sun} stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <rect x={0} y={0} width={1920} height={1080} fill={`url(#${gid}-wash)`} opacity={lightP} />
+          {[gcLeft, gcRight].map((g, i) => (
+            <ellipse key={i} cx={g[0]} cy={g[1]} rx={52} ry={78} fill={C.sun} opacity={0.22 * lightP} filter={`url(#${gid}-soft)`} />
+          ))}
+        </g>
+      ) : null}
+      {[0, 1, 2, 3, 4, 5].map((i) => {
+        const s = k.inLight - 16 + i * 5;
+        const to = i % 2 ? gcRight : gcLeft;
+        const p = (f - s) / 24;
+        const land = pulse(f, s + 22, 18);
+        return (
+          <g key={`ph${i}`}>
+            <Photon from={[to[0] - 300 + i * 12, to[1] - 680]} to={to} p={p} size={0.8} />
+            {land > 0 ? <circle cx={to[0]} cy={to[1]} r={30} fill={C.sun} opacity={0.5 * land} filter={`url(#${gid}-soft)`} /> : null}
+          </g>
+        );
+      })}
 
       {/* ============ labels: the left column (carried over from S09, then the new ones) ============ */}
       {(() => {
@@ -355,6 +397,7 @@ export const S10Layers: React.FC = () => {
       {o2Label > 0 ? <SubLine x={770} y={846} text="oxygen out" p={o2Label} color={C.coral} weight={600} size={42} /> : null}
       <SubLine x={Z3[0] + 136} y={700} text="open" p={openWord} color={C.ink300} />
       <SubLine x={Z3[0] + 136} y={700} text="closed" p={closedWord} color={C.ink300} />
+      {co2InLabel > 0 ? <SubLine x={1130} y={900} text="carbon dioxide in" p={co2InLabel} color={C.ice} weight={600} size={42} /> : null}
       <ForkLabel anchors={[gcLeft, gcRight]} join={[Z3[0], 736]} text="guard cells" textAt={[Z3[0], 800]} color={C.leafLight} size={COL_SIZE} progress={prog(f, k.guardWord - 2, 24)} opacity={gcOut} />
 
       {/* ============ recap: guard cells (on another stoma, so lines never cross) ============ */}
@@ -369,7 +412,7 @@ export const S10Layers: React.FC = () => {
         />
       ) : null}
 
-      <SectionTag n={4} title="Leaf structure" t={200} opacity={1 - window01(f, k.zoomIn[0], k.zoomOut[1] - 6, 14)} />
+      <SectionTag n={4} title="Leaf structure" t={200} extended opacity={1 - window01(f, k.zoomIn[0], k.zoomOut[1] - 6, 14)} />
     </Stage>
   );
 };
@@ -418,7 +461,19 @@ const Loader: React.FC<{ f: number; start: number; away: number; route: Pt[]; ki
 };
 
 /** CO2 in along `route` (absorbed into the palisade cell at the end) or O2 out (made in the cell, leaves the leaf). */
-const Gas: React.FC<{ f: number; start: number; travel: number; route: readonly Pt[]; kind: "co2" | "o2"; i: number; gid: string }> = ({ f, start, travel, route, kind, i, gid }) => {
+const Gas: React.FC<{
+  f: number;
+  start: number;
+  travel: number;
+  route: readonly Pt[];
+  kind: "co2" | "o2";
+  i: number;
+  gid: string;
+  /** world scale (0.2 at ×2 zoom; smaller when the camera is closer, so the size on screen stays the same) */
+  size?: number;
+  /** base rotation (deg); a near-vertical molecule slips through a narrow pore */
+  rot?: number;
+}> = ({ f, start, travel, route, kind, i, gid, size = 0.2, rot }) => {
   if (f < start || f > start + travel + 34) return null;
   const pts = smoothPts(route, 12);
   const q = prog(f, start, travel, (v) => v * 0.15 + EASE.inOut(v) * 0.85);
@@ -426,11 +481,11 @@ const Gas: React.FC<{ f: number; start: number; travel: number; route: readonly 
   const appear = prog(f, start, 12);
   const endP = kind === "co2" ? prog(f, start + travel - 8, 12) : prog(f, start + travel - 10, 14);
   const wob = Math.sin(Math.PI * q);
-  const jx = noise2D(`g10x${kind}${i}`, f * 0.035, 0) * 5 * wob;
-  const jy = noise2D(`g10y${kind}${i}`, f * 0.035, 3) * 5 * wob;
+  const jx = noise2D(`g10x${kind}${i}`, f * 0.035, 0) * 5 * wob * (size / 0.2);
+  const jy = noise2D(`g10y${kind}${i}`, f * 0.035, 3) * 5 * wob * (size / 0.2);
   const end = pts[pts.length - 1];
   const glow = kind === "co2" ? pulse(f, start + travel - 8, 30) : 0;
-  const common = { x: x + jx, y: y + jy, scale: 0.2 * (1 - 0.4 * endP), rotate: -40 + i * 35 + noise2D(`g10r${kind}${i}`, f * 0.02, 1) * 25, progress: appear, opacity: 1 - endP, seed: 140 + i + (kind === "co2" ? 0 : 10) };
+  const common = { x: x + jx, y: y + jy, scale: size * (1 - 0.4 * endP), rotate: (rot ?? -40 + i * 35) + noise2D(`g10r${kind}${i}`, f * 0.02, 1) * 25, progress: appear, opacity: 1 - endP, seed: 140 + i + (kind === "co2" ? 0 : 10) };
   return (
     <g>
       {glow > 0 ? <circle cx={end[0]} cy={end[1]} r={16} fill={C.leafLight} opacity={0.55 * glow} filter={`url(#${gid}-soft)`} /> : null}

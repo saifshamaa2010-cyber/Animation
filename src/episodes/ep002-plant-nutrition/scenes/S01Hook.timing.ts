@@ -28,7 +28,9 @@ export const s01Timing = (t: CueFns) => {
   const mass = t.word("mass");
   const notSoil = t.cue("notSoil");
   const strike = t.word("soil", 4);
+  // "Most of the wood came out of thin air." — the wood (trunk and branches) lights up as it is named
   const air = t.cue("air");
+  const wood = t.word("wood");
   const thin = t.word("thin");
   const promise = t.cue("promise");
   return {
@@ -57,6 +59,7 @@ export const s01Timing = (t: CueFns) => {
     notSoil,
     strike,
     air,
+    wood,
     thin,
     promise,
     end: t.dur,

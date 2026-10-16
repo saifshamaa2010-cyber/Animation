@@ -2,7 +2,8 @@
  * S01 · Hook — van Helmont's willow.
  * A sapling in a pot of dried soil on a scale; both are weighed (ledger ticks); five years of nothing but
  * water (the tree grows, the camera pulls back to fit it); +74 kg vs −57 g; "Where did the mass come from?";
- * not the soil — carbon dioxide drifts in out of thin air and into the leaves.
+ * not the soil — "most of the wood": the trunk and branches warm up as carbon dioxide drifts in out of thin
+ * air and into the leaves.
  */
 import React from "react";
 import { C, EASE } from "../../../brand/tokens";
@@ -94,6 +95,9 @@ export const S01Hook: React.FC = () => {
     seed: 7,
   });
   const glint = co2Glint(flights, f);
+  // "Most of the wood…": the trunk and branches warm up as they're named, and keep warming a little while
+  // the carbon dioxide streams in (S18 pays this off in full: the wood is built from it)
+  const woodGlow = 0.38 * prog(f, k.wood - 2, 18) + 0.14 * prog(f, k.wood + 16, Math.max(30, k.promise - k.wood), lin);
 
   // ---- screen-space anchors
   const saplingTip = S([WILLOW_BASE[0] + 22, WILLOW_BASE[1] - 104 + (1 - planted) * -46]);
@@ -122,7 +126,7 @@ export const S01Hook: React.FC = () => {
         {wet > 0 ? <ellipse cx={rose[0] + 18} cy={WILLOW.potY + 6} rx={44} ry={8} fill={mix(C.soil, C.ink950, 0.55)} opacity={wet} /> : null}
         {planted > 0 ? (
           <g transform={`translate(0 ${(1 - EASE.out(planted)) * -46})`} opacity={Math.min(1, planted * 1.6)}>
-            <WillowTree geo={geo} glint={glint} />
+            <WillowTree geo={geo} glint={glint} glow={woodGlow} />
           </g>
         ) : null}
         <Drops f={f} start={pourStart} stop={pourStop} every={6} from={() => rose} soilY={WILLOW.potY + 4} />

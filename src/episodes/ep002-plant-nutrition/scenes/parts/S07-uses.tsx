@@ -37,7 +37,7 @@ export const STATIONS: readonly Station[] = [
   { n: 1, c: [440, 296], r: 112, arrive: [440, 296], title: "respiration", sub: "releases energy", label: [440, 444] },
   { n: 2, c: [1480, 290], r: 104, arrive: [1351, 290], title: "starch", sub: "energy store", label: [1480, 444] },
   { n: 3, c: [1580, 732], r: 118, arrive: [1502, 657], title: "cellulose", sub: "cell walls", label: [1580, 874] },
-  { n: 4, c: [960, 780], r: 40, arrive: [960, 780], title: "sucrose", sub: "transport in phloem", label: [TUBE.x + TUBE.w / 2, 874] },
+  { n: 4, c: [960, 780], r: 40, arrive: [960, 780], title: "sucrose", sub: "transported in phloem", label: [TUBE.x + TUBE.w / 2, 874] },
   { n: 5, c: [340, 722], r: 96, arrive: [340, 722], title: "nectar", sub: "attracts insects", label: [340, 874] },
 ];
 
@@ -73,8 +73,19 @@ export const Badge: React.FC<{ readonly at: Pt; readonly n: number; readonly app
   );
 };
 
-/** Two-line label under a station: the use, then what it is for. Each line arrives on its own word. */
-export const StationLabel: React.FC<{ readonly s: Station; readonly title: number; readonly sub: number; readonly glow?: number }> = ({ s, title, sub, glow = 0 }) => {
+/**
+ * Two-line label under a station: the use, then what it is for. Each line arrives on its own word.
+ * `subText` / `subColor` replace the second line (e.g. sucrose: "another sugar" first, in amber, before it
+ * becomes "transported in phloem").
+ */
+export const StationLabel: React.FC<{
+  readonly s: Station;
+  readonly title: number;
+  readonly sub: number;
+  readonly glow?: number;
+  readonly subText?: string;
+  readonly subColor?: string;
+}> = ({ s, title, sub, glow = 0, subText, subColor = C.ink300 }) => {
   const line = (text: string, p: number, y: number, size: number, weight: number, color: string) =>
     p > 0 ? (
       <text
@@ -98,7 +109,7 @@ export const StationLabel: React.FC<{ readonly s: Station; readonly title: numbe
   return (
     <g>
       {line(s.title, title, s.label[1], 46, 600, mix(C.paper, C.amberLight, glow))}
-      {line(s.sub, sub, s.label[1] + 52, 40, 400, C.ink300)}
+      {line(subText ?? s.sub, sub, s.label[1] + 52, 40, 400, subColor)}
     </g>
   );
 };

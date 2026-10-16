@@ -1,17 +1,20 @@
 /**
  * S19 · Recap — six numbered places appear ("Let's recap"); each turns into a card as its point is
  * read, and its icon builds in time with the words (the equation's molecules, light → chlorophyll →
- * glucose, the five uses, the two ions, the leaf's layers, the three limiting factors). Only the card
+ * glucose, the five uses, the two ions, the leaf's layers, the three limiting factors in the exam's own
+ * words: "light intensity", "CO₂ concentration", "temperature"). Only the card
  * being read is lit; the others settle back. On "And that's plant nutrition" the cards make way for
  * the title, which lands exactly where S20 (the end card) holds it.
  */
 import React from "react";
 import { C, EASE } from "../../../brand/tokens";
+import { FONT } from "../../../brand/fonts";
 import { Stage } from "../../../components/Stage";
+import { ChemText, chemWidth } from "../../../components/Equation";
 import { Photon, SunIcon } from "../../../components/Light";
 import { Glucose } from "../../../components/SugarChain";
 import { Flower, Leaf, LeafSection, Sucrose, leafGeometry } from "../../../components/bio";
-import { CarbonDioxide, Oxygen, Water, mix } from "../../../components/kit";
+import { CarbonDioxide, Oxygen, Water, mix, textWidth } from "../../../components/kit";
 import { Pt } from "../../../lib/geometry";
 import { prog } from "../../../lib/motion";
 import { pulse } from "../../../lib/track";
@@ -19,10 +22,12 @@ import { useScene } from "../../../lib/timeline";
 import { s19Timing } from "./S19Recap.timing";
 import { TitleWords } from "./parts/S02-TitleCard";
 import { FoldChain, GreeningChloroplast, IonBall, StraightArrow } from "./parts/S08-minerals";
-import { CardSlot, EnergyBolt, MiniRateGraph, MiniThermometer, PlusMark, RecapCard, WallBricks, iconCentre } from "./parts/S19-recap";
+import { CardSlot, EnergyBolt, MiniThermometer, PlusMark, RecapCard, WallBricks, cardPos, iconCentre } from "./parts/S19-recap";
 
 /** Same y as S20's title, so the cut to the end card is seamless. */
 const TITLE_Y = 262;
+/** card 6: "CO₂" plus a word space, at the factor rows' 40 px */
+const CO2_W = chemWidth("CO2", 40, 500) + textWidth(" ", 40, 500);
 
 export const S19Recap: React.FC = () => {
   const sc = useScene();
@@ -51,8 +56,8 @@ export const S19Recap: React.FC = () => {
 
   // ---------------------------------------------------------------- card 2: light → chlorophyll → energy in glucose
   const c2 = iconCentre(1);
-  const firstT0 = k.c2.light - 16;
-  const dotDur0 = Math.max(18, Math.min(36, k.c2.chemicals - 4 - (firstT0 + 20)));
+  const firstT0 = k.c2Light - 16;
+  const dotDur0 = Math.max(18, Math.min(36, k.c2Chemicals - 4 - (firstT0 + 20)));
   const cycles: { t0: number; dot: number }[] = [];
   for (let n = 0; n < 8; n++) {
     const t0 = firstT0 + n * 54;
@@ -87,16 +92,19 @@ export const S19Recap: React.FC = () => {
   const leaf5 = leafGeometry({ cx: c5[0] - 128, cy: c5[1] - 6, len: 196, wid: 108, ang: -16, stalk: 0.1, veinPairs: 4 });
   const sec5 = { x: c5[0] + 22, y: c5[1] - 40, w: 232 };
   const secH = sec5.w * 0.34;
-  const broadP = prog(f, k.c5.broad - 4, 14);
-  const thinP = prog(f, k.c5.thin - 4, 14);
-  const layersP = prog(f, k.c5.layers - 6, 40, (v) => v);
+  const broadP = prog(f, k.c5Broad - 4, 14);
+  const thinP = prog(f, k.c5Thin - 4, 14);
+  const layersP = prog(f, k.c5Layers - 6, 40, (v) => v);
 
-  // ---------------------------------------------------------------- card 6: limiting factors
-  const c6 = iconCentre(5);
-  const g6 = { x: c6[0] - 236, y: c6[1] - 64, w: 240, h: 150 };
-  const fac = [k.r6, k.c6.co2, k.c6.temperature];
-  const facX = [c6[0] + 66, c6[0] + 152, c6[0] + 232];
-  const limGlow = pulse(f, k.c6.limiting - 2, 40);
+  // ---------------------------------------------------------------- card 6: limiting factors, in the exam's words
+  // three rows (icon + "light intensity" / "CO₂ concentration" / "temperature"), each arriving on its word
+  const p6 = cardPos(5);
+  const ROW = { iconX: p6.x + 78, textX: p6.x + 124, y0: p6.y + 106, pitch: 51 } as const;
+  const rowIn = (j: number) => prog(f, k.c6Rows[j] - 4, 16);
+  // the factor being said is bright and the earlier ones settle back; "…can ALL be limiting factors" lights all three
+  const allLit = prog(f, k.c6Limiting - 4, 14);
+  const rowLit = (j: number) => Math.max(allLit, 1 - prog(f, (j < 2 ? k.c6Rows[j + 1] : k.c6Limiting) - 4, 14));
+  const limGlow = pulse(f, k.c6Limiting - 2, 40);
 
   return (
     <Stage bg={{ tone: "warm", lightX: 0.5, lightY: 0.26 }}>
@@ -109,21 +117,21 @@ export const S19Recap: React.FC = () => {
         <>
           {/* 1 · photosynthesis: carbon dioxide + water → glucose + oxygen (light, chlorophyll) */}
           <RecapCard i={0} title={cards[0].title} color={cards[0].color} p={cardP(0)} active={active(0)} past={past(0)} exit={exit(0)}>
-            <CarbonDioxide x={c1[0] - 200} y={c1[1]} scale={0.4} progress={a1(k.c1.co2)} temperature={20} seed={191} />
-            <PlusMark x={c1[0] - 139} y={c1[1]} s={11} p={a1(k.c1.water)} />
-            <Water x={c1[0] - 92} y={c1[1] + 4} scale={0.5} progress={a1(k.c1.water)} temperature={20} seed={192} />
-            <StraightArrow from={[c1[0] - 50, c1[1]]} to={[c1[0] + 22, c1[1]]} p={prog(f, k.c1.gives - 4, 14)} color={C.paper} width={4} head={14} />
-            {a1(k.c1.glucose) > 0 ? <Glucose x={c1[0] + 70} y={c1[1]} tone="sugar" glow={0.3} scale={0.9 * (0.7 + 0.3 * EASE.out(a1(k.c1.glucose)))} opacity={Math.min(1, a1(k.c1.glucose) * 1.5)} /> : null}
-            <PlusMark x={c1[0] + 126} y={c1[1]} s={11} p={a1(k.c1.oxygen)} />
-            <Oxygen x={c1[0] + 186} y={c1[1]} scale={0.46} progress={a1(k.c1.oxygen)} temperature={20} seed={193} />
-            <SunIcon x={c1[0] - 14} y={c1[1] - 62} r={18} progress={prog(f, k.c1.light - 4, 16)} glow={0.4 + 0.5 * pulse(f, k.c1.light - 2, 30)} />
-            <GreeningChloroplast x={c1[0] - 14} y={c1[1] + 58} scale={0.5} green={1} progress={prog(f, k.c1.chlorophyll - 4, 16)} glow={pulse(f, k.c1.chlorophyll - 2, 30)} />
+            <CarbonDioxide x={c1[0] - 200} y={c1[1]} scale={0.4} progress={a1(k.c1Co2)} temperature={20} seed={191} />
+            <PlusMark x={c1[0] - 139} y={c1[1]} s={11} p={a1(k.c1Water)} />
+            <Water x={c1[0] - 92} y={c1[1] + 4} scale={0.5} progress={a1(k.c1Water)} temperature={20} seed={192} />
+            <StraightArrow from={[c1[0] - 50, c1[1]]} to={[c1[0] + 22, c1[1]]} p={prog(f, k.c1Gives - 4, 14)} color={C.paper} width={4} head={14} />
+            {a1(k.c1Glucose) > 0 ? <Glucose x={c1[0] + 70} y={c1[1]} tone="sugar" glow={0.3} scale={0.9 * (0.7 + 0.3 * EASE.out(a1(k.c1Glucose)))} opacity={Math.min(1, a1(k.c1Glucose) * 1.5)} /> : null}
+            <PlusMark x={c1[0] + 126} y={c1[1]} s={11} p={a1(k.c1Oxygen)} />
+            <Oxygen x={c1[0] + 186} y={c1[1]} scale={0.46} progress={a1(k.c1Oxygen)} temperature={20} seed={193} />
+            <SunIcon x={c1[0] - 14} y={c1[1] - 62} r={18} progress={prog(f, k.c1Light - 4, 16)} glow={0.4 + 0.5 * pulse(f, k.c1Light - 2, 30)} />
+            <GreeningChloroplast x={c1[0] - 14} y={c1[1] + 58} scale={0.5} green={1} progress={prog(f, k.c1Chlorophyll - 4, 16)} glow={pulse(f, k.c1Chlorophyll - 2, 30)} />
           </RecapCard>
 
           {/* 2 · chlorophyll transfers energy from light into energy in chemicals */}
           <RecapCard i={1} title={cards[1].title} color={cards[1].color} p={cardP(1)} active={active(1)} past={past(1)} exit={exit(1)}>
             <GreeningChloroplast x={c2[0]} y={c2[1]} scale={0.85} green={1} progress={prog(f, k.r2 - 2, 16)} glow={chlGlow} />
-            <SunIcon x={c2[0] - 186} y={c2[1]} r={26} progress={prog(f, k.c2.transfers - 4, 16)} glow={0.5} />
+            <SunIcon x={c2[0] - 186} y={c2[1]} r={26} progress={prog(f, k.c2Transfers - 4, 16)} glow={0.5} />
             <StraightArrow from={[c2[0] - 140, c2[1] + 54]} to={[c2[0] - 64, c2[1] + 54]} p={prog(f, firstT0 + 4, 14)} color={C.ink400} width={3} head={10} />
             <StraightArrow from={[c2[0] + 64, c2[1] + 54]} to={[c2[0] + 140, c2[1] + 54]} p={prog(f, firstT0 + 24, 14)} color={C.ink400} width={3} head={10} />
             {cycles.map((c, n) => {
@@ -172,11 +180,11 @@ export const S19Recap: React.FC = () => {
           {/* 4 · nitrate → amino acids; magnesium → chlorophyll */}
           <RecapCard i={3} title={cards[3].title} color={cards[3].color} p={cardP(3)} active={active(3)} past={past(3)} exit={exit(3)}>
             <IonBall x={ionL[0]} y={ionL[1]} kind="nitrate" color={C.ice} progress={prog(f, k.r4 - 2, 16)} />
-            <StraightArrow from={[ionL[0], ionL[1] + 70]} to={[ionL[0], ionL[1] + 96]} p={prog(f, k.c4.amino - 12, 12)} color={C.paper} width={4} head={11} />
-            <FoldChain x={ionL[0]} y={ionL[1] + 114} r={12} fold={0} shown={6 * prog(f, k.c4.amino - 4, 18, (v) => v)} glow={0.4} />
-            <IonBall x={ionR[0]} y={ionR[1]} kind="magnesium" color={C.leafLight} progress={prog(f, k.c4.magnesium - 2, 16)} />
-            <StraightArrow from={[ionR[0], ionR[1] + 80]} to={[ionR[0], ionR[1] + 100]} p={prog(f, k.c4.chlorophyll - 12, 12)} color={C.paper} width={4} head={11} />
-            <GreeningChloroplast x={ionR[0]} y={ionR[1] + 118} scale={0.55} green={prog(f, k.c4.chlorophyll - 2, 22)} progress={prog(f, k.c4.chlorophyll - 8, 14)} glow={pulse(f, k.c4.chlorophyll, 30)} />
+            <StraightArrow from={[ionL[0], ionL[1] + 70]} to={[ionL[0], ionL[1] + 96]} p={prog(f, k.c4Amino - 12, 12)} color={C.paper} width={4} head={11} />
+            <FoldChain x={ionL[0]} y={ionL[1] + 114} r={12} fold={0} shown={6 * prog(f, k.c4Amino - 4, 18, (v) => v)} glow={0.4} />
+            <IonBall x={ionR[0]} y={ionR[1]} kind="magnesium" color={C.leafLight} progress={prog(f, k.c4Magnesium - 2, 16)} />
+            <StraightArrow from={[ionR[0], ionR[1] + 80]} to={[ionR[0], ionR[1] + 100]} p={prog(f, k.c4Chlorophyll - 12, 12)} color={C.paper} width={4} head={11} />
+            <GreeningChloroplast x={ionR[0]} y={ionR[1] + 118} scale={0.55} green={prog(f, k.c4Chlorophyll - 2, 22)} progress={prog(f, k.c4Chlorophyll - 8, 14)} glow={pulse(f, k.c4Chlorophyll, 30)} />
           </RecapCard>
 
           {/* 5 · leaves: broad, thin, built in layers */}
@@ -195,18 +203,46 @@ export const S19Recap: React.FC = () => {
                 <StraightArrow from={[sec5.x - 16, sec5.y + secH / 2]} to={[sec5.x - 16, sec5.y + secH + 2]} p={thinP} color={C.paper} width={4} head={10} />
               </g>
             ) : null}
-            {layersP > 0 ? <LeafSection x={sec5.x} y={sec5.y} w={sec5.w} reveal={layersP} chloroGlow={pulse(f, k.c5.adapted - 2, 40)} /> : null}
+            {layersP > 0 ? <LeafSection x={sec5.x} y={sec5.y} w={sec5.w} reveal={layersP} chloroGlow={pulse(f, k.c5Adapted - 2, 40)} /> : null}
           </RecapCard>
 
-          {/* 6 · light, carbon dioxide and temperature can all be limiting factors */}
+          {/* 6 · light intensity, carbon dioxide concentration and temperature can all be limiting factors */}
           <RecapCard i={5} title={cards[5].title} color={cards[5].color} p={cardP(5)} active={active(5)} past={past(5)} exit={exit(5)} extended>
-            <MiniRateGraph x={g6.x} y={g6.y} w={g6.w} h={g6.h} axes={prog(f, k.r6 - 2, 14)} p={prog(f, k.r6 + 4, Math.max(30, k.c6.temperature - k.r6), (v) => v)} plateauGlow={limGlow} />
-            <SunIcon x={facX[0]} y={c6[1] - 4} r={17} progress={prog(f, fac[0] - 2, 14)} glow={0.4 + 0.5 * Math.max(pulse(f, fac[0], 26), limGlow)} />
-            <CarbonDioxide x={facX[1]} y={c6[1] - 4} scale={0.34} progress={prog(f, fac[1] - 2, 14)} temperature={20} seed={196} />
-            <MiniThermometer x={facX[2]} y={c6[1] - 10} p={prog(f, fac[2] - 2, 14)} />
-            {limGlow > 0
-              ? facX.map((x, n) => <circle key={n} cx={x} cy={c6[1] - 4} r={30 + 6 * limGlow} fill="none" stroke={C.paper} strokeOpacity={0.4 * limGlow} strokeWidth={3} />)
-              : null}
+            {[0, 1, 2].map((j) => {
+              const p = rowIn(j);
+              if (p <= 0) return null;
+              const lit = rowLit(j);
+              const y = ROW.y0 + j * ROW.pitch;
+              const col = mix(C.ink300, C.paper, lit);
+              const op = Math.min(1, p * 1.5);
+              return (
+                <g key={`fac${j}`} transform={`translate(${(1 - EASE.out(Math.min(1, p))) * -14} 0)`}>
+                  {limGlow > 0.01 ? <circle cx={ROW.iconX} cy={y} r={27} fill={C.paper} opacity={0.16 * limGlow} /> : null}
+                  <g opacity={0.7 + 0.3 * lit}>
+                    {j === 0 ? <SunIcon x={ROW.iconX} y={y} r={16} progress={p} glow={0.3 + 0.5 * Math.max(pulse(f, k.r6, 26), limGlow)} /> : null}
+                    {j === 1 ? <CarbonDioxide x={ROW.iconX} y={y} scale={0.32} progress={p} temperature={20} seed={196} /> : null}
+                    {j === 2 ? (
+                      <g transform={`translate(${ROW.iconX} ${y - 3}) scale(0.72)`}>
+                        <MiniThermometer x={0} y={0} p={p} />
+                      </g>
+                    ) : null}
+                  </g>
+                  {j === 1 ? (
+                    <g opacity={op}>
+                      {/* formula and word drawn separately: SVG drops the leading space of a new <text> run */}
+                      <ChemText text="CO2" x={ROW.textX} y={y + 14} size={40} weight={500} color={col} />
+                      <text x={ROW.textX + CO2_W} y={y + 14} fontFamily={FONT} fontWeight={500} fontSize={40} fill={col}>
+                        concentration
+                      </text>
+                    </g>
+                  ) : (
+                    <text x={ROW.textX} y={y + 14} fontFamily={FONT} fontWeight={500} fontSize={40} fill={col} opacity={op}>
+                      {j === 0 ? "light intensity" : "temperature"}
+                    </text>
+                  )}
+                </g>
+              );
+            })}
           </RecapCard>
         </>
       ) : null}

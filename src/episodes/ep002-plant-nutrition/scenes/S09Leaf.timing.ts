@@ -24,8 +24,18 @@ export const s09Timing = (t: CueFns) => {
   const section = t.cue("section");
   const crossSection = t.word("cross-section", 1);
   const dicot = t.word("dicotyledonous", 1);
+  // "That's a plant whose seeds have two seed leaves."
+  const dicotGloss = t.cue("dicot");
+  const seeds = t.word("seeds", 1);
+  const two = t.word("two", 1);
   const simplified = t.cue("simplified");
   const simpWord = t.word("simplified", 1);
+  // "Everyone needs to name each part. Explaining how each part helps photosynthesis is for the Extended paper."
+  const extendedLeaf = t.cue("extendedLeaf");
+  const name = t.word("name", 1);
+  const explaining = t.word("explaining", 1);
+  const extWord = t.word("extended", 1);
+  const layers = t.cue("layers"); // "Let's go through it layer by layer, from the top."
   const layer = t.word("layer", 1); // "…layer by layer,"
   const top = t.word("top", 1); // "…from the top."
   // ---- cuticle
@@ -75,8 +85,16 @@ export const s09Timing = (t: CueFns) => {
     section,
     crossSection,
     dicot,
+    dicotGloss,
+    seeds,
+    two,
     simplified,
     simpWord,
+    extendedLeaf,
+    name,
+    explaining,
+    extWord,
+    layers,
     layer,
     top,
     cuticle,
@@ -107,6 +125,8 @@ export const s09Timing = (t: CueFns) => {
     plantPush: [adapted - 8, Math.max(adapted + 30, broadThin - 4)] as const,
     cutDraw: cut - 4,
     sectionPush: [cut + 22, Math.max(cut + 64, Math.min(crossSection + 2, cut + 80))] as const,
+    // the EXTENDED badge glides from the left column up into the section tag (it stays there for S09 and S10)
+    badgeFly: [Math.max(layers - 4, extWord + 26), Math.max(layers - 4, extWord + 26) + 28] as const,
     end: t.dur,
   };
 };
@@ -121,6 +141,10 @@ export const s09Sfx = (t: CueFns): SfxEvent[] => {
     { frame: k.cut, sfx: "snip", gainDb: -8 }, // the leaf is cut open
     { frame: k.sectionPush[0], sfx: "whoosh_zoom", gainDb: -7 }, // push into the cut: the cross-section
     { frame: k.crossSection, sfx: "ui_blip", gainDb: -12 }, // "cross-section"
+    { frame: k.two, sfx: "ui_blip", gainDb: -13 }, // the seedling's two seed leaves unfold
+    { frame: k.name, sfx: "ui_blip", gainDb: -14 }, // "name: everyone"
+    { frame: k.extWord, sfx: "ui_blip", gainDb: -11 }, // EXTENDED badge
+    { frame: k.badgeFly[0], sfx: "whoosh_soft", gainDb: -15 }, // the badge moves up to the section tag
     { frame: k.waxy, sfx: "ui_blip", gainDb: -11 }, // label: waxy cuticle
     { frame: k.upperWord, sfx: "ui_blip", gainDb: -11 }, // label: upper epidermis
     { frame: k.palWord, sfx: "ui_blip", gainDb: -11 }, // label: palisade mesophyll

@@ -43,6 +43,12 @@ export const s10Timing = (t: CueFns) => {
   const opened = t.word("opened", 1);
   const closed = t.word("closed", 1);
   const guardWord = t.word("guard", 1);
+  // "In the light, they open the stomata, so carbon dioxide can diffuse in."
+  const guardOpen = t.cue("guardOpen");
+  const inLight = t.word("light", 1);
+  const openNow = t.word("open", 1);
+  const co2Again = t.word("carbon", 3);
+  const diffuseIn = t.word("diffuse", 2);
   // ---- recap, top to bottom, in time with the list
   const recap = t.cue("recap");
   const rCuticle = t.word("cuticle", 1);
@@ -51,7 +57,7 @@ export const s10Timing = (t: CueFns) => {
   const rSpongy = t.word("spongy", 2);
   const rBundle = t.word("vascular", 2);
   const rLower = t.word("lower", 2);
-  const rStomata = t.word("stomata", 3);
+  const rStomata = t.word("stomata", 4); // "…lower epidermis with stomata and guard cells"
   const rGuard = t.word("guard", 2);
   return {
     spongy,
@@ -92,6 +98,11 @@ export const s10Timing = (t: CueFns) => {
     opened,
     closed,
     guardWord,
+    guardOpen,
+    inLight,
+    openNow,
+    co2Again,
+    diffuseIn,
     recap,
     rCuticle,
     rUpper,
@@ -104,6 +115,8 @@ export const s10Timing = (t: CueFns) => {
     // camera: in to the stoma for the gases (×2), closer for the guard cells, back out for the recap
     zoomIn: [gases - 6, gases + 34] as const,
     zoomGuard: [guard - 4, guard + 30] as const,
+    // the guard cells open the closed pore again (never before it has finished closing)
+    reopen: Math.max(openNow - 4, closed + 30),
     zoomOut: [recap - 2, Math.max(recap + 30, Math.min(recap + 46, rCuticle - 6))] as const,
     end: t.dur,
   };
@@ -124,6 +137,9 @@ export const s10Sfx = (t: CueFns): SfxEvent[] => {
     { frame: k.opened, sfx: "tick", gainDb: -10 }, // stoma opens
     { frame: k.closed, sfx: "tock", gainDb: -10 }, // stoma closes
     { frame: k.guardWord, sfx: "ui_blip", gainDb: -11 }, // label: guard cells
+    { frame: k.inLight - 6, sfx: "whoosh_soft", gainDb: -15 }, // light reaches the guard cells
+    { frame: k.reopen, sfx: "tick", gainDb: -10 }, // in the light the stoma opens again
+    { frame: k.co2Again, sfx: "ui_blip", gainDb: -13 }, // carbon dioxide diffuses in through it
     { frame: k.zoomOut[0], sfx: "whoosh_soft", gainDb: -10 }, // back out to the whole section
     { frame: k.rCuticle, sfx: "ui_blip", gainDb: -14 }, // recap: labels light top to bottom
     { frame: k.rSpongy, sfx: "ui_blip", gainDb: -14 },
