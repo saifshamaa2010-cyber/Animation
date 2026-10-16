@@ -28,9 +28,16 @@ const run = (cmd: string, args: string[]) => execFileSync(cmd, args, { stdio: "i
 run("npx", [
   "remotion", "render", comp, path.join(out, captions ? `${ep}-preview-captions.mp4` : `${ep}.mp4`),
   `--props=${JSON.stringify({ audio, captions })}`,
-  "--codec=h264", "--crf=16", "--x264-preset=slow", "--audio-codec=aac", "--audio-bitrate=320k",
+  // the captioned preview is for review only: quicker to render, small enough to send in a chat
+  ...(captions ? ["--crf=25", "--x264-preset=veryfast", "--audio-bitrate=192k"] : ["--crf=16", "--x264-preset=slow", "--audio-bitrate=320k"]),
+  "--codec=h264", "--audio-codec=aac",
   "--pixel-format=yuv420p", "--concurrency=4",
 ]);
+
+if (captions) {
+  console.log(`\nPreview → ${path.relative(root, out)}/${ep}-preview-captions.mp4`);
+  process.exit(0);
+}
 
 // Deliverables next to the video.
 // The mastered voice stem (48 kHz, levelled, peak-safe) — the raw TTS stays in public/ as an archive.
