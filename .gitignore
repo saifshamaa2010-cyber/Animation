@@ -8,6 +8,7 @@ out
 
 # Python tooling + downloaded voice/recognition models (re-downloaded by the setup script)
 .venv/
+.venv-tts/
 models/
 __pycache__/
 .cache/
