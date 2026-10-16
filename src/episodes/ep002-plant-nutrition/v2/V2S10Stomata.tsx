@@ -191,11 +191,21 @@ const beatsOf = (k: ReturnType<typeof s10Timing>) => {
 const buddiesFor = (k: ReturnType<typeof s10Timing>, b: Beats): Buddy[] => {
   const g = k.gases;
   // before the range: carbon dioxide already inside diffuses through the air spaces to the cells
-  const inside: Buddy[] = [
-    { kind: "co2", seed: 41, home: [905, 330], go: k.carbon, travel: 96, fade: "absorb", target: pickCell("l", 0) },
-    { kind: "co2", seed: 42, home: [1030, 300], go: k.carbon + 18, travel: 96, fade: "absorb", target: pickCell("r", 0) },
-    { kind: "co2", seed: 43, home: [965, 262], go: k.carbon + 36, travel: 104, fade: "absorb", target: pickCell("r", 1) },
-  ].map((x) => ({ ...x, route: makeRoute([x.home, [x.home[0] + (x.target.cx - x.home[0]) * 0.5, x.home[1] - 16], cellDoor(x.target, x.home)]) }) as Buddy);
+  const insideSpec: { seed: number; home: Pt; go: number; travel: number; target: Cell }[] = [
+    { seed: 41, home: [905, 330], go: k.carbon, travel: 96, target: pickCell("l", 0) },
+    { seed: 42, home: [1030, 300], go: k.carbon + 18, travel: 96, target: pickCell("r", 0) },
+    { seed: 43, home: [965, 262], go: k.carbon + 36, travel: 104, target: pickCell("r", 1) },
+  ];
+  const inside: Buddy[] = insideSpec.map((x) => ({
+    kind: "co2",
+    seed: x.seed,
+    home: x.home,
+    go: x.go,
+    travel: x.travel,
+    fade: "absorb",
+    target: x.target,
+    route: makeRoute([x.home, [x.home[0] + (x.target.cx - x.home[0]) * 0.5, x.home[1] - 16], cellDoor(x.target, x.home)]),
+  }));
 
   // daytime: carbon dioxide from the outside air diffuses in through the open stoma
   const dayIn: { seed: number; home: Pt; go: number; travel: number; pocket: Pt; cell: Cell }[] = [
