@@ -30,11 +30,14 @@ export const SURFACE = TUBE_BOTTOM - TUBES.tubeH * LEVEL;
 /** Lamp left of tube A, standing on the same bench as the rack. */
 export const LAMP = { x: 700, y: 392, beam: 290 } as const;
 /** The sprig of pondweed standing in tubes A and B, completely under the indicator (cut end at the top). */
-export const WEED = { base: 606, len: 196, scale: 0.6 } as const;
+export const WEED = { base: 606, len: 210, scale: 0.8 } as const;
 export const WEED_TIP = WEED.base - WEED.len;
 export const WEED_CY = WEED.base - WEED.len / 2;
 /** Condition labels under the tubes, result labels / question marks above the bungs. */
 export const COND_Y = 704;
+/** Tube C's condition label ("no pondweed") sits a little right of the tube's centre, so it never reads as
+ * one phrase with tube B's "dark". */
+export const COND_C_X = SLOTS[2][0] + 20;
 export const TOP_Y = 236;
 /** The demo tube (S16, first half). */
 export const DEMO = { x: 960, y: 260, w: 130, h: 400, level: 0.78 } as const;
@@ -344,13 +347,13 @@ export const IndicatorTube: React.FC<IndicatorTubeProps> = ({
                 <g>
                   <Pondweed x={x} y={WEED.base} len={WEED.len} scale={WEED.scale} progress={weed} />
                   {sunlit > 0 ? (
-                    <g filter={`url(#${id}-sun)`} opacity={0.3 * sunlit}>
+                    <g filter={`url(#${id}-sun)`} opacity={0.25 * sunlit}>
                       <Pondweed x={x} y={WEED.base} len={WEED.len} scale={WEED.scale} progress={weed} />
                     </g>
                   ) : null}
                   {/* the pondweed is under the liquid: a little of the indicator's colour over it */}
                   <g clipPath={`url(#${id}-l)`}>
-                    <rect x={x - r - 4} y={surf} width={w + 8} height={bottom - surf + 10} fill={tint} opacity={0.16 * Math.min(1, weed)} />
+                    <rect x={x - r - 4} y={surf} width={w + 8} height={bottom - surf + 10} fill={tint} opacity={0.1 * Math.min(1, weed)} />
                   </g>
                 </g>
               ) : null}

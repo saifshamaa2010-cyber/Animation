@@ -6,8 +6,8 @@
  *    real curve draws along it.
  * 3. Temperature: rises to an optimum, then falls quickly.
  * 4. Why: the light and CO2 graphs step aside for the EP001 teal enzyme and its substrates. On
- *    "This next part is for the Extended paper" the EXTENDED badge joins the section tag (which brightens
- *    while it arrives) and stays until the exam technique. A
+ *    "This next part is for the Extended paper" the EXTENDED badge can join the section tag (which brightens
+ *    while it arrives) until the exam technique — off by default, see MARK_EXTENDED. A
  *    thermometer and the marker on the temperature graph show the temperature. Below the optimum the
  *    molecules move faster (wander speed and trails ∝ temperature) and dock more often (each docking =
  *    an effective collision; the substrate turns into amber product). Above it the weak bonds snap,
@@ -31,7 +31,7 @@ import { jitter, prog, thermalAmplitude, window01 } from "../../../lib/motion";
 import { track } from "../../../lib/track";
 import { useScene } from "../../../lib/timeline";
 import { GRAPHS } from "./layout";
-import { s14Timing } from "./S14RateResults.timing";
+import { MARK_EXTENDED, s14Timing } from "./S14RateResults.timing";
 import {
   BOUND,
   CommandChip,
@@ -230,8 +230,8 @@ export const S14RateResults: React.FC = () => {
   const whyLine = prog(f, k.why - 2, 18, (v) => v);
 
   // ---------------------------------------------------------------- Extended part: {extendedTemp} → {describe}
-  const extendedBadge = prog(f, k.extendedTemp, 18) * (1 - prog(f, k.describe - 4, 16));
-  const tagBright = prog(f, k.extendedTemp - 4, 14) * (1 - prog(f, Math.max(k.extendedTemp + 60, k.below + 30), 30, EASE.inOut));
+  const extendedBadge = MARK_EXTENDED ? prog(f, k.extendedTemp, 18) * (1 - prog(f, k.describe - 4, 16)) : 0;
+  const tagBright = MARK_EXTENDED ? prog(f, k.extendedTemp - 4, 14) * (1 - prog(f, Math.max(k.extendedTemp + 60, k.below + 30), 30, EASE.inOut)) : 0;
 
   const subs = HOMES.map((_, i) => {
     let s = subState(i, f);

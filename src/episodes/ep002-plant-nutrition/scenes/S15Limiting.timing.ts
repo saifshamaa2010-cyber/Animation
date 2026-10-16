@@ -122,7 +122,7 @@ export const s15Timing = (t: CueFns) => {
 export const s15Sfx = (t: CueFns): SfxEvent[] => {
   const k = s15Timing(t);
   return [
-    { frame: k.extendedWord, sfx: "ui_blip", gainDb: -10 }, // section 8 + EXTENDED badge
+    { frame: k.extendedWord, sfx: "ui_blip", gainDb: -10 }, // section 8 tag settles in
     { frame: k.limitingFactors, sfx: "ui_blip", gainDb: -12 }, // "limiting factors"
     { frame: k.limits, sfx: "ui_blip", gainDb: -11 }, // definition completes
     { frame: k.graph, sfx: "whoosh_soft", gainDb: -12 }, // back to the light graph

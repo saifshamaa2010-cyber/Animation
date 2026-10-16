@@ -1,16 +1,21 @@
 /**
  * S17 · Reveal — what the three tubes do, why, and the respiration myth. Same rack as S16 (seamless cut).
  *
- * 1. "A few hours later". Tube A (light): CO2 dots go INTO the leaf, purple spreads out from the leaf;
+ * 1. "A few hours later". Tube A (light): CO2 dots go INTO the pondweed, purple spreads out from it;
  *    the rate bars: photosynthesis longer than respiration. A few dots still come out (respiration).
  * 2. Tube B (dark): the foil is lifted — yellow, full of CO2; photosynthesis bar drops to zero, the
- *    respiration bar carries on, more dots come OUT of the leaf.
- * 3. Tube C (no leaf) stays red — the control; both bars empty. Then A and B's leaves glow: the leaf caused it.
- * 4. Dim light: a fresh tube A goes in, the lamp dims (fewer photons); the bars become equal, dots go in
- *    and out at the same rate — it stays red.
+ *    respiration bar carries on, more dots come OUT of the pondweed.
+ * 3. Tube C (no pondweed) stays red — the control; both bars empty. Then A and B's pondweed glows: it
+ *    caused the changes.
+ * 4. Dim light: a fresh tube A goes in, the lamp dims (fewer photons); the bars become equal ("rates
+ *    equal"). "No net…": the respiration bar slides up onto the photosynthesis bar and cancels ALL of it
+ *    ("no net change"); one dot goes in on "uptake", one comes out on "release" — it stays red.
  * 5. The experiment steps back; MythCard: "Plants respire only at night" → "all the time" (the
  *    respiration bar never stops while photosynthesis switches on and off with day and night).
- * 6. ExamTip "net uptake of carbon dioxide": the bars show net = photosynthesis minus respiration.
+ * 6. Bright light: photosynthesis long again; on "net uptake" the part beyond respiration is outlined
+ *    "net". "Net means overall": the respiration bar slides up and cancels its share — what is left is the
+ *    net ("net = overall"); the bars glow on "takes in" / "gives out". "Net is the word examiners look
+ *    for": ExamTip "net uptake of carbon dioxide", "net" underlined.
  */
 import React from "react";
 import { C, EASE } from "../../../brand/tokens";
@@ -25,45 +30,46 @@ import { Key, pulse, track } from "../../../lib/track";
 import { useScene } from "../../../lib/timeline";
 import { s17Timing } from "./S17Reveal.timing";
 import {
+  COND_C_X,
   COND_Y,
   ColourKey,
   DotPlan,
   IND_TEXT,
   IndicatorTube,
   KEY_CX,
-  LEAF,
   LampWithLight,
   RACK_SEEDS,
   RackBase,
   SLOTS,
   TOP_Y,
   TubeText,
+  WEED_CY,
   dotAt,
   indColour,
-  leafPoint,
   tubeHomes,
+  weedPoint,
 } from "./parts/S16-tubes";
 import { HoursLater, MythLine, RateBars } from "./parts/S17-rates";
 
 const [XA, XB, XC] = SLOTS.map((s) => s[0]);
-const LEAF_C = (x: number): Pt => [x, LEAF.cy];
+const WEED_C = (x: number): Pt => [x, WEED_CY];
 
 /** Extra homes that keep clear of the dots already there. */
 const moreHomes = (x: number, existing: readonly Pt[], n: number, seed: number): Pt[] => {
   const out: Pt[] = [];
-  for (const p of tubeHomes(x, 60, seed, { leaf: true, minD: 14 })) {
+  for (const p of tubeHomes(x, 60, seed, { weed: true, minD: 14 })) {
     if (out.length >= n) break;
     if ([...existing, ...out].every((q) => Math.hypot(q[0] - p[0], q[1] - p[1]) >= 14)) out.push(p);
   }
   return out;
 };
 
-const HOMES_A = tubeHomes(XA, 9, RACK_SEEDS[0], { leaf: true });
-const HOMES_B = tubeHomes(XB, 9, RACK_SEEDS[1], { leaf: true });
+const HOMES_A = tubeHomes(XA, 9, RACK_SEEDS[0], { weed: true });
+const HOMES_B = tubeHomes(XB, 9, RACK_SEEDS[1], { weed: true });
 const HOMES_C = tubeHomes(XC, 9, RACK_SEEDS[2]);
 const EXTRA_A = moreHomes(XA, HOMES_A, 2, 61);
 const EXTRA_B = moreHomes(XB, HOMES_B, 12, 62);
-const HOMES_A2 = tubeHomes(XA, 9, 41, { leaf: true });
+const HOMES_A2 = tubeHomes(XA, 9, 41, { weed: true });
 
 /** Keyframes forced into order, so a fast narrator can never make a track run backwards. */
 const mono = (keys: readonly Key[]): Key[] => {
@@ -84,7 +90,7 @@ export const S17Reveal: React.FC = () => {
   // ---------------------------------------------------------------- focus: the tube being explained stays bright
   const segA = Math.max(window01(f, k.lightTube - 4, k.darkTube - 4, 12), window01(f, k.dim - 6, BIG, 12));
   const segB = window01(f, k.darkTube - 4, k.controlTube - 4, 12);
-  const segC = window01(f, k.controlTube - 4, k.leafCaused - 4, 12);
+  const segC = window01(f, k.controlTube - 4, k.weedCaused - 4, 12);
   const anyFocus = Math.max(segA, segB, segC);
   const focus = (seg: number) => 1 - 0.5 * anyFocus * (1 - seg);
   // the experiment steps back for the myth
@@ -106,26 +112,28 @@ export const S17Reveal: React.FC = () => {
   const plansA: DotPlan[] = [
     ...HOMES_A.map((home, n) => {
       const at = n < 7 ? absorbA[n] : n === 7 ? k.takes - 2 : undefined;
-      return { home, seed: 200 + n, exitAt: at, to: at !== undefined ? leafPoint(XA, n) : undefined };
+      return { home, seed: 200 + n, exitAt: at, to: at !== undefined ? weedPoint(XA, n) : undefined };
     }),
     // respiration still gives a little CO2 out
-    ...EXTRA_A.map((home, n) => ({ home, seed: 300 + n, enterAt: n === 0 ? k.r1 + 8 : k.gives1 - 2, from: leafPoint(XA, 30 + n), travel: 34 })),
+    ...EXTRA_A.map((home, n) => ({ home, seed: 300 + n, enterAt: n === 0 ? k.r1 + 8 : k.gives1 - 2, from: weedPoint(XA, 30 + n), travel: 34 })),
   ];
   const dotsA = plansA.map((p) => dotAt(f, p));
 
   // ---------------------------------------------------------------- tube A2: a fresh tube in dim light → stays red
   const dimOn = prog(f, k.dimW - 2, 14);
   const lampOn = 1 - 0.7 * dimOn;
-  const swaps = [0, 1, 2];
+  // as many dots go in as come out: the last pair on "…no net uptake or release"
+  const a2Out = [k.rates - 4, k.rates + 40, Math.max(k.rates + 60, k.uptake - 6)];
+  const a2In = [k.rates + 18, k.rates + 62, Math.max(k.rates + 82, k.release - 6)];
   const plansA2: DotPlan[] = [
     ...HOMES_A2.map((home, n) => ({
       home,
       seed: 400 + n,
-      exitAt: n < 3 ? k.rates - 4 + swaps[n] * 44 : undefined,
-      to: n < 3 ? leafPoint(XA, 50 + n) : undefined,
+      exitAt: n < 3 ? a2Out[n] : undefined,
+      to: n < 3 ? weedPoint(XA, 50 + n) : undefined,
       travel: 34,
     })),
-    ...HOMES_A2.slice(0, 3).map((home, n) => ({ home, seed: 420 + n, enterAt: k.rates + 18 + n * 44, from: leafPoint(XA, 60 + n), travel: 34 })),
+    ...HOMES_A2.slice(0, 3).map((home, n) => ({ home, seed: 420 + n, enterAt: a2In[n], from: weedPoint(XA, 60 + n), travel: 34 })),
   ];
   const dotsA2 = plansA2.map((p) => dotAt(f, p));
 
@@ -133,16 +141,16 @@ export const S17Reveal: React.FC = () => {
   const foilLift = prog(f, k.darkTube - 2, 22, EASE.inOut);
   const plansB: DotPlan[] = [
     ...HOMES_B.map((home, n) => ({ home, seed: 220 + n })),
-    // given out by the leaf during the hours in the dark (already there)
+    // given out by the pondweed during the hours in the dark (already there)
     ...EXTRA_B.slice(0, 9).map((home, n) => ({ home, seed: 320 + n })),
     // …and still coming out now: respiration carries on
-    ...EXTRA_B.slice(9).map((home, n) => ({ home, seed: 340 + n, enterAt: [k.r2 + 6, k.gives2 - 2, k.gives2 + 14][n], from: leafPoint(XB, 40 + n), travel: 34 })),
+    ...EXTRA_B.slice(9).map((home, n) => ({ home, seed: 340 + n, enterAt: [k.r2 + 6, k.gives2 - 2, k.gives2 + 14][n], from: weedPoint(XB, 40 + n), travel: 34 })),
   ];
   const dotsB = plansB.map((p) => dotAt(f, p));
 
-  // ---------------------------------------------------------------- tube C (no leaf) → stays red
+  // ---------------------------------------------------------------- tube C (no pondweed) → stays red
   const dotsC = HOMES_C.map((home, n) => dotAt(f, { home, seed: 240 + n }));
-  const leafGlow = pulse(f, k.leafCaused - 4, 44);
+  const weedGlow = pulse(f, k.weedCaused - 4, 44);
 
   // ---------------------------------------------------------------- labels round the tubes
   const qA = 1 - prog(f, k.lightTube - 2, 10);
@@ -159,7 +167,7 @@ export const S17Reveal: React.FC = () => {
   // ---------------------------------------------------------------- the key: the colour being explained is ringed
   const keyHi: [number, number, number] = [
     window01(f, k.yellowW - 2, k.controlTube - 4, 10),
-    Math.max(window01(f, k.staysRed - 2, k.leafCaused + 10, 10), window01(f, k.staysRed2 - 2, k.myth, 10)),
+    Math.max(window01(f, k.staysRed - 2, k.weedCaused + 10, 10), window01(f, k.staysRed2 - 2, k.myth, 10)),
     window01(f, k.purpleW - 2, k.darkTube - 4, 10),
   ];
 
@@ -188,19 +196,33 @@ export const S17Reveal: React.FC = () => {
     mono([
       [k.r1 - 2, 0],
       [k.r1 + 18, LO, EASE.out],
-      [k.noLeaf - 2, LO],
-      [k.noLeaf + 14, 0],
+      [k.noWeed - 2, LO],
+      [k.noWeed + 14, 0],
       [k.dim + 12, 0],
       [k.dim + 30, LO, EASE.out],
     ]),
   );
   const psIn = prog(f, k.ps1 - 4, 16);
   const rIn = prog(f, k.r1 - 4, 16);
-  const rGlow = Math.max(pulse(f, k.r2 - 2, 40), pulse(f, k.mythRespire - 2, 36), window01(f, k.all - 2, k.night + 34, 12));
-  const psGlow = pulse(f, k.faster2 - 2, 36);
+  const rGlow = Math.max(
+    pulse(f, k.r2 - 2, 40),
+    pulse(f, k.mythRespire - 2, 36),
+    window01(f, k.all - 2, k.night + 34, 12),
+    pulse(f, k.gives3 - 2, 40), // "…than it gives out"
+  );
+  const psGlow = Math.max(pulse(f, k.faster2 - 2, 36), pulse(f, k.takes2 - 2, 40)); // "…the plant takes in more"
   const equal = window01(f, k.equal - 2, k.myth, 12);
+  // dim light: respiration cancels ALL of photosynthesis → no net change
+  const noNetP = window01(f, Math.max(k.noNetW + 18, k.release - 4), k.myth, 12);
+  // bright light: respiration cancels only its share; the rest is the net uptake ("net means overall")
+  const cancel =
+    f < k.net
+      ? { p: prog(f, k.noNetW - 6, 30, (v) => v), op: 1 - prog(f, k.myth - 6, 14) }
+      : { p: prog(f, k.overallW + 6, 34, (v) => v), op: 1 };
   const net = prog(f, k.netW - 2, 18);
-  const netPulse = pulse(f, k.netWord - 2, 36);
+  // "net = overall" has done its job once the exam tip arrives (keeps the words on screen down)
+  const overall = prog(f, k.overallW - 2, 16) * (1 - prog(f, k.netExam - 4, 14, EASE.in));
+  const netPulse = pulse(f, k.wordW - 2, 36);
 
   // ---------------------------------------------------------------- myth + exam tip
   const cardOut = prog(f, k.net - 2, 18, EASE.in);
@@ -210,7 +232,7 @@ export const S17Reveal: React.FC = () => {
   const CARD = { x: 1180, y: 420, w: 1240 };
   const MYTH_S = 40 / 34;
   const TIP = { x: 1180, y: 420, text: "net uptake of carbon dioxide" };
-  const tipP = prog(f, k.netW - 4, 20);
+  const tipP = prog(f, k.netExam - 4, 20); // on: Net is the word examiners look for.
   const tipW = Math.max(textWidth(TIP.text, 50, 700), textWidth("EXAM TIP", 40, 700) + 60) + 90;
   const tipL = TIP.x - tipW / 2;
   const tipBase = TIP.y - 166 / 2 + 122;
@@ -226,17 +248,17 @@ export const S17Reveal: React.FC = () => {
         <IndicatorTube
           x={XA}
           colour={indColour(0)}
-          spread={{ colour: indColour(1), p: spreadA, at: LEAF_C(XA), reach: 300 }}
+          spread={{ colour: indColour(1), p: spreadA, at: WEED_C(XA), reach: 300 }}
           dots={dotsA}
-          leaf={1}
+          weed={1}
           sunlit={0.8}
-          leafGlow={leafGlow}
+          weedGlow={weedGlow}
           bung={1}
           opacity={focus(segA) * (1 - oldAOut)}
           dy={-70 * EASE.in(oldAOut)}
         />
-        <IndicatorTube x={XA} colour={indColour(0)} dots={dotsA2} leaf={1} sunlit={0.8 * lampOn} bung={1} progress={newAIn} opacity={focus(segA)} dy={-60 * (1 - EASE.out(newAIn))} />
-        <IndicatorTube x={XB} colour={indColour(-1)} dots={dotsB} leaf={1} leafGlow={leafGlow} bung={1} foil={1} foilLift={foilLift} opacity={focus(segB)} />
+        <IndicatorTube x={XA} colour={indColour(0)} dots={dotsA2} weed={1} sunlit={0.8 * lampOn} bung={1} progress={newAIn} opacity={focus(segA)} dy={-60 * (1 - EASE.out(newAIn))} />
+        <IndicatorTube x={XB} colour={indColour(-1)} dots={dotsB} weed={1} weedGlow={weedGlow} bung={1} foil={1} foilLift={foilLift} opacity={focus(segB)} />
         <IndicatorTube x={XC} colour={indColour(0)} dots={dotsC} bung={1} opacity={focus(segC)} />
 
         {/* below: the condition; above: the result */}
@@ -253,8 +275,8 @@ export const S17Reveal: React.FC = () => {
           <TubeText x={XB} y={TOP_Y} text="yellow" p={resB} color={IND_TEXT.yellow} size={48} weight={700} />
         </g>
         <g opacity={focus(segC) * words}>
-          <TubeText x={XC} y={COND_Y} text="no leaf" p={1} />
-          <TubeText x={XC} y={COND_Y + 60} text="control" p={controlP} weight={700} />
+          <TubeText x={COND_C_X} y={COND_Y} text="no pondweed" p={1} />
+          <TubeText x={COND_C_X} y={COND_Y + 60} text="control" p={controlP} weight={700} />
           <TubeText x={XC} y={TOP_Y} text="?" p={qC} size={64} weight={700} />
           <TubeText x={XC} y={TOP_Y} text="red" p={resC} color={IND_TEXT.red} size={48} weight={700} />
         </g>
@@ -264,7 +286,20 @@ export const S17Reveal: React.FC = () => {
 
       {/* ============ why: the two rates ============ */}
       <HoursLater x={130} y={262} p={hoursP} sweep={hoursSweep} opacity={hoursOut} />
-      <RateBars ps={psLen} r={rLen} psIn={psIn} rIn={rIn} rGlow={rGlow} psGlow={psGlow} equal={equal} net={net} netPulse={netPulse} />
+      <RateBars
+        ps={psLen}
+        r={rLen}
+        psIn={psIn}
+        rIn={rIn}
+        rGlow={rGlow}
+        psGlow={psGlow}
+        equal={equal}
+        noNet={noNetP}
+        cancel={cancel}
+        net={net}
+        netPulse={netPulse}
+        overall={overall}
+      />
 
       {/* ============ the myth ============ */}
       {/* MythCard's tag is drawn at 34 px; scaled by 40/34 so it meets the 40 px minimum (same on-screen width) */}
@@ -276,7 +311,7 @@ export const S17Reveal: React.FC = () => {
       {/* ============ the exam word ============ */}
       <ExamTip x={TIP.x} y={TIP.y} text={TIP.text} progress={tipP} />
       {tipP > 0.9 ? (
-        <HandUnderline x1={tipL + 42} x2={tipL + 46 + textWidth("net", 50, 700)} y={tipBase + 16} progress={prog(f, k.netWord - 2, 16)} color={C.amber} width={6} seed={17} />
+        <HandUnderline x1={tipL + 42} x2={tipL + 46 + textWidth("net", 50, 700)} y={tipBase + 16} progress={prog(f, k.wordW - 2, 16)} color={C.amber} width={6} seed={17} />
       ) : null}
 
       <SectionTag n={9} title="Gas exchange" t={200} extended />

@@ -1,5 +1,5 @@
 /**
- * S15 · Limiting factors (EXTENDED) — explaining the graph shapes.
+ * S15 · Limiting factors — explaining the graph shapes (Extended content; the EXTENDED badge follows MARK_EXTENDED).
  *
  * 1. Opens on S14's three graphs (its exam chips clear); the curves pulse on "shapes";
  *    "limiting factor" is defined with two pills: in short supply → limits the rate.
@@ -31,6 +31,7 @@ import { pulse, track } from "../../../lib/track";
 import { useScene } from "../../../lib/timeline";
 import { GRAPHS } from "./layout";
 import { s15Timing } from "./S15Limiting.timing";
+import { MARK_EXTENDED } from "./S14RateResults.timing";
 import { S14_CHIPS, S14_DESCRIBE } from "./S14RateResults";
 import { CO2_SPLIT, CommandChip, HIGH_KNEE, HIGH_PLATEAU, LIGHT_PLATEAU, LIGHT_SLOPE, TEMP_OPT, co2Curve, lightCurve, lightCurveHighCo2, tempCurve } from "./parts/S14-results";
 import type { Curve } from "../../../components/Graph";
@@ -99,7 +100,8 @@ export const S15Limiting: React.FC = () => {
     [Math.max(k.newCurve + 30, k.forLonger + 12), HIGH_KNEE + 0.15, EASE.inOut],
     [Math.max(k.forLonger + 42, k.levelsHigher + 20), 10, EASE.inOut],
   ]);
-  const iceMarker = f < k.newCurve - 6 ? shared : peel;
+  // the dot rides the head of the new curve, stopping short of the "higher carbon dioxide" label
+  const iceMarker = Math.min(9.4, f < k.newCurve - 6 ? shared : peel);
   const iceMarkerOp = window01(f, k.low - 4, k.proves + 10, 10);
   const sameBand = window01(f, k.low - 6, k.newCurve + 10, 16); // the light-limited part lights up again
   const stillP = prog(f, k.still - 4, 18) * (1 - prog(f, k.newCurve + 6, 14));
@@ -381,7 +383,7 @@ export const S15Limiting: React.FC = () => {
         <SummerPicture cx={CARD.xs[2]} f={f} start={k.summer} co2={k.summerFactor} bright={k.plenty} tiny={k.tiny} />
       </ConditionCard>
 
-      <SectionTag n={8} title="Limiting factors" t={f} extended />
+      <SectionTag n={8} title="Limiting factors" t={f} extended={MARK_EXTENDED} />
     </Stage>
   );
 };

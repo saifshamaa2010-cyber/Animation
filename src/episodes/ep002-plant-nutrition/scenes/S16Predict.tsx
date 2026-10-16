@@ -29,6 +29,7 @@ import {
   ChemLeader,
   Co2Dot,
   ColourKey,
+  COND_C_X,
   COND_Y,
   DEMO,
   DotDraw,
@@ -218,7 +219,7 @@ export const S16Predict: React.FC = () => {
       <ChemLeader anchor={BUNG_ANCHOR} at={BUNG_AT} align="end" text="bung: no CO2 in or out" progress={bungLabelIn} opacity={bungLabelOut} />
       <TubeText x={SLOTS[0][0]} y={COND_Y} text="light" p={condP[0]} color={C.sun} />
       <TubeText x={SLOTS[1][0]} y={COND_Y} text="dark" p={condP[1]} />
-      <TubeText x={SLOTS[2][0]} y={COND_Y} text="no pondweed" p={condP[2]} />
+      <TubeText x={COND_C_X} y={COND_Y} text="no pondweed" p={condP[2]} />
       {SLOTS.map((slot, i) => (
         <TubeText key={i} x={slot[0]} y={TOP_Y} text="?" p={qMarks[i]} size={64} weight={700} />
       ))}
