@@ -107,6 +107,25 @@ export const W2 = {
   skyGold: "#F7B24E",
   hill: "#7CB65A",
   hillDeep: "#4F8E43",
+  // old journal page (history)
+  parchment: "#F3E3C0",
+  parchmentDeep: "#D9BC88",
+  sepia: "#6B4A2B",
+  sepiaLight: "#A47B52",
+  // notebook paper (definitions, equations, exam technique)
+  notePaper: "#FBF8F1",
+  noteShade: "#EEE7D8",
+  noteLine: "#A9C6E8",
+  noteMargin: "#E88D8D",
+  // soil cut-away (roots, mineral ions)
+  skyDay: "#BFE3F7",
+  skyDayLow: "#E8F5FB",
+  grass: "#78B957",
+  grassDeep: "#4F8E3E",
+  soilTop: "#8A6447",
+  soilMid: "#6E4B34",
+  soilDeep: "#4A3122",
+  pebble: "#A38B74",
   // Chloro the mascot
   chloroLight: "#B5EC6A",
   chloroMid: "#6CCB4E",

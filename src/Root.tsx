@@ -8,7 +8,9 @@ import { Episode as Episode2, ScenePreview as ScenePreview2 } from "./episodes/e
 import { TL as TL2 } from "./episodes/ep002-plant-nutrition/timeline";
 import { Thumbnail as Thumbnail2 } from "./episodes/ep002-plant-nutrition/Thumbnail";
 import { FunKitSheet } from "./components/fun/FunKitSheet";
-import { V2Preview, V2ScenePreview, V2_PREVIEW_FRAMES, V2_SCENES } from "./episodes/ep002-plant-nutrition/v2/V2Preview";
+import { PartCardSample, WorldSample } from "./components/fun/WorldSamples";
+import { V2Preview, V2_PREVIEW_FRAMES } from "./episodes/ep002-plant-nutrition/v2/V2Preview";
+import { EpisodeV2, ScenePreviewV2 } from "./episodes/ep002-plant-nutrition/v2/Episode";
 import { PhotosynthesisPreview } from "./previews/PhotosynthesisPreview";
 import { BioKitDemo } from "./components/bio/BioKitDemo";
 
@@ -81,10 +83,25 @@ export const RemotionRoot: React.FC = () => {
         </Folder>
         <Still id="ep002-thumbnail" component={Thumbnail2} width={1280} height={720} />
         <Composition id="fun-kit-sheet" component={FunKitSheet} durationInFrames={120} fps={30} width={1920} height={1080} />
+        <Composition id="part-card-sample" component={PartCardSample} durationInFrames={120} fps={30} width={1920} height={1080} />
+        {(["desk", "bench", "leaf", "meadow", "journal", "notebook", "soil"] as const).map((w) => (
+          <Composition key={w} id={`world-${w}`} component={WorldSample} durationInFrames={30} fps={30} width={1920} height={1080} defaultProps={{ world: w }} />
+        ))}
         <Folder name="ep002-v2">
-          <Composition id="ep002v2-preview" component={V2Preview} durationInFrames={V2_PREVIEW_FRAMES} fps={30} width={1920} height={1080} />
-          {V2_SCENES.map((s) => (
-            <Composition key={s.id} id={`ep002v2-${s.id}`} component={V2ScenePreview} durationInFrames={sceneLen(s.id, TL2)} fps={30} width={1920} height={1080} defaultProps={{ sceneId: s.id }} />
+          <Composition id="ep002v2" component={EpisodeV2} durationInFrames={TL2.durationFrames} fps={30} width={1920} height={1080} defaultProps={{ audio: EP2_AUDIO, captions: false }} />
+          <Composition id="ep002v2-preview" component={EpisodeV2} durationInFrames={TL2.durationFrames} fps={30} width={1920} height={1080} defaultProps={{ audio: EP2_AUDIO, captions: true }} />
+          <Composition id="ep002v2-style-sample" component={V2Preview} durationInFrames={V2_PREVIEW_FRAMES} fps={30} width={1920} height={1080} />
+          {TL2.scenes.map((s) => (
+            <Composition
+              key={s.id}
+              id={`ep002v2-${s.id}`}
+              component={ScenePreviewV2}
+              durationInFrames={sceneLen(s.id, TL2)}
+              fps={30}
+              width={1920}
+              height={1080}
+              defaultProps={{ sceneId: s.id, audio: EP2_AUDIO, captions: true }}
+            />
           ))}
         </Folder>
       </Folder>

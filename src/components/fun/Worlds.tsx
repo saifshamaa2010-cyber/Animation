@@ -5,7 +5,7 @@ import { H, W, W2 } from "../../brand/tokens";
 import { FONT } from "../../brand/fonts";
 import { useSvgId } from "../ids";
 
-export type WorldKind = "desk" | "bench" | "leaf" | "meadow";
+export type WorldKind = "desk" | "bench" | "leaf" | "meadow" | "journal" | "notebook" | "soil";
 
 /** Soft, slow drifting light motes (a world's atmosphere). Deterministic. */
 const Motes: React.FC<{ n: number; color: string; seed: string; opacity?: number; area?: readonly [number, number, number, number] }> = ({
@@ -137,14 +137,126 @@ const Meadow: React.FC = () => {
   );
 };
 
+/** An old journal page: aged parchment, faint rules, foxing and a darker vignette (for history). */
+const Journal: React.FC = () => {
+  const id = useSvgId("journal");
+  return (
+    <g>
+      <defs>
+        <radialGradient id={`${id}-p`} cx="50%" cy="45%" r="75%">
+          <stop offset="0" stopColor={W2.parchment} />
+          <stop offset="0.8" stopColor={W2.parchmentDeep} />
+          <stop offset="1" stopColor={W2.sepiaLight} />
+        </radialGradient>
+        <filter id={`${id}-n`} x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves={2} seed={7} result="n" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.42  0 0 0 0 0.29  0 0 0 0 0.17  0 0 0 0.10 0" />
+        </filter>
+      </defs>
+      <rect width={W} height={H} fill={`url(#${id}-p)`} />
+      <rect width={W} height={H} filter={`url(#${id}-n)`} />
+      {Array.from({ length: 14 }, (_, i) => (
+        <line key={i} x1={150} x2={W - 150} y1={150 + i * 62} y2={150 + i * 62} stroke={W2.sepia} strokeOpacity={0.07} strokeWidth={2} />
+      ))}
+      {[
+        [260, 880, 60],
+        [1650, 210, 44],
+        [1500, 930, 30],
+      ].map(([x, y, r], i) => (
+        <circle key={i} cx={x} cy={y} r={r} fill={W2.sepiaLight} opacity={0.12} />
+      ))}
+    </g>
+  );
+};
+
+/** Notebook paper: cream page, blue rules, red margin line (definitions, equations, exam technique). */
+const Notebook: React.FC = () => {
+  const id = useSvgId("note");
+  return (
+    <g>
+      <defs>
+        <linearGradient id={`${id}-p`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor={W2.notePaper} />
+          <stop offset="1" stopColor={W2.noteShade} />
+        </linearGradient>
+        <radialGradient id={`${id}-v`} cx="50%" cy="45%" r="80%">
+          <stop offset="0.7" stopColor="#000" stopOpacity="0" />
+          <stop offset="1" stopColor="#5A4A2E" stopOpacity="0.16" />
+        </radialGradient>
+      </defs>
+      <rect width={W} height={H} fill={`url(#${id}-p)`} />
+      {Array.from({ length: 16 }, (_, i) => (
+        <line key={i} x1={0} x2={W} y1={120 + i * 62} y2={120 + i * 62} stroke={W2.noteLine} strokeOpacity={0.55} strokeWidth={2} />
+      ))}
+      <line x1={150} x2={150} y1={0} y2={H} stroke={W2.noteMargin} strokeOpacity={0.7} strokeWidth={3} />
+      {[300, 540, 780].map((y) => (
+        <circle key={y} cx={60} cy={y} r={18} fill="#D9D0BE" />
+      ))}
+      <rect width={W} height={H} fill={`url(#${id}-v)`} />
+    </g>
+  );
+};
+
+/** Soil cut-away: a strip of sky and grass above, soil layers with pebbles below (`groundY`). */
+const Soil: React.FC<{ groundY: number }> = ({ groundY }) => {
+  const id = useSvgId("soil");
+  const f = useCurrentFrame();
+  return (
+    <g>
+      <defs>
+        <linearGradient id={`${id}-sky`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor={W2.skyDay} />
+          <stop offset="1" stopColor={W2.skyDayLow} />
+        </linearGradient>
+        <linearGradient id={`${id}-soil`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor={W2.soilTop} />
+          <stop offset="0.5" stopColor={W2.soilMid} />
+          <stop offset="1" stopColor={W2.soilDeep} />
+        </linearGradient>
+      </defs>
+      <rect width={W} height={groundY} fill={`url(#${id}-sky)`} />
+      <circle cx={1680} cy={150} r={70} fill={W2.skyGold} opacity={0.9} />
+      <circle cx={1680} cy={150} r={110} fill={W2.skyGold} opacity={0.18 + 0.04 * Math.sin(f / 30)} />
+      <rect x={0} y={groundY} width={W} height={H - groundY} fill={`url(#${id}-soil)`} />
+      <path d={`M0,${groundY} ${Array.from({ length: 49 }, (_, i) => `L${i * 40},${groundY - (i % 2 ? 14 : 2)}`).join(" ")} L${W},${groundY} Z`} fill={W2.grass} />
+      <rect x={0} y={groundY - 2} width={W} height={14} fill={W2.grassDeep} />
+      {Array.from({ length: 34 }, (_, i) => {
+        const x = (i * 211 + 37) % W;
+        const y = groundY + 60 + ((i * 137) % (H - groundY - 80));
+        const r = 8 + (i % 5) * 4;
+        return <ellipse key={i} cx={x} cy={y} rx={r * 1.4} ry={r} fill={W2.pebble} opacity={0.35} />;
+      })}
+    </g>
+  );
+};
+
 /**
  * A full-frame stage in one of the channel's "worlds" (v2 look). Children are SVG in 1920×1080 coords.
- * `benchY` sets the bench height for the lab world.
+ * `benchY` sets the bench height for the lab world; `groundY` the soil line for the soil world.
  */
-export const WorldStage: React.FC<{ readonly world: WorldKind; readonly benchY?: number; readonly children: React.ReactNode }> = ({ world, benchY = 760, children }) => (
+export const WorldStage: React.FC<{ readonly world: WorldKind; readonly benchY?: number; readonly groundY?: number; readonly children: React.ReactNode }> = ({
+  world,
+  benchY = 760,
+  groundY = 380,
+  children,
+}) => (
   <AbsoluteFill style={{ fontFamily: FONT, backgroundColor: "#000" }}>
     <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
-      {world === "desk" ? <Desk /> : world === "bench" ? <Bench benchY={benchY} /> : world === "leaf" ? <LeafNight /> : <Meadow />}
+      {world === "desk" ? (
+        <Desk />
+      ) : world === "bench" ? (
+        <Bench benchY={benchY} />
+      ) : world === "leaf" ? (
+        <LeafNight />
+      ) : world === "journal" ? (
+        <Journal />
+      ) : world === "notebook" ? (
+        <Notebook />
+      ) : world === "soil" ? (
+        <Soil groundY={groundY} />
+      ) : (
+        <Meadow />
+      )}
       {children}
     </svg>
   </AbsoluteFill>

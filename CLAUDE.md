@@ -41,7 +41,25 @@ and never leave them a half-finished pipeline to operate.
   - `[pause 1.5]` — inserted silence in seconds (used for the pause-and-predict moment, scene
     breathing room and the title).
 
-## Visual identity ("Soft Lab")
+## Visual identity — "Worlds" (from EP002 v2; the owner's choice)
+
+The owner wants every video to feel fun, varied and hand-made — never generic, repetitive or AI-looking —
+while the lesson always comes first. Shared kit: `src/components/fun/` (Chloro the mascot, molecule
+characters, sticky notes, speech bubbles, neon signs, handwriting, section cards, world stages).
+
+- **One topic, in parts.** A video is one chapter of the syllabus divided into parts: section cards read
+  "Plant nutrition · Part 4 of 9 · Leaf structure" — never "Chapter 4".
+- **Each part gets the setting that suits it** (study desk, notebook, lab bench, inside the leaf, soil,
+  meadow, old journal…). Vary them; don't default to one colour (e.g. not purple everywhere).
+- **Chloro appears only where it adds something** (intro, exam traps/tips, predictions, recap, end) — not in
+  every scene.
+- **Calm and spacious:** well structured, unhurried, one idea on screen at a time, no clutter. Fun touches
+  (faces, gags, metaphors like the stomata "bouncers") must make a point memorable, never distract from it
+  or go deeper than the lesson. Decorative backgrounds are allowed.
+- Text rules still apply (Lexend ≥ 40 px, handwriting ≥ 56 px, ~6 words, 100 px safe area). Accuracy rules
+  still apply: say when a picture is simplified.
+
+## Visual identity — "Soft Lab" (EP001 and EP002 v1)
 
 All design values live in `src/brand/tokens.ts`. Use the tokens; do not invent new colours.
 

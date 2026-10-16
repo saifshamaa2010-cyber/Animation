@@ -3,6 +3,7 @@
  * episodes/<id>/build/sfx-events.json — absolute times the Python mixer places SFX at.
  *
  *   npx tsx scripts/sfx-events.ts ep001-enzymes
+ *   npx tsx scripts/sfx-events.ts ep002-plant-nutrition src/episodes/ep002-plant-nutrition/v2/sfx.ts   (a variant's own effects)
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
@@ -13,7 +14,8 @@ const root = path.resolve(__dirname, "..");
 
 const main = async () => {
   const tl = JSON.parse(readFileSync(path.join(root, "episodes", ep, "build", "timeline.json"), "utf8")) as Timeline;
-  const { SCENE_SFX } = await import(path.join(root, "src", "episodes", ep, "scenes", "sfx.ts"));
+  const mod = process.argv[3] ? path.resolve(root, process.argv[3]) : path.join(root, "src", "episodes", ep, "scenes", "sfx.ts");
+  const { SCENE_SFX } = await import(mod);
   const events: { sec: number; sfx: string; gainDb: number; scene: string }[] = [];
   for (const scene of tl.scenes) {
     const fn = SCENE_SFX[scene.id];

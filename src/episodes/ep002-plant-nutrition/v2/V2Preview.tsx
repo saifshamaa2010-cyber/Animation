@@ -5,19 +5,13 @@
 import React from "react";
 import { AbsoluteFill, Sequence, useCurrentFrame } from "remotion";
 import { W2 } from "../../../brand/tokens";
-import { Captions, ScenePreviewFrame } from "../../../components/EpisodeFrame";
-import { Chloro, ChapterCard } from "../../../components/fun";
+import { Captions } from "../../../components/EpisodeFrame";
+import { SectionCard } from "../../../components/fun";
 import { SceneContext } from "../../../lib/timeline";
 import { TL } from "../timeline";
 import { V2S06Tip } from "./V2S06Tip";
 import { V2S10Stomata } from "./V2S10Stomata";
 import { V2S16Bench } from "./V2S16Bench";
-
-export const V2_SCENES = [
-  { id: "S06", Comp: V2S06Tip },
-  { id: "S10", Comp: V2S10Stomata },
-  { id: "S16", Comp: V2S16Bench },
-] as const;
 
 const CARD = 66; // chapter bumper, frames
 
@@ -43,9 +37,7 @@ const Card: React.FC<{ seg: Segment }> = ({ seg }) => {
   return (
     <AbsoluteFill>
       <svg viewBox="0 0 1920 1080" width={1920} height={1080}>
-        <ChapterCard n={seg.n} title={seg.title} t={t} dur={CARD} total={10} bg={seg.bg}>
-          <Chloro x={1690} y={1000} size={270} mood="celebrate" pose="wave" enter={Math.min(1, Math.max(0, (t - 8) / 16))} seed={seg.n} />
-        </ChapterCard>
+        <SectionCard topic="Plant nutrition" part={seg.n} of={9} title={seg.title} t={t} dur={CARD} look={{ bg: seg.bg }} chloro />
       </svg>
     </AbsoluteFill>
   );
@@ -81,7 +73,4 @@ export const V2Preview: React.FC = () => {
   );
 };
 
-/** One v2 scene on its own (full scene length, captions on) — for building and checking frames. */
-export const V2ScenePreview: React.FC<{ readonly sceneId: string }> = ({ sceneId }) => (
-  <ScenePreviewFrame tl={TL} scenes={V2_SCENES} sceneId={sceneId} audio="episodes/ep002-plant-nutrition/narration.wav" captions />
-);
+
