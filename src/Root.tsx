@@ -7,6 +7,8 @@ import { TL } from "./episodes/ep001-enzymes/timeline";
 import { Episode as Episode2, ScenePreview as ScenePreview2 } from "./episodes/ep002-plant-nutrition/Episode";
 import { TL as TL2 } from "./episodes/ep002-plant-nutrition/timeline";
 import { Thumbnail as Thumbnail2 } from "./episodes/ep002-plant-nutrition/Thumbnail";
+import { FunKitSheet } from "./components/fun/FunKitSheet";
+import { V2Preview, V2ScenePreview, V2_PREVIEW_FRAMES, V2_SCENES } from "./episodes/ep002-plant-nutrition/v2/V2Preview";
 import { PhotosynthesisPreview } from "./previews/PhotosynthesisPreview";
 import { BioKitDemo } from "./components/bio/BioKitDemo";
 
@@ -78,6 +80,13 @@ export const RemotionRoot: React.FC = () => {
           ))}
         </Folder>
         <Still id="ep002-thumbnail" component={Thumbnail2} width={1280} height={720} />
+        <Composition id="fun-kit-sheet" component={FunKitSheet} durationInFrames={120} fps={30} width={1920} height={1080} />
+        <Folder name="ep002-v2">
+          <Composition id="ep002v2-preview" component={V2Preview} durationInFrames={V2_PREVIEW_FRAMES} fps={30} width={1920} height={1080} />
+          {V2_SCENES.map((s) => (
+            <Composition key={s.id} id={`ep002v2-${s.id}`} component={V2ScenePreview} durationInFrames={sceneLen(s.id, TL2)} fps={30} width={1920} height={1080} defaultProps={{ sceneId: s.id }} />
+          ))}
+        </Folder>
       </Folder>
       <Composition id="preview-photosynthesis" component={PhotosynthesisPreview} durationInFrames={300} fps={30} width={1920} height={1080} />
       <Composition id="bio-kit-demo" component={BioKitDemo} durationInFrames={150} fps={30} width={1920} height={1080} />

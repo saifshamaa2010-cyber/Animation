@@ -77,6 +77,51 @@ export const C = {
   flame: "#6FA8FF",
 } as const;
 
+/**
+ * "Worlds" palette (EP002 v2 onwards): each chapter can sit in its own setting — a study desk, a lab
+ * bench, inside the leaf, a sunlit meadow — and the mascot Chloro hosts. Warmer and more playful than
+ * the ink-blue Soft Lab look, but the science colours above (CO2 ice, O2 coral, glucose amber, leaf
+ * greens, indicator colours) stay the same so the meaning of a colour never changes between videos.
+ */
+export const W2 = {
+  // study desk (purple grid)
+  deskTop: "#4A2C8F",
+  deskBottom: "#2A1B5E",
+  deskGrid: "#B9A6FF",
+  // lab bench
+  wallTop: "#F7E3D3",
+  wallBottom: "#D9C6EE",
+  tile: "#FFFFFF",
+  wood: "#E2B47E",
+  woodDeep: "#B7834F",
+  woodDark: "#7C5534",
+  // inside the leaf
+  leafNight: "#1E1747",
+  leafNightDeep: "#120E2E",
+  cellFill: "#8DD46E",
+  cellDeep: "#4E9E45",
+  cellLine: "#2E6B33",
+  // sunlit meadow
+  skyMagenta: "#A63A72",
+  skyCoral: "#F2735F",
+  skyGold: "#F7B24E",
+  hill: "#7CB65A",
+  hillDeep: "#4F8E43",
+  // Chloro the mascot
+  chloroLight: "#B5EC6A",
+  chloroMid: "#6CCB4E",
+  chloroDeep: "#3E9A3C",
+  chloroLine: "#21592A",
+  cheek: "#FF7FAF",
+  // paper things
+  sticky: "#FFC85A",
+  stickyDeep: "#E9A532",
+  tape: "#E8E2D2",
+  neon: "#7CFFB2",
+  neonOff: "#3A5546",
+  inkText: "#1E1A2E",
+} as const;
+
 export const FONT_SIZES = {
   hero: 120,
   headline: 84,
