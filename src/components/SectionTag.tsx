@@ -6,14 +6,15 @@ import { textWidth } from "./kit/text";
 /**
  * Where-are-we tag for long episodes: "3 · Mineral ions", top-left inside the safe area.
  * Arrives with the section, then settles to a quiet 55 % so it never competes with the diagram.
- * `extended` adds a badge for Supplement (Extended-paper) content.
+ * `extended` adds a badge for Supplement (Extended-paper) content: `true`, or a 0..1 progress to bring the
+ * badge in (and out) on a cue when only part of a scene is Extended.
  */
 export const SectionTag: React.FC<{
   readonly n: number;
   readonly title: string;
   /** frames since the section started (negative = not yet) */
   readonly t: number;
-  readonly extended?: boolean;
+  readonly extended?: boolean | number;
   readonly opacity?: number;
 }> = ({ n, title, t, extended = false, opacity = 1 }) => {
   if (t < 0 || opacity <= 0) return null;
@@ -25,6 +26,7 @@ export const SectionTag: React.FC<{
   const numW = 64;
   const tw = textWidth(title, size, 600);
   const badgeW = textWidth("EXTENDED", 40, 700) + 36;
+  const ex = extended === true ? 1 : extended === false ? 0 : Math.max(0, Math.min(1, extended));
   return (
     <g opacity={inP * settle * opacity} transform={`translate(${(1 - inP) * -24} 0)`}>
       <rect x={x} y={y} width={numW} height={64} rx={16} fill={C.paper} />
@@ -34,8 +36,8 @@ export const SectionTag: React.FC<{
       <text x={x + numW + 22} y={y + 48} fontFamily={FONT} fontWeight={600} fontSize={size} fill={C.paper} letterSpacing={-0.5}>
         {title}
       </text>
-      {extended ? (
-        <g>
+      {ex > 0 ? (
+        <g opacity={ex} transform={`translate(${(1 - EASE.out(ex)) * -16} 0)`}>
           <rect x={x + numW + 44 + tw} y={y + 4} width={badgeW} height={56} rx={14} fill="none" stroke={C.violetLight} strokeWidth={3} />
           <text x={x + numW + 44 + tw + badgeW / 2} y={y + 46} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={40} fill={C.violetLight} letterSpacing={1}>
             EXTENDED

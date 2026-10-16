@@ -44,1464 +44,1634 @@ So where did a whole tree's worth
 of mass come from? Not the soil.
 
 11
-00:00:32,800 --> 00:00:35,720
-Most of it came out of thin air.
+00:00:32,800 --> 00:00:36,110
+Most of the wood came
+out of thin air.
 
 12
-00:00:36,120 --> 00:00:38,150
+00:00:36,510 --> 00:00:38,540
 By the end of this video,
 
 13
-00:00:38,150 --> 00:00:39,900
+00:00:38,540 --> 00:00:40,290
 you'll know exactly how,
 
 14
-00:00:39,900 --> 00:00:42,870
+00:00:40,290 --> 00:00:43,260
 and how to explain it in an exam.
 
 15
-00:00:46,220 --> 00:00:49,790
+00:00:46,610 --> 00:00:50,180
 You eat to get your
 food. Plants don't.
 
 16
-00:00:49,790 --> 00:00:51,830
+00:00:50,180 --> 00:00:52,220
 Plants make their own food,
 
 17
-00:00:51,830 --> 00:00:53,510
+00:00:52,220 --> 00:00:53,900
 by photosynthesis.
 
 18
-00:00:53,910 --> 00:00:57,190
+00:00:54,300 --> 00:00:57,580
 Here's the definition
 the mark scheme wants.
 
 19
-00:00:57,190 --> 00:00:59,590
+00:00:57,580 --> 00:00:59,980
 Learn it word for word.
 
 20
-00:00:59,590 --> 00:01:03,950
+00:00:59,980 --> 00:01:04,340
 Photosynthesis is the process by
 which plants synthesise carbohydrates
 
 21
-00:01:03,950 --> 00:01:07,330
+00:01:04,340 --> 00:01:07,720
 from raw materials
 using energy from light.
 
 22
-00:01:08,230 --> 00:01:10,140
+00:01:08,620 --> 00:01:10,530
 Let's break that down.
 
 23
-00:01:10,140 --> 00:01:12,010
+00:01:10,530 --> 00:01:12,400
 Synthesise means make.
 
 24
-00:01:12,010 --> 00:01:15,370
-The carbohydrate a plant
-makes first is glucose,
+00:01:12,400 --> 00:01:15,030
+The carbohydrate it makes is glucose,
 
 25
-00:01:15,370 --> 00:01:16,890
+00:01:15,030 --> 00:01:16,550
 a simple sugar.
 
 26
-00:01:16,890 --> 00:01:20,460
+00:01:16,550 --> 00:01:20,120
 The raw materials are
 carbon dioxide and water.
 
 27
-00:01:20,460 --> 00:01:23,920
+00:01:20,120 --> 00:01:23,580
 And the energy to do
 it comes from light.
 
 28
-00:01:24,870 --> 00:01:26,830
+00:01:24,530 --> 00:01:26,490
 Now the word equation.
 
 29
-00:01:26,830 --> 00:01:28,970
+00:01:26,490 --> 00:01:28,630
 Carbon dioxide, plus water,
 
 30
-00:01:28,970 --> 00:01:31,470
+00:01:28,630 --> 00:01:31,130
 gives glucose, plus oxygen.
 
 31
-00:01:31,770 --> 00:01:35,710
+00:01:31,430 --> 00:01:35,370
 And it happens in the presence
 of light and chlorophyll,
 
 32
-00:01:35,710 --> 00:01:38,390
+00:01:35,370 --> 00:01:38,050
 so we write those on the arrow.
 
 33
-00:01:38,390 --> 00:01:41,090
+00:01:38,050 --> 00:01:40,750
 They're conditions, not reactants.
 
 34
-00:01:41,090 --> 00:01:42,840
+00:01:40,750 --> 00:01:42,500
 Light isn't a substance,
 
 35
-00:01:42,840 --> 00:01:45,340
+00:01:42,500 --> 00:01:45,000
 and chlorophyll isn't used up.
 
 36
-00:01:45,840 --> 00:01:49,060
+00:01:45,500 --> 00:01:48,720
 So where do the raw
 materials come from?
 
 37
-00:01:49,060 --> 00:01:52,920
+00:01:48,720 --> 00:01:52,580
 Carbon dioxide diffuses
 into the leaf from the air.
 
 38
-00:01:52,920 --> 00:01:56,220
+00:01:52,580 --> 00:01:55,880
 Water is absorbed from
 the soil by the roots,
 
 39
-00:01:56,220 --> 00:01:58,110
+00:01:55,880 --> 00:01:57,770
 and travels up the stem,
 
 40
-00:01:58,110 --> 00:02:00,740
+00:01:57,770 --> 00:02:00,400
 in the xylem, to the leaf.
 
 41
-00:02:01,040 --> 00:02:03,290
+00:02:00,700 --> 00:02:02,950
 Oxygen is a waste product.
 
 42
-00:02:03,290 --> 00:02:06,400
+00:02:02,950 --> 00:02:06,060
 Some is used in the
 plant's own respiration,
 
 43
-00:02:06,400 --> 00:02:10,780
+00:02:06,060 --> 00:02:10,440
 and the rest diffuses out
 of the leaf, into the air.
 
 44
-00:02:11,730 --> 00:02:14,260
+00:02:11,390 --> 00:02:13,920
 If you're taking the Extended paper,
 
 45
-00:02:14,260 --> 00:02:17,840
+00:02:13,920 --> 00:02:17,500
 you also need the
 balanced symbol equation.
 
 46
-00:02:17,840 --> 00:02:21,180
+00:02:17,500 --> 00:02:20,840
 Six C O two, plus six H two O,
 
 47
-00:02:21,180 --> 00:02:23,850
+00:02:20,840 --> 00:02:23,510
 gives C six H twelve O six,
 
 48
-00:02:23,850 --> 00:02:25,710
+00:02:23,510 --> 00:02:25,370
 plus six O two.
 
 49
-00:02:26,210 --> 00:02:28,220
+00:02:25,870 --> 00:02:27,880
 Let's check it balances.
 
 50
-00:02:28,220 --> 00:02:30,380
+00:02:27,880 --> 00:02:30,040
 Carbon: six on the left,
 
 51
-00:02:30,380 --> 00:02:32,090
+00:02:30,040 --> 00:02:31,750
 six on the right.
 
 52
-00:02:32,090 --> 00:02:34,810
+00:02:31,750 --> 00:02:34,470
 Hydrogen: twelve on each side.
 
 53
-00:02:34,810 --> 00:02:38,680
+00:02:34,470 --> 00:02:38,340
 Oxygen: twelve plus six
 makes eighteen on the left,
 
 54
-00:02:38,680 --> 00:02:43,770
+00:02:38,340 --> 00:02:43,430
 and six plus twelve makes eighteen
 on the right. It balances.
 
 55
-00:02:44,720 --> 00:02:47,940
+00:02:44,380 --> 00:02:47,600
 So, what does the light actually do?
 
 56
-00:02:48,240 --> 00:02:51,660
+00:02:47,900 --> 00:02:51,320
 Inside the cells of a
 leaf are chloroplasts.
 
 57
-00:02:51,660 --> 00:02:53,820
+00:02:51,320 --> 00:02:53,480
 Chloroplasts contain chlorophyll,
 
 58
-00:02:53,820 --> 00:02:55,690
+00:02:53,480 --> 00:02:55,350
 a green pigment.
 
 59
-00:02:55,690 --> 00:02:57,760
+00:02:55,350 --> 00:02:57,420
 Chlorophyll absorbs light.
 
 60
-00:02:57,760 --> 00:03:01,950
+00:02:57,420 --> 00:03:01,610
 Then it transfers energy from
 light into energy in chemicals,
 
 61
-00:03:01,950 --> 00:03:04,650
+00:03:01,610 --> 00:03:04,310
 for the synthesis of carbohydrates.
 
 62
-00:03:04,650 --> 00:03:09,040
+00:03:04,310 --> 00:03:08,700
 In other words, that energy
 ends up stored in glucose.
 
 63
-00:03:09,540 --> 00:03:12,280
+00:03:09,200 --> 00:03:11,940
 Be careful with your wording here.
 
 64
-00:03:12,280 --> 00:03:15,420
+00:03:11,940 --> 00:03:15,080
 Never write that
 chlorophyll makes energy.
 
 65
-00:03:15,420 --> 00:03:17,280
+00:03:15,080 --> 00:03:16,940
 Energy can't be made.
 
 66
-00:03:17,280 --> 00:03:19,300
+00:03:16,940 --> 00:03:18,960
 Chlorophyll transfers it.
 
 67
-00:03:19,300 --> 00:03:22,510
+00:03:18,960 --> 00:03:22,170
 So use the syllabus word: transfers.
 
 68
-00:03:23,460 --> 00:03:26,000
+00:03:23,120 --> 00:03:25,660
 So the plant has made glucose.
 
 69
-00:03:26,000 --> 00:03:27,810
+00:03:25,660 --> 00:03:27,470
 What happens to it?
 
 70
-00:03:27,810 --> 00:03:30,700
+00:03:27,470 --> 00:03:30,060
 There are five uses to learn.
 
 71
-00:03:30,700 --> 00:03:33,730
+00:03:30,360 --> 00:03:33,390
 One. Glucose is used in respiration,
 
 72
-00:03:33,730 --> 00:03:36,810
+00:03:33,390 --> 00:03:36,470
 to release energy for
 the plant's cells.
 
 73
-00:03:36,810 --> 00:03:39,790
+00:03:36,470 --> 00:03:39,450
 Two. Glucose is turned into starch,
 
 74
-00:03:39,790 --> 00:03:41,600
+00:03:39,450 --> 00:03:41,260
 as an energy store.
 
 75
-00:03:41,600 --> 00:03:43,110
+00:03:41,260 --> 00:03:42,770
 Starch is insoluble,
 
 76
-00:03:43,110 --> 00:03:47,650
+00:03:42,770 --> 00:03:47,310
 so storing it doesn't affect the
 movement of water by osmosis.
 
 77
-00:03:47,650 --> 00:03:51,020
+00:03:47,310 --> 00:03:50,680
 Three. Glucose is used
 to make cellulose,
 
 78
-00:03:51,020 --> 00:03:53,370
+00:03:50,680 --> 00:03:53,030
 which builds the cell walls.
 
 79
-00:03:53,370 --> 00:03:56,500
-Four. Glucose is
-changed into sucrose,
+00:03:53,030 --> 00:03:57,540
+Four. Glucose is changed
+into sucrose, another sugar.
 
 80
-00:03:56,500 --> 00:03:58,590
-for transport in the phloem,
+00:03:57,540 --> 00:04:00,170
+Sucrose is transported in the phloem,
 
 81
-00:03:58,590 --> 00:04:02,160
+00:04:00,170 --> 00:04:03,740
 to other parts of
 the plant. And five.
 
 82
-00:04:02,160 --> 00:04:04,490
+00:04:03,740 --> 00:04:06,070
 Sugars are used to make nectar,
 
 83
-00:04:04,490 --> 00:04:08,260
+00:04:06,070 --> 00:04:09,840
 in flowers, to attract
 insects for pollination.
 
 84
-00:04:08,760 --> 00:04:10,890
+00:04:10,340 --> 00:04:12,470
 Respiration. Starch.
 
 85
-00:04:10,890 --> 00:04:14,010
+00:04:12,470 --> 00:04:15,590
 Cellulose. Sucrose. Nectar.
 
 86
-00:04:14,960 --> 00:04:17,300
+00:04:16,540 --> 00:04:18,880
 But glucose only contains carbon,
 
 87
-00:04:17,300 --> 00:04:19,070
+00:04:18,880 --> 00:04:20,650
 hydrogen and oxygen.
 
 88
-00:04:19,070 --> 00:04:21,980
+00:04:20,650 --> 00:04:23,560
 To grow, a plant also needs proteins,
 
 89
-00:04:21,980 --> 00:04:25,060
+00:04:23,560 --> 00:04:26,640
 and proteins are made
 from amino acids.
 
 90
-00:04:25,060 --> 00:04:27,670
+00:04:26,640 --> 00:04:29,250
 Amino acids contain nitrogen.
 
 91
-00:04:27,670 --> 00:04:30,830
+00:04:29,250 --> 00:04:32,410
 So plants absorb nitrate
 ions from the soil,
 
 92
-00:04:30,830 --> 00:04:32,600
+00:04:32,410 --> 00:04:34,180
 through their roots.
 
 93
-00:04:32,600 --> 00:04:36,020
+00:04:34,180 --> 00:04:37,600
 Nitrate ions are needed
 to make amino acids.
 
 94
-00:04:36,020 --> 00:04:37,680
+00:04:37,600 --> 00:04:39,260
 Without enough nitrate,
 
 95
-00:04:37,680 --> 00:04:39,820
+00:04:39,260 --> 00:04:41,400
 the plant has stunted growth,
 
 96
-00:04:39,820 --> 00:04:42,610
+00:04:41,400 --> 00:04:44,190
 and its older leaves turn yellow.
 
 97
-00:04:43,110 --> 00:04:45,760
+00:04:44,690 --> 00:04:47,340
 Plants also absorb magnesium ions.
 
 98
-00:04:45,760 --> 00:04:49,190
+00:04:47,340 --> 00:04:50,770
 Magnesium ions are needed
 to make chlorophyll.
 
 99
-00:04:49,190 --> 00:04:50,950
+00:04:50,770 --> 00:04:52,530
 Without enough magnesium,
 
 100
-00:04:50,950 --> 00:04:54,130
+00:04:52,530 --> 00:04:55,710
 the leaves turn yellow
 between the veins.
 
 101
-00:04:54,130 --> 00:04:57,300
+00:04:55,710 --> 00:04:58,880
 Less chlorophyll means
 less light is absorbed,
 
 102
-00:04:57,300 --> 00:04:59,760
+00:04:58,880 --> 00:05:01,340
 so there's less photosynthesis.
 
 103
-00:05:00,260 --> 00:05:02,810
+00:05:01,840 --> 00:05:04,390
 In an exam, link three things:
 
 104
-00:05:02,810 --> 00:05:05,420
+00:05:04,390 --> 00:05:07,000
 the ion, what it's used to make,
 
 105
-00:05:05,420 --> 00:05:07,870
+00:05:07,000 --> 00:05:09,450
 and what happens without it.
 
 106
-00:05:08,820 --> 00:05:11,700
+00:05:10,400 --> 00:05:13,280
 Most photosynthesis
 happens in the leaves,
 
 107
-00:05:11,700 --> 00:05:14,540
+00:05:13,280 --> 00:05:16,120
 and leaves are adapted for it.
 
 108
-00:05:14,540 --> 00:05:17,130
+00:05:16,120 --> 00:05:18,710
 Most leaves are broad and thin.
 
 109
-00:05:17,130 --> 00:05:19,560
+00:05:18,710 --> 00:05:21,140
 Broad means a large surface area,
 
 110
-00:05:19,560 --> 00:05:21,470
+00:05:21,140 --> 00:05:23,050
 to absorb more light.
 
 111
-00:05:21,470 --> 00:05:26,190
+00:05:23,050 --> 00:05:27,770
 Thin means a short distance for carbon
 dioxide to diffuse to the cells
 
 112
-00:05:26,190 --> 00:05:27,230
+00:05:27,770 --> 00:05:28,810
 inside.
 
 113
-00:05:27,730 --> 00:05:30,020
+00:05:29,310 --> 00:05:31,600
 Now let's cut a leaf open.
 
 114
-00:05:30,020 --> 00:05:34,810
+00:05:31,600 --> 00:05:36,390
 This is a cross-section through
 the leaf of a dicotyledonous plant.
 
 115
-00:05:34,810 --> 00:05:36,660
-It's a simplified diagram,
+00:05:36,390 --> 00:05:40,050
+That's a plant whose seeds
+have two seed leaves.
 
 116
-00:05:36,660 --> 00:05:40,990
-so let's go through it layer
-by layer, from the top.
+00:05:40,050 --> 00:05:42,460
+It's a simplified diagram.
 
 117
-00:05:41,490 --> 00:05:43,740
-First, the waxy cuticle.
+00:05:42,460 --> 00:05:45,150
+Everyone needs to name each part.
 
 118
-00:05:43,740 --> 00:05:45,440
-It reduces water loss,
+00:05:45,150 --> 00:05:50,240
+Explaining how each part helps
+photosynthesis is for the Extended paper.
 
 119
-00:05:45,440 --> 00:05:47,440
-and because it's transparent,
+00:05:50,240 --> 00:05:54,330
+Let's go through it layer
+by layer, from the top.
 
 120
-00:05:47,440 --> 00:05:50,340
-light passes straight through it.
+00:05:54,830 --> 00:05:57,080
+First, the waxy cuticle.
 
 121
-00:05:50,340 --> 00:05:52,690
-Next, the upper epidermis.
+00:05:57,080 --> 00:05:58,780
+It reduces water loss,
 
 122
-00:05:52,690 --> 00:05:54,980
-These cells are transparent too,
+00:05:58,780 --> 00:06:00,780
+and because it's transparent,
 
 123
-00:05:54,980 --> 00:05:57,170
-and they have no chloroplasts,
+00:06:00,780 --> 00:06:03,680
+light passes straight through it.
 
 124
-00:05:57,170 --> 00:06:00,840
+00:06:03,680 --> 00:06:06,030
+Next, the upper epidermis.
+
+125
+00:06:06,030 --> 00:06:08,320
+These cells are transparent too,
+
+126
+00:06:08,320 --> 00:06:10,510
+and they have no chloroplasts,
+
+127
+00:06:10,510 --> 00:06:14,180
 so light passes through
 to the cells below.
 
-125
-00:06:00,840 --> 00:06:03,100
+128
+00:06:14,180 --> 00:06:16,440
 Then the palisade mesophyll.
 
-126
-00:06:03,100 --> 00:06:04,750
+129
+00:06:16,440 --> 00:06:18,090
 These cells are tall,
 
-127
-00:06:04,750 --> 00:06:07,860
+130
+00:06:18,090 --> 00:06:21,200
 tightly packed, close
 to the top surface,
 
-128
-00:06:07,860 --> 00:06:09,970
+131
+00:06:21,200 --> 00:06:23,310
 and full of chloroplasts.
 
-129
-00:06:09,970 --> 00:06:12,510
+132
+00:06:23,310 --> 00:06:25,850
 So they absorb the most light.
 
-130
-00:06:12,510 --> 00:06:15,750
+133
+00:06:25,850 --> 00:06:29,090
 This is where most
 photosynthesis happens.
 
-131
-00:06:16,700 --> 00:06:19,980
+134
+00:06:30,040 --> 00:06:33,320
 Below the palisade is
 the spongy mesophyll.
 
-132
-00:06:19,980 --> 00:06:21,680
+135
+00:06:33,320 --> 00:06:35,020
 Its cells are rounder,
 
-133
-00:06:21,680 --> 00:06:23,140
+136
+00:06:35,020 --> 00:06:36,480
 and loosely packed,
 
-134
-00:06:23,140 --> 00:06:25,540
+137
+00:06:36,480 --> 00:06:38,880
 with air spaces between them.
 
-135
-00:06:25,540 --> 00:06:29,430
+138
+00:06:38,880 --> 00:06:42,770
 The air spaces let carbon
 dioxide diffuse to the cells,
 
-136
-00:06:29,430 --> 00:06:33,530
+139
+00:06:42,770 --> 00:06:46,870
 and they give a large surface
 area for gas exchange.
 
-137
-00:06:34,030 --> 00:06:37,460
+140
+00:06:47,370 --> 00:06:50,800
 Running through the leaf
 are vascular bundles.
 
-138
-00:06:37,460 --> 00:06:41,560
+141
+00:06:50,800 --> 00:06:54,900
 The xylem brings water and
 mineral ions into the leaf.
 
-139
-00:06:41,560 --> 00:06:44,920
+142
+00:06:54,900 --> 00:06:58,260
 The phloem carries sucrose
 and amino acids away,
 
-140
-00:06:44,920 --> 00:06:47,310
+143
+00:06:58,260 --> 00:07:00,650
 to the rest of the plant.
 
-141
-00:06:47,810 --> 00:06:50,680
+144
+00:07:01,150 --> 00:07:04,020
 On the underside is
 the lower epidermis,
 
-142
-00:06:50,680 --> 00:06:53,180
+145
+00:07:04,020 --> 00:07:06,520
 with tiny pores called stomata.
 
-143
-00:06:53,180 --> 00:06:55,570
+146
+00:07:06,520 --> 00:07:08,910
 One pore is called a stoma.
 
-144
-00:06:55,570 --> 00:06:58,790
+147
+00:07:08,910 --> 00:07:12,130
 Carbon dioxide diffuses
 in through the stomata,
 
-145
-00:06:58,790 --> 00:07:00,850
+148
+00:07:12,130 --> 00:07:14,190
 and oxygen diffuses out.
 
-146
-00:07:00,850 --> 00:07:05,380
+149
+00:07:14,190 --> 00:07:18,620
 Each stoma is opened and closed
 by a pair of guard cells.
 
-147
-00:07:05,880 --> 00:07:07,990
-So, from top to bottom:
-
-148
-00:07:07,990 --> 00:07:09,940
-cuticle, upper epidermis,
-
-149
-00:07:09,940 --> 00:07:11,310
-palisade mesophyll,
-
 150
-00:07:11,310 --> 00:07:13,800
-spongy mesophyll, vascular bundle,
+00:07:18,620 --> 00:07:21,480
+In the light, they open the stomata,
 
 151
-00:07:13,800 --> 00:07:17,280
+00:07:21,480 --> 00:07:24,270
+so carbon dioxide can diffuse in.
+
+152
+00:07:24,770 --> 00:07:26,880
+So, from top to bottom:
+
+153
+00:07:26,880 --> 00:07:28,830
+cuticle, upper epidermis,
+
+154
+00:07:28,830 --> 00:07:30,200
+palisade mesophyll,
+
+155
+00:07:30,200 --> 00:07:32,690
+spongy mesophyll, vascular bundle,
+
+156
+00:07:32,690 --> 00:07:36,170
 lower epidermis with
 stomata and guard cells.
 
-152
-00:07:18,430 --> 00:07:22,870
+157
+00:07:37,320 --> 00:07:41,760
 So how can you show that a leaf
 has been photosynthesising?
 
-153
-00:07:22,870 --> 00:07:24,420
+158
+00:07:41,760 --> 00:07:43,310
 Test it for starch,
 
-154
-00:07:24,420 --> 00:07:28,520
+159
+00:07:43,310 --> 00:07:47,410
 because a leaf stores some
 of its glucose as starch.
 
-155
-00:07:29,020 --> 00:07:31,370
+160
+00:07:47,910 --> 00:07:50,260
 First, destarch the plant.
 
-156
-00:07:31,370 --> 00:07:34,570
+161
+00:07:50,260 --> 00:07:53,460
 Put it in the dark for a day or two.
 
-157
-00:07:34,570 --> 00:07:37,490
+162
+00:07:53,460 --> 00:07:56,380
 With no light, it
 can't photosynthesise,
 
-158
-00:07:37,490 --> 00:07:40,220
+163
+00:07:56,380 --> 00:07:59,110
 so it uses up its stored starch.
 
-159
-00:07:40,220 --> 00:07:44,840
+164
+00:07:59,110 --> 00:08:03,730
 That means any starch you find later
 must have been made during your
 
-160
-00:07:44,840 --> 00:07:47,530
+165
+00:08:03,730 --> 00:08:06,420
 experiment. Step one:
 
-161
-00:07:47,530 --> 00:07:51,380
+166
+00:08:06,420 --> 00:08:10,270
 put the leaf in boiling
 water for about a minute.
 
-162
-00:07:51,380 --> 00:07:53,030
+167
+00:08:10,270 --> 00:08:11,920
 This kills the cells,
 
-163
-00:07:53,030 --> 00:07:55,560
+168
+00:08:11,920 --> 00:08:14,450
 and breaks down the cell membranes,
 
-164
-00:07:55,560 --> 00:07:59,590
+169
+00:08:14,450 --> 00:08:18,480
 so the iodine can get
 in later. Step two:
 
-165
-00:07:59,590 --> 00:08:01,890
+170
+00:08:18,480 --> 00:08:20,780
 turn off the Bunsen burner.
 
-166
-00:08:01,890 --> 00:08:05,380
+171
+00:08:20,780 --> 00:08:24,270
 Then put the leaf in a
 boiling tube of ethanol,
 
-167
-00:08:05,380 --> 00:08:08,010
+172
+00:08:24,270 --> 00:08:26,900
 and stand it in the hot water.
 
-168
-00:08:08,010 --> 00:08:09,570
+173
+00:08:26,900 --> 00:08:28,460
 Ethanol is flammable,
 
-169
-00:08:09,570 --> 00:08:12,590
+174
+00:08:28,460 --> 00:08:31,480
 so never heat it with a naked flame.
 
-170
-00:08:12,590 --> 00:08:15,370
+175
+00:08:31,480 --> 00:08:34,260
 The hot ethanol removes
 the chlorophyll,
 
-171
-00:08:15,370 --> 00:08:20,180
+176
+00:08:34,260 --> 00:08:39,070
 so the colour change will
 be easy to see. Step three:
 
-172
-00:08:20,180 --> 00:08:22,570
+177
+00:08:39,070 --> 00:08:41,460
 dip the leaf in warm water.
 
-173
-00:08:22,570 --> 00:08:24,710
+178
+00:08:41,460 --> 00:08:43,600
 The ethanol makes it brittle,
 
-174
-00:08:24,710 --> 00:08:28,310
+179
+00:08:43,600 --> 00:08:47,200
 and the water softens it. Step four:
 
-175
-00:08:28,310 --> 00:08:30,780
+180
+00:08:47,200 --> 00:08:49,670
 spread the leaf on a white tile,
 
-176
-00:08:30,780 --> 00:08:33,100
+181
+00:08:49,670 --> 00:08:51,990
 so the colour is easy to see,
 
-177
-00:08:33,100 --> 00:08:35,260
+182
+00:08:51,990 --> 00:08:54,150
 and add iodine solution.
 
-178
-00:08:35,560 --> 00:08:37,260
+183
+00:08:54,450 --> 00:08:56,150
 If it turns blue-black,
 
-179
-00:08:37,260 --> 00:08:38,930
+184
+00:08:56,150 --> 00:08:57,820
 starch is present.
 
-180
-00:08:38,930 --> 00:08:40,730
+185
+00:08:57,820 --> 00:08:59,620
 If it stays orange-brown,
 
-181
-00:08:40,730 --> 00:08:42,450
+186
+00:08:59,620 --> 00:09:01,340
 there's no starch.
 
-182
-00:08:43,600 --> 00:08:48,090
+187
+00:09:02,490 --> 00:09:06,980
 Now you can use that test to
 show what photosynthesis needs.
 
-183
-00:08:48,090 --> 00:08:50,640
+188
+00:09:06,980 --> 00:09:09,530
 Each experiment needs a control.
 
-184
-00:08:50,640 --> 00:08:53,260
+189
+00:09:09,530 --> 00:09:12,150
 A control is identical to the test,
 
-185
-00:08:53,260 --> 00:08:56,690
+190
+00:09:12,150 --> 00:09:15,580
 except for the one factor
 you're investigating.
 
-186
-00:08:56,690 --> 00:09:00,740
+191
+00:09:15,580 --> 00:09:19,630
 It shows that the result
 was caused by that factor.
 
-187
-00:09:01,240 --> 00:09:03,060
+192
+00:09:20,130 --> 00:09:21,950
 First, chlorophyll.
 
-188
-00:09:03,060 --> 00:09:06,360
+193
+00:09:21,950 --> 00:09:25,250
 Take a destarched plant
 with variegated leaves:
 
-189
-00:09:06,360 --> 00:09:09,880
+194
+00:09:25,250 --> 00:09:28,770
 leaves that are partly
 green and partly white.
 
-190
-00:09:09,880 --> 00:09:12,720
+195
+00:09:28,770 --> 00:09:31,610
 The white parts have no chlorophyll.
 
-191
-00:09:12,720 --> 00:09:15,670
+196
+00:09:31,610 --> 00:09:34,560
 Leave it in the light
 for a few hours,
 
-192
-00:09:15,670 --> 00:09:17,380
+197
+00:09:34,560 --> 00:09:36,270
 then test a leaf.
 
-193
-00:09:17,380 --> 00:09:20,220
+198
+00:09:36,270 --> 00:09:39,110
 Only the green parts turn blue-black.
 
-194
-00:09:20,220 --> 00:09:22,820
+199
+00:09:39,110 --> 00:09:41,710
 The white parts stay orange-brown.
 
-195
-00:09:22,820 --> 00:09:25,030
+200
+00:09:41,710 --> 00:09:44,350
+The green parts are the control.
+
+201
+00:09:44,350 --> 00:09:46,560
 So chlorophyll is needed.
 
-196
-00:09:25,530 --> 00:09:27,100
+202
+00:09:47,060 --> 00:09:48,630
 Second, light.
 
-197
-00:09:27,100 --> 00:09:31,420
-Cover part of a leaf on a
-destarched plant with black paper,
+203
+00:09:48,630 --> 00:09:50,430
+Take a destarched plant,
 
-198
-00:09:31,420 --> 00:09:34,920
-and leave it in the
-light for a few hours.
+204
+00:09:50,430 --> 00:09:53,940
+and cover part of one
+leaf with black paper.
 
-199
-00:09:34,920 --> 00:09:39,220
+205
+00:09:53,940 --> 00:09:57,150
+Leave it in the light
+for a few hours.
+
+206
+00:09:57,150 --> 00:10:01,450
 After the test, only the
 uncovered part turns blue-black.
 
-200
-00:09:39,220 --> 00:09:41,960
+207
+00:10:01,450 --> 00:10:04,190
 The uncovered part is the control.
 
-201
-00:09:41,960 --> 00:09:43,870
+208
+00:10:04,190 --> 00:10:06,100
 So light is needed.
 
-202
-00:09:44,370 --> 00:09:46,430
+209
+00:10:06,600 --> 00:10:08,660
 Third, carbon dioxide.
 
-203
-00:09:46,430 --> 00:09:49,380
-Seal a leaf in a
-flask with soda lime,
+210
+00:10:08,660 --> 00:10:10,460
+Take a destarched plant,
 
-204
-00:09:49,380 --> 00:09:51,690
+211
+00:10:10,460 --> 00:10:11,960
+and seal one leaf,
+
+212
+00:10:11,960 --> 00:10:15,410
+still attached, inside
+a flask with soda lime,
+
+213
+00:10:15,410 --> 00:10:17,720
 which absorbs carbon dioxide.
 
-205
-00:09:51,690 --> 00:09:54,170
+214
+00:10:17,720 --> 00:10:20,200
 The control is an identical flask,
 
-206
-00:09:54,170 --> 00:09:55,930
+215
+00:10:20,200 --> 00:10:21,960
 with no soda lime.
 
-207
-00:09:55,930 --> 00:09:58,350
+216
+00:10:21,960 --> 00:10:24,380
 After a few hours in the light,
 
-208
-00:09:58,350 --> 00:10:01,290
+217
+00:10:24,380 --> 00:10:27,320
 only the control leaf
 turns blue-black.
 
-209
-00:10:01,290 --> 00:10:03,740
+218
+00:10:27,320 --> 00:10:29,770
 So carbon dioxide is needed.
 
-210
-00:10:04,890 --> 00:10:08,350
+219
+00:10:30,920 --> 00:10:34,380
 Next: how fast is
 photosynthesis happening?
 
-211
-00:10:08,350 --> 00:10:09,870
+220
+00:10:34,380 --> 00:10:35,900
 That's its rate.
 
-212
-00:10:09,870 --> 00:10:13,620
+221
+00:10:35,900 --> 00:10:39,650
 To measure it, use
 pondweed, a water plant.
 
-213
-00:10:13,620 --> 00:10:17,420
+222
+00:10:39,650 --> 00:10:43,450
 Put it in water with a little
 sodium hydrogencarbonate,
 
-214
-00:10:17,420 --> 00:10:19,780
+223
+00:10:43,450 --> 00:10:45,810
 which supplies carbon dioxide.
 
-215
-00:10:19,780 --> 00:10:25,190
+224
+00:10:45,810 --> 00:10:51,220
 In the light, the pondweed gives
 off bubbles of gas, mostly oxygen.
 
-216
-00:10:25,490 --> 00:10:27,890
+225
+00:10:51,520 --> 00:10:53,920
 Count the bubbles per minute.
 
-217
-00:10:27,890 --> 00:10:30,270
+226
+00:10:53,920 --> 00:10:56,300
 Or, for more accurate results,
 
-218
-00:10:30,270 --> 00:10:33,090
+227
+00:10:56,300 --> 00:10:59,120
 collect the gas and
 measure its volume,
 
-219
-00:10:33,090 --> 00:10:36,180
+228
+00:10:59,120 --> 00:11:02,210
 because bubbles can
 be different sizes.
 
-220
-00:10:36,680 --> 00:10:38,870
+229
+00:11:02,710 --> 00:11:04,900
 To change the light intensity,
 
-221
-00:10:38,870 --> 00:10:41,750
+230
+00:11:04,900 --> 00:11:07,780
 move a lamp closer or further away.
 
-222
-00:10:41,750 --> 00:10:43,350
+231
+00:11:07,780 --> 00:11:09,380
 The closer the lamp,
 
-223
-00:10:43,350 --> 00:10:45,850
+232
+00:11:09,380 --> 00:11:11,880
 the higher the light intensity.
 
-224
-00:10:45,850 --> 00:10:49,570
+233
+00:11:11,880 --> 00:11:15,420
 So, light intensity is
-the independent variable.
+the independent variable:
 
-225
-00:10:49,570 --> 00:10:52,360
-The rate is the dependent variable.
+234
+00:11:15,420 --> 00:11:17,230
+the one you change.
 
-226
-00:10:52,360 --> 00:10:55,410
+235
+00:11:17,230 --> 00:11:19,840
+The rate is the dependent variable:
+
+236
+00:11:19,840 --> 00:11:21,700
+the one you measure.
+
+237
+00:11:21,700 --> 00:11:24,750
 And everything else
 must be kept constant:
 
-227
-00:10:55,410 --> 00:10:59,260
+238
+00:11:24,750 --> 00:11:28,600
 the same plant, the same
 carbon dioxide concentration,
 
-228
-00:10:59,260 --> 00:11:01,370
-and the same temperature.
+239
+00:11:28,600 --> 00:11:30,160
+the same temperature,
 
-229
-00:11:01,370 --> 00:11:02,870
+240
+00:11:30,160 --> 00:11:32,260
+and no other lights on.
+
+241
+00:11:32,260 --> 00:11:34,500
+To keep the temperature steady,
+
+242
+00:11:34,500 --> 00:11:37,280
+stand the beaker in a water bath.
+
+243
+00:11:37,280 --> 00:11:38,780
 An LED lamp helps,
 
-230
-00:11:02,870 --> 00:11:07,310
+244
+00:11:38,780 --> 00:11:43,220
 because it gives off much less
 heat than a filament bulb.
 
-231
-00:11:07,610 --> 00:11:09,260
+245
+00:11:43,520 --> 00:11:45,170
 At each new distance,
 
-232
-00:11:09,260 --> 00:11:11,930
+246
+00:11:45,170 --> 00:11:47,840
 wait a few minutes before you count,
 
-233
-00:11:11,930 --> 00:11:14,080
+247
+00:11:47,840 --> 00:11:49,990
 so the plant can adjust.
 
-234
-00:11:14,080 --> 00:11:17,110
+248
+00:11:49,990 --> 00:11:53,020
 Then repeat, and calculate a mean.
 
-235
-00:11:18,260 --> 00:11:20,170
+249
+00:11:53,520 --> 00:11:57,320
+You can test the other
+two factors the same way.
+
+250
+00:11:57,320 --> 00:12:00,050
+Just change one thing at a time.
+
+251
+00:12:00,050 --> 00:12:01,800
+To vary carbon dioxide,
+
+252
+00:12:01,800 --> 00:12:05,690
+use different concentrations
+of sodium hydrogencarbonate.
+
+253
+00:12:05,690 --> 00:12:07,200
+To vary temperature,
+
+254
+00:12:07,200 --> 00:12:10,680
+set the water bath to
+different temperatures.
+
+255
+00:12:11,830 --> 00:12:13,740
 Here are the results.
 
-236
-00:11:20,170 --> 00:11:22,220
+256
+00:12:13,740 --> 00:12:15,790
 As light intensity increases,
 
-237
-00:11:22,220 --> 00:11:25,020
+257
+00:12:15,790 --> 00:12:18,590
 the rate of photosynthesis increases.
 
-238
-00:11:25,020 --> 00:11:26,930
+258
+00:12:18,590 --> 00:12:20,500
 Then it levels off.
 
-239
-00:11:27,230 --> 00:11:30,020
+259
+00:12:20,800 --> 00:12:23,590
 Increase the carbon
 dioxide concentration,
 
-240
-00:11:30,020 --> 00:11:32,230
+260
+00:12:23,590 --> 00:12:25,800
 and you get the same shape:
 
-241
-00:11:32,230 --> 00:11:33,690
+261
+00:12:25,800 --> 00:12:27,260
 the rate increases,
 
-242
-00:11:33,690 --> 00:11:35,360
+262
+00:12:27,260 --> 00:12:28,930
 then levels off.
 
-243
-00:11:35,660 --> 00:11:37,680
+263
+00:12:29,230 --> 00:12:31,250
 Temperature is different.
 
-244
-00:11:37,680 --> 00:11:40,350
+264
+00:12:31,250 --> 00:12:33,920
 The rate increases up to an optimum,
 
-245
-00:11:40,350 --> 00:11:42,070
+265
+00:12:33,920 --> 00:12:35,640
 then falls quickly.
 
-246
-00:11:42,070 --> 00:11:47,020
+266
+00:12:35,640 --> 00:12:40,590
 That's because the reactions of
 photosynthesis are catalysed by enzymes.
 
-247
-00:11:47,020 --> 00:11:48,430
+267
+00:12:40,590 --> 00:12:43,860
+This next part is for
+the Extended paper.
+
+268
+00:12:43,860 --> 00:12:45,270
 Below the optimum,
 
-248
-00:11:48,430 --> 00:11:52,680
+269
+00:12:45,270 --> 00:12:49,520
 raising the temperature gives the
 molecules more kinetic energy,
 
-249
-00:11:52,680 --> 00:11:57,370
+270
+00:12:49,520 --> 00:12:54,210
 so there are more frequent effective
 collisions between enzymes and their
 
-250
-00:11:57,370 --> 00:11:59,920
+271
+00:12:54,210 --> 00:12:56,760
 substrates. Above the optimum,
 
-251
-00:11:59,920 --> 00:12:02,080
+272
+00:12:56,760 --> 00:12:58,920
 the enzymes are denatured.
 
-252
-00:12:02,080 --> 00:12:04,370
+273
+00:12:58,920 --> 00:13:01,210
 Their active sites change shape,
 
-253
-00:12:04,370 --> 00:12:07,110
+274
+00:13:01,210 --> 00:13:03,950
 so the substrates no longer fit.
 
-254
-00:12:07,610 --> 00:12:10,380
+275
+00:13:04,450 --> 00:13:07,220
 When a question says
 describe a graph,
 
-255
-00:12:10,380 --> 00:12:14,040
-say what happens, with
-numbers from the axes.
+276
+00:13:07,220 --> 00:13:10,960
+say what happens, and quote
+numbers from the axes,
 
-256
-00:12:14,040 --> 00:12:16,870
+277
+00:13:10,960 --> 00:13:12,580
+with their units.
+
+278
+00:13:12,580 --> 00:13:15,410
 When it says explain, say why.
 
-257
-00:12:18,020 --> 00:12:19,770
+279
+00:13:16,560 --> 00:13:18,310
 For the Extended paper,
 
-258
-00:12:19,770 --> 00:12:24,180
+280
+00:13:18,310 --> 00:13:22,720
 you need to explain those
 shapes using limiting factors.
 
-259
-00:12:24,180 --> 00:12:29,090
+281
+00:13:22,720 --> 00:13:27,630
 A limiting factor is something in
 short supply that limits the rate of a
 
-260
-00:12:29,090 --> 00:12:30,180
+282
+00:13:27,630 --> 00:13:28,720
 process.
 
-261
-00:12:30,680 --> 00:12:32,830
+283
+00:13:29,220 --> 00:13:31,370
 Back to the light graph.
 
-262
-00:12:32,830 --> 00:12:34,430
+284
+00:13:31,370 --> 00:13:32,970
 On this rising part,
 
-263
-00:12:34,430 --> 00:12:37,960
+285
+00:13:32,970 --> 00:13:36,500
 the rate increases as
 light intensity increases.
 
-264
-00:12:37,960 --> 00:12:41,190
+286
+00:13:36,500 --> 00:13:39,730
 So light intensity is
 the limiting factor.
 
-265
-00:12:41,190 --> 00:12:42,690
+287
+00:13:39,730 --> 00:13:41,230
 On this flat part,
 
-266
-00:12:42,690 --> 00:12:45,190
+288
+00:13:41,230 --> 00:13:43,730
 more light makes no difference.
 
-267
-00:12:45,190 --> 00:12:47,540
-Light is no longer limiting.
+289
+00:13:43,730 --> 00:13:47,400
+Light intensity is no
+longer the limiting factor.
 
-268
-00:12:47,540 --> 00:12:48,950
+290
+00:13:47,400 --> 00:13:48,810
 Something else is,
 
-269
-00:12:48,950 --> 00:12:52,780
+291
+00:13:48,810 --> 00:13:52,640
 like carbon dioxide
 concentration, or temperature.
 
-270
-00:12:53,280 --> 00:12:58,030
+292
+00:13:53,140 --> 00:13:57,890
 Now repeat the experiment at a
 higher carbon dioxide concentration.
 
-271
-00:12:58,030 --> 00:12:59,780
-The curve rises higher,
+293
+00:13:57,890 --> 00:13:59,640
+At low light intensity,
 
-272
-00:12:59,780 --> 00:13:01,740
+294
+00:13:59,640 --> 00:14:01,820
+the two curves are the same,
+
+295
+00:14:01,820 --> 00:14:05,690
+because light intensity is
+still the limiting factor.
+
+296
+00:14:05,690 --> 00:14:08,750
+But the new curve keeps
+rising for longer,
+
+297
+00:14:08,750 --> 00:14:10,710
 and levels off higher.
 
-273
-00:13:01,740 --> 00:13:06,770
+298
+00:14:10,710 --> 00:14:15,740
 That shows carbon dioxide was the
 limiting factor on the flat part.
 
-274
-00:13:07,270 --> 00:13:10,230
+299
+00:14:16,240 --> 00:14:19,200
 In the exam, name
 the limiting factor,
 
-275
-00:13:10,230 --> 00:13:11,910
+300
+00:14:19,200 --> 00:14:20,880
 and give the reason:
 
-276
-00:13:11,910 --> 00:13:14,610
+301
+00:14:20,880 --> 00:14:23,580
 increasing it increases the rate.
 
-277
-00:13:15,110 --> 00:13:18,800
+302
+00:14:24,080 --> 00:14:27,770
 Different conditions have
 different limiting factors.
 
-278
-00:13:18,800 --> 00:13:21,160
+303
+00:14:27,770 --> 00:14:30,130
 At dawn, or on a dull day,
 
-279
-00:13:21,160 --> 00:13:24,640
+304
+00:14:30,130 --> 00:14:33,350
 light intensity is usually
-the limiting factor.
+the limiting factor,
 
-280
-00:13:24,640 --> 00:13:26,430
+305
+00:14:33,350 --> 00:14:35,800
+because there's not much light.
+
+306
+00:14:35,800 --> 00:14:37,590
 On a cold winter's day,
 
-281
-00:13:26,430 --> 00:13:28,300
+307
+00:14:37,590 --> 00:14:39,460
 it's often temperature.
 
-282
-00:13:28,300 --> 00:13:31,060
+308
+00:14:39,460 --> 00:14:42,190
+The molecules have
+less kinetic energy,
+
+309
+00:14:42,190 --> 00:14:45,230
+so there are fewer
+effective collisions.
+
+310
+00:14:45,230 --> 00:14:47,990
 And on a bright, warm summer's day,
 
-283
-00:13:31,060 --> 00:13:34,060
-it's often carbon
+311
+00:14:47,990 --> 00:14:50,470
+there's plenty of light and warmth,
+
+312
+00:14:50,470 --> 00:14:53,610
+so it's often carbon
 dioxide concentration.
 
-284
-00:13:35,210 --> 00:13:36,930
-One more practical.
+313
+00:14:53,610 --> 00:14:57,950
+There's only a tiny amount of
+carbon dioxide in the air.
 
-285
-00:13:36,930 --> 00:13:41,130
+314
+00:14:59,100 --> 00:15:00,560
+One more practical,
+
+315
+00:15:00,560 --> 00:15:03,840
+and this one's for
+the Extended paper.
+
+316
+00:15:03,840 --> 00:15:08,040
 Hydrogencarbonate indicator shows
 how much carbon dioxide is in a
 
-286
-00:13:41,130 --> 00:13:46,550
+317
+00:15:08,040 --> 00:15:13,460
 solution. At the normal level of
 carbon dioxide in air, it's red.
 
-287
-00:13:46,550 --> 00:13:48,400
+318
+00:15:13,460 --> 00:15:15,310
 With more carbon dioxide,
 
-288
-00:13:48,400 --> 00:13:49,970
+319
+00:15:15,310 --> 00:15:16,880
 it turns yellow.
 
-289
-00:13:49,970 --> 00:13:51,820
+320
+00:15:16,880 --> 00:15:18,730
 With less carbon dioxide,
 
-290
-00:13:51,820 --> 00:13:53,490
+321
+00:15:18,730 --> 00:15:20,400
 it turns purple.
 
-291
-00:13:53,990 --> 00:13:57,170
-Here are three sealed
-tubes of indicator.
+322
+00:15:20,900 --> 00:15:23,640
+Here are three tubes of indicator.
 
-292
-00:13:57,170 --> 00:14:00,090
-One has a leaf, in bright light.
+323
+00:15:23,640 --> 00:15:25,490
+They're sealed with bungs,
 
-293
-00:14:00,090 --> 00:14:02,750
-One has a leaf, wrapped in foil,
+324
+00:15:25,490 --> 00:15:29,670
+so no carbon dioxide from
+the air can get in or out.
 
-294
-00:14:02,750 --> 00:14:04,650
-so it's in the dark.
+325
+00:15:29,670 --> 00:15:32,600
+One has pondweed, in bright light.
 
-295
-00:14:04,650 --> 00:14:07,430
-And one has no leaf at all.
+326
+00:15:32,600 --> 00:15:34,250
+One has pondweed too,
 
-296
-00:14:07,430 --> 00:14:09,710
+327
+00:15:34,250 --> 00:15:36,720
+but its tube is wrapped in foil,
+
+328
+00:15:36,720 --> 00:15:38,530
+so it's dark inside.
+
+329
+00:15:38,530 --> 00:15:41,510
+And one has no pondweed at all.
+
+330
+00:15:41,510 --> 00:15:43,790
 What colour will each tube be,
 
-297
-00:14:09,710 --> 00:14:11,570
+331
+00:15:43,790 --> 00:15:45,650
 after a few hours?
 
-298
-00:14:12,070 --> 00:14:15,590
+332
+00:15:46,150 --> 00:15:49,670
 Pause the video, and
 make your prediction.
 
-299
-00:14:19,940 --> 00:14:21,960
+333
+00:15:54,020 --> 00:15:56,040
 Here's what happens.
 
-300
-00:14:21,960 --> 00:14:25,330
+334
+00:15:56,040 --> 00:15:59,410
 In the light, the
 indicator turns purple.
 
-301
-00:14:25,330 --> 00:14:28,120
+335
+00:15:59,410 --> 00:16:02,200
 Photosynthesis is faster
 than respiration,
 
-302
-00:14:28,120 --> 00:14:32,750
-so the leaf takes in more carbon
-dioxide than it gives out.
+336
+00:16:02,200 --> 00:16:07,030
+so the pondweed takes in more
+carbon dioxide than it gives out.
 
-303
-00:14:33,050 --> 00:14:35,730
+337
+00:16:07,330 --> 00:16:10,010
 In the dark, it turns yellow.
 
-304
-00:14:35,730 --> 00:14:37,490
+338
+00:16:10,010 --> 00:16:11,770
 There's no photosynthesis,
 
-305
-00:14:37,490 --> 00:14:39,440
+339
+00:16:11,770 --> 00:16:13,720
 but respiration carries on,
 
-306
-00:14:39,440 --> 00:14:42,520
-so the leaf gives out carbon dioxide.
+340
+00:16:13,720 --> 00:16:17,000
+so the pondweed gives
+out carbon dioxide.
 
-307
-00:14:42,820 --> 00:14:45,550
-The tube with no leaf stays red.
+341
+00:16:17,300 --> 00:16:20,230
+The tube with no pondweed stays red.
 
-308
-00:14:45,550 --> 00:14:47,220
+342
+00:16:20,230 --> 00:16:21,900
 That's the control.
 
-309
-00:14:47,220 --> 00:14:51,080
-It shows that the leaf
+343
+00:16:21,900 --> 00:16:25,960
+It shows that the pondweed
 caused the colour changes.
 
-310
-00:14:51,380 --> 00:14:54,960
+344
+00:16:26,260 --> 00:16:30,100
 And in dim light, the
-two rates can be equal,
+two rates can be equal.
 
-311
-00:14:54,960 --> 00:14:57,360
+345
+00:16:30,100 --> 00:16:33,990
+Then there's no net uptake or
+release of carbon dioxide,
+
+346
+00:16:33,990 --> 00:16:36,390
 so the indicator stays red.
 
-312
-00:14:57,860 --> 00:14:59,980
+347
+00:16:36,890 --> 00:16:39,010
 Which busts a classic myth:
 
-313
-00:14:59,980 --> 00:15:02,720
+348
+00:16:39,010 --> 00:16:41,750
 that plants only respire at night.
 
-314
-00:15:02,720 --> 00:15:04,810
+349
+00:16:41,750 --> 00:16:43,840
 Plants respire all the time,
 
-315
-00:15:04,810 --> 00:15:07,490
+350
+00:16:43,840 --> 00:16:46,520
 day and night, just like you.
 
-316
-00:15:07,490 --> 00:15:10,900
+351
+00:16:46,520 --> 00:16:49,930
 In bright light,
 photosynthesis is just faster,
 
-317
-00:15:10,900 --> 00:15:14,170
+352
+00:16:49,930 --> 00:16:53,200
 so there's a net uptake
 of carbon dioxide.
 
-318
-00:15:14,170 --> 00:15:17,150
+353
+00:16:53,200 --> 00:16:54,690
+Net means overall:
+
+354
+00:16:54,690 --> 00:16:59,030
+the plant takes in more carbon
+dioxide than it gives out.
+
+355
+00:16:59,030 --> 00:17:02,010
 Net is the word examiners look for.
 
-319
-00:15:18,300 --> 00:15:21,130
+356
+00:17:03,160 --> 00:17:05,990
 So, back to van Helmont's willow.
 
-320
-00:15:21,130 --> 00:15:24,760
+357
+00:17:05,990 --> 00:17:09,620
 Where did those seventy-four
 kilograms come from?
 
-321
-00:15:25,160 --> 00:15:27,490
+358
+00:17:10,020 --> 00:17:12,350
 Carbon dioxide, from the air,
 
-322
-00:15:27,490 --> 00:15:29,880
+359
+00:17:12,350 --> 00:17:14,740
 and water, from the soil.
 
-323
-00:15:29,880 --> 00:15:31,390
+360
+00:17:14,740 --> 00:17:16,250
 Joined into glucose,
 
-324
-00:15:31,390 --> 00:15:33,190
+361
+00:17:16,250 --> 00:17:18,050
 using energy from light,
 
-325
-00:15:33,190 --> 00:15:35,090
+362
+00:17:18,050 --> 00:17:19,950
 then built into cellulose,
 
-326
-00:15:35,090 --> 00:15:36,960
+363
+00:17:19,950 --> 00:17:21,820
 starch and proteins.
 
-327
-00:15:37,260 --> 00:15:41,100
+364
+00:17:22,120 --> 00:17:25,960
 The little that the soil lost
 was mostly mineral ions,
 
-328
-00:15:41,100 --> 00:15:43,410
+365
+00:17:25,960 --> 00:17:28,270
 like nitrate and magnesium.
 
-329
-00:15:43,810 --> 00:15:47,470
+366
+00:17:28,670 --> 00:17:32,330
 Van Helmont thought his
 tree was made of water.
 
-330
-00:15:47,470 --> 00:15:49,670
+367
+00:17:32,330 --> 00:17:34,530
 He was only partly right.
 
-331
-00:15:49,670 --> 00:15:52,350
+368
+00:17:34,530 --> 00:17:37,210
 A living tree is full of water.
 
-332
-00:15:52,350 --> 00:15:56,480
+369
+00:17:37,210 --> 00:17:41,340
 But most of the wood itself
 was built from carbon dioxide,
 
-333
-00:15:56,480 --> 00:15:58,630
+370
+00:17:41,340 --> 00:17:43,490
 taken out of thin air.
 
-334
-00:15:59,780 --> 00:16:01,310
+371
+00:17:44,640 --> 00:17:46,170
 Let's recap.
 
-335
-00:16:01,310 --> 00:16:06,030
+372
+00:17:46,170 --> 00:17:50,890
 Photosynthesis: carbon dioxide plus
 water gives glucose plus oxygen,
 
-336
-00:16:06,030 --> 00:16:09,210
+373
+00:17:50,890 --> 00:17:54,070
 in the presence of
 light and chlorophyll.
 
-337
-00:16:09,210 --> 00:16:13,770
+374
+00:17:54,070 --> 00:17:58,630
 Chlorophyll transfers energy from
 light into energy in chemicals.
 
-338
-00:16:13,770 --> 00:16:16,060
+375
+00:17:58,630 --> 00:18:00,920
 Glucose is used for respiration,
 
-339
-00:16:16,060 --> 00:16:17,570
+376
+00:18:00,920 --> 00:18:02,430
 starch, cellulose,
 
-340
-00:16:17,570 --> 00:16:19,290
+377
+00:18:02,430 --> 00:18:04,150
 sucrose and nectar.
 
-341
-00:16:19,290 --> 00:16:21,740
-Nitrate ions make amino acids.
+378
+00:18:04,150 --> 00:18:07,570
+Nitrate ions are needed
+to make amino acids.
 
-342
-00:16:21,740 --> 00:16:24,200
-Magnesium ions make chlorophyll.
+379
+00:18:07,570 --> 00:18:11,000
+Magnesium ions are needed
+to make chlorophyll.
 
-343
-00:16:24,200 --> 00:16:26,140
+380
+00:18:11,000 --> 00:18:12,940
 Leaves are broad, thin,
 
-344
-00:16:26,140 --> 00:16:27,740
+381
+00:18:12,940 --> 00:18:14,540
 and built in layers,
 
-345
-00:16:27,740 --> 00:16:30,200
+382
+00:18:14,540 --> 00:18:17,000
 each adapted for photosynthesis.
 
-346
-00:16:30,200 --> 00:16:35,190
-Light, carbon dioxide and temperature
-can all be limiting factors.
+383
+00:18:17,000 --> 00:18:21,740
+Light intensity, carbon dioxide
+concentration and temperature can all be
 
-347
-00:16:35,690 --> 00:16:37,950
+384
+00:18:21,740 --> 00:18:23,370
+limiting factors.
+
+385
+00:18:23,870 --> 00:18:26,130
 And that's plant nutrition.
