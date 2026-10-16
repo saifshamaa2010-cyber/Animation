@@ -10,35 +10,38 @@
  *    spaces to the cells; the cell surfaces light up (large surface area).
  *  - bundle / xylem / phloem: the vascular bundle is named, then its xylem and phloem.
  *  - lower / stomata: the lower epidermis, then the pore is ringed and named "stoma".
- *  - gases: CO2 characters diffuse up from the outside air, through the pore, into the air spaces (wobbly
- *    paths); then O2 characters diffuse down and out. Dashed arrows + "carbon dioxide in" / "oxygen out".
- *  - guard: the light dims (sun sets in the sky window); at "opened" the guard cells swell proudly, at
- *    "closed" they go limp and the pore shuts; the sign flips to CLOSED; late CO2 bumps the door and waits,
- *    sleepy. "guard cells" with a leader to each cell.
- *  - guardOpen "In the light": the sun rises again, light sweeps down, photons land on the guard cells'
- *    chloroplasts, shades back on; the guard cells swell and bow apart (the pore opens), the sign strikes
- *    OPEN and the waiting CO2 diffuse in one by one, excited ("You're in!").
- *  - recap: the visible layers are named again as the narrator lists them.
+ *  - gases: the camera pushes in to the stoma (change of scale) and the neon sign strikes OPEN. Carbon
+ *    dioxide characters diffuse up from the outside air, through the pore, into the air spaces and are taken
+ *    in by the cells (wobbly paths); oxygen made in the cells diffuses down and out. Dashed arrows +
+ *    "carbon dioxide in" / "oxygen out".
+ *  - guard: a little closer. On "opened" the guard cells swell proudly; on "closed" the light fades (the sun
+ *    sets in the sky window), they go limp, the pore shuts and the sign flips to CLOSED. More carbon dioxide
+ *    arrives, bonks the shut door and queues, sleepy. "guard cells" with a leader to each cell.
+ *  - guardOpen "In the light": light sweeps down, photons land on the guard cells' chloroplasts, shades back
+ *    on; the guard cells swell and bow apart (the pore opens), the sign strikes OPEN and the queue diffuses in
+ *    one by one, excited ("You're in!").
+ *  - recap: the camera pulls back out and the visible layers are named again as the narrator lists them.
  */
 import React from "react";
 import { noise2D } from "@remotion/noise";
 import { C, EASE, W2 } from "../../../brand/tokens";
 import { HAND } from "../../../brand/fonts";
 import { CO2Buddy, Chloro, ChloroMood, ChloroPose, NeonSign, O2Buddy, Sparkle, SpeechBubble, WorldStage } from "../../../components/fun";
-import { Stoma, stomaOuterHalf } from "../../../components/fun/Stoma";
+import { Stoma, stomaOuterHalf, stomaPoreHalf } from "../../../components/fun/Stoma";
 import { CellBlob, CellPaint, PillCell } from "../../../components/fun/CartoonCells";
 import { DayNightDial } from "../../../components/fun/DayNightDial";
 import { DashArrow, PillLabel, Route, makeRoute, routeAt } from "../../../components/fun/PillLabel";
 import { useNarrationTalk } from "../../../components/fun/narrationTalk";
 import { Photon, SunBeams } from "../../../components/Light";
 import { HandCircle, mix } from "../../../components/kit";
+import { ImpactLines } from "../../../components/fun/StudyProps";
 import { Pt, rng } from "../../../lib/geometry";
 import { pulse, track } from "../../../lib/track";
 import { useScene } from "../../../lib/timeline";
 import { useSvgId } from "../../../components/ids";
 import { s10Timing } from "../scenes/S10Layers.timing";
 
-// ------------------------------------------------------------------ layout (1920×1080)
+// ------------------------------------------------------------------ layout (world = 1920×1080 at zoom 1)
 const PORE: Pt = [960, 605];
 const GLEN = 300; // guard cell length
 const GIRTH = 92;
@@ -49,12 +52,62 @@ const AIR_TOP = EPI_TOP + EPI_H; // outside air below this
 const POCKET: Pt = [960, 400]; // sub-stomatal air space
 const BUNDLE: Pt = [290, 336];
 const BUNDLE_R = 116;
-const SIGN: Pt = [960, 204];
-const DIAL: Pt = [1712, 206];
-const CHLORO: Pt = [1688, 962];
+// screen-space furniture
+const SIGN: Pt = [960, 168];
+const DIAL: Pt = [1712, 196];
+const CHLORO: Pt = [1690, 962];
+// camera: where the pore sits on screen, and how close (gases, then a little closer for the guard cells)
+const Z1 = 1.55;
+const S1: Pt = [960, 560];
+const Z2 = 1.7;
+const S2: Pt = [960, 545];
 
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 const lin = (f: number, a: number, len: number) => clamp01((f - a) / Math.max(1, len));
+
+/** Camera that keeps the pore as its anchor: zoom in log space, the pore glides between screen points. */
+type CamKey = { readonly f: number; readonly z: number; readonly S: Pt };
+const anchorCam = (f: number, keys: readonly CamKey[]) => {
+  let z = keys[0].z;
+  let S: Pt = keys[0].S;
+  if (f >= keys[keys.length - 1].f) {
+    z = keys[keys.length - 1].z;
+    S = keys[keys.length - 1].S;
+  } else {
+    for (let i = 0; i < keys.length - 1; i++) {
+      const a = keys[i];
+      const b = keys[i + 1];
+      if (f >= a.f && f < b.f) {
+        const t = EASE.inOut(clamp01((f - a.f) / Math.max(1, b.f - a.f)));
+        z = Math.exp(Math.log(a.z) + (Math.log(b.z) - Math.log(a.z)) * t);
+        S = [a.S[0] + (b.S[0] - a.S[0]) * t, a.S[1] + (b.S[1] - a.S[1]) * t];
+        break;
+      }
+    }
+  }
+  const cx = PORE[0] - (S[0] - 960) / z;
+  const cy = PORE[1] - (S[1] - 540) / z;
+  return {
+    z,
+    T: `translate(960 540) scale(${z}) translate(${-cx} ${-cy})`,
+    toScreen: (p: Pt): Pt => [(p[0] - cx) * z + 960, (p[1] - cy) * z + 540],
+  };
+};
+
+/** Eased path through keyed points: [[frame, point], …] (ease-in-out between keys). */
+type PK = readonly [number, Pt];
+const trackPt = (f: number, keys: readonly PK[]): Pt => {
+  if (f <= keys[0][0]) return keys[0][1];
+  for (let i = 0; i < keys.length - 1; i++) {
+    const [f0, a] = keys[i];
+    const [f1, b] = keys[i + 1];
+    if (f <= f1) {
+      const t = EASE.inOut(clamp01((f - f0) / Math.max(1, f1 - f0)));
+      return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+    }
+  }
+  return keys[keys.length - 1][1];
+};
 
 // ------------------------------------------------------------------ the tissue (deterministic)
 type Cell = { cx: number; cy: number; rx: number; ry: number; rot: number; seed: number };
@@ -100,11 +153,16 @@ const SPONGY: Cell[] = (() => {
 })();
 
 const nearestCell = (p: Pt) => SPONGY.reduce((best, c) => (Math.hypot(c.cx - p[0], c.cy - p[1]) < Math.hypot(best.cx - p[0], best.cy - p[1]) ? c : best), SPONGY[0]);
-/** a point just inside a cell's wall, on the side facing `from` (where a gas is taken in) */
+/** a point just inside a cell's wall, on the side facing `from` (where a gas is taken in / given out) */
 const cellDoor = (c: Cell, from: Pt, depth = 0.45): Pt => {
   const a = Math.atan2(from[1] - c.cy, from[0] - c.cx);
   return [c.cx + Math.cos(a) * c.rx * depth, c.cy + Math.sin(a) * c.ry * depth];
 };
+// the cells around the air space under the stoma (in view when the camera is in close)
+const CELL_LU = nearestCell([639, 401]);
+const CELL_RU = nearestCell([1278, 412]);
+const CELL_LL = nearestCell([711, 509]);
+const CELL_RL = nearestCell([1169, 512]);
 
 // epidermis: fixed cells away from the stoma, two neighbours that stretch as the guard cells swell
 const EPI_GAP = 8;
@@ -129,17 +187,19 @@ const EPI_CELLS: [number, number][] = (() => {
 })();
 
 // ------------------------------------------------------------------ gas characters
-type Phase = "day" | "night" | "dawn";
 type Buddy = {
   readonly kind: "co2" | "o2";
   readonly seed: number;
-  /** wanders around here at first */
-  readonly home: Pt;
-  /** drifts in from here (off-screen) at `enterAt` */
-  readonly from?: Pt;
-  readonly enterAt?: number;
-  /** at night it drifts to the door and waits */
-  readonly wait?: { readonly at: Pt; readonly from: number; readonly bump?: boolean };
+  /** where it is before it sets off: keyed points it drifts between (it wanders around them) */
+  readonly keys: readonly PK[];
+  /** pops in at this frame (oxygen made in a cell) */
+  readonly appear?: number;
+  /** queued outside the shut stoma from this frame (until `go`) */
+  readonly queued?: number;
+  /** stands up in the queue (upright, like someone waiting in line) at this frame */
+  readonly standAt?: number;
+  /** bonks the shut pore at this frame */
+  readonly bonk?: number;
   /** then it sets off along its route */
   readonly go?: number;
   readonly travel?: number;
@@ -147,35 +207,40 @@ type Buddy = {
   /** fade out at the end of the route (taken in by a cell / drifted away) */
   readonly fade?: "absorb" | "away";
   readonly target?: Cell;
+  readonly source?: Cell;
 };
 
-const LANE_IN = 952; // carbon dioxide through the pore (left of centre)
-const LANE_OUT = 970; // oxygen (right of centre)
+const LANE_IN = 950; // carbon dioxide through the pore (left of centre)
+const LANE_OUT = 972; // oxygen (right of centre)
 
 const inRoute = (start: Pt, pocket: Pt, cell: Cell): Route =>
-  makeRoute([start, [LANE_IN + (start[0] - LANE_IN) * 0.35, 812], [LANE_IN, 728], [LANE_IN, 605], [LANE_IN, 488], pocket, cellDoor(cell, pocket)]);
+  makeRoute([start, [start[0] + (LANE_IN - start[0]) * 0.6, 792], [LANE_IN, 742], [LANE_IN, 605], [LANE_IN, 492], pocket, cellDoor(cell, pocket)]);
 const outRoute = (start: Pt, end: Pt): Route =>
-  makeRoute([start, [LANE_OUT, 470], [LANE_OUT, 605], [LANE_OUT, 735], [1040, 800], [1180, 806], end]);
+  makeRoute([start, [LANE_OUT + (start[0] - LANE_OUT) * 0.3, 452], [LANE_OUT, 505], [LANE_OUT, 605], [LANE_OUT, 735], [1046, 792], end]);
 
-/** cells around the air space that take the carbon dioxide in */
-const LEFT_CELLS = SPONGY.filter((c) => c.cx < 930 && c.cx > 600 && c.cy > 200).sort((a, b) => Math.hypot(a.cx - 960, a.cy - 400) - Math.hypot(b.cx - 960, b.cy - 400));
-const RIGHT_CELLS = SPONGY.filter((c) => c.cx > 990 && c.cx < 1320 && c.cy > 200).sort((a, b) => Math.hypot(a.cx - 960, a.cy - 400) - Math.hypot(b.cx - 960, b.cy - 400));
-const pickCell = (side: "l" | "r", i: number) => {
-  const list = side === "l" ? LEFT_CELLS : RIGHT_CELLS;
-  return list[Math.min(i, list.length - 1)] ?? SPONGY[0];
-};
+// queue spots outside the shut stoma (to the left of the door, clear of the labels)
+/** the first one arrives as the pore shuts, and bonks it */
+const BONK = (b: { close: number }) => b.close + 16;
+const QUEUE: Pt[] = [
+  [862, 744],
+  [782, 750],
+  [702, 743],
+  [622, 749],
+];
+const DOOR: Pt = [957, 790]; // just below the pore
 
 type Beats = ReturnType<typeof beatsOf>;
 const beatsOf = (k: ReturnType<typeof s10Timing>) => {
-  const dusk = k.guard + 2;
-  const close = Math.max(k.closed, dusk + 20);
-  const flex = Math.min(k.opened, close - 22);
+  const dusk = k.closed - 6; // the light fades as the narrator says "closed"
+  const close = dusk + 8;
+  const flex = k.opened - 2;
   const dawn = k.guardOpen + 6;
   const reopen = Math.max(k.reopen, dawn + 20);
   return {
     co2Label: k.diffusesIn,
     o2Go: k.oxygen - 6,
     o2Label: k.oxygen + 2,
+    gasOut: k.guard + 4,
     dusk,
     flex,
     close,
@@ -192,14 +257,14 @@ const buddiesFor = (k: ReturnType<typeof s10Timing>, b: Beats): Buddy[] => {
   const g = k.gases;
   // before the range: carbon dioxide already inside diffuses through the air spaces to the cells
   const insideSpec: { seed: number; home: Pt; go: number; travel: number; target: Cell }[] = [
-    { seed: 41, home: [905, 330], go: k.carbon, travel: 96, target: pickCell("l", 0) },
-    { seed: 42, home: [1030, 300], go: k.carbon + 18, travel: 96, target: pickCell("r", 0) },
-    { seed: 43, home: [965, 262], go: k.carbon + 36, travel: 104, target: pickCell("r", 1) },
+    { seed: 41, home: [905, 330], go: k.carbon, travel: 96, target: CELL_LU },
+    { seed: 42, home: [1030, 300], go: k.carbon + 18, travel: 96, target: CELL_RU },
+    { seed: 43, home: [965, 262], go: k.carbon + 36, travel: 104, target: nearestCell([1200, 288]) },
   ];
   const inside: Buddy[] = insideSpec.map((x) => ({
     kind: "co2",
     seed: x.seed,
-    home: x.home,
+    keys: [[0, x.home]],
     go: x.go,
     travel: x.travel,
     fade: "absorb",
@@ -207,70 +272,82 @@ const buddiesFor = (k: ReturnType<typeof s10Timing>, b: Beats): Buddy[] => {
     route: makeRoute([x.home, [x.home[0] + (x.target.cx - x.home[0]) * 0.5, x.home[1] - 16], cellDoor(x.target, x.home)]),
   }));
 
-  // daytime: carbon dioxide from the outside air diffuses in through the open stoma
+  // daytime: carbon dioxide from the outside air diffuses in through the open stoma, to the cells
   const dayIn: { seed: number; home: Pt; go: number; travel: number; pocket: Pt; cell: Cell }[] = [
-    { seed: 1, home: [842, 790], go: g + 4, travel: 92, pocket: [892, 402], cell: pickCell("l", 0) },
-    { seed: 2, home: [690, 828], go: g + 30, travel: 104, pocket: [1020, 380], cell: pickCell("r", 0) },
-    { seed: 3, home: [500, 756], go: g + 56, travel: 118, pocket: [872, 330], cell: pickCell("l", 1) },
-    { seed: 4, home: [880, 872], go: g + 82, travel: 96, pocket: [1046, 432], cell: pickCell("r", 1) },
+    { seed: 1, home: [792, 721], go: g + 4, travel: 92, pocket: [900, 430], cell: CELL_LL },
+    { seed: 2, home: [838, 795], go: g + 30, travel: 96, pocket: [1024, 424], cell: CELL_RL },
+    { seed: 3, home: [650, 708], go: g + 56, travel: 110, pocket: [880, 404], cell: CELL_LU },
+    { seed: 4, home: [534, 753], go: g + 82, travel: 116, pocket: [1040, 448], cell: CELL_RU },
   ];
-  const day: Buddy[] = dayIn.map((d) => ({ kind: "co2", seed: d.seed, home: d.home, go: d.go, travel: d.travel, route: inRoute(d.home, d.pocket, d.cell), fade: "absorb", target: d.cell }));
+  const day: Buddy[] = dayIn.map((d) => ({ kind: "co2", seed: d.seed, keys: [[0, d.home]], go: d.go, travel: d.travel, route: inRoute(d.home, d.pocket, d.cell), fade: "absorb", target: d.cell }));
 
-  // the ones that arrive at the door as it shuts, wait (sleepy), and go in when the light returns
-  const step = Math.max(16, Math.min(22, (b.end - 30 - (b.reopen + 22)) / 3));
-  const w0 = b.reopen + 22;
-  const waiters: { seed: number; home: Pt; at: Pt; from: number; bump?: boolean; go: number; pocket: Pt; cell: Cell; enter?: [Pt, number] }[] = [
-    { seed: 5, home: [318, 812], at: [956, 806], from: b.dusk + 6, bump: true, go: w0, pocket: [900, 380], cell: pickCell("l", 2) },
-    { seed: 6, home: [170, 716], at: [872, 830], from: b.dusk + 18, go: w0 + step, pocket: [1030, 400], cell: pickCell("r", 2) },
-    { seed: 7, home: [590, 716], at: [1046, 818], from: b.dusk + 10, go: w0 + step * 2, pocket: [930, 330], cell: pickCell("l", 3) },
-    { seed: 8, home: [420, 790], at: [790, 812], from: b.dusk + 26, go: w0 + step * 3, pocket: [1000, 350], cell: pickCell("r", 3), enter: [[-90, 760], g + 70] },
+  // more carbon dioxide drifts up as the stoma shuts: it waits outside, then goes in when the light returns
+  const step = 18;
+  const w0 = b.reopen + 18;
+  const arrive = k.guard - 4;
+  const waiters: { seed: number; home: Pt; spot: Pt; from: number; go: number; pocket: Pt; cell: Cell; bump?: boolean }[] = [
+    { seed: 5, home: [330, 780], spot: QUEUE[0], from: arrive, go: w0, pocket: [902, 428], cell: CELL_LL, bump: true },
+    { seed: 6, home: [180, 720], spot: QUEUE[1], from: arrive + 10, go: w0 + step, pocket: [1026, 420], cell: CELL_RL },
+    { seed: 7, home: [250, 830], spot: QUEUE[2], from: arrive + 20, go: w0 + step * 2, pocket: [884, 404], cell: CELL_LU },
+    { seed: 8, home: [90, 760], spot: QUEUE[3], from: arrive + 30, go: w0 + step * 3, pocket: [1040, 446], cell: CELL_RU },
   ];
-  const night: Buddy[] = waiters.map((w) => ({
-    kind: "co2",
-    seed: w.seed,
-    home: w.home,
-    from: w.enter?.[0],
-    enterAt: w.enter?.[1],
-    wait: { at: w.at, from: w.from, bump: w.bump },
-    go: w.go,
-    travel: 66,
-    route: inRoute(w.at, w.pocket, w.cell),
-    fade: "absorb",
-    target: w.cell,
-  }));
+  const night: Buddy[] = waiters.map((w) => {
+    const keys: PK[] = w.bump
+      ? [
+          [w.from, w.home],
+          [b.close + 2, DOOR],
+          [b.close + 28, DOOR],
+          [b.close + 46, w.spot],
+        ]
+      : [
+          [w.from, w.home],
+          [w.from + 66, w.spot],
+        ];
+    return {
+      kind: "co2",
+      seed: w.seed,
+      keys,
+      queued: b.close + 20,
+      standAt: w.bump ? b.close + 46 : w.from + 66,
+      bonk: w.bump ? BONK(b) : undefined,
+      go: w.go,
+      travel: 66,
+      route: inRoute(w.spot, w.pocket, w.cell),
+      fade: "absorb",
+      target: w.cell,
+    };
+  });
 
   // oxygen made in the cells diffuses out through the stoma
-  const o2: Buddy[] = [
-    { seed: 21, home: [882, 318] as Pt, go: b.o2Go, end: [1330, 772] as Pt },
-    { seed: 22, home: [1050, 300] as Pt, go: b.o2Go + 16, end: [1460, 720] as Pt },
-    { seed: 23, home: [985, 250] as Pt, go: b.o2Go + 32, end: [1250, 690] as Pt },
-  ].map((o) => ({ kind: "o2", seed: o.seed, home: o.home, go: o.go, travel: 84, route: outRoute(o.home, o.end), fade: "away" }) as Buddy);
+  const o2Spec: { seed: number; cell: Cell; toward: Pt; end: Pt }[] = [
+    { seed: 21, cell: CELL_LL, toward: [920, 440], end: [1232, 782] },
+    { seed: 22, cell: CELL_RL, toward: [1000, 440], end: [1330, 716] },
+    { seed: 23, cell: CELL_RU, toward: [1000, 420], end: [1150, 742] },
+  ];
+  const o2: Buddy[] = o2Spec.map((o, i) => {
+    const start = cellDoor(o.cell, o.toward, 0.62);
+    const go = b.o2Go + i * 16;
+    return { kind: "o2", seed: o.seed, keys: [[0, start]], appear: go - 22, go, travel: 86, route: outRoute(start, o.end), fade: "away", source: o.cell };
+  });
 
   return [...inside, ...day, ...night, ...o2];
 };
 
 /** Where a buddy is, how it's turned, and how visible, at frame f. */
-const buddyState = (bd: Buddy, f: number, b: Beats) => {
-  const wander = (amp: number, salt = 0): Pt => [noise2D(`wx${bd.seed}${salt}`, f / 70, 0) * amp, noise2D(`wy${bd.seed}${salt}`, f / 70, 3) * amp * 0.7];
-  let base: Pt = bd.home;
+const buddyState = (bd: Buddy, f: number) => {
+  let base: Pt = trackPt(f, bd.keys);
   let opacity = 1;
   let scale = 0.82;
-  if (bd.from && bd.enterAt !== undefined) {
-    const e = EASE.out(lin(f, bd.enterAt, 70));
-    if (f < bd.enterAt) opacity = 0;
-    base = [bd.from[0] + (bd.home[0] - bd.from[0]) * e, bd.from[1] + (bd.home[1] - bd.from[1]) * e];
+  let pop = 1;
+  if (bd.appear !== undefined) {
+    if (f < bd.appear) return null;
+    pop = lin(f, bd.appear, 14);
   }
+  const queued = bd.queued !== undefined && f >= bd.queued && (bd.go === undefined || f < bd.go);
   let bumped = 0;
-  if (bd.wait && f >= bd.wait.from) {
-    const e = EASE.inOut(lin(f, bd.wait.from, 52));
-    const at = bd.wait.at;
-    base = [base[0] + (at[0] - base[0]) * e, base[1] + (at[1] - base[1]) * e];
-    if (bd.wait.bump) {
-      // nose up against the closed door, then bounce back
-      const t0 = Math.max(bd.wait.from + 52, b.close + 22);
-      bumped = pulse(f, t0, 16);
-      base = [base[0], base[1] - bumped * 30];
-    }
+  if (bd.bonk !== undefined) {
+    bumped = pulse(f, bd.bonk, 12);
+    base = [base[0], base[1] - bumped * 34];
   }
   let u = 0;
   if (bd.go !== undefined && bd.route && f >= bd.go) {
@@ -281,18 +358,22 @@ const buddyState = (bd: Buddy, f: number, b: Beats) => {
       opacity *= 1 - k;
       scale *= 1 - 0.55 * k;
     } else if (bd.fade === "away") {
-      opacity *= 1 - clamp01((u - 0.72) / 0.28);
+      opacity *= 1 - clamp01((u - 0.78) / 0.22);
     }
   }
-  // wobble everywhere except while squeezing through the pore (diffusion is random, the pore is narrow)
+  // random wobble (diffusion), except while squeezing through the narrow pore; small while queued
   const nearPore = Math.abs(base[0] - PORE[0]) < 160 ? clamp01((Math.abs(base[1] - PORE[1]) - 110) / 110) : 1;
-  const w = wander(16 * nearPore, 1);
+  const amp = (queued ? 5 : 16) * nearPore * (bd.appear !== undefined && u === 0 ? 0.3 : 1);
+  const w: Pt = [noise2D(`wx${bd.seed}`, f / 70, 0) * amp, noise2D(`wy${bd.seed}`, f / 70, 3) * amp * 0.7];
   const p: Pt = [base[0] + w[0], base[1] + w[1]];
   const upright = Math.abs(p[0] - PORE[0]) < 120 ? 1 - clamp01((Math.abs(p[1] - PORE[1]) - 140) / 80) : 0;
-  const tumble = noise2D(`rot${bd.seed}`, f / 90, 0) * 28;
-  const rotate = tumble * (1 - upright) + 90 * upright;
+  const tumble = noise2D(`rot${bd.seed}`, f / 90, 0) * (queued ? 10 : 28);
+  const free = tumble * (1 - upright) + 90 * upright;
+  // in the queue it stands upright, like someone waiting in line (until it sets off)
+  const stand = bd.standAt === undefined ? 0 : EASE.out(lin(f, bd.standAt - 12, 16)) * (bd.go === undefined ? 1 : 1 - lin(f, bd.go, 14));
+  const rotate = free + (90 + tumble * 0.25 - free) * stand;
   const moving = bd.go !== undefined && f >= bd.go && u < 1;
-  return { p, rotate, opacity, scale, moving, bumped };
+  return { p, rotate, opacity, scale, pop, moving, bumped, queued };
 };
 
 // ------------------------------------------------------------------ small drawn parts
@@ -365,12 +446,32 @@ const Breeze: React.FC<{ f: number }> = ({ f }) => (
       [1180, 940, 1],
       [520, 960, 2],
       [1460, 860, 3],
+      [1300, 690, 4],
     ].map(([x0, y, i]) => {
       const x = x0 + ((f * 0.5 + i * 140) % 260) - 130;
       return <path key={i} d={`M${x},${y} q40,-14 80,0 t80,0 q22,-2 26,-18 q-2,-16 -18,-12`} fill="none" stroke={C.paper} strokeWidth={4} strokeLinecap="round" />;
     })}
   </g>
 );
+
+/** guard-cell chloroplast positions (world), for the photons to land on */
+const guardPlastids = (open: number): Pt[] => {
+  const L = GLEN / 2;
+  const spots: [number, number][] = [
+    [-0.66, 0.56],
+    [0.2, 0.52],
+    [0.72, 0.5],
+  ];
+  const out: Pt[] = [];
+  for (const side of [-1, 1]) {
+    for (const [t, s] of spots) {
+      const xi = stomaPoreHalf(open, PORE_W, t);
+      const xo = stomaOuterHalf(open, GIRTH, PORE_W, t);
+      out.push([PORE[0] + side * (xi + (xo - xi) * s), PORE[1] + t * L]);
+    }
+  }
+  return out;
+};
 
 // ------------------------------------------------------------------ the scene
 export const V2S10Stomata: React.FC = () => {
@@ -380,7 +481,19 @@ export const V2S10Stomata: React.FC = () => {
   const b = beatsOf(k);
   const id = useSvgId("s10v2");
   const talk = useNarrationTalk(3);
-  const buddies = React.useMemo(() => buddiesFor(k, b), [k.gases, b.reopen, b.dusk, b.end]); // eslint-disable-line react-hooks/exhaustive-deps
+  const buddies = React.useMemo(() => buddiesFor(k, b), [k.gases, k.guard, b.reopen, b.close, b.o2Go]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ---- camera: in to one stoma (change of scale), a little closer for the guard cells, back out for the recap
+  const cam = anchorCam(f, [
+    { f: k.zoomIn[0], z: 1, S: PORE },
+    { f: k.zoomIn[1], z: Z1, S: S1 },
+    { f: k.zoomGuard[0], z: Z1, S: S1 },
+    { f: k.zoomGuard[1], z: Z2, S: S2 },
+    { f: k.zoomOut[0], z: Z2, S: S2 },
+    { f: Math.max(k.zoomOut[1], k.zoomOut[0] + 40), z: 1, S: PORE },
+  ]);
+  const toS = cam.toScreen;
+  const focus = lin(f, k.zoomIn[0], 30) * (1 - lin(f, k.zoomOut[0], 30));
 
   // ---- light and the stoma's state
   const night = track(f, [
@@ -391,51 +504,60 @@ export const V2S10Stomata: React.FC = () => {
   ]);
   const open = track(f, [
     [b.flex - 2, 1],
-    [b.flex + 8, 1.15, EASE.out],
+    [b.flex + 8, 1.18, EASE.out],
     [b.flex + 20, 1],
     [b.close, 1],
     [b.close + 24, 0, EASE.inOut],
     [b.reopen, 0],
-    [b.reopen + 16, 1.12, EASE.out],
+    [b.reopen + 16, 1.14, EASE.out],
     [b.reopen + 30, 1, EASE.inOut],
   ]);
   const gLight = track(f, [
-    [b.dusk, 0.55],
+    [b.dusk, 0.45],
     [b.dusk + 30, 0],
-    [b.photons + 14, 0],
-    [b.photons + 30, 1, EASE.out],
-    [b.reopen + 50, 0.6],
+    [b.photons + 20, 0],
+    [b.photons + 34, 1, EASE.out],
+    [b.reopen + 50, 0.55],
   ]);
   const shades = track(f, [
     [b.dusk + 4, 1],
     [b.dusk + 20, 0, EASE.inOut],
-    [b.photons + 22, 0],
-    [b.photons + 28, 1, EASE.in],
+    [b.photons + 24, 0],
+    [b.photons + 32, 1, EASE.in],
   ]);
   const proud = f >= b.flex - 2 && f < b.flex + 22;
-  const asleep = f >= b.close + 14 && f < b.dawn + 8;
+  const asleep = f >= b.close + 14 && f < b.photons + 22;
   const thrilled = f >= b.reopen && f < b.end;
   const sEyes = asleep ? "sleepy" : proud ? "happy" : "open";
   const sMouth = asleep ? "flat" : proud || thrilled ? "grin" : "smile";
 
-  // ---- the neon sign flips over (like a shop door sign) and strikes
+  // ---- the neon sign: strikes as we arrive, flips over at closing time (like a shop door sign) and back
+  const signIn = lin(f, k.gases + 4, 12);
   const flip1 = lin(f, b.close, 12);
   const flip2 = lin(f, b.reopen, 12);
   const closedSide = (flip1 >= 0.5 && f < b.reopen) || (f >= b.reopen && flip2 < 0.5);
   const flipU = f >= b.reopen ? flip2 : flip1;
   const signSX = Math.max(0.02, Math.abs(Math.cos(flipU * Math.PI)));
-  const signOn = closedSide
-    ? lin(f, b.close + 14, 14)
-    : f >= b.reopen
-      ? lin(f, b.reopen + 12, 14)
-      : f >= b.close
-        ? 0
-        : 1;
-  const signSwing = Math.sin(lin(f, b.close, 40) * Math.PI * 3) * (1 - lin(f, b.close, 40)) * 6 + Math.sin(lin(f, b.reopen, 40) * Math.PI * 3) * (1 - lin(f, b.reopen, 40)) * 6;
+  const signOn = closedSide ? lin(f, b.close + 12, 14) : f >= b.reopen ? lin(f, b.reopen + 12, 14) : f >= b.close ? 0 : lin(f, k.gases + 10, 16);
+  const swingAt = (t0: number) => Math.sin(lin(f, t0, 40) * Math.PI * 3) * (1 - lin(f, t0, 40)) * 6;
+  const signSwing = swingAt(b.close) + swingAt(b.reopen) + swingAt(k.gases + 4) * 0.6;
+  const signOut = lin(f, k.zoomOut[0], 14);
 
-  // ---- beams: fade at dusk, sweep down from the top at dawn
-  const beamReveal = f < b.dawn - 2 ? 1 : EASE.out(lin(f, b.dawn - 2, 26));
-  const beamsOn = 1 - night;
+  // ---- light: soft beams by day; at dawn they sweep down from the top
+  const beamReveal = f < b.dawn - 2 ? 1 : EASE.out(lin(f, b.dawn - 2, 28));
+  const beamOn = (1 - night) * (0.55 + 0.45 * track(f, [
+    [b.dawn, 0],
+    [b.dawn + 22, 1, EASE.out],
+    [b.reopen + 30, 1],
+    [b.reopen + 70, 0],
+  ]));
+  // the morning light floods down from above
+  const sunrise = track(f, [
+    [b.dawn - 2, 0],
+    [b.dawn + 24, 1, EASE.out],
+    [b.reopen + 24, 0.8],
+    [b.end, 0.25],
+  ]);
 
   // ---- pre-range highlights
   const airTint = pulse(f, k.airWord - 4, 70);
@@ -444,40 +566,50 @@ export const V2S10Stomata: React.FC = () => {
   const phloemGlow = pulse(f, k.phloemWord - 4, 80);
   const epiGlow = pulse(f, k.lowerWord - 4, 70);
 
-  // a cell "gulps" when it takes carbon dioxide in
+  // a cell "gulps" when it takes carbon dioxide in, and puffs when it gives oxygen out
   const gulpOf = (c: Cell) =>
     buddies.reduce((acc, bd) => {
-      if (bd.target !== c || bd.go === undefined) return acc;
-      const arrive = bd.go + (bd.travel ?? 90) * 0.93;
-      return Math.max(acc, pulse(f, arrive, 14));
+      if (bd.target === c && bd.go !== undefined) return Math.max(acc, pulse(f, bd.go + (bd.travel ?? 90) * 0.93, 14));
+      if (bd.source === c && bd.appear !== undefined) return Math.max(acc, 0.7 * pulse(f, bd.appear - 2, 14));
+      return acc;
     }, 0);
 
   // ---- Chloro the host
   let mood: ChloroMood = "explain";
   let pose: ChloroPose = "rest";
-  let look: [number, number] = [0.4, -0.3];
+  let look: [number, number] = [-0.4, -0.3];
   if (f >= k.spongyWord && f < k.air) pose = "point";
   if (f >= k.lowerWord && f < k.gases - 12) pose = "point";
-  if (f >= k.gases - 12 && f < b.dusk) {
+  if (f >= k.gases - 12 && f < b.flex) {
     pose = "point";
-    look = [0.6, -0.2];
+    look = [-0.7, -0.2];
+  }
+  if (f >= b.flex && f < b.dusk) {
+    mood = "happy";
+    pose = "present";
+    look = [-0.7, -0.3];
   }
   if (f >= b.dusk && f < b.dawn) {
     mood = "worried";
     pose = "hold";
-    look = [-0.2, -1];
+    look = [0.2, -1];
   }
-  if (f >= b.dawn && f < b.in2) {
+  if (f >= b.dawn && f < b.reopen) {
+    mood = "shocked";
+    pose = "point";
+    look = [-0.3, -1];
+  }
+  if (f >= b.reopen && f < b.in2) {
     mood = "celebrate";
     pose = "cheer";
   }
   if (f >= b.in2 && f < b.end) {
     mood = "happy";
     pose = "point";
-    look = [0.7, 0];
+    look = [-0.7, 0];
   }
   const chloroTalk = mood === "explain" || mood === "happy" ? talk : 0;
-  const chloroBounce = lin(f, b.dawn + 2, 16) * (f < b.dawn + 18 ? 1 : 0) + lin(f, b.dusk + 30, 14) * (f < b.dusk + 44 ? 1 : 0);
+  const chloroBounce = lin(f, b.reopen + 2, 16) * (f < b.reopen + 18 ? 1 : 0) + lin(f, b.dusk + 30, 14) * (f < b.dusk + 44 ? 1 : 0);
 
   // ---- labels
   const lab = (start: number, end: number, len = 18) => ({ progress: lin(f, start, len), out: lin(f, end, 12) });
@@ -487,22 +619,16 @@ export const V2S10Stomata: React.FC = () => {
   const airC = nearestCell([1380, 412]);
   const recapFor = (start: number, next: number) => lab(start, Math.max(start + 34, next));
 
-  // dashed arrows
-  const co2Arrow: Pt[] = [[800, 866], [900, 822], [936, 740], [938, 600], [930, 470], [900, 420]];
-  const o2Arrow: Pt[] = [[1012, 420], [984, 470], [984, 600], [988, 740], [1050, 830], [1150, 866]];
+  // dashed arrows (world): carbon dioxide up and in, oxygen down and out — through the pore
+  const co2Arrow: Pt[] = [[790, 806], [902, 784], [942, 730], [946, 605], [942, 492], [902, 436]];
+  const o2Arrow: Pt[] = [[1018, 436], [978, 492], [976, 605], [980, 728], [1040, 790], [1164, 806]];
 
-  // photons from the light above, onto the guard cells' chloroplasts
-  const photonTargets: Pt[] = [
-    [896, 640],
-    [1024, 640],
-    [902, 696],
-    [1018, 696],
-    [912, 520],
-    [1008, 520],
-  ];
+  // photons: from the light above (screen), onto the guard cells' chloroplasts
+  const plastids = guardPlastids(Math.min(1, open));
 
   const epiOpenHalf = stomaOuterHalf(open, GIRTH, PORE_W, 0.29) - 8;
   const nightTint = 0.5 * night;
+  const stomaFace = toS([PORE[0] + 82, PORE[1] - 45]);
 
   return (
     <WorldStage world="leaf">
@@ -522,224 +648,246 @@ export const V2S10Stomata: React.FC = () => {
           <stop offset="0" stopColor={C.sun} stopOpacity={0.3} />
           <stop offset="1" stopColor={C.sun} stopOpacity={0} />
         </radialGradient>
+        <radialGradient id={`${id}-focus`} gradientUnits="userSpaceOnUse" cx={PORE[0]} cy={PORE[1] - 70} r={720}>
+          <stop offset="0" stopColor={W2.leafNightDeep} stopOpacity={0} />
+          <stop offset="0.42" stopColor={W2.leafNightDeep} stopOpacity={0} />
+          <stop offset="1" stopColor={W2.leafNightDeep} stopOpacity={0.62} />
+        </radialGradient>
+        <radialGradient id={`${id}-sunrise`} gradientUnits="userSpaceOnUse" cx={1100} cy={-180} r={1050}>
+          <stop offset="0" stopColor={C.sun} stopOpacity={0.55} />
+          <stop offset="0.5" stopColor={C.sun} stopOpacity={0.16} />
+          <stop offset="1" stopColor={C.sun} stopOpacity={0} />
+        </radialGradient>
         <clipPath id={`${id}-beamclip`}>
           <rect x={0} y={-200} width={1920} height={1400 * beamReveal} />
         </clipPath>
       </defs>
 
-      {/* daylight from above, and the air spaces */}
-      <rect x={0} y={0} width={1920} height={AIR_TOP} fill={`url(#${id}-sky)`} opacity={1 - night} />
-      {airTint > 0 ? <rect x={0} y={90} width={1920} height={EPI_TOP - 90} fill={C.ice} opacity={0.16 * airTint} /> : null}
-      <ellipse cx={POCKET[0]} cy={POCKET[1] + 30} rx={260} ry={220} fill={`url(#${id}-pocket)`} opacity={1 - night} />
+      {/* ================= world, part 1: tissue, air, gases ================= */}
+      <g transform={cam.T}>
+        {/* daylight from above, and the air spaces */}
+        <rect x={-400} y={-200} width={2720} height={AIR_TOP + 200} fill={`url(#${id}-sky)`} opacity={1 - night} />
+        {airTint > 0 ? <rect x={0} y={90} width={1920} height={EPI_TOP - 90} fill={C.ice} opacity={0.16 * airTint} /> : null}
+        <ellipse cx={POCKET[0]} cy={POCKET[1] + 30} rx={260} ry={220} fill={`url(#${id}-pocket)`} opacity={1 - night} />
 
-      <Palisade paint={`url(#${id}-pal)`} />
-      <VascularBundle xylemGlow={xylemGlow} phloemGlow={phloemGlow} />
-      {SPONGY.map((c) => (
-        <CellBlob
-          key={c.seed}
-          cx={c.cx}
-          cy={c.cy}
-          rx={c.rx}
-          ry={c.ry}
-          rot={c.rot}
-          seed={c.seed}
-          paint={`url(#${id}-sp)`}
-          plastids={6}
-          glow={surface}
-          glowColor={C.amberLight}
-          scale={1 + 0.05 * gulpOf(c)}
-        />
-      ))}
+        <Palisade paint={`url(#${id}-pal)`} />
+        <VascularBundle xylemGlow={xylemGlow} phloemGlow={phloemGlow} />
+        {SPONGY.map((c) => (
+          <CellBlob
+            key={c.seed}
+            cx={c.cx}
+            cy={c.cy}
+            rx={c.rx}
+            ry={c.ry}
+            rot={c.rot}
+            seed={c.seed}
+            paint={`url(#${id}-sp)`}
+            plastids={6}
+            glow={surface}
+            glowColor={C.amberLight}
+            scale={1 + 0.06 * gulpOf(c)}
+          />
+        ))}
+        {/* close in: the tissue around the stoma steps back so the stoma reads first */}
+        {focus > 0 ? <rect x={-400} y={-200} width={2720} height={AIR_TOP + 200} fill={`url(#${id}-focus)`} opacity={focus} /> : null}
 
-      {/* outside air */}
-      <rect x={0} y={AIR_TOP - 12} width={1920} height={1080 - AIR_TOP + 12} fill={`url(#${id}-air)`} />
-      <Breeze f={f} />
+        {/* outside air */}
+        <rect x={-400} y={AIR_TOP - 12} width={2720} height={1400 - AIR_TOP} fill={`url(#${id}-air)`} />
+        <Breeze f={f} />
 
-      {/* the pore (behind everything that passes through it) */}
-      <Stoma x={PORE[0]} y={PORE[1]} length={GLEN} girth={GIRTH} poreWidth={PORE_W} open={open} light={gLight} dim={night} layer="back" poreColors={[W2.leafNight, mix(W2.leafNight, C.ice, 0.3)]} />
+        {/* the pore (behind everything that passes through it) */}
+        <Stoma x={PORE[0]} y={PORE[1]} length={GLEN} girth={GIRTH} poreWidth={PORE_W} open={open} light={gLight} dim={night} layer="back" poreColors={[W2.leafNight, mix(W2.leafNight, C.ice, 0.3)]} />
 
-      {/* the gases */}
-      {buddies.map((bd, i) => {
-        const s = buddyState(bd, f, b);
-        if (s.opacity <= 0.01) return null;
-        const phase: Phase = f < b.dusk ? "day" : f < b.dawn ? "night" : "dawn";
-        if (bd.kind === "o2") {
-          return <O2Buddy key={i} x={s.p[0]} y={s.p[1]} scale={s.scale} rotate={s.rotate} mood={s.moving ? "excited" : "happy"} opacity={s.opacity} jiggle={2} seed={bd.seed} look={s.moving ? 1 : 0} />;
-        }
-        const bm =
-          phase === "night" && bd.wait
-            ? s.bumped > 0.05 || (f < b.close + 60 && f >= bd.wait.from)
+        {/* the gas routes: drawn behind the guard cells, so they visibly pass through the pore */}
+        <DashArrow pts={co2Arrow} progress={lin(f, b.co2Label - 4, 26)} out={lin(f, b.gasOut, 12)} color={C.ice} flow={f} />
+        <DashArrow pts={o2Arrow} progress={lin(f, b.o2Label - 4, 26)} out={lin(f, b.gasOut, 12)} color={C.coral} flow={f} />
+        <DashArrow pts={co2Arrow} progress={lin(f, b.in2 - 6, 26)} out={lin(f, b.end - 4, 12)} color={C.ice} flow={f} />
+
+        {/* the gases */}
+        {buddies.map((bd, i) => {
+          const s = buddyState(bd, f);
+          if (!s || s.opacity <= 0.01) return null;
+          if (bd.kind === "o2") {
+            return <O2Buddy key={i} x={s.p[0]} y={s.p[1]} scale={s.scale} rotate={s.rotate} mood={s.moving ? "excited" : "happy"} opacity={s.opacity} progress={s.pop} jiggle={2} seed={bd.seed} look={s.moving ? 1 : 0} />;
+          }
+          const dark = night > 0.5;
+          const shut = bd.queued !== undefined && f >= b.close + 6 && f < b.close + 36;
+          const bm = s.moving
+            ? "excited"
+            : s.bumped > 0.05 || shut || (bd.bonk !== undefined && f >= bd.bonk && f < bd.bonk + 40)
               ? "worried"
-              : "sleepy"
-            : phase === "night"
-              ? "sleepy"
-              : phase === "dawn" && bd.wait
-                ? "excited"
-                : s.moving
+              : s.queued && dark
+                ? "sleepy"
+                : s.queued && f >= b.dawn
                   ? "excited"
                   : "happy";
-        return <CO2Buddy key={i} x={s.p[0]} y={s.p[1]} scale={s.scale} rotate={s.rotate} mood={bm} opacity={s.opacity} jiggle={2} seed={bd.seed} look={s.moving ? 0 : -0.4} />;
-      })}
+          return <CO2Buddy key={i} x={s.p[0]} y={s.p[1]} scale={s.scale} rotate={s.rotate} mood={bm} opacity={s.opacity} jiggle={2} seed={bd.seed} look={s.moving ? 0 : 0.6} />;
+        })}
 
-      {/* lower epidermis (clear cells, no chloroplasts) */}
-      <g>
-        {EPI_CELLS.map(([x, w], i) => (
-          <PillCell key={i} x={x} y={EPI_TOP} w={w} h={EPI_H} paint={`url(#${id}-epi)`} />
-        ))}
-        <PillCell x={EPI_LEFT_END + EPI_GAP / 2} y={EPI_TOP} w={PORE[0] - epiOpenHalf - EPI_LEFT_END - EPI_GAP / 2} h={EPI_H} paint={`url(#${id}-epi)`} />
-        <PillCell x={PORE[0] + epiOpenHalf} y={EPI_TOP} w={EPI_RIGHT_START - (PORE[0] + epiOpenHalf)} h={EPI_H} paint={`url(#${id}-epi)`} />
-        {epiGlow > 0 ? <rect x={-10} y={EPI_TOP - 6} width={1940} height={EPI_H + 12} rx={20} fill="none" stroke={C.amberLight} strokeWidth={8} opacity={0.8 * epiGlow} /> : null}
-      </g>
-
-      {/* the guard cells: bouncers in shades */}
-      <Stoma
-        x={PORE[0]}
-        y={PORE[1]}
-        length={GLEN}
-        girth={GIRTH}
-        poreWidth={PORE_W}
-        open={open}
-        light={gLight}
-        dim={night}
-        layer="front"
-        face
-        shades={shades}
-        eyes={sEyes}
-        mouth={sMouth}
-        look={thrilled ? [0, 0.6] : asleep ? [0, 0] : [0, 0.3]}
-        seed={4}
-      />
-
-      {/* light */}
-      <g clipPath={`url(#${id}-beamclip)`}>
-        <SunBeams
-          source={[1500, -420]}
-          beams={[
-            [
-              [260, 1000],
-              [520, 1000],
-            ],
-            [
-              [760, 1000],
-              [930, 1000],
-            ],
-            [
-              [1010, 1000],
-              [1160, 1000],
-            ],
-            [
-              [1420, 1000],
-              [1580, 1000],
-            ],
-          ]}
-          on={0.55 * beamsOn}
-          fadeTo={[1100, 1000]}
-        />
-      </g>
-      {photonTargets.map((t, i) => (
-        <Photon key={i} from={[t[0] + 330, -60]} to={t} p={(f - b.photons - i * 4) / 24} size={0.9} />
-      ))}
-
-      <Chloro
-        x={CHLORO[0]}
-        y={CHLORO[1]}
-        size={236}
-        mood={mood}
-        pose={pose}
-        pointAngle={-14}
-        flip
-        look={look}
-        talk={chloroTalk}
-        bounce={chloroBounce}
-        seed={5}
-      />
-
-      {/* night */}
-      {nightTint > 0 ? <rect x={0} y={0} width={1920} height={1080} fill={mix(W2.leafNightDeep, "#000000", 0.25)} opacity={nightTint} /> : null}
-
-      {/* sky window: is it light or dark? */}
-      <DayNightDial x={DIAL[0]} y={DIAL[1]} r={78} night={night} />
-
-      {/* the neon sign hanging over the door */}
-      <g transform={`rotate(${signSwing} ${SIGN[0]} 0)`}>
-        <path d={`M${SIGN[0] - 100},90 L${SIGN[0] - 100 * signSX},132 M${SIGN[0] + 100},90 L${SIGN[0] + 100 * signSX},132`} stroke={mix(C.ink300, C.paper, 0.3)} strokeWidth={4} strokeDasharray="7 5" />
-        <g transform={`translate(${SIGN[0]} 0) scale(${signSX} 1) translate(${-SIGN[0]} 0)`}>
-          <NeonSign x={SIGN[0]} y={SIGN[1]} text={closedSide ? "CLOSED" : "OPEN"} on={signOn} size={74} color={closedSide ? C.coral : W2.neon} />
+        {/* lower epidermis (clear cells, no chloroplasts) */}
+        <g>
+          {EPI_CELLS.map(([x, w], i) => (
+            <PillCell key={i} x={x} y={EPI_TOP} w={w} h={EPI_H} paint={`url(#${id}-epi)`} />
+          ))}
+          <PillCell x={EPI_LEFT_END + EPI_GAP / 2} y={EPI_TOP} w={PORE[0] - epiOpenHalf - EPI_LEFT_END - EPI_GAP / 2} h={EPI_H} paint={`url(#${id}-epi)`} />
+          <PillCell x={PORE[0] + epiOpenHalf} y={EPI_TOP} w={EPI_RIGHT_START - (PORE[0] + epiOpenHalf)} h={EPI_H} paint={`url(#${id}-epi)`} />
+          {epiGlow > 0 ? <rect x={-10} y={EPI_TOP - 6} width={1940} height={EPI_H + 12} rx={20} fill="none" stroke={C.amberLight} strokeWidth={8} opacity={0.8 * epiGlow} /> : null}
         </g>
       </g>
 
-      {/* ---------------- labels: before the preview range */}
-      <PillLabel x={560} y={232} text="spongy mesophyll" {...lab(k.spongyWord, k.air + 30)} anchors={[[spongyCell.cx, spongyCell.cy]]} />
+      {/* night falls over the tissue (the guard cells dim themselves, so they stay readable) */}
+      {nightTint > 0 ? <rect x={0} y={0} width={1920} height={1080} fill={mix(W2.leafNightDeep, "#000000", 0.25)} opacity={nightTint} /> : null}
+
+      {/* ================= world, part 2: the guard cells ("bouncers" in shades) ================= */}
+      <g transform={cam.T}>
+        <Stoma
+          x={PORE[0]}
+          y={PORE[1]}
+          length={GLEN}
+          girth={GIRTH}
+          poreWidth={PORE_W}
+          open={open}
+          light={gLight}
+          dim={night * 0.75}
+          layer="front"
+          face
+          shades={shades}
+          eyes={sEyes}
+          mouth={sMouth}
+          look={thrilled ? [-0.4, 0.7] : asleep ? [0, 0] : [-0.3, 0.4]}
+          seed={4}
+        />
+        <HandCircle cx={PORE[0]} cy={PORE[1]} rx={150} ry={186} progress={lin(f, k.stomataWord - 4, 22)} opacity={1 - lin(f, k.gases + 2, 14)} color={C.amberLight} width={7} seed={3} />
+      </g>
+
+      {/* ================= screen space ================= */}
+      {/* light from above: soft beams by day, a sweep down at dawn */}
+      <g clipPath={`url(#${id}-beamclip)`}>
+        {sunrise > 0 ? <rect x={0} y={0} width={1920} height={1080} fill={`url(#${id}-sunrise)`} opacity={sunrise} style={{ mixBlendMode: "screen" }} /> : null}
+        <SunBeams
+          source={[1240, -520]}
+          beams={[
+            [
+              [560, 1000],
+              [760, 1000],
+            ],
+            [
+              [820, 1000],
+              [1000, 1000],
+            ],
+            [
+              [1060, 1000],
+              [1220, 1000],
+            ],
+            [
+              [1320, 1000],
+              [1480, 1000],
+            ],
+          ]}
+          on={beamOn}
+          fadeTo={[960, 1000]}
+        />
+      </g>
+      {plastids.map((t, i) => {
+        const to = toS(t);
+        const from: Pt = [to[0] + 260 + (i % 3) * 30, -60];
+        return <Photon key={i} from={from} to={to} p={(f - b.photons - i * 4) / 24} size={1.1} />;
+      })}
+      {plastids.map((t, i) => {
+        const at = toS(t);
+        return <Sparkle key={`p${i}`} x={at[0]} y={at[1]} r={22} seed={i + 7} color={C.sun} opacity={pulse(f, b.photons + i * 4 + 22, 22)} />;
+      })}
+
+      <Chloro x={CHLORO[0]} y={CHLORO[1]} size={236} mood={mood} pose={pose} pointAngle={f >= b.dawn && f < b.reopen ? -60 : -14} flip look={look} talk={chloroTalk} bounce={chloroBounce} seed={5} />
+
+      {/* sky window: is it light or dark? */}
+      <DayNightDial x={DIAL[0]} y={DIAL[1]} r={78} night={night} progress={lin(f, k.gases + 16, 16) * (1 - signOut)} />
+
+      {/* the neon sign hanging over the door */}
+      {signIn > 0 && signOut < 1 ? (
+        <g opacity={1 - signOut} transform={`rotate(${signSwing} ${SIGN[0]} 0) translate(0 ${-(1 - EASE.out(signIn)) * 240})`}>
+          <path d={`M${SIGN[0] - 100},-10 L${SIGN[0] - 100 * signSX},${SIGN[1] - 66} M${SIGN[0] + 100},-10 L${SIGN[0] + 100 * signSX},${SIGN[1] - 66}`} stroke={mix(C.ink300, C.paper, 0.3)} strokeWidth={4} strokeDasharray="7 5" />
+          <g transform={`translate(${SIGN[0]} 0) scale(${signSX} 1) translate(${-SIGN[0]} 0)`}>
+            <NeonSign x={SIGN[0]} y={SIGN[1]} text={closedSide ? "CLOSED" : "OPEN"} on={signOn} size={70} color={closedSide ? C.coral : W2.neon} />
+          </g>
+        </g>
+      ) : null}
+
+      {/* ---------------- labels: before the preview range (camera at rest) */}
+      <PillLabel x={560} y={232} text="spongy mesophyll" {...lab(k.spongyWord, k.air + 30)} anchors={[toS([spongyCell.cx, spongyCell.cy])]} />
       <PillLabel
         x={1380}
         y={250}
         text="air spaces"
         {...lab(k.airWord, k.carbon + 40)}
         color={C.ice}
-        anchors={[
-          [(airA.cx + airB.cx) / 2, (airA.cy + airB.cy) / 2 + 6],
-          [(airA.cx + airC.cx) / 2, (airA.cy + airC.cy) / 2],
-        ]}
+        anchors={[toS([(airA.cx + airB.cx) / 2, (airA.cy + airB.cy) / 2 + 6]), toS([(airA.cx + airC.cx) / 2, (airA.cy + airC.cy) / 2])]}
       />
-      <PillLabel x={600} y={330} text="vascular bundle" {...lab(k.vascular, k.plant + 30)} anchors={[[BUNDLE[0] + 80, BUNDLE[1] - 10]]} />
-      <PillLabel x={560} y={180} text="xylem" {...lab(k.xylemWord, k.plant + 30)} color={C.ice} anchors={[[BUNDLE[0] + 30, BUNDLE[1] - 40]]} />
-      <PillLabel x={600} y={480} text="phloem" {...lab(k.phloemWord, k.plant + 30)} color={C.amber} anchors={[[BUNDLE[0] + 24, BUNDLE[1] + 58]]} />
-      <PillLabel x={1330} y={724} text="lower epidermis" {...lab(k.lowerWord, k.onePore + 8)} anchors={[[1300, EPI_TOP + EPI_H / 2]]} />
-      <HandCircle cx={PORE[0]} cy={PORE[1]} rx={150} ry={186} progress={lin(f, k.stomataWord - 4, 22)} opacity={1 - lin(f, k.gases + 4, 14)} color={C.amberLight} width={7} seed={3} />
-      <PillLabel x={1250} y={808} text="stoma" {...lab(k.onePore, k.gases + 4)} anchors={[[PORE[0] + 2, PORE[1] + 96]]} />
+      <PillLabel x={600} y={330} text="vascular bundle" {...lab(k.vascular, k.plant + 30)} anchors={[toS([BUNDLE[0] + 80, BUNDLE[1] - 10])]} />
+      <PillLabel x={560} y={180} text="xylem" {...lab(k.xylemWord, k.plant + 30)} color={C.ice} anchors={[toS([BUNDLE[0] + 30, BUNDLE[1] - 40])]} />
+      <PillLabel x={600} y={480} text="phloem" {...lab(k.phloemWord, k.plant + 30)} color={C.amber} anchors={[toS([BUNDLE[0] + 24, BUNDLE[1] + 58])]} />
+      <PillLabel x={1330} y={724} text="lower epidermis" {...lab(k.lowerWord, k.onePore + 8)} anchors={[toS([1300, EPI_TOP + EPI_H / 2])]} />
+      <PillLabel x={1250} y={808} text="stoma" {...lab(k.onePore, k.diffusesIn - 6)} anchors={[toS([PORE[0] + 2, PORE[1] + 108])]} />
       {f >= k.lower && f < k.gases + 20 ? (
-        <text x={150} y={948} fontFamily={HAND} fontWeight={700} fontSize={62} fill={mix(C.ice, C.paper, 0.4)} opacity={lin(f, k.lowerWord, 14) * (1 - lin(f, k.gases + 2, 14))}>
+        <text x={150} y={948} fontFamily={HAND} fontWeight={700} fontSize={62} fill={mix(C.ice, C.paper, 0.4)} opacity={lin(f, k.lowerWord, 14) * (1 - lin(f, k.gases - 6, 10))}>
           outside air
         </text>
       ) : null}
 
       {/* ---------------- the preview range */}
-      <DashArrow pts={co2Arrow} progress={lin(f, b.co2Label - 4, 26)} out={lin(f, b.dusk, 12)} color={C.ice} flow={f} />
-      <DashArrow pts={o2Arrow} progress={lin(f, b.o2Label - 4, 26)} out={lin(f, b.dusk, 12)} color={C.coral} flow={f} />
-      <PillLabel x={590} y={912} text="carbon dioxide in" {...lab(b.co2Label, b.dusk)} color={C.ice} />
-      <PillLabel x={1300} y={912} text="oxygen out" {...lab(b.o2Label, b.dusk)} color={C.coral} />
+      <PillLabel x={540} y={926} text="carbon dioxide in" {...lab(b.co2Label, b.gasOut)} color={C.ice} />
+      <PillLabel x={1330} y={926} text="oxygen out" {...lab(b.o2Label, b.gasOut)} color={C.coral} />
 
       <PillLabel
-        x={PORE[0]}
-        y={330}
+        x={960}
+        y={924}
         text="guard cells"
         {...lab(b.label, b.reopen + 4)}
         color={W2.chloroLight}
-        anchors={[
-          [PORE[0] - 26, 498],
-          [PORE[0] + 26, 498],
-        ]}
+        anchors={[toS([PORE[0] - 46, PORE[1] + 82]), toS([PORE[0] + 46, PORE[1] + 82])]}
       />
+      {/* bonk! the door is shut */}
+      <ImpactLines x={toS([PORE[0], PORE[1] + GLEN / 2 + 4])[0]} y={toS([PORE[0], PORE[1] + GLEN / 2 + 4])[1]} progress={lin(f, BONK(b) + 5, 16)} r0={44} r1={110} angles={[200, 168, 12, -20]} color={C.amberLight} width={8} />
+      {/* the queue dozes */}
+      {asleep && f >= b.close + 40 ? (
+        <text
+          x={toS(QUEUE[2])[0] + 30}
+          y={toS(QUEUE[2])[1] - 70 - ((f - b.close) % 50) * 0.6}
+          fontFamily={HAND}
+          fontWeight={700}
+          fontSize={64}
+          fill={C.amberLight}
+          opacity={Math.sin((((f - b.close) % 50) / 50) * Math.PI) * (1 - lin(f, b.dawn, 10))}
+        >
+          z z
+        </text>
+      ) : null}
 
       {/* in the light: they open, carbon dioxide can diffuse in */}
-      <DashArrow pts={co2Arrow} progress={lin(f, b.in2 - 6, 26)} out={lin(f, b.end, 12)} color={C.ice} flow={f} />
-      <PillLabel x={590} y={912} text="carbon dioxide in" {...lab(b.in2, b.end)} color={C.ice} />
-      <SpeechBubble x={1086} y={352} text="You're in!" size={48} tail={[1046, 540]} progress={lin(f, b.reopen + 26, 14) * (1 - lin(f, b.end - 16, 12))} />
+      <PillLabel x={540} y={926} text="carbon dioxide in" {...lab(b.in2, b.end - 4)} color={C.ice} />
+      <SpeechBubble x={1210} y={300} text="You're in!" size={50} tail={[stomaFace[0] + 30, stomaFace[1] - 30]} progress={lin(f, b.reopen + 24, 14) * (1 - lin(f, b.end - 16, 12))} />
       {[
-        [860, 520, 1],
-        [1072, 470, 2],
-        [1090, 700, 3],
-        [836, 690, 4],
-      ].map(([x, y, s]) => (
-        <Sparkle key={s} x={x} y={y} r={18} seed={s} opacity={pulse(f, b.reopen + 6 + s * 3, 40)} />
+        [-170, -140, 1],
+        [170, -190, 2],
+        [190, 120, 3],
+        [-190, 90, 4],
+      ].map(([dx, dy, s]) => (
+        <Sparkle key={s} x={960 + dx} y={545 + dy} r={22} seed={s} opacity={pulse(f, b.reopen + 6 + s * 3, 40)} />
       ))}
 
       {/* ---------------- recap (after the preview range): name what's in view as it's listed */}
-      <PillLabel x={520} y={196} text="palisade mesophyll" {...recapFor(k.rPalisade, k.rSpongy)} anchors={[[420, 70]]} />
-      <PillLabel x={560} y={232} text="spongy mesophyll" {...recapFor(k.rSpongy, k.rBundle)} anchors={[[spongyCell.cx, spongyCell.cy]]} />
-      <PillLabel x={600} y={330} text="vascular bundle" {...recapFor(k.rBundle, k.rLower)} anchors={[[BUNDLE[0] + 80, BUNDLE[1] - 10]]} />
-      <PillLabel x={1330} y={724} text="lower epidermis" {...lab(k.rLower, k.end + 999)} anchors={[[1300, EPI_TOP + EPI_H / 2]]} />
-      <PillLabel x={1250} y={880} text="stoma" {...lab(k.rStomata, k.end + 999)} anchors={[[PORE[0] + 2, PORE[1] + 96]]} />
+      <PillLabel x={520} y={196} text="palisade mesophyll" {...recapFor(k.rPalisade, k.rSpongy)} anchors={[toS([420, 70])]} />
+      <PillLabel x={560} y={232} text="spongy mesophyll" {...recapFor(k.rSpongy, k.rBundle)} anchors={[toS([spongyCell.cx, spongyCell.cy])]} />
+      <PillLabel x={600} y={330} text="vascular bundle" {...recapFor(k.rBundle, k.rLower)} anchors={[toS([BUNDLE[0] + 80, BUNDLE[1] - 10])]} />
+      <PillLabel x={1330} y={724} text="lower epidermis" {...lab(k.rLower, k.end + 999)} anchors={[toS([1300, EPI_TOP + EPI_H / 2])]} />
+      <PillLabel x={1250} y={880} text="stoma" {...lab(k.rStomata, k.end + 999)} anchors={[toS([PORE[0] + 2, PORE[1] + 108])]} />
       <PillLabel
         x={PORE[0]}
         y={330}
         text="guard cells"
         {...lab(k.rGuard, k.end + 999)}
         color={W2.chloroLight}
-        anchors={[
-          [PORE[0] - 60, 498],
-          [PORE[0] + 60, 498],
-        ]}
+        anchors={[toS([PORE[0] - 60, PORE[1] - 100]), toS([PORE[0] + 60, PORE[1] - 100])]}
       />
     </WorldStage>
   );
