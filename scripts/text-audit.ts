@@ -97,7 +97,7 @@ const main = async () => {
   const rows = [...hits.values()].sort((a, b) => a.frames[0] - b.frames[0]);
   const fmt = (fs: number[]) => (fs.length > 6 ? `${fs.slice(0, 6).join(", ")} … (${fs.length} frames)` : fs.join(", "));
   const lines = [
-    `# Text audit: ${id} (${frames.length} frames checked, ${spec})`,
+    `# Text audit: ${id} (${frames.length} frames checked, ${spec.length > 60 ? `frames ${frames[0]}–${frames[frames.length - 1]}` : spec})`,
     "",
     `Rules: text ≥ ${MIN_PX} px, inside the ${SAFE} px safe area, never cut by the frame. Fading (opacity < 0.35) and transition-blurred text is ignored.`,
     "",
