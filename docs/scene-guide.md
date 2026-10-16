@@ -65,8 +65,9 @@ picky motion designer. Iterate until it looks crafted, not generated.
 Same look as EP001 (approved by the owner), with these changes:
 
 - **No decorative background.** `Stage` with no `particles`; no `DepthMolecules`. Only things that explain.
-- **Long, structured episodes.** Each section opens with a `SectionTag` (top-left, e.g. "4 · Leaf structure";
-  `extended` adds the EXTENDED badge). The table of sections is in the episode's `storyboard.md`.
+- **Long, structured episodes.** Each section opens with a `SectionTag` (top-left, e.g. "4 · Leaf structure").
+  This channel never labels content Core or Extended (CLAUDE.md), so `SectionTag`'s `extended` prop is not
+  used. The table of sections is in the episode's `storyboard.md`.
 - **Human narrator.** Until the recording exists, `timeline.json` is an estimate (`npm run estimate`). When the
   real voice arrives the cue frames move. So: put every beat on a cue (`sc.cue`), never on a fixed number of
   frames after the scene start, and guard short gaps (e.g. `Math.min(30, k.next - k.now)`), so the scene still
