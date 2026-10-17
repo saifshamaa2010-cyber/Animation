@@ -71,6 +71,82 @@ class Kokoro(Provider):
         return samples, sr
 
 
+class Chatterbox(Provider):
+    """Free, local, MIT licence (code and weights). https://github.com/resemble-ai/chatterbox
+
+    Runs in .venv-tts (torch) through pipeline/tts/chatterbox_worker.py, one sentence at a time (it is
+    most natural on short inputs); sentences are joined with a short breath. CHATTERBOX_REF = a
+    reference clip that sets the voice (empty = the model's built-in voice). Only synthetic or
+    consenting voices may be used as a reference — never a real person's voice without their consent.
+    """
+
+    name = "chatterbox"
+    BREATH = 0.3  # seconds between sentences inside one segment
+
+    def __init__(self) -> None:
+        self.ref = os.environ.get("CHATTERBOX_REF", "").strip()
+        if self.ref and not Path(self.ref).is_absolute():
+            self.ref = str(ROOT / self.ref)
+        if self.ref and not Path(self.ref).exists():
+            raise SystemExit(f"CHATTERBOX_REF not found: {self.ref}")
+        self.params = {k: os.environ.get(k, "") for k in ("CHATTERBOX_EXAGGERATION", "CHATTERBOX_CFG", "CHATTERBOX_TEMPERATURE")}
+        self.proc = None
+        self.sr = 24000
+
+    def voice_id(self) -> str:
+        ref = "builtin"
+        if self.ref:
+            ref = Path(self.ref).stem + "-" + hashlib.sha256(Path(self.ref).read_bytes()).hexdigest()[:8]
+        return ref + "".join(f"|{v}" for v in self.params.values())
+
+    def _worker(self):
+        if self.proc is None:
+            import subprocess
+
+            py = ROOT / ".venv-tts" / "bin" / "python"
+            if not py.exists():
+                raise SystemExit("Chatterbox needs .venv-tts (see pipeline/setup.sh).")
+            CACHE.mkdir(parents=True, exist_ok=True)
+            log = open(CACHE / "chatterbox-worker.log", "a")
+            env = {**os.environ, "CHATTERBOX_REF": self.ref}
+            self.proc = subprocess.Popen([str(py), str(Path(__file__).with_name("chatterbox_worker.py"))], cwd=ROOT, env=env,
+                                         stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=log, text=True, bufsize=1)
+            hello = json.loads(self.proc.stdout.readline() or "{}")
+            if not hello.get("ready"):
+                raise SystemExit(f"Chatterbox failed to start; see {CACHE / 'chatterbox-worker.log'}")
+            self.sr = int(hello["sr"])
+        return self.proc
+
+    @staticmethod
+    def sentences(text: str) -> list[str]:
+        import re
+
+        return [s for s in re.split(r"(?<=[.!?…])\s+", text.strip()) if s]
+
+    def _one(self, sentence: str) -> np.ndarray:
+        p = self._worker()
+        out = CACHE / f"chatterbox-part-{os.getpid()}.wav"
+        seed = int(hashlib.sha256(sentence.encode()).hexdigest()[:8], 16)
+        p.stdin.write(json.dumps({"text": sentence, "out": str(out), "seed": seed}) + "\n")
+        p.stdin.flush()
+        reply = json.loads(p.stdout.readline() or '{"ok": false, "error": "worker stopped"}')
+        if not reply.get("ok"):
+            raise SystemExit(f"Chatterbox: {reply.get('error')} (log: {CACHE / 'chatterbox-worker.log'})")
+        audio, _ = sf.read(out, dtype="float32")
+        out.unlink(missing_ok=True)
+        from ..narrate import trim  # same silence trim as whole segments get
+
+        return trim(audio, self.sr)
+
+    def _synth(self, text: str):
+        parts: list[np.ndarray] = []
+        for i, s in enumerate(self.sentences(text)):
+            if i:
+                parts.append(np.zeros(int(self.BREATH * self.sr), dtype=np.float32))
+            parts.append(self._one(s))
+        return (np.concatenate(parts) if parts else np.zeros(1, dtype=np.float32)), self.sr
+
+
 def _post(url: str, headers: dict, body: dict) -> bytes:
     req = urllib.request.Request(url, data=json.dumps(body).encode(), headers=headers, method="POST")
     with urllib.request.urlopen(req, timeout=120) as r:
@@ -226,7 +302,7 @@ class Cartesia(Provider):
         return audio, sr
 
 
-PROVIDERS = {"kokoro": Kokoro, "elevenlabs": ElevenLabs, "gemini": Gemini, "cartesia": Cartesia,
+PROVIDERS = {"kokoro": Kokoro, "chatterbox": Chatterbox, "elevenlabs": ElevenLabs, "gemini": Gemini, "cartesia": Cartesia,
              "openai": OpenAI, "google": Google}
 
 
