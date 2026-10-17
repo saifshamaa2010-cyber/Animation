@@ -147,17 +147,19 @@ export type QuillJob = { readonly start: number; readonly end: number; readonly 
 
 /**
  * Where the quill is at frame f, given its writing jobs (sorted by start): it slides in just before a
- * job, follows the writing, glides straight to the next job when that starts soon after, otherwise
- * slides away. Returns the nib position and the quill's presence (0..1, its `progress`).
+ * job, follows the writing, glides straight to the next job when that starts within `glide` frames,
+ * otherwise slides away. `travel` (optional) caps the glide's length: the quill moves over in that many
+ * frames, then rests where it will write next. Returns the nib position and the quill's presence
+ * (0..1, its `progress`).
  */
-export const quillAt = (jobs: readonly QuillJob[], f: number, glide = 26): { tip: Pt; on: number } => {
+export const quillAt = (jobs: readonly QuillJob[], f: number, glide = 26, travel?: number): { tip: Pt; on: number } => {
   if (!jobs.length) return { tip: [0, 0], on: 0 };
   for (let i = 0; i < jobs.length; i++) {
     const j = jobs[i];
     if (f >= j.start && f <= j.end) return { tip: j.tip(f), on: 1 };
     const next = jobs[i + 1];
     if (next && f > j.end && f < next.start && next.start - j.end <= glide) {
-      const t = EASE.inOut((f - j.end) / (next.start - j.end));
+      const t = EASE.inOut(clamp01((f - j.end) / Math.min(next.start - j.end, travel ?? Infinity)));
       const a = j.tip(j.end);
       const b = next.tip(next.start);
       return { tip: [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t - Math.sin(t * Math.PI) * 30], on: 1 };

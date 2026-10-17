@@ -56,7 +56,7 @@ const BAL: BalanceLayout = { cx: 1430, baseY: 548, pivotY: 262, arm: 232, hang: 
 const LED = { x: 1090, y1: 712, y2: 840, size: 84, tickX: 1300, valX: 1400, x2: 1790 } as const;
 const NOTE = { x: 1090, yearsY: 344, waterY: 470, size: 76 } as const;
 const Q = { x: 1180, y: 332, size: 280 } as const;
-const CAN = { x: 822, y: 560, tilt: 44, scale: 1.1 } as const;
+const CAN = { x: 826, y: 606, tilt: 44, scale: 1.1 } as const;
 
 const WATER_W = caveatWidth("nothing but water", NOTE.size);
 const KG_W = caveatWidth("+74 kg", LED.size);
@@ -162,12 +162,14 @@ export const V2S01Hook: React.FC = () => {
     { start: k.jan, end: k.helmontEnd, tip: (fr) => scribbleTip(HEAD.x, HEAD.nameY, "Jan van Helmont", HEAD.nameSize, prog(fr, k.jan, k.helmontEnd - k.jan, lin), fr) },
     { start: k.treeWeight - 2, end: k.treeWeight + 14, tip: (fr) => scribbleTip(LED.x, LED.y1, "tree", LED.size, prog(fr, k.treeWeight - 2, 16, lin), fr) },
     { start: k.soilWeights - 2, end: k.soilWeights + 14, tip: (fr) => scribbleTip(LED.x, LED.y2, "soil", LED.size, prog(fr, k.soilWeights - 2, 16, lin), fr) },
+    { start: k.five - 2, end: k.five + 16, tip: (fr) => scribbleTip(NOTE.x, NOTE.yearsY, "years", NOTE.size, prog(fr, k.five - 2, 18, lin), fr) },
     { start: k.nothing, end: k.waterEnd, tip: (fr) => scribbleTip(NOTE.x, NOTE.waterY, "nothing but water", NOTE.size, prog(fr, k.nothing, k.waterEnd - k.nothing, lin), fr) },
     { start: k.seventy, end: k.kgEnd - 4, tip: (fr) => scribbleTip(LED.valX, LED.y1, "+74 kg", LED.size, prog(fr, k.seventy, k.kgEnd - k.seventy - 4, lin), fr) },
     { start: k.fifty, end: k.gEnd - 4, tip: (fr) => scribbleTip(LED.valX, LED.y2, "-57 g", LED.size, prog(fr, k.fifty, k.gEnd - k.fifty - 4, lin), fr) },
     { start: k.how - 2, end: k.how + 20, tip: (fr) => scribbleTip(HOW.x, HOW.y, HOW.text, HOW.size, prog(fr, k.how - 2, 22, lin), fr) },
   ];
-  const quill = quillAt(jobs, f);
+  // the quill glides on to the next word when it comes within 4 s, instead of leaving and coming back
+  const quill = quillAt(jobs, f, 120, 24);
 
   // ---------------------------------------------------------------- the question, "not the soil", the answer
   const qP = prog(f, k.where - 2, 40, lin);
@@ -216,6 +218,17 @@ export const V2S01Hook: React.FC = () => {
         </g>
       ) : null}
 
+      {/* ---------------- the watering can sits behind the willow's hanging branches (reaching in under the canopy) */}
+      <InkWateringCan
+        x={CAN.x + 70 * (1 - EASE.out(canIn)) + 320 * canOut}
+        y={CAN.y - 40 * canOut}
+        tilt={canTilt}
+        scale={CAN.scale}
+        flip
+        wash={canIn}
+        opacity={canIn * (1 - prog(f, k.waterEnd + 10, 10))}
+      />
+
       {/* ---------------- the drawing */}
       <g transform={`translate(${BX} ${BY}) scale(${S})`}>
         <InkLine pts={[[-330, 212], [-60, 214], [180, 211], [330, 213]]} progress={prog(f, 50, 30, lin)} width={4} seed={3} opacity={0.8} />
@@ -247,17 +260,8 @@ export const V2S01Hook: React.FC = () => {
           : null}
       </g>
 
-      {/* ---------------- watering: the can pours, drops soak into the soil */}
+      {/* ---------------- watering: drops from the can soak into the soil */}
       <InkDrops f={f} start={pourStart} stop={pourStop} every={7} from={() => rose} soilY={BY + 2} full={full} />
-      <InkWateringCan
-        x={CAN.x + 70 * (1 - EASE.out(canIn)) + 320 * canOut}
-        y={CAN.y - 40 * canOut}
-        tilt={canTilt}
-        scale={CAN.scale}
-        flip
-        wash={canIn}
-        opacity={canIn * (1 - prog(f, k.waterEnd + 10, 10))}
-      />
 
       {/* ---------------- the header: when, and who */}
       {headOut > 0 ? (
