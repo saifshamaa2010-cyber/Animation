@@ -8,7 +8,7 @@ import { Episode as Episode2, ScenePreview as ScenePreview2 } from "./episodes/e
 import { TL as TL2 } from "./episodes/ep002-plant-nutrition/timeline";
 import { Thumbnail as Thumbnail2 } from "./episodes/ep002-plant-nutrition/Thumbnail";
 import { FunKitSheet } from "./components/fun/FunKitSheet";
-import { PartCardSample, WorldSample } from "./components/fun/WorldSamples";
+import { PartCardSample, PartCardsAll, WorldSample } from "./components/fun/WorldSamples";
 import { V2Preview, V2_PREVIEW_FRAMES } from "./episodes/ep002-plant-nutrition/v2/V2Preview";
 import { EpisodeV2, ScenePreviewV2 } from "./episodes/ep002-plant-nutrition/v2/Episode";
 import { PhotosynthesisPreview } from "./previews/PhotosynthesisPreview";
@@ -84,6 +84,7 @@ export const RemotionRoot: React.FC = () => {
         <Still id="ep002-thumbnail" component={Thumbnail2} width={1280} height={720} />
         <Composition id="fun-kit-sheet" component={FunKitSheet} durationInFrames={120} fps={30} width={1920} height={1080} />
         <Composition id="part-card-sample" component={PartCardSample} durationInFrames={120} fps={30} width={1920} height={1080} />
+        <Composition id="part-cards-all" component={PartCardsAll} durationInFrames={9} fps={30} width={1920} height={1080} />
         {(["desk", "bench", "leaf", "meadow", "journal", "notebook", "soil"] as const).map((w) => (
           <Composition key={w} id={`world-${w}`} component={WorldSample} durationInFrames={30} fps={30} width={1920} height={1080} defaultProps={{ world: w }} />
         ))}
